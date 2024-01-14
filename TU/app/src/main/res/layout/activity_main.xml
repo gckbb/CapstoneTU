@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <FrameLayout
-        android:id="@+id/tmapViewContainer"
+    <Button
+        android:id="@+id/tmapView_btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:text="button"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
