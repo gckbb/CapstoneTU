@@ -22,7 +22,8 @@ class MapActivity : AppCompatActivity() {
         setContentView(R.layout.activity_map)
 
         //이부분 tmap sdk에도 BuildConfig가 있어서 고생좀 함
-        val appKey: String = com.example.tu.BuildConfig.app_key
+        //여기 오류나면 Build -> Rebuild Project 누르면 됨
+        val appKey: String = com.example.kakaotest.BuildConfig.app_key
 
         // FrameLayout 컨테이너를 XML에서 찾아옴
         val container: FrameLayout = findViewById(R.id.tmapViewContainer)
