@@ -80,7 +80,7 @@
             android:textColor="@color/colorWhite" />
 
         <Button
-            android:id="@+id/tmapview"
+            android:id="@+id/tmapViewbtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="map test btn"/>

@@ -76,11 +76,18 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance() //2 FirebaseAuth의 인스턴스 초기화
         super.onCreate(savedInstanceState)
         KakaoSdk.init(this, getString(R.string.kakao_app_key))
-        setContentView(R.layout.activity_main)
+
+        //setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-
+        //지도 생성 테스트 버튼
+        binding.tmapViewbtn.setOnClickListener{
+            val intent = Intent(this, MapActivity::class.java)
+            startActivity(intent)
+        }
 
         // 이메일 회원가입
         val joinBtn = findViewById<Button>(R.id.email_login_button)
@@ -90,8 +97,6 @@ class MainActivity : AppCompatActivity() {
             //첫번째 방법
             val id: EditText = findViewById<EditText>(R.id.id_edittext)
             val password = findViewById<EditText>(R.id.password_edittext)
-
-
 
             auth!!.createUserWithEmailAndPassword(id.text.toString(), password.text.toString())
                 .addOnCompleteListener(this) { task ->
@@ -121,10 +126,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
         }
-
-
-
-
 
 
         //구글 로그인 버튼
