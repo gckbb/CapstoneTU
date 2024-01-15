@@ -78,6 +78,13 @@
             android:background="@drawable/signin_google"
             android:text="@string/signin_kakao"
             android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/tmapview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="map test btn"/>
+
     </LinearLayout>
 
 
