@@ -81,8 +81,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
         //지도 생성 테스트 버튼
         binding.tmapViewbtn.setOnClickListener{
             val intent = Intent(this, MapActivity::class.java)
