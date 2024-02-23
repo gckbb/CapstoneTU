@@ -1,5 +1,7 @@
 package com.example.kakaotest
 
+import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.graphics.BitmapFactory
 import android.graphics.PointF
 import android.os.Bundle
@@ -16,14 +18,24 @@ import com.skt.tmap.TMapView
 import com.skt.tmap.TMapView.OnClickListenerCallback
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.poi.TMapPOIItem
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.POST
 import java.util.ArrayList
+import java.util.HashMap
 
 
 class MapActivity : AppCompatActivity() {
 
     val searchDataList = arrayListOf<SearchData>()
+    var searchDataList2 = ArrayList<SearchData>()
+
     private var mBinding: ActivityMapBinding ?= null
     private val binding get() = mBinding!!
+    private val routetest = MakeRoute()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +53,7 @@ class MapActivity : AppCompatActivity() {
         val tMapView = TMapView(this@MapActivity)
         val tMapData = TMapData()
         val tMapGps = TMapPoint()
+        val apiAdapter = ApiAdapter()
 
         // TMapView를 FrameLayout에 추가
         container.addView(tMapView)
@@ -50,10 +63,13 @@ class MapActivity : AppCompatActivity() {
         val searchDataAdapter = DataAdapter(this,searchDataList)
         binding.searchDataListView.adapter = searchDataAdapter
 
+
+
         binding.searchDataListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectItem = parent.getItemAtPosition(position) as SearchData
 
-            Toast.makeText(this, selectItem.id, Toast.LENGTH_SHORT).show()
+            //apiAdapter.apiRequest(126.862833,35.151286,126.883917,35.153113)
+            Toast.makeText(this, "${selectItem.tpoint.latitude}", Toast.LENGTH_SHORT).show()
             tMapView.setCenterPoint(selectItem.tpoint.latitude,selectItem.tpoint.longitude)
             tMapView.zoomLevel = 15
 
@@ -117,19 +133,62 @@ class MapActivity : AppCompatActivity() {
                                 marker.setTMapPoint(TMapPoint())
                                 marker.icon = BitmapFactory.decodeResource(resources, R.drawable.poi)
                                 tMapView.addTMapMarkerItem(marker)
+                                searchDataList2.add(SearchData(item.poiName,item.poiPoint,item.poiAddress))
                                 runOnUiThread{
                                     searchDataList.add(SearchData(item.poiName,item.poiPoint,item.poiAddress))
                                     searchDataAdapter.notifyDataSetChanged()
                                 }
                                 num += 1
                             }
+
+                            routetest.routeSet(searchDataList2,searchDataList2[0])
+                            routetest.routeStart(2,6)
+                            routetest.printTotalRoute()
+
                             tMapView.addTMapPOIItem(poiItemList)
                         })
+
                 }
             }
         })
 
 
     }
+    fun apiRequest(startX :Number,startY :Number,endX :Number,endY :Number) : Number? {
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("https://apis.openapi.sk.com/tmap/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
+        val apiService: ApiService = retrofit.create(ApiService::class.java)
+
+        var input = HashMap<String,Any>()
+        input["startY"] = startY
+        input["startX"] = startX
+        input["endY"] = endY
+        input["endX"] = endX
+        input["totalValue"] = 2
+
+        val routeCall = apiService.getRoute(input)
+        var totalTime :Number? = null
+
+        routeCall.enqueue(object: Callback<FeatureCollection> {
+            override fun onResponse(call: Call<FeatureCollection>, response: Response<FeatureCollection>) {
+                val RouteInfo : FeatureCollection? = response.body()
+                Log.d(ContentValues.TAG, "getPostList onResponse()")
+                Log.d(ContentValues.TAG, "type : ${RouteInfo?.features?.get(0)?.type}")
+                Log.d(ContentValues.TAG, "TotalTime : ${RouteInfo?.features?.get(0)?.properties?.totalTime}")
+                Log.d(ContentValues.TAG, "TotalDistance : ${RouteInfo?.features?.get(0)?.properties?.totalDistance}")
+                Log.d(ContentValues.TAG, "TotalFare : ${RouteInfo?.features?.get(0)?.properties?.totalFare}")
+                totalTime = RouteInfo?.features?.get(0)?.properties?.totalTime
+            }
+            override fun onFailure(call: Call<FeatureCollection>, t: Throwable) {
+                call.cancel()
+                Log.d(ContentValues.TAG, "api fail")
+                totalTime = null
+            }
+
+        })
+        return totalTime
+    }
 }
