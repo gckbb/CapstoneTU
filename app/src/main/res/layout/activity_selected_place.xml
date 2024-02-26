@@ -1,0 +1,37 @@
+<!-- res/layout/activity_selected_place.xml -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+   >
+
+
+    <ListView
+        android:id="@+id/placeListView"
+        android:layout_width="371dp"
+        android:layout_height="583dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"
+        android:dividerHeight="4dp"
+
+        android:padding="8dp"
+        android:background="@drawable/edittext3" />
+
+
+    <Button
+        android:id="@+id/nextbutton"
+        android:layout_width="83dp"
+        android:layout_height="50dp"
+        android:background="@drawable/buttonshape1"
+        android:textColor="@color/white"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:text="다음" />
+
+
+
+</RelativeLayout>
