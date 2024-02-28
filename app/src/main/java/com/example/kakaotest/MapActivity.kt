@@ -53,7 +53,7 @@ class MapActivity : AppCompatActivity() {
      //   val appKey: String = BuildConfig.app_key
 
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString("app_key", "74eZJKg20t0o9Ms568XTU8R7cULDZYg78iLDfi00").apply()
+        sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP").apply()
 
         // 값을 가져옴
         val appKey: String? = sharedPreferences.getString("app_key", null)
