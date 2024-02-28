@@ -3,9 +3,11 @@ package com.example.kakaotest
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kakaotest.Plan.SelectedPlaceData
 
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
@@ -30,11 +32,12 @@ class CreatedPath : AppCompatActivity() {
 
         // CreatedPath에서 데이터 받아오기
         val selectedPlacesList =
-            intent.getParcelableArrayListExtra<SearchData>("selectedPlacesList")
+            intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
 
+        Log.d("selectedPlaceDataList",selectedPlacesList.toString())
 
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP")
+        sharedPreferences.edit().putString("app_key", "74eZJKg20t0o9Ms568XTU8R7cULDZYg78iLDfi00")
             .apply()
 
 
@@ -75,7 +78,7 @@ class CreatedPath : AppCompatActivity() {
                     //선택된 장소들 표시
                     if (tpoint != null) {
                         val marker = TMapMarkerItem().apply {
-                            id = selectedPlace.id
+                            id = selectedPlace.placeName
                             setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))
                             icon = if (index==0) iconList[0]
                             else if (index == selectedPlacesList.size-1) iconList[2]

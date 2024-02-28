@@ -1,18 +1,17 @@
 package com.example.kakaotest
 
 import android.content.ContentValues
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.widget.AdapterView
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kakaotest.Plan.SelectedPlaceData
 import com.example.kakaotest.databinding.ActivityMapBinding
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapData.OnFindAllPOIListener
@@ -27,7 +26,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.POST
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -55,7 +53,7 @@ class MapActivity : AppCompatActivity() {
      //   val appKey: String = BuildConfig.app_key
 
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP").apply()
+        sharedPreferences.edit().putString("app_key", "74eZJKg20t0o9Ms568XTU8R7cULDZYg78iLDfi00").apply()
 
         // 값을 가져옴
         val appKey: String? = sharedPreferences.getString("app_key", null)
@@ -82,7 +80,7 @@ class MapActivity : AppCompatActivity() {
             val selectItem = parent.getItemAtPosition(position) as SearchData
 
             //apiAdapter.apiRequest(126.862833,35.151286,126.883917,35.153113)
-            Toast.makeText(this, "${selectItem.tpoint.latitude}", Toast.LENGTH_SHORT).show()
+           // Toast.makeText(this, "${selectItem.tpoint.latitude}", Toast.LENGTH_SHORT).show()
             tMapView.setCenterPoint(selectItem.tpoint.latitude,selectItem.tpoint.longitude)
             tMapView.zoomLevel = 15
 
@@ -90,20 +88,52 @@ class MapActivity : AppCompatActivity() {
             if(startpoint==null || endpoint==null){
                 if(startpoint==null){
                     startpoint = selectItem.tpoint
-                    Toast.makeText(this, "시작지역: ${selectItem.id}", Toast.LENGTH_SHORT).show()
+                  //  Toast.makeText(this, "시작지역: ${selectItem.id}", Toast.LENGTH_SHORT).show()
                 }else if(endpoint==null){
                     endpoint = selectItem.tpoint
-                    Toast.makeText(this, "도착지역: ${selectItem.id}", Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(this, "도착지역: ${selectItem.id}", Toast.LENGTH_SHORT).show()
                 }
             }
 
             // 중복된 장소인지 확인
             if (!isPlaceAlreadySelected(selectItem)) {
-                Toast.makeText(this, selectItem.id, Toast.LENGTH_SHORT).show()
+              //  Toast.makeText(this, selectItem.id, Toast.LENGTH_SHORT).show()
 
                 // 선택한 장소를 리스트에 추가
                 selectedPlacesList.add(selectItem)
+                
+          
+
+               // 선택한 장소를 SelectedPlaceData에 추가
+                val selectedPlaceData = SelectedPlaceData(
+                    placeName = selectItem.id,
+                    tpoint = TMapPoint(selectItem.tpoint.latitude, selectItem.tpoint.longitude),
+                    address = selectItem.address
+
+                )
+
                 Log.d("ITEM", selectItem.toString())
+
+                // 리스트에 추가된 모든 장소를 SelectedPlaceData 리스트로 변환
+                val selectedPlaceDataList = selectedPlacesList.map {
+                    SelectedPlaceData(
+                        placeName = it.id,
+                        tpoint = TMapPoint(it.tpoint.latitude, it.tpoint.longitude),
+                        address = it.address
+                    )
+
+                }
+
+     //           for (0 in selected)
+
+                binding.nextbutton.setOnClickListener {
+                    val intent = Intent(this, SelectedPlace::class.java)
+                    intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(selectedPlaceDataList))
+                    startActivity(intent)
+                    Log.d("Item", selectedPlacesList.toString())
+
+                }
+
             } else {
                 Toast.makeText(this, "이미 선택된 장소입니다.", Toast.LENGTH_SHORT).show()
             }
@@ -177,11 +207,11 @@ class MapActivity : AppCompatActivity() {
                                 num += 1
                             }
 
-
+/*
                             routetest.routeSet(searchDataList2,searchDataList2[0])
                             routetest.routeStart(2,6)
                             routetest.printTotalRoute()
-
+*/
                             tMapView.addTMapPOIItem(poiItemList)
                         })
 
@@ -217,15 +247,6 @@ class MapActivity : AppCompatActivity() {
         })
 
 
-
-
-        binding.nextbutton.setOnClickListener {
-            // 선택한 장소 목록을 다음 액티비티로 전달
-            val selectedDataList = ArrayList<Parcelable>(selectedPlacesList.map { it as Parcelable })
-            val intent = Intent(this, SelectedPlace::class.java)
-            intent.putParcelableArrayListExtra("selectedPlacesList", ArrayList(selectedPlacesList))
-            startActivity(intent)
-        }
 
 
 
