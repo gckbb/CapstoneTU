@@ -1,4 +1,4 @@
-package com.example.kakaotest
+package com.example.kakaotest.Map
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.Plan.SelectedPlaceData
+import com.example.kakaotest.R
 
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint

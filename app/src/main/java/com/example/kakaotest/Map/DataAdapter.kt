@@ -1,4 +1,4 @@
-package com.example.kakaotest
+package com.example.kakaotest.Map
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.kakaotest.R
 
 class DataAdapter(val context: Context, val dataList:ArrayList<SearchData>): BaseAdapter() {
-
+//MapActivity에서의 ListView와 data_list.xml
 
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {

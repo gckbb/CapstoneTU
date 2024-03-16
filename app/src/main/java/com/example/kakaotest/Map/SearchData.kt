@@ -1,4 +1,4 @@
-package com.example.kakaotest
+package com.example.kakaotest.Map
 
 import android.os.Parcel
 import android.os.Parcelable

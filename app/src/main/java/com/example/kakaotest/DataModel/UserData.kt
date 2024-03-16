@@ -1,9 +1,7 @@
-package com.example.kakaotest.Login
+package com.example.kakaotest.DataModel
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.example.kakaotest.Post.PostData
-import com.example.kakaotest.TravelPlan
 
 data class UserData(
     var id: String? = null,
@@ -13,7 +11,7 @@ data class UserData(
     var phone : String? = null,
     var signtime: Long? = null,
     var socialLogin : Boolean? = false,
-    var postCount: Int? = 0, // 게시글 개수
+    var postCount: Int? = null,
     var writtenPosts: List<PostData>? = null, // 작성한 게시글 리스트
     var savedPosts: List<PostData>? = null, // 저장한 게시글 리스트
     var travelPlanCount: Int? = 0, // 여행 일정 개수

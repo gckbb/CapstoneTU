@@ -2,6 +2,7 @@ package com.example.kakaotest.Utility
 
 
 import android.content.Context
+import android.content.DialogInterface
 import android.util.Log
 import android.view.Gravity
 import android.widget.TextView
@@ -19,7 +20,8 @@ class AlertDialogHelper {
         message: String,
         PositiveBtn: String?,
         NegativeBtn: String?,
-        NeutralBtn: String?
+        NeutralBtn: String?,
+        listener: DialogInterface.OnClickListener?
     ) {
         val builder = AlertDialog.Builder(context)
 
@@ -34,25 +36,25 @@ class AlertDialogHelper {
 
         // Positive 버튼 추가
         if (PositiveBtn != null) {
-            builder.setPositiveButton(PositiveBtn) { dialog, _ ->
+            builder.setPositiveButton(PositiveBtn) { dialog, which ->
                 Log.d("MyTag", "positive")
-                dialog.dismiss()
+                listener?.onClick(dialog, which)
             }
         }
 
         // Negative 버튼 추가
         if (NegativeBtn != null) {
-            builder.setNegativeButton(NegativeBtn) { dialog, _ ->
+            builder.setNegativeButton(NegativeBtn) { dialog, which ->
                 Log.d("MyTag", "negative")
-                dialog.dismiss()
+                listener?.onClick(dialog, which)
             }
         }
 
         // Neutral 버튼 추가
         if (NeutralBtn != null) {
-            builder.setNeutralButton(NeutralBtn) { dialog, _ ->
+            builder.setNeutralButton(NeutralBtn) { dialog, which ->
                 Log.d("MyTag", "neutral")
-                dialog.dismiss()
+                listener?.onClick(dialog, which)
             }
         }
 

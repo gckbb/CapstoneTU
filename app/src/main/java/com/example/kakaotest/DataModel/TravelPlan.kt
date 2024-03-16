@@ -1,13 +1,19 @@
-
-package com.example.kakaotest.Plan
-
+package com.example.kakaotest.DataModel
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.skt.tmap.*
+import com.example.kakaotest.Plan.SelectedPlaceData
+import com.skt.tmap.TMapPoint
+import java.security.Timestamp
 
+data class TravelPlan (
+    var date : List<Timestamp>?= null,
+    var area : List<area>? =null,
+    var SelectedPlaceData : List<SelectedPlaceData>? = null
 
-data class SelectedPlaceData(
+)
+
+data class area(
     val placeName: String,
     val tpoint: TMapPoint, // TMapPoint는 Parcelable이어야 함
     val address: String
@@ -45,9 +51,8 @@ data class SelectedPlaceData(
             return arrayOfNulls(size)
         }
     }
-
-
-
-
-
 }
+
+
+
+

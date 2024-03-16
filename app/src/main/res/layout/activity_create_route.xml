@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".Map.MapActivity">
+
+
+
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/ic_back"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+        <Button
+            android:id="@+id/nextbutton"
+            android:layout_width="83dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="307dp"
+            android:text="다음"
+            android:textStyle="bold"
+            android:background="@drawable/buttonshape2"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <FrameLayout
+            android:id="@+id/Fragmentlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"/>
+
+    <Button
+        android:id="@+id/firstDay"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/buttonnormal"
+        android:text="1 DAY"
+        tools:ignore="TouchTargetSizeCheck"
+        />
+
+    <Button
+        android:id="@+id/secondDay"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/buttonnormal"
+        android:text="2 DAY"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <ListView
+        android:id="@+id/firstlistView"
+        android:layout_width="365dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="160dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/edittext3"/>
+
+    <ListView
+        android:id="@+id/secondlistView"
+        android:layout_width="365dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="160dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/edittext3"/>
+
+</FrameLayout>
+

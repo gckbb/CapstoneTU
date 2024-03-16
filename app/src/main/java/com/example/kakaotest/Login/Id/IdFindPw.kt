@@ -1,5 +1,6 @@
 package com.example.kakaotest.Login.Id
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -60,8 +61,12 @@ class IdFindPw : AppCompatActivity() {
                         "입력된 정보와 일치하는 계정이 없습니다.\n 다시 입력해주십시오.",
                         "확인",
                         null,
-                        null
-                    )
+                        null,
+                        DialogInterface.OnClickListener { dialog, which ->
+                            if (which == DialogInterface.BUTTON_POSITIVE) {
+                                dialog.dismiss()
+                            }
+                        })
                 } else {
                     for (document in documents) {
                     // 입력한 정보들과 일치하는 문서가 있을 경우

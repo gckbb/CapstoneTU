@@ -1,6 +1,7 @@
 package com.example.kakaotest.Login.Id
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -55,14 +56,23 @@ class IdFindId : AppCompatActivity() {
                 .addOnSuccessListener { documents ->
                     if (documents.isEmpty) {
                         // 입력한 이름과 이메일과 일치하는 문서가 없을 경우 (회원X)
-                        AlertDialogHelper().showAlertMessage(this,"가입되지 않은 계정입니다.","확인",null,null)
+                        AlertDialogHelper().showAlertMessage(this,"가입되지 않은 계정입니다.","확인",null,null,
+                            DialogInterface.OnClickListener { dialog, which ->
+                                if (which == DialogInterface.BUTTON_POSITIVE) {
+                                    dialog.dismiss()
+                                }
+                            })
                     } else {
                         // 입력한 이름과 이메일이 일치하는 문서가 있을 경우
                         for (document in documents) {
                             // 각 문서에서 "id" 필드 값을 가져옴
                             val id = document["id"]
-                            AlertDialogHelper().showAlertMessage(this,"회원님의 아이디는\n$id 입니다.","확인",null,null)
-
+                            AlertDialogHelper().showAlertMessage(this,"회원님의 아이디는\n$id 입니다.","확인",null,null,
+                                DialogInterface.OnClickListener { dialog, which ->
+                                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                                        dialog.dismiss()
+                                    }
+                                })
 
                         }
                     }

@@ -1,4 +1,4 @@
-package com.example.kakaotest
+package com.example.kakaotest.Map
 
 import android.content.ContentValues
 import android.content.Context
@@ -12,6 +12,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.Plan.SelectedPlaceData
+import com.example.kakaotest.R
 import com.example.kakaotest.databinding.ActivityMapBinding
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapData.OnFindAllPOIListener
@@ -124,7 +125,7 @@ class MapActivity : AppCompatActivity() {
 
                 }
 
-     //           for (0 in selected)
+
 
                 binding.nextbutton.setOnClickListener {
                     val intent = Intent(this, SelectedPlace::class.java)
@@ -197,7 +198,9 @@ class MapActivity : AppCompatActivity() {
                                 )
                                 marker.id = item.poiName
                                 marker.setTMapPoint(TMapPoint())
-                                marker.icon = BitmapFactory.decodeResource(resources, R.drawable.poi)
+                                marker.icon = BitmapFactory.decodeResource(resources,
+                                    R.drawable.poi
+                                )
                                 tMapView.addTMapMarkerItem(marker)
                                 searchDataList2.add(SearchData(item.poiName,item.poiPoint,item.poiAddress))
                                 runOnUiThread{

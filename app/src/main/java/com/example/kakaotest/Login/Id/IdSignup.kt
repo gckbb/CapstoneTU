@@ -1,6 +1,7 @@
 package com.example.kakaotest.Login.Id
 
 import android.content.ContentValues.TAG
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +11,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.Login.MainActivity
-import com.example.kakaotest.Login.UserData
+import com.example.kakaotest.DataModel.UserData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.AlertDialogHelper
 import com.google.firebase.firestore.FirebaseFirestore
@@ -59,11 +60,21 @@ class IdSignup : AppCompatActivity() {
                     .addOnSuccessListener { documents ->
                         if (documents.isEmpty) {
                             // 입력한 아이디와 일치하는 문서가 없을 경우
-                            AlertDialogHelper().showAlertMessage(this,"사용하실 수 있는 아이디입니다.","확인",null,null)
+                            AlertDialogHelper().showAlertMessage(this,"사용하실 수 있는 아이디입니다.","확인",null,null,
+                                DialogInterface.OnClickListener { dialog, which ->
+                                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                                        dialog.dismiss()
+                                    }
+                                })
 
                         } else {
                             // 입력한 아이디와 일치하는 문서가 있을 경우
-                            AlertDialogHelper().showAlertMessage(this,"존재하는 아이디입니다.\n 다시 입력해주세요.","확인",null,null)
+                            AlertDialogHelper().showAlertMessage(this,"존재하는 아이디입니다.\n 다시 입력해주세요.","확인",null,null,
+                                DialogInterface.OnClickListener { dialog, which ->
+                                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                                        dialog.dismiss()
+                                    }
+                                })
 
 
 
@@ -85,7 +96,7 @@ class IdSignup : AppCompatActivity() {
 
         id_sign_Btn.setOnClickListener {
           //  clickSignUp()
-            var resultDTO =UserData()
+            var resultDTO = UserData()
 
             resultDTO.id = id_sign_id.text.toString()
             resultDTO.pw = id_sign_pw.text.toString()

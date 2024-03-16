@@ -1,4 +1,4 @@
-package com.example.kakaotest
+package com.example.kakaotest.Map
 
 import android.content.ContentValues
 import android.util.Log
@@ -11,12 +11,12 @@ class MakeRoute {
     private var saveList = LinkedList<SearchRouteData>()
     private var dayRouteList = LinkedList<SearchRouteData>()
     private val apiAdapter = ApiAdapter()
-    private lateinit var startPoint :SearchData
+    private lateinit var startPoint : SearchData
 
     //경로찾기를 시작할 기본데이터인 routeList를 채워주는 함수, time에는 숙소와 해당장소와의 이동시간이 저장됨
-    fun routeSet(searchDataList: ArrayList<SearchData>,startPoint: SearchData) {
+    fun routeSet(searchDataList: ArrayList<SearchData>, startPoint: SearchData) {
         this.startPoint = startPoint
-        var routeData:SearchRouteData
+        var routeData: SearchRouteData
         var time:Number?
 
         for(i in 1 until searchDataList.count()) {
@@ -76,7 +76,7 @@ class MakeRoute {
 
     }
     //경로의 마지막 장소와 가장 가까운 장소를 다음 장소로 추가하는 함수
-    fun findMinPoint(startRouteData:SearchRouteData): Boolean{
+    fun findMinPoint(startRouteData: SearchRouteData): Boolean{
         var minIndex:Int = 0
         var minTime:Int? = apiAdapter.apiRequest(startRouteData.pointdata!!.tpoint.longitude,
                                                  startRouteData.pointdata.tpoint.latitude,
@@ -108,7 +108,7 @@ class MakeRoute {
         return true
     }
 
-    fun findInList(findData:SearchRouteData):Int {
+    fun findInList(findData: SearchRouteData):Int {
         for(i in 0 until saveList.count()) {
             if(saveList[i] == findData) {
                 return i

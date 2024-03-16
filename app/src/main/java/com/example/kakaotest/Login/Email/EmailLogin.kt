@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.HomeActivity
 import com.example.kakaotest.Login.SavedUser
@@ -96,7 +97,7 @@ class EmailLogin : AppCompatActivity() {
 
         // 현재 액티비티를 종료하여 이전 화면으로 돌아감
         backButton.setOnClickListener {
-            finish()
+            onBackPressed()
         }
 
 

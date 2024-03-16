@@ -1,6 +1,7 @@
 package com.example.kakaotest.Login
-
+//이거 테스트임
 import android.content.ContentValues.TAG
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -14,15 +15,15 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.example.kakaotest.HomeActivity
 import com.example.kakaotest.Login.Email.EmailLogin
 import com.example.kakaotest.Login.Id.IdFindId
 import com.example.kakaotest.Login.Id.IdFindPw
 import com.example.kakaotest.Login.Id.IdSignup
-import com.example.kakaotest.MapActivity
+import com.example.kakaotest.Map.MapActivity
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.AlertDialogHelper
 import com.example.kakaotest.databinding.ActivityMainBinding
+import com.example.kakaotest.HomeActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -156,9 +157,18 @@ class MainActivity : AppCompatActivity() {
                 .addOnSuccessListener { documents ->
                     if (documents.isEmpty) {
                         // 사용자 아이디와 일치하는 문서가 없을 경우
-                        AlertDialogHelper().showAlertMessage(this,"해당 아이디가 존재하지 않습니다.","확인",null,null)
+                        AlertDialogHelper().showAlertMessage(this,
+                            "해당 아이디가 존재하지 않습니다.",
+                            "확인",
+                            null,
+                            null,
+                            DialogInterface.OnClickListener { dialog, which ->
+                                if (which == DialogInterface.BUTTON_POSITIVE) {
+                                    dialog.dismiss()
+                                }
 
-                    } else {
+                            })
+                    }else {
                         // 사용자 아이디와 일치하는 문서가 있을 경우
                         for (document in documents) {
                             val savedPassword = document.getString("pw")
@@ -172,7 +182,14 @@ class MainActivity : AppCompatActivity() {
                                 startActivity(nextIntent)
                             } else {
                                 // 비밀번호가 일치하지 않는 경우
-                                AlertDialogHelper().showAlertMessage(this,"비밀번호가 일치하지 않습니다.","확인",null,null)
+                                AlertDialogHelper().showAlertMessage(this,"비밀번호가 일치하지 않습니다.","확인",null,null,
+
+                                    DialogInterface.OnClickListener { dialog, which ->
+                                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                                            dialog.dismiss()
+                                        }
+
+                                    })
 
                             }
                         }

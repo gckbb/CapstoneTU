@@ -1,6 +1,7 @@
 package com.example.kakaotest.Login.Id
 
 import android.content.ContentValues.TAG
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -58,8 +59,12 @@ class ResetPassword : AppCompatActivity() {
                 "비밀번호가 일치하지 않습니다.",
                 "확인",
                 null,
-                null
-            )
+                null,
+                DialogInterface.OnClickListener { dialog, which ->
+                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                        dialog.dismiss()
+                    }
+                })
         }
     }}
 }

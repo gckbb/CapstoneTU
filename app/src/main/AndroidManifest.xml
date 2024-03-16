@@ -22,13 +22,25 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".PlanActivity"
+            android:name=".Map.RouteActivity"
             android:exported="false" />
         <activity
-            android:name=".Login.Id.ResetPassword"
+            android:name=".PlanInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Select"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreatedRoute"
+            android:exported="false" />
+        <activity
+            android:name=".Plan.Path"
+            android:exported="false" />
+        <activity
+            android:name=".Login.Id.ResetPassword"
             android:exported="false" />
         <activity
             android:name=".Login.Id.IdSignup"
@@ -49,13 +61,13 @@
             android:name=".Login.Email.EmailLogin"
             android:exported="false" />
         <activity
-            android:name=".CreatedPath"
+            android:name=".Map.CreatedPath"
             android:exported="false" />
         <activity
-            android:name=".SelectedPlace"
+            android:name=".Map.SelectedPlace"
             android:exported="false" />
         <activity
-            android:name=".MapActivity"
+            android:name=".Map.MapActivity"
             android:exported="false" />
         <activity
             android:name=".Login.MainActivity"
