@@ -49,11 +49,11 @@ class HomeFragment : Fragment() {
         val view = binding.root
 
         // 검색 버튼 클릭 리스너 설정
-        binding.searchBtn.setOnClickListener {
+      /*  binding.searchBtn.setOnClickListener {
                 val intent = Intent(requireActivity(), CreatedRoute::class.java)
                 startActivity(intent)
         }
-
+*/
         return view
     }
 

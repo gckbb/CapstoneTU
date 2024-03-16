@@ -34,7 +34,10 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".CreatedRoute"
+            android:name=".CreatedRoute1"
+            android:exported="false" />
+        <activity
+            android:name=".CreatedRoute2"
             android:exported="false" />
         <activity
             android:name=".Plan.Path"

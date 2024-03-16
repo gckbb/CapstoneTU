@@ -178,26 +178,57 @@ class PMakeRoute {
             return -1
         }
     }
-
-    fun printTotalRoute():List<String>  {
+/*
+    fun printTotalRoute(): List<String>  {
         val routeStringList = mutableListOf<String>()
         try {
+            var dayIndex = 1 // 루트의 일수 인덱스
             for (i in 0 until totalRouteList.count()) {
                 val dayStringBuilder = StringBuilder()
-                dayStringBuilder.append("${i + 1} Day\n")
+                //dayStringBuilder.append("$dayIndex Day\n") // 일수 인덱스를 출력
                 for (k in 0 until (totalRouteList[i].dayRoute?.count()!!)) {
-                    dayStringBuilder.append("${totalRouteList[i].dayRoute?.get(k)?.pointdata?.placeName}\n")
+                    dayStringBuilder.append("${totalRouteList[i].dayRoute?.get(k)?.pointdata?.placeName}  ")
                 }
                 dayStringBuilder.append("총 이동시간 : ${totalRouteList[i].totalTime}\n")
-                dayStringBuilder.append("----------------------------\n")
                 routeStringList.add(dayStringBuilder.toString())
+
+                dayIndex++ // 다음 일수로 이동
             }
         } catch (e: Exception) {
             // 예외가 발생하면 로그로 출력
             Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
         }
         return routeStringList
+    }*/
+
+    fun printTotalRoute(): List<List<String>> {
+        val routeList = mutableListOf<List<String>>()
+
+        try {
+            for (route in totalRouteList) {
+                val dayRoute = mutableListOf<String>()
+                for (placeData in route.dayRoute ?: emptyList()) {
+                    placeData.pointdata?.placeName?.let { dayRoute.add(it) }
+                    Log.d("PLAN",dayRoute.toString())
+                }
+
+
+                val min = (route.totalTime.toInt() ?: 0) / 60 // 분 = 초 / 60
+                val hour: Double = min.toDouble() / 60.0 // 시간 = 분 / 60 == 정수부분만
+                val formattedHour = String.format("%.1f", hour)
+
+                dayRoute.add("총 이동시간 : ${formattedHour}시간 ")
+                routeList.add(dayRoute)
+            }
+        } catch (e: Exception) {
+            // 예외가 발생하면 로그로 출력
+            Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
+        }
+
+        return routeList
     }
+
+
 
     fun printAllRoute() {
         try{

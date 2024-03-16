@@ -12,7 +12,7 @@ import com.example.kakaotest.Plan.RouteListAdapter
 import com.example.kakaotest.Plan.SelectedPlaceData
 import kotlinx.coroutines.launch
 
-class CreatedRoute : AppCompatActivity() {
+class CreatedRoute1 : AppCompatActivity() {
 
     private val routetest = PMakeRoute()
 
@@ -20,9 +20,7 @@ class CreatedRoute : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_route)
 
-        // 화면에서 버튼을 참조
-        val firstDayButton: Button = findViewById(R.id.firstDay)
-        val secondDayButton: Button = findViewById(R.id.secondDay)
+
 
         // Intent로 전달된 데이터 가져오기
         val receivedDataList =
@@ -56,12 +54,33 @@ class CreatedRoute : AppCompatActivity() {
 
     // 리스트뷰 업데이트 함수
     private fun updateListView() {
-        val listView = findViewById<ListView>(R.id.firstlistView)
-        val routeListAdapter = RouteListAdapter(this, android.R.layout.simple_list_item_1, mutableListOf())
+        val listView1 = findViewById<ListView>(R.id.listView1)
+        val routeListAdapter1 = RouteListAdapter(this, android.R.layout.simple_list_item_1, mutableListOf())
+        val firstDayRoute = routetest.printTotalRoute().firstOrNull() // 첫 번째 일자의 경로 가져오기
 
-        // 어댑터에 경로 리스트 설정
-        routeListAdapter.addAll(routetest.printTotalRoute())
+        if (firstDayRoute != null) {
+            // 첫 번째 일자의 경로에서 각 장소를 각각 어댑터에 추가
+            for (routeData in firstDayRoute) {
+                routeListAdapter1.add(routeData.toString())
+            }
 
-        listView.adapter = routeListAdapter
+        }
+        listView1.adapter = routeListAdapter1
+
+        val listView2 = findViewById<ListView>(R.id.listView2)
+        val routeListAdapter2 = RouteListAdapter(this, android.R.layout.simple_list_item_1, mutableListOf())
+        val secondDayRoute = routetest.printTotalRoute().getOrNull(1)
+
+        if (secondDayRoute != null) {
+            for (routeData in secondDayRoute){
+                routeListAdapter2.add(routeData.toString())
+            }
+        }
+
+        listView2.adapter = routeListAdapter2
     }
+
+
+
+
 }
