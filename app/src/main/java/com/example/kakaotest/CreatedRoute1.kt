@@ -10,7 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.kakaotest.Plan.PMakeRoute
 import com.example.kakaotest.Plan.RouteListAdapter
 import com.example.kakaotest.Plan.SelectedPlaceData
+import com.skt.tmap.TMapPoint
 import kotlinx.coroutines.launch
+import java.util.ArrayList
 
 class CreatedRoute1 : AppCompatActivity() {
 
@@ -37,11 +39,19 @@ class CreatedRoute1 : AppCompatActivity() {
         lifecycleScope.launch {
             routetest.routeSet(receivedDataList!!, receivedDataList[0])
             Log.d("SelectedPlace", "Route Set")
-            routetest.routeStart(2, 6)
+            routetest.routeStart(2, 6,1)
             Log.d("SelectedPlace", "Route Started")
             routetest.printTotalRoute()
             Log.d("SelectedPlace", "Total Route Printed")
             updateListView()
+        }
+
+
+        val path_1: Button = findViewById<Button>(R.id.path_1)
+        path_1.setOnClickListener {
+            val intent = Intent (this, FirstRoute::class.java)
+            intent.putStringArrayListExtra("FirstDayRoute", ArrayList(routetest.printTotalRoute().firstOrNull()))
+            startActivity(intent)
         }
 
         // 다음 액티비티로 이동하는 버튼 설정
@@ -67,6 +77,15 @@ class CreatedRoute1 : AppCompatActivity() {
         }
         listView1.adapter = routeListAdapter1
 
+        // 리스트에 추가된 모든 장소를 SelectedPlaceData 리스트로 변환
+     /*   val firstDayRouteList = firstDayRoute!!.map {
+            SelectedPlaceData(
+                placeName = it.,
+                tpoint = TMapPoint(it.tpoint.latitude, it.tpoint.longitude),
+                address = it.address
+            )
+
+        }*/
         val listView2 = findViewById<ListView>(R.id.listView2)
         val routeListAdapter2 = RouteListAdapter(this, android.R.layout.simple_list_item_1, mutableListOf())
         val secondDayRoute = routetest.printTotalRoute().getOrNull(1)
