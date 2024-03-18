@@ -48,11 +48,13 @@ class CreatedRoute1 : AppCompatActivity() {
 
 
         val path_1: Button = findViewById<Button>(R.id.path_1)
-        path_1.setOnClickListener {
+      /*  path_1.setOnClickListener {
+            val firstDayRoute = routetest.printTotalRoute().firstOrNull()
+            val formattedFirstDayRoute = firstDayRoute?.flatMap { it }?.map { it.toString() }?.let { ArrayList(it) } ?: ArrayList()
             val intent = Intent (this, FirstRoute::class.java)
-            intent.putStringArrayListExtra("FirstDayRoute", ArrayList(routetest.printTotalRoute().firstOrNull()))
+            intent.putStringArrayListExtra("FirstDayRoute", formattedFirstDayRoute)
             startActivity(intent)
-        }
+        }*/
 
         // 다음 액티비티로 이동하는 버튼 설정
         val nextButton: Button = findViewById<Button>(R.id.nextbutton)
@@ -63,7 +65,11 @@ class CreatedRoute1 : AppCompatActivity() {
     }
 
     // 리스트뷰 업데이트 함수
+    // 리스트뷰 업데이트 함수
+    // 리스트뷰 업데이트 함수
     private fun updateListView() {
+        val listView = findViewById<ListView>(R.id.listView1)
+        val routeListAdapter = RouteListAdapter(this, android.R.layout.simple_list_item_1, mutableListOf())
         val listView1 = findViewById<ListView>(R.id.listView1)
         val routeListAdapter1 = RouteListAdapter(this, android.R.layout.simple_list_item_1, mutableListOf())
         val firstDayRoute = routetest.printTotalRoute().firstOrNull() // 첫 번째 일자의 경로 가져오기
@@ -77,27 +83,25 @@ class CreatedRoute1 : AppCompatActivity() {
         }
         listView1.adapter = routeListAdapter1
 
-        // 리스트에 추가된 모든 장소를 SelectedPlaceData 리스트로 변환
-     /*   val firstDayRouteList = firstDayRoute!!.map {
-            SelectedPlaceData(
-                placeName = it.,
-                tpoint = TMapPoint(it.tpoint.latitude, it.tpoint.longitude),
-                address = it.address
-            )
-
-        }*/
         val listView2 = findViewById<ListView>(R.id.listView2)
         val routeListAdapter2 = RouteListAdapter(this, android.R.layout.simple_list_item_1, mutableListOf())
         val secondDayRoute = routetest.printTotalRoute().getOrNull(1)
 
+        // 어댑터에 경로 리스트 설정
+        routeListAdapter.addAll(routetest.printTotalRoute())
         if (secondDayRoute != null) {
             for (routeData in secondDayRoute){
                 routeListAdapter2.add(routeData.toString())
             }
         }
 
+        listView.adapter = routeListAdapter
         listView2.adapter = routeListAdapter2
     }
+
+
+
+
 
 
 

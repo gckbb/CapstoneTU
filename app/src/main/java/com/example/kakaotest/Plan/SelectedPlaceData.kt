@@ -10,7 +10,8 @@ import com.skt.tmap.*
 data class SelectedPlaceData(
     val placeName: String,
     val tpoint: TMapPoint, // TMapPoint는 Parcelable이어야 함
-    val address: String
+    val address: String,
+
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",

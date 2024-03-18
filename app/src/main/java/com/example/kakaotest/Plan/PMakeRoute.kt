@@ -167,7 +167,7 @@ class PMakeRoute {
             return -1
         }
     }
-/*
+
     fun printTotalRoute(): List<String>  {
         val routeStringList = mutableListOf<String>()
         try {
@@ -188,28 +188,25 @@ class PMakeRoute {
             Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
         }
         return routeStringList
-    }*/
-
-    fun printTotalRoute(): List<List<String>> {
+    }
+/*
+    fun printTotalRoute(): MutableList<List<String>> {
         val routeList = mutableListOf<List<String>>()
 
         try {
-
-
-
-                for(i in 0 until totalRouteList.count()){
-                    println("${i+1} Day")
-                    val dayRoute = mutableListOf<String>()
-                    for(k in 0 until (totalRouteList[i].dayRoute?.count()!!)) {
-                        dayRoute.add("${totalRouteList[i].dayRoute?.get(k)?.pointdata?.placeName}  ")
-                    }
-
-                val min = (totalRouteList[i].totalTime.toInt() ?: 0) / 60 // 분 = 초 / 60
-                val hour: Double = min.toDouble() / 60.0 // 시간 = 분 / 60 == 정수부분만
-                val formattedHour = String.format("%.1f", hour)
-
-                dayRoute.add("총 이동시간 : ${formattedHour}시간 ")
-                routeList.add(dayRoute)
+            var dayIndex = 1 // 루트의 일수 인덱스
+            for (i in 0 until totalRouteList.count()) {
+                val dayRoute = mutableListOf<String>() // 각 날짜의 경로를 저장할 리스트 초기화
+                for (k in 0 until (totalRouteList[i].dayRoute?.count() ?: 0)) {
+                    val placeData = totalRouteList[i].dayRoute?.get(k)?.pointdata
+                    val placeInfo = mutableListOf<String>()
+                    placeInfo.add(placeData?.placeName ?: "")
+                    placeInfo.add(placeData?.tpoint.toString())
+                    placeInfo.add(placeData?.address ?: "")
+                    dayRoute.add(placeInfo.toString())
+                }
+                routeList.add(dayRoute) // 각 날짜의 경로를 전체 리스트에 추가
+                dayIndex++ // 다음 일수로 이동
             }
         } catch (e: Exception) {
             // 예외가 발생하면 로그로 출력
@@ -218,6 +215,8 @@ class PMakeRoute {
 
         return routeList
     }
+
+*/
 
     fun printAllRoute() {
         try{
