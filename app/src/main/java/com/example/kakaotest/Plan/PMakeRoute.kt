@@ -9,6 +9,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import java.lang.Exception
+import java.sql.Types.NULL
 import java.util.LinkedList
 import java.util.ArrayList
 
@@ -19,6 +20,7 @@ class PMakeRoute {
     private var dayRouteList = LinkedList<PSearchRouteData>()
     private val apiAdapter = ApiAdapter()
     private lateinit var startPoint: SelectedPlaceData
+    val AllRouteList = LinkedList<DRouteData>()
 
     fun routeSet(selectedPlaceList: ArrayList<SelectedPlaceData>, startPoint: SelectedPlaceData) {
         try {
@@ -167,7 +169,7 @@ class PMakeRoute {
             return -1
         }
     }
-
+/*
     fun printTotalRoute(): List<String>  {
         val routeStringList = mutableListOf<String>()
         try {
@@ -189,6 +191,8 @@ class PMakeRoute {
         }
         return routeStringList
     }
+
+ */
 /*
     fun printTotalRoute(): MutableList<List<String>> {
         val routeList = mutableListOf<List<String>>()
@@ -217,6 +221,35 @@ class PMakeRoute {
     }
 
 */
+
+
+
+    fun printTotalRoute(): Array<Array<Array<String>>> {
+        val totalDate: Int = totalRouteList.size
+        val dayRoute = Array(totalDate) { Array(0) { Array(3) { "" } } }
+
+        try {
+            for (i in 0 until totalDate) { // i일째
+                val placesPerDay: Int = totalRouteList[i].dayRoute.size // i일째 장소들 개수
+                dayRoute[i] = Array(placesPerDay) { Array(3) { "" } }
+                for (j in 0 until placesPerDay) { // 해당 날짜의 장소 개수만큼 반복
+                    dayRoute[i][j][0] = "${totalRouteList[i].dayRoute[j].pointdata?.placeName}" // 장소 이름 추가
+                    dayRoute[i][j][1] = "${totalRouteList[i].dayRoute[j].pointdata?.tpoint}" // 장소 위치 추가
+                    dayRoute[i][j][2] = "${totalRouteList[i].dayRoute[j].pointdata?.address}" // 장소 주소 추가
+
+
+                }
+
+                val totalTime = "총 이동시간 : ${totalRouteList[i].totalTime}\n"
+                dayRoute[i][placesPerDay][3] = totalTime
+            }
+        } catch (e: Exception) {
+            // 예외가 발생하면 로그로 출력
+            Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
+        }
+        return dayRoute
+    }
+
 
     fun printAllRoute() {
         try{

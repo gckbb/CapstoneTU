@@ -64,9 +64,7 @@ class CreatedRoute1 : AppCompatActivity() {
         }
     }
 
-    // 리스트뷰 업데이트 함수
-    // 리스트뷰 업데이트 함수
-    // 리스트뷰 업데이트 함수
+
     private fun updateListView() {
         val listView = findViewById<ListView>(R.id.listView1)
         val routeListAdapter = RouteListAdapter(this, android.R.layout.simple_list_item_1, mutableListOf())
@@ -88,7 +86,6 @@ class CreatedRoute1 : AppCompatActivity() {
         val secondDayRoute = routetest.printTotalRoute().getOrNull(1)
 
         // 어댑터에 경로 리스트 설정
-        routeListAdapter.addAll(routetest.printTotalRoute())
         if (secondDayRoute != null) {
             for (routeData in secondDayRoute){
                 routeListAdapter2.add(routeData.toString())
