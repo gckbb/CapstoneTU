@@ -1,15 +1,13 @@
 package com.example.kakaotest.Plan
 
-import android.content.ContentValues
 import android.util.Log
 import com.example.kakaotest.Map.ApiAdapter
-import com.google.android.play.integrity.internal.i
+import com.skt.tmap.TMapPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import java.lang.Exception
-import java.sql.Types.NULL
 import java.util.LinkedList
 import java.util.ArrayList
 
@@ -66,8 +64,8 @@ class PMakeRoute {
         coroutineScope {
             try {
                 for (k in 0 until totalDate) {
-                    var totalTime: Int = 0
-                    var currentDayTime: Int = 0
+                    var totalTime: Double = 0.0
+                    var currentDayTime: Double = 0.0
                     var remainingTime: Int = maxDayTime * 3600 // 남은 시간을 초 단위로 계산
 
                     dayRouteList.add(PSearchRouteData(startPoint, 0))
@@ -169,87 +167,38 @@ class PMakeRoute {
             return -1
         }
     }
-/*
-    fun printTotalRoute(): List<String>  {
-        val routeStringList = mutableListOf<String>()
+    data class RouteData(
+        val routeStringList: List<List<String>>,
+        val routeTpointList: List<List<String>>
+    )
+
+    fun printTotalRoute(): RouteData {
+        val routeStringList = mutableListOf<List<String>>()
+        val routeTpointList = mutableListOf<List<String>>()
         try {
-            var dayIndex = 1 // 루트의 일수 인덱스
             for (i in 0 until totalRouteList.count()) {
-                val dayStringBuilder = StringBuilder()
-                //dayStringBuilder.append("$dayIndex Day\n") // 일수 인덱스를 출력
+                val dayRouteList = mutableListOf<String>()
+                val tpointList = mutableListOf<String>()
                 for (k in 0 until (totalRouteList[i].dayRoute?.count()!!)) {
-                    dayStringBuilder.append("${totalRouteList[i].dayRoute?.get(k)?.pointdata?.placeName}  ")
+                    val placeName = totalRouteList[i].dayRoute?.get(k)?.pointdata?.placeName
+                    val tpoint = totalRouteList[i].dayRoute?.get(k)?.pointdata?.tpoint
+                    val address = totalRouteList[i].dayRoute?.get(k)?.pointdata?.address
+                    if (placeName != null) {
+                        dayRouteList.add(placeName)
+                    }
+                    if (tpoint != null) {
+                        tpointList.add(tpoint.toString())
+                    }
                 }
-                dayStringBuilder.append("총 이동시간 : ${totalRouteList[i].totalTime}\n")
-                routeStringList.add(dayStringBuilder.toString())
-
-                dayIndex++ // 다음 일수로 이동
+                routeStringList.add(dayRouteList)
+                routeTpointList.add(tpointList)
             }
         } catch (e: Exception) {
             // 예외가 발생하면 로그로 출력
             Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
         }
-        return routeStringList
+        return RouteData(routeStringList, routeTpointList)
     }
-
- */
-/*
-    fun printTotalRoute(): MutableList<List<String>> {
-        val routeList = mutableListOf<List<String>>()
-
-        try {
-            var dayIndex = 1 // 루트의 일수 인덱스
-            for (i in 0 until totalRouteList.count()) {
-                val dayRoute = mutableListOf<String>() // 각 날짜의 경로를 저장할 리스트 초기화
-                for (k in 0 until (totalRouteList[i].dayRoute?.count() ?: 0)) {
-                    val placeData = totalRouteList[i].dayRoute?.get(k)?.pointdata
-                    val placeInfo = mutableListOf<String>()
-                    placeInfo.add(placeData?.placeName ?: "")
-                    placeInfo.add(placeData?.tpoint.toString())
-                    placeInfo.add(placeData?.address ?: "")
-                    dayRoute.add(placeInfo.toString())
-                }
-                routeList.add(dayRoute) // 각 날짜의 경로를 전체 리스트에 추가
-                dayIndex++ // 다음 일수로 이동
-            }
-        } catch (e: Exception) {
-            // 예외가 발생하면 로그로 출력
-            Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
-        }
-
-        return routeList
-    }
-
-*/
-
-
-
-    fun printTotalRoute(): Array<Array<Array<String>>> {
-        val totalDate: Int = totalRouteList.size
-        val dayRoute = Array(totalDate) { Array(0) { Array(3) { "" } } }
-
-        try {
-            for (i in 0 until totalDate) { // i일째
-                val placesPerDay: Int = totalRouteList[i].dayRoute.size // i일째 장소들 개수
-                dayRoute[i] = Array(placesPerDay) { Array(3) { "" } }
-                for (j in 0 until placesPerDay) { // 해당 날짜의 장소 개수만큼 반복
-                    dayRoute[i][j][0] = "${totalRouteList[i].dayRoute[j].pointdata?.placeName}" // 장소 이름 추가
-                    dayRoute[i][j][1] = "${totalRouteList[i].dayRoute[j].pointdata?.tpoint}" // 장소 위치 추가
-                    dayRoute[i][j][2] = "${totalRouteList[i].dayRoute[j].pointdata?.address}" // 장소 주소 추가
-
-
-                }
-
-                val totalTime = "총 이동시간 : ${totalRouteList[i].totalTime}\n"
-                dayRoute[i][placesPerDay][3] = totalTime
-            }
-        } catch (e: Exception) {
-            // 예외가 발생하면 로그로 출력
-            Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
-        }
-        return dayRoute
-    }
-
 
     fun printAllRoute() {
         try{
@@ -263,5 +212,4 @@ class PMakeRoute {
         }    }
 
 }
-
 

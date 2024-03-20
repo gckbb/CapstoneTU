@@ -22,10 +22,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".FirstRoute"
+            android:name=".SecondRoute"
             android:exported="false" />
         <activity
-            android:name=".Map.RouteActivity"
+            android:name=".FirstRoute"
             android:exported="false" />
         <activity
             android:name=".PlanInfoActivity"
@@ -38,9 +38,6 @@
             android:exported="false" />
         <activity
             android:name=".CreatedRoute1"
-            android:exported="false" />
-        <activity
-            android:name=".CreatedRoute2"
             android:exported="false" />
         <activity
             android:name=".Plan.Path"

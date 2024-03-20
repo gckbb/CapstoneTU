@@ -10,6 +10,7 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <FrameLayout
@@ -61,6 +62,18 @@
                 android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
 
+            <TextView
+                android:id="@+id/totalTime_1"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="210dp"
+                android:layout_marginTop="102dp"
+                android:text=" "
+
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                tools:ignore="SpeakableTextPresentCheck,TextSizeCheck" />
+
             <ListView
                 android:id="@+id/listView1"
                 android:layout_width="365dp"
@@ -93,6 +106,17 @@
                 android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
 
+            <TextView
+                android:id="@+id/totalTime_2"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="210dp"
+                android:layout_marginTop="472dp"
+                android:text=" "
+
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                tools:ignore="SpeakableTextPresentCheck,TextSizeCheck" />
             <ListView
                 android:id="@+id/listView2"
                 android:layout_width="365dp"
