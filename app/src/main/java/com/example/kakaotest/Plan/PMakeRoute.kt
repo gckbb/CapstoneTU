@@ -169,12 +169,14 @@ class PMakeRoute {
     }
     data class RouteData(
         val routeStringList: List<List<String>>,
-        val routeTpointList: List<List<String>>
+        val routeTpointList: List<List<String>>,
+        val TotalTimeList : List<String>
     )
 
     fun printTotalRoute(): RouteData {
         val routeStringList = mutableListOf<List<String>>()
         val routeTpointList = mutableListOf<List<String>>()
+        val totalTimeList = mutableListOf<String>()
         try {
             for (i in 0 until totalRouteList.count()) {
                 val dayRouteList = mutableListOf<String>()
@@ -192,12 +194,17 @@ class PMakeRoute {
                 }
                 routeStringList.add(dayRouteList)
                 routeTpointList.add(tpointList)
+                val min = totalRouteList[i].totalTime / 60
+                val hour = min / 60
+                val formattedHour: Double = String.format("%.1f", hour).toDouble()
+                val totalTime = "총 이동시간 : ${formattedHour} 시간"
+                totalTimeList.add(totalTime)
             }
         } catch (e: Exception) {
             // 예외가 발생하면 로그로 출력
             Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
         }
-        return RouteData(routeStringList, routeTpointList)
+        return RouteData(routeStringList, routeTpointList,totalTimeList)
     }
 
     fun printAllRoute() {

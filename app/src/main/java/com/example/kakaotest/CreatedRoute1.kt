@@ -21,31 +21,41 @@ class CreatedRoute1 : AppCompatActivity() {
 
     private val routetest = PMakeRoute()
     private val TotalRoute = arrayListOf<SelectedPlaceData>()
+    private lateinit var routeData: PMakeRoute.RouteData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_route)
         val routeData = routetest.printTotalRoute()
-        /*
+        val routeStringList = routeData.routeStringList
+        val routeTpointList = routeData.routeTpointList
+
+
 
         val path_1: Button = findViewById<Button>(R.id.path_1)
         path_1.setOnClickListener {
             // Intent 생성
             val intent = Intent(this, FirstRoute::class.java)
-            intent.putExtra("firstDay", firstDay)
 
+            // routeTpointList를 인텐트에 추가
+          //  intent.putStringArrayListExtra("firstTpoint", routeTpointList[0] as ArrayList<String>)
+          //  Log.d("PLAN", (routeTpointList[0].toString()))
+            // 액티비티 시작
             startActivity(intent)
         }
-
+        // 두 번째 버튼을 클릭했을 때
         val path_2: Button = findViewById<Button>(R.id.path_2)
         path_2.setOnClickListener {
             // Intent 생성
             val intent = Intent(this, SecondRoute::class.java)
 
-            intent.putExtra("secondDay", secondDay)
+            // routeTpointList를 인텐트에 추가
+            intent.putStringArrayListExtra("secondTpoint", routeTpointList[1] as ArrayList<String>)
+
+            // 액티비티 시작
             startActivity(intent)
         }
-*/
+
         // Intent로 전달된 데이터 가져오기
         val receivedDataList =
             intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
@@ -88,6 +98,7 @@ class CreatedRoute1 : AppCompatActivity() {
         val routeStringList = routeData.routeStringList
         val routeTpointList = routeData.routeTpointList
 
+        val totalTime = routeData.TotalTimeList
         val firstPlaceNames = routeStringList.getOrNull(0) ?: emptyList()
         // 리스트뷰 어댑터 생성 및 설정
         val adapter1 =
@@ -98,6 +109,10 @@ class CreatedRoute1 : AppCompatActivity() {
             false
         }
 
+        Log.d("PLAN", (routeTpointList[0].toString()))
+
+        totalTime_1.text = totalTime[0]
+        totalTime_2.text = totalTime[1]
         val secondPlaceNames = routeStringList.getOrNull(1)?: emptyList()
         val adapter2 = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, secondPlaceNames)
         listView2.adapter = adapter2
