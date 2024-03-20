@@ -70,6 +70,7 @@ class FirstRoute : AppCompatActivity() {
 
         }
 
+
 /*
         val firstTpointList = intent.getStringArrayListExtra("firstTpoint")
         if (firstTpointList != null) {
