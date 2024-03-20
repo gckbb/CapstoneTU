@@ -42,6 +42,34 @@ class FirstRoute : AppCompatActivity() {
 
         tMapView.setSKTMapApiKey(appKey)
         container.addView(tMapView)
+
+
+        // FirstRoute 액티비티에서 인텐트에서 데이터 가져오기
+        val tmapPointStringList = intent.getStringArrayListExtra("firstTpoint")
+
+        Log.d("PLAN",tmapPointStringList.toString())
+// 가져온 문자열 리스트를 TMapPoint 리스트로 변환
+        val tmapPointList = tmapPointStringList?.map {
+            val parts = it.split(",")
+            val latitude = parts[0].toDouble()
+            val longitude = parts[1].toDouble()
+            TMapPoint(latitude, longitude)
+        } ?: emptyList()
+// TMapPoint 리스트를 순회하며 각 좌표에 마커를 추가
+        tmapPointList.forEachIndexed { index, tMapPoint ->
+            // 마커 생성
+            val marker = TMapMarkerItem()
+            // 마커의 좌표 설정
+            marker.setTMapPoint(TMapPoint())
+
+            // 마커의 아이콘 설정 (예: 기본 마커 아이콘 사용)
+            marker.setIcon(BitmapFactory.decodeResource(resources, R.drawable.point))
+            // 마커의 타이틀 설정 (선택사항)
+            // 마커를 지도에 추가
+            tMapView.addTMapMarkerItem(marker)
+
+        }
+
 /*
         val firstTpointList = intent.getStringArrayListExtra("firstTpoint")
         if (firstTpointList != null) {

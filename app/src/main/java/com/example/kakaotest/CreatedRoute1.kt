@@ -11,63 +11,59 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.kakaotest.Plan.PMakeRoute
-import com.example.kakaotest.Plan.RouteListAdapter
 import com.example.kakaotest.Plan.SelectedPlaceData
-import com.skt.tmap.TMapPoint
 import kotlinx.coroutines.launch
-import java.util.ArrayList
 
 class CreatedRoute1 : AppCompatActivity() {
 
     private val routetest = PMakeRoute()
-    private val TotalRoute = arrayListOf<SelectedPlaceData>()
-    private lateinit var routeData: PMakeRoute.RouteData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_route)
-        val routeData = routetest.printTotalRoute()
-        val routeStringList = routeData.routeStringList
-        val routeTpointList = routeData.routeTpointList
-
-
 
         val path_1: Button = findViewById<Button>(R.id.path_1)
-        path_1.setOnClickListener {
-            // Intent 생성
-            val intent = Intent(this, FirstRoute::class.java)
-
-            // routeTpointList를 인텐트에 추가
-          //  intent.putStringArrayListExtra("firstTpoint", routeTpointList[0] as ArrayList<String>)
-          //  Log.d("PLAN", (routeTpointList[0].toString()))
-            // 액티비티 시작
-            startActivity(intent)
-        }
-        // 두 번째 버튼을 클릭했을 때
         val path_2: Button = findViewById<Button>(R.id.path_2)
+        val nextButton: Button = findViewById<Button>(R.id.nextbutton)
+
+        // 클릭 이벤트 설정
+        path_1.setOnClickListener {
+            val intent = Intent(this, FirstRoute::class.java)
+            // TotalRouteData에서 첫 번째 날짜의 데이터 가져오기
+            val firstDayData = routetest.printTotalRoute().routeDataList.firstOrNull()
+
+            // 첫 번째 날짜의 데이터가 있을 때 처리
+            if (firstDayData != null) {
+                // 첫 번째 날짜의 선택된 장소 리스트 가져오기
+                val selectedPlaceList = firstDayData.selectedPlaceList
+
+                // 선택된 장소 리스트에서 TMapPoint 리스트 생성
+                val tmapPointList = selectedPlaceList.map { it.tpoint }
+
+                // TMapPoint 리스트를 문자열 리스트로 변환하여 인텐트에 추가
+                val tmapPointStringList = tmapPointList.map { it.toString() }
+                intent.putStringArrayListExtra("firstTpoint", ArrayList(tmapPointStringList))
+
+                // 액티비티 시작
+                startActivity(intent)
+            } else {
+                Log.e("CreatedRoute1", "No data available for the first day")
+            }
+        }
+
         path_2.setOnClickListener {
-            // Intent 생성
             val intent = Intent(this, SecondRoute::class.java)
-
-            // routeTpointList를 인텐트에 추가
-            intent.putStringArrayListExtra("secondTpoint", routeTpointList[1] as ArrayList<String>)
-
-            // 액티비티 시작
             startActivity(intent)
         }
 
-        // Intent로 전달된 데이터 가져오기
-        val receivedDataList =
-            intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
+        nextButton.setOnClickListener {
+            val intent = Intent(this, PlanInfoActivity::class.java)
+            startActivity(intent)
+        }
 
-        // 로그에 받은 데이터 출력
+        val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
         Log.d("receivedDataList", receivedDataList.toString())
 
-        // 첫 번째 장소 설정
-        val startPlace = receivedDataList?.getOrNull(0)
-        Log.d("PLAN", startPlace.toString())
-
-        // 루틴 설정 및 실행
         lifecycleScope.launch {
             routetest.routeSet(receivedDataList!!, receivedDataList[0])
             Log.d("SelectedPlace", "Route Set")
@@ -77,16 +73,7 @@ class CreatedRoute1 : AppCompatActivity() {
             Log.d("SelectedPlace", "Total Route Printed")
             updateListView()
         }
-
-
-        // 다음 액티비티로 이동하는 버튼 설정
-        val nextButton: Button = findViewById<Button>(R.id.nextbutton)
-        nextButton.setOnClickListener {
-            val intent = Intent(this, PlanInfoActivity::class.java)
-            startActivity(intent)
-        }
     }
-
 
     private fun updateListView() {
         val listView1 = findViewById<ListView>(R.id.listView1)
@@ -94,31 +81,47 @@ class CreatedRoute1 : AppCompatActivity() {
         val scrollView = findViewById<ScrollView>(R.id.scrollView)
         val totalTime_1 = findViewById<TextView>(R.id.totalTime_1)
         val totalTime_2 = findViewById<TextView>(R.id.totalTime_2)
-        val routeData = routetest.printTotalRoute()
-        val routeStringList = routeData.routeStringList
-        val routeTpointList = routeData.routeTpointList
+        val totalRouteData = routetest.printTotalRoute()
 
-        val totalTime = routeData.TotalTimeList
-        val firstPlaceNames = routeStringList.getOrNull(0) ?: emptyList()
-        // 리스트뷰 어댑터 생성 및 설정
-        val adapter1 =
-            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, firstPlaceNames)
-        listView1.adapter = adapter1
-        listView1.setOnTouchListener { v, event ->
+
+
+        // 첫 번째 날짜의 모든 데이터
+        val firstDayData = totalRouteData.routeDataList.firstOrNull()
+        if (firstDayData != null) {
+            val date = firstDayData.date // 첫 번째 날짜
+            val totalTime = firstDayData.totalTime // 첫 번째 날짜의 총 이동 시간
+            val selectedPlaceList = firstDayData.selectedPlaceList // 첫 번째 날짜의 선택된 장소 데이터 목록
+            totalTime_1.text = totalTime
+            val firstDayPlace = selectedPlaceList.map { it.placeName }
+            val adapter1 =
+                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, firstDayPlace)
+            listView1.adapter = adapter1
+            listView1.setOnTouchListener { _, _ ->
+                scrollView.requestDisallowInterceptTouchEvent(true)
+                false
+            }
+        }
+
+        val secondDayData = totalRouteData.routeDataList.getOrNull(1)
+        if (secondDayData!= null) {
+            val date = secondDayData.date // 두 번째 날짜
+            val totalTime = secondDayData.totalTime // 첫 번째 날짜의 총 이동 시간
+            val selectedPlaceList = secondDayData.selectedPlaceList // 첫 번째 날짜의 선택된 장소 데이터 목록
+            totalTime_2.text=totalTime
+            val secondDayPlace = selectedPlaceList.map { it.placeName }
+            val adapter2 =
+                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, secondDayPlace)
+            listView2.adapter = adapter2
+            listView2.setOnTouchListener { _, _ ->
+                scrollView.requestDisallowInterceptTouchEvent(true)
+                false
+            }
+        }
+
+        listView1.setOnTouchListener { _, _ ->
             scrollView.requestDisallowInterceptTouchEvent(true)
             false
         }
 
-        Log.d("PLAN", (routeTpointList[0].toString()))
-
-        totalTime_1.text = totalTime[0]
-        totalTime_2.text = totalTime[1]
-        val secondPlaceNames = routeStringList.getOrNull(1)?: emptyList()
-        val adapter2 = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, secondPlaceNames)
-        listView2.adapter = adapter2
-        listView2.setOnTouchListener { v, event ->
-            scrollView.requestDisallowInterceptTouchEvent(true)
-            false
-        }
     }
 }

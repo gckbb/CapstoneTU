@@ -167,6 +167,8 @@ class PMakeRoute {
             return -1
         }
     }
+
+    /*
     data class RouteData(
         val routeStringList: List<List<String>>,
         val routeTpointList: List<List<String>>,
@@ -205,6 +207,111 @@ class PMakeRoute {
             Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
         }
         return RouteData(routeStringList, routeTpointList,totalTimeList)
+    }*/
+    /*
+    data class TotalRouteData(
+        val totalTime: String, // 총 이동 시간
+        val selectedPlaceList: List<SelectedPlaceData> // 선택된 장소 데이터 목록
+    )
+
+    /**
+     * 전체 경로 정보를 기반으로 TotalRouteData 객체를 생성하고 반환합니다.
+     */
+    fun printTotalRoute(): TotalRouteData {
+
+        val routeStringList = mutableListOf<List<String>>()
+        val routeTpointList = mutableListOf<List<String>>()
+        val totalTimeList = mutableListOf<String>()
+        // 선택된 장소 데이터 목록을 저장할 리스트
+        val selectedPlaceDataList = mutableListOf<SelectedPlaceData>()
+
+        // 전체 경로 정보를 순회하며 각 날짜별 이동 경로와 총 이동 시간을 계산합니다.
+        try {
+            for (i in 0 until totalRouteList.count()) {
+                val dayRouteList = mutableListOf<String>()
+                val tpointList = mutableListOf<String>()
+                // 각 날짜별 이동 경로와 선택된 장소 데이터를 계산합니다.
+                for (k in 0 until (totalRouteList[i].dayRoute?.count()!!)) {
+                    val placeName = totalRouteList[i].dayRoute?.get(k)?.pointdata?.placeName
+                    val tpoint = totalRouteList[i].dayRoute?.get(k)?.pointdata?.tpoint
+                    val address = totalRouteList[i].dayRoute?.get(k)?.pointdata?.address
+                    // 장소 이름과 좌표가 유효한 경우에만 데이터를 추가합니다.
+                    if (placeName != null && tpoint != null) {
+                        dayRouteList.add(placeName)
+                        tpointList.add(tpoint.toString())
+                        // 선택된 장소 데이터를 생성하여 리스트에 추가합니다.
+                        val selectedPlaceData = SelectedPlaceData(placeName, tpoint, address ?: "")
+                        selectedPlaceDataList.add(selectedPlaceData)
+                    }
+                }
+                // 이동 경로와 총 이동 시간을 각 리스트에 추가합니다.
+                routeStringList.add(dayRouteList)
+                routeTpointList.add(tpointList)
+                val min = totalRouteList[i].totalTime / 60
+                val hour = min / 60
+                val formattedHour: Double = String.format("%.1f", hour).toDouble()
+                val totalTime = "총 이동시간 : ${formattedHour} 시간"
+                totalTimeList.add(totalTime)
+            }
+        } catch (e: Exception) {
+            // 예외가 발생하면 로그로 출력합니다.
+            Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
+        }
+        // 총 이동 시간(totalTime)은 totalTimeList의 첫 번째 요소로 설정합니다.
+        val totalTime = totalTimeList.firstOrNull() ?: ""
+        // TotalRouteData 객체를 생성하여 반환합니다.
+        return TotalRouteData(totalTime, selectedPlaceDataList)
+    }
+
+*/
+    data class TotalRouteData(
+        val routeDataList: List<RouteData>
+    )
+
+    data class RouteData(
+        val date: Int,
+        val totalTime: String,
+        val selectedPlaceList: List<SelectedPlaceData>
+    )
+
+    fun printTotalRoute(): TotalRouteData {
+        val routeDataList = mutableListOf<RouteData>()
+
+        try {
+            var date = 1
+            for (i in 0 until totalRouteList.count()) {
+                val dayRouteList = mutableListOf<String>()
+                val tpointList = mutableListOf<String>()
+                val selectedPlaceDataList = mutableListOf<SelectedPlaceData>()
+
+                for (k in 0 until (totalRouteList[i].dayRoute?.count() ?: 0)) {
+                    val placeName = totalRouteList[i].dayRoute?.get(k)?.pointdata?.placeName
+                    val tpoint = totalRouteList[i].dayRoute?.get(k)?.pointdata?.tpoint
+                    val address = totalRouteList[i].dayRoute?.get(k)?.pointdata?.address
+
+                    if (placeName != null && tpoint != null) {
+                        dayRouteList.add(placeName)
+                        tpointList.add(tpoint.toString())
+                        val selectedPlaceData = SelectedPlaceData(placeName, tpoint, address ?: "")
+                        selectedPlaceDataList.add(selectedPlaceData)
+                    }
+                }
+
+                val min = totalRouteList[i].totalTime / 60
+                val hour = min / 60
+                val formattedHour: Double = String.format("%.1f", hour).toDouble()
+                val totalTime = "총 이동시간 : ${formattedHour} 시간"
+
+                val routeData = RouteData(date, totalTime, selectedPlaceDataList)
+                routeDataList.add(routeData)
+
+                date++
+            }
+        } catch (e: Exception) {
+            Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
+        }
+
+        return TotalRouteData(routeDataList)
     }
 
     fun printAllRoute() {
