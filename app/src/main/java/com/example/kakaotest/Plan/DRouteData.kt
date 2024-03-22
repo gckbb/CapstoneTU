@@ -5,7 +5,7 @@ import android.os.Parcelable
 import java.util.LinkedList
 
 data class DRouteData(
-    val totalTime: Double,
+    val totalTime: Number,
     val dayRoute: LinkedList<PSearchRouteData>?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -14,7 +14,7 @@ data class DRouteData(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeDouble(totalTime)
+        parcel.writeDouble(totalTime as Double)
         parcel.writeList(dayRoute)
     }
 

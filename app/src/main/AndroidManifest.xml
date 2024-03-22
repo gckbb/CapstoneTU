@@ -31,16 +31,10 @@
             android:name=".PlanInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".Select"
-            android:exported="false" />
-        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".CreatedRoute1"
-            android:exported="false" />
-        <activity
-            android:name=".Plan.Path"
             android:exported="false" />
         <activity
             android:name=".Login.Id.ResetPassword"
