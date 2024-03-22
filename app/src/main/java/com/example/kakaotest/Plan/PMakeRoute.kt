@@ -1,5 +1,7 @@
 package com.example.kakaotest.Plan
 
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import com.example.kakaotest.Map.ApiAdapter
 import com.skt.tmap.TMapPoint
@@ -18,7 +20,7 @@ class PMakeRoute {
     private var dayRouteList = LinkedList<PSearchRouteData>()
     private val apiAdapter = ApiAdapter()
     private lateinit var startPoint: SelectedPlaceData
-    val AllRouteList = LinkedList<DRouteData>()
+
 
     fun routeSet(selectedPlaceList: ArrayList<SelectedPlaceData>, startPoint: SelectedPlaceData) {
         try {
@@ -28,7 +30,7 @@ class PMakeRoute {
             var time: Number?
 
             for (i in 1 until selectedPlaceList.count()) {
-                val time = runBlocking {
+                time = runBlocking {
                     async(Dispatchers.IO) {
                         apiAdapter.apiRequest(
                             startPoint.tpoint.longitude, startPoint.tpoint.latitude,
@@ -264,15 +266,6 @@ class PMakeRoute {
     }
 
 */
-    data class TotalRouteData(
-        val routeDataList: List<RouteData>
-    )
-
-    data class RouteData(
-        val date: Int,
-        val totalTime: String,
-        val selectedPlaceList: List<SelectedPlaceData>
-    )
 
     fun printTotalRoute(): TotalRouteData {
         val routeDataList = mutableListOf<RouteData>()
@@ -280,20 +273,18 @@ class PMakeRoute {
         try {
             var date = 1
             for (i in 0 until totalRouteList.count()) {
-                val dayRouteList = mutableListOf<String>()
-                val tpointList = mutableListOf<String>()
-                val selectedPlaceDataList = mutableListOf<SelectedPlaceData>()
+                val selectedPlaceDataList = mutableListOf<SelectedPlace>()
 
                 for (k in 0 until (totalRouteList[i].dayRoute?.count() ?: 0)) {
                     val placeName = totalRouteList[i].dayRoute?.get(k)?.pointdata?.placeName
                     val tpoint = totalRouteList[i].dayRoute?.get(k)?.pointdata?.tpoint
                     val address = totalRouteList[i].dayRoute?.get(k)?.pointdata?.address
 
-                    if (placeName != null && tpoint != null) {
-                        dayRouteList.add(placeName)
-                        tpointList.add(tpoint.toString())
-                        val selectedPlaceData = SelectedPlaceData(placeName, tpoint, address ?: "")
-                        selectedPlaceDataList.add(selectedPlaceData)
+                    if (placeName != null && tpoint != null && address!=null) {
+
+
+                        val selectedPlace= SelectedPlace(placeName,address, tpoint)
+                        selectedPlaceDataList.add(selectedPlace)
                     }
                 }
 

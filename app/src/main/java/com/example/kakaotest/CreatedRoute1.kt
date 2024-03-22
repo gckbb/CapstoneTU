@@ -1,7 +1,10 @@
 package com.example.kakaotest
 
 import android.content.Intent
+import android.location.Address
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -11,8 +14,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.kakaotest.Plan.PMakeRoute
+import com.example.kakaotest.Plan.SelectedPlace
 import com.example.kakaotest.Plan.SelectedPlaceData
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.io.Serializable
 
 class CreatedRoute1 : AppCompatActivity() {
 
@@ -35,14 +41,12 @@ class CreatedRoute1 : AppCompatActivity() {
             // 첫 번째 날짜의 데이터가 있을 때 처리
             if (firstDayData != null) {
                 // 첫 번째 날짜의 선택된 장소 리스트 가져오기
-                val selectedPlaceList = firstDayData.selectedPlaceList
+                val selectedPlaceList = firstDayData?.selectedPlaceList
 
-                // 선택된 장소 리스트에서 TMapPoint 리스트 생성
-                val tmapPointList = selectedPlaceList.map { it.tpoint }
+                val selectedPlaceArrayList = ArrayList<SelectedPlace>(selectedPlaceList ?: emptyList())
 
-                // TMapPoint 리스트를 문자열 리스트로 변환하여 인텐트에 추가
-                val tmapPointStringList = tmapPointList.map { it.toString() }
-                intent.putStringArrayListExtra("firstTpoint", ArrayList(tmapPointStringList))
+                intent.putParcelableArrayListExtra("selectedPlaceList", selectedPlaceArrayList)
+
 
                 // 액티비티 시작
                 startActivity(intent)
@@ -92,7 +96,7 @@ class CreatedRoute1 : AppCompatActivity() {
             val totalTime = firstDayData.totalTime // 첫 번째 날짜의 총 이동 시간
             val selectedPlaceList = firstDayData.selectedPlaceList // 첫 번째 날짜의 선택된 장소 데이터 목록
             totalTime_1.text = totalTime
-            val firstDayPlace = selectedPlaceList.map { it.placeName }
+            val firstDayPlace = selectedPlaceList.map { it.name }
             val adapter1 =
                 ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, firstDayPlace)
             listView1.adapter = adapter1
@@ -108,7 +112,7 @@ class CreatedRoute1 : AppCompatActivity() {
             val totalTime = secondDayData.totalTime // 첫 번째 날짜의 총 이동 시간
             val selectedPlaceList = secondDayData.selectedPlaceList // 첫 번째 날짜의 선택된 장소 데이터 목록
             totalTime_2.text=totalTime
-            val secondDayPlace = selectedPlaceList.map { it.placeName }
+            val secondDayPlace = selectedPlaceList.map { it.name }
             val adapter2 =
                 ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, secondDayPlace)
             listView2.adapter = adapter2
@@ -125,3 +129,5 @@ class CreatedRoute1 : AppCompatActivity() {
 
     }
 }
+
+
