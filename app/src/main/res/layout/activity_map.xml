@@ -76,30 +76,14 @@
             android:layout_marginTop="31dp"
             android:background="@drawable/ic_back"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-        <Button
-            android:id="@+id/findroute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="경로찾기"
-            tools:ignore="MissingConstraints" />
 
-        <Button
-            android:id="@+id/makeroot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="일정생성"
-            tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/nextbutton"
             android:layout_width="83dp"
             android:layout_height="47dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
             android:text="다음"
             app:layout_constraintEnd_toEndOf="parent"
 

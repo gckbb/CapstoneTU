@@ -1,10 +1,13 @@
 package com.example.kakaotest.Fragment
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.kakaotest.Map.WhereActivity
 import com.example.kakaotest.databinding.FragmentHomeBinding
 
 
@@ -48,11 +51,11 @@ class HomeFragment : Fragment() {
         val view = binding.root
 
         // 검색 버튼 클릭 리스너 설정
-      /*  binding.searchBtn.setOnClickListener {
-                val intent = Intent(requireActivity(), CreatedRoute::class.java)
+        binding.searchBtn.setOnClickListener {
+                val intent = Intent(requireActivity(), WhereActivity::class.java)
                 startActivity(intent)
+            Log.d("PLAN","homefragment -> whereactivity")
         }
-*/
         return view
     }
 

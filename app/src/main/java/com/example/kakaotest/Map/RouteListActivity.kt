@@ -63,7 +63,7 @@ class RouteListActivity : AppCompatActivity() {
         }
 
         nextButton.setOnClickListener {
-            val intent = Intent(this, PlanInfoActivity::class.java)
+            val intent = Intent(this, PlanInfoInput::class.java)
             startActivity(intent)
         }
 

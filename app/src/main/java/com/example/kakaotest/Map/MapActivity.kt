@@ -233,46 +233,14 @@ class MapActivity : AppCompatActivity() {
 
 
 
-                binding.findroute.setOnClickListener {
-                    start = startpoint!!
-                    end = endpoint!!
-
-                    Thread {
-                        try {
-                            val polyLine: TMapPolyLine = tMapData.findPathData(start, end)
-                            if (polyLine != null) {
-                                runOnUiThread {
-                                    tMapView.addTMapPolyLine(polyLine)
-                                }
-                                Toast.makeText(this@MapActivity, "경로탐색", Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(
-                                    this@MapActivity,
-                                    "경로를 찾을 수 없습니다.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        } catch (e: Exception) {
-                            // 예외 처리 (API 호출이 실패한 경우)
-                            Log.e("TMapData", "경로 검색 중 오류 발생: ${e.message}")
-                            runOnUiThread {
-                                Toast.makeText(
-                                    this@MapActivity,
-                                    "경로 검색 중 오류 발생",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                    }.start()
-                }
-            }
-        })
-
 
     }
 
 
-    private fun isPlaceAlreadySelected(newPlace: SearchData): Boolean {
+
+})}
+
+    private fun isPlaceAlreadySelected(newPlace: SearchData): Boolean{
         // 중복된 장소인지 확인
         for (selectedPlace in selectedPlacesList) {
             if (selectedPlace.id == newPlace.id) {
