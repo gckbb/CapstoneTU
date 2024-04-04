@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 선택되었을 때의 배경 -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="9dp" />
+            <solid android:color="@color/Secondbutton" />
+        </shape>
+    </item>
+
+    <item android:state_selected="false">
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="2dp"
+                android:color="#CCCCCC" />
+            <corners android:radius="9dp"/>
+        </shape>
+    </item>
+</selector>
