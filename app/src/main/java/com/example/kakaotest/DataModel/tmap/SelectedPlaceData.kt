@@ -1,5 +1,5 @@
 
-package com.example.kakaotest.Plan
+package com.example.kakaotest.DataModel.tmap
 
 
 import android.os.Parcel

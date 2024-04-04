@@ -21,7 +21,7 @@ import com.example.kakaotest.Login.Id.IdFindPw
 import com.example.kakaotest.Login.Id.IdSignup
 import com.example.kakaotest.Map.MapActivity
 import com.example.kakaotest.R
-import com.example.kakaotest.Utility.AlertDialogHelper
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.example.kakaotest.databinding.ActivityMainBinding
 import com.example.kakaotest.HomeActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn

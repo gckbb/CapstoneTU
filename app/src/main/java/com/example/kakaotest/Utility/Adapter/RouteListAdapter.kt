@@ -1,4 +1,4 @@
-package com.example.kakaotest.Plan
+package com.example.kakaotest.Utility.Adapter
 
 import android.content.Context
 import android.view.LayoutInflater

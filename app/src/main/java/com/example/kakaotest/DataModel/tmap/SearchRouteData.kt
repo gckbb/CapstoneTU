@@ -1,9 +1,9 @@
-package com.example.kakaotest.Plan
+package com.example.kakaotest.DataModel.tmap
 
 import android.os.Parcel
 import android.os.Parcelable
 
-data class PSearchRouteData(
+data class SearchRouteData(
     val pointdata: SelectedPlaceData?,
     var time: Number
 ) : Parcelable {
@@ -21,12 +21,12 @@ data class PSearchRouteData(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<PSearchRouteData> {
-        override fun createFromParcel(parcel: Parcel): PSearchRouteData {
-            return PSearchRouteData(parcel)
+    companion object CREATOR : Parcelable.Creator<SearchRouteData> {
+        override fun createFromParcel(parcel: Parcel): SearchRouteData {
+            return SearchRouteData(parcel)
         }
 
-        override fun newArray(size: Int): Array<PSearchRouteData?> {
+        override fun newArray(size: Int): Array<SearchRouteData?> {
             return arrayOfNulls(size)
         }
     }

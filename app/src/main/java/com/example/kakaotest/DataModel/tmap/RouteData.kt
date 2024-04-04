@@ -1,6 +1,4 @@
-package com.example.kakaotest.Map
-
-import com.google.gson.annotations.SerializedName
+package com.example.kakaotest.DataModel.tmap
 
 data class RouteData(val totalTime:Number? = null,
                      val totalDistance:Number? = null,

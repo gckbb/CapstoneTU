@@ -1,16 +1,16 @@
-package com.example.kakaotest.Plan
+package com.example.kakaotest.DataModel.tmap
 
 import android.os.Parcel
 import android.os.Parcelable
 import java.util.LinkedList
 
-data class DRouteData(
+data class DayRouteData(
     val totalTime: Number,
-    val dayRoute: LinkedList<PSearchRouteData>?
+    val dayRoute: LinkedList<SearchRouteData>?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readDouble(),
-        parcel.readArrayList(PSearchRouteData::class.java.classLoader) as LinkedList<PSearchRouteData>?
+        parcel.readArrayList(SearchRouteData::class.java.classLoader) as LinkedList<SearchRouteData>?
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -22,12 +22,12 @@ data class DRouteData(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<DRouteData> {
-        override fun createFromParcel(parcel: Parcel): DRouteData {
-            return DRouteData(parcel)
+    companion object CREATOR : Parcelable.Creator<DayRouteData> {
+        override fun createFromParcel(parcel: Parcel): DayRouteData {
+            return DayRouteData(parcel)
         }
 
-        override fun newArray(size: Int): Array<DRouteData?> {
+        override fun newArray(size: Int): Array<DayRouteData?> {
             return arrayOfNulls(size)
         }
     }

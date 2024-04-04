@@ -1,6 +1,5 @@
-package com.example.kakaotest
+package com.example.kakaotest.Fragment
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -58,7 +57,7 @@ class HomeFragment : Fragment() {
     }
 
     // 콜백 인스턴스 설정 메서드
-    fun setButtonClickCallback(callback: HomeFragment.ButtonClickCallback) {
+    fun setButtonClickCallback(callback: ButtonClickCallback) {
         this.buttonClickCallback = callback
     }
 

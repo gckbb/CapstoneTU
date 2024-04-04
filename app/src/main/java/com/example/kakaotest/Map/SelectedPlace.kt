@@ -8,15 +8,14 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kakaotest.CreatedRoute1
-import com.example.kakaotest.Plan.PMakeRoute
-import com.example.kakaotest.Plan.SelectedPlaceData
+import com.example.kakaotest.Utility.tmap.MakeRoute
+import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import java.util.ArrayList
 
 
 class SelectedPlace : AppCompatActivity() {
-    private val routetest = PMakeRoute()
+    private val routetest = MakeRoute()
     private val logList = mutableListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +55,7 @@ class SelectedPlace : AppCompatActivity() {
         // next 버튼 클릭 시 CreatedPath 로 이동
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
-            val intent = Intent(this, CreatedRoute1::class.java)
+            val intent = Intent(this, RouteListActivity::class.java)
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
             startActivity(intent)
             Log.d("Item", receivedDataList.toString())

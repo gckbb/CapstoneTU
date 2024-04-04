@@ -1,4 +1,4 @@
-package com.example.kakaotest.Map
+package com.example.kakaotest.DataModel.tmap
 
 import android.os.Parcel
 import android.os.Parcelable

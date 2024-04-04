@@ -1,4 +1,4 @@
-package com.example.kakaotest.Map
+package com.example.kakaotest.Utility.Adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.R
 
 class DataAdapter(val context: Context, val dataList:ArrayList<SearchData>): BaseAdapter() {

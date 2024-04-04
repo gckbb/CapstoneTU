@@ -1,10 +1,7 @@
-package com.example.kakaotest
+package com.example.kakaotest.Map
 
 import android.content.Intent
-import android.location.Address
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -13,13 +10,14 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.kakaotest.Plan.PMakeRoute
-import com.example.kakaotest.Plan.SelectedPlaceData
+import com.example.kakaotest.Utility.tmap.MakeRoute
+import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
+import com.example.kakaotest.R
 import kotlinx.coroutines.launch
 
-class CreatedRoute1 : AppCompatActivity() {
+class RouteListActivity : AppCompatActivity() {
 
-    private val routetest = PMakeRoute()
+    private val routetest = MakeRoute()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,4 +1,4 @@
-package com.example.kakaotest.Map
+package com.example.kakaotest.Utility.tmap
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

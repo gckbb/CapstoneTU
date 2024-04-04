@@ -1,4 +1,4 @@
-package com.example.kakaotest
+package com.example.kakaotest.Map
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -7,7 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
-import com.example.kakaotest.Plan.PSearchRouteData
+import com.example.kakaotest.DataModel.tmap.SearchRouteData
+import com.example.kakaotest.R
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
@@ -20,7 +21,7 @@ class FirstRoute : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first_route)
 
-        val firstList = intent.getParcelableArrayListExtra<PSearchRouteData>("firstList")
+        val firstList = intent.getParcelableArrayListExtra<SearchRouteData>("firstList")
         Log.d("PLAN","firstRoute \n"+ firstList.toString())
 
         val pointList = ArrayList<TMapPoint>()

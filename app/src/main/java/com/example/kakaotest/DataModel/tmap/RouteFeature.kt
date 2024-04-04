@@ -1,4 +1,4 @@
-package com.example.kakaotest.Map
+package com.example.kakaotest.DataModel.tmap
 
 data class RouteFeature(
     val type : String? = null,

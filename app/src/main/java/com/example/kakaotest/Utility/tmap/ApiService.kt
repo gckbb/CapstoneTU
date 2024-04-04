@@ -1,5 +1,6 @@
-package com.example.kakaotest.Map
+package com.example.kakaotest.Utility.tmap
 
+import com.example.kakaotest.DataModel.tmap.FeatureCollection
 import retrofit2.Call
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
