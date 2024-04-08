@@ -1,17 +1,14 @@
 package com.example.kakaotest.DataModel
 
-import android.os.Parcel
-import android.os.Parcelable
-import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
-import com.skt.tmap.TMapPoint
-import java.security.Timestamp
-
-data class TravelPlan (
-    val tripId : String,
-    val startDate : String,
-    val endDate : String,
-    val destinations : List<DailyDestination>
-
+data class TravelPlan(
+    val where: Place?,
+    val startDate: String?,
+    val endDate: String?,
+    val who: String?,
+    val transportion: String?,
+    val theme: String?,
+    val activity: String?,
+    val destinations: List<Place>?
 )
 
 

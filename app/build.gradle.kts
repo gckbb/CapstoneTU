@@ -83,4 +83,7 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 
+    implementation ("com.github.skydoves:balloon:1.4.6")
+    implementation ("com.tomergoldst.android:tooltips:1.1.1")
+
 }

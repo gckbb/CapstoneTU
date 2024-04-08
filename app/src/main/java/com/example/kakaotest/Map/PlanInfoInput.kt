@@ -5,46 +5,55 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.example.kakaotest.DataModel.Place
+import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.Fragment.DatePickerFragment
 import com.example.kakaotest.R
 import com.google.firebase.firestore.FirebaseFirestore
+import com.skydoves.balloon.ArrowPositionRules
+import com.skydoves.balloon.Balloon
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.createBalloon
+import com.skydoves.balloon.overlay.BalloonOverlayCircle
 
 import java.util.Calendar
 
-class PlanInfoInput : AppCompatActivity() {
+
+ class PlanInfoInput : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plan_info)
+
         Log.d("Plan","PlaninfoInput Activity success")
-        // val selectedPlaces: Array<Place>? = intent.getParcelableArrayExtra("selectedPlaces") as? Array<Place>
+        val selectedPlace = intent.getParcelableExtra<Place>("region")
+
+
+        Log.d("PLAN", selectedPlace.toString())
         var selectedDate: Calendar = Calendar.getInstance()
-        val where = findViewById<TextView>(R.id.where)
+
+
+
+        selectedPlace?.let { place ->
+            val placeName = place.placeName
+            val whereTextView = findViewById<TextView>(R.id.where)
+            whereTextView.text = placeName
+        }
+
         val firstdate: TextView = findViewById<TextView>(R.id.day1txt)
         val seconddate: TextView = findViewById<TextView>(R.id.day2txt)
         val firstBtn = findViewById<Button>(R.id.day1btn)
         val secondBtn = findViewById<Button>(R.id.day2btn)
-
-
-
-        val db = FirebaseFirestore.getInstance()
-        val collectionRef = db.collection("travelPlans")
-        val documentRef = collectionRef.document("travelId")
-
-
-
-
-        /*어디로?*/
-        var place : String = ""
-        /*        selectedPlaces?.let {
-                     place = selectedPlaces?.firstOrNull()?.placeName.toString()
-                    where.text = place
-                }*/
-
-        Log.d("Plan","place : $place")
+        Log.d("Plan","place : $selectedPlace")
         /*언제?*/
         // 첫 번째 날짜 선택 버튼 클릭 이벤트 처리
         var  firstday : String = ""
@@ -193,9 +202,24 @@ class PlanInfoInput : AppCompatActivity() {
             }
         }
         Log.d("PLAN","activity : $activity")
-/*
-        val travelPlan = TravelPlan(
-            where = null,
+
+
+
+        val helpBtn=findViewById<ImageButton>(R.id.help)
+        val helptxt = findViewById<ImageView>(R.id.helptxt)
+        helpBtn.setOnClickListener{
+            helptxt.visibility = View.VISIBLE
+        }
+        val backgroundLayout = findViewById<LinearLayout>(R.id.backgroundLayout)
+
+        backgroundLayout.setOnClickListener {
+            // 배경 레이아웃 클릭 시 이미지뷰를 숨김
+            helptxt.visibility = View.GONE
+        }
+
+
+            val travelPlan = TravelPlan(
+            where = selectedPlace,
             startDate = firstday,
             endDate = secondday,
             who = who,
@@ -205,18 +229,7 @@ class PlanInfoInput : AppCompatActivity() {
             destinations = null
         )
 
-        collectionRef
-            .add(travelPlan)
-            .addOnSuccessListener { documentReference ->
-                Log.d("firestore", "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w("firestore", "Error adding document", e)
-            }
-*/
     }
-
-
 
 
 

@@ -53,4 +53,6 @@ interface ApiService {
         @Query("coordType") coordType: String? = null,
         @Query("addressType") addressType: String? = null
     ): Response<AddressInfoResponse>
+
+
 }

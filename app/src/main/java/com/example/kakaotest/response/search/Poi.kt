@@ -81,4 +81,6 @@ data class Poi(
 
     //소개 정보
     val desc: String? = null
+
+
 )

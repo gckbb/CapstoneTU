@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.example.kakaotest.DataModel.Place
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.SearchRecyclerAdapter
 import com.example.kakaotest.Utility.tmap.RetrofitUtil
@@ -38,7 +39,7 @@ class WhereActivity :  AppCompatActivity() , CoroutineScope {
     private lateinit var binding:ActivityWhereBinding
     private lateinit var adapter: SearchRecyclerAdapter
 
-
+    private var selectedPlace: Place? = null // 선택한 장소를 저장할 변수
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +52,14 @@ class WhereActivity :  AppCompatActivity() , CoroutineScope {
 
 
 
-
         binding.nextbutton.setOnClickListener {
+            // 다음 액티비티로 이동하는 인텐트 생성
             val intent = Intent(this, PlanInfoInput::class.java)
-            //  intent.putExtra("selectedPlaces", selectItem)
-            startActivity(intent)
+            // 선택한 장소가 있을 때에만 인텐트에 추가
+            selectedPlace?.let { place ->
+                intent.putExtra("region", place)
+                startActivity(intent)
+            }
         }
 
 
@@ -86,26 +90,30 @@ class WhereActivity :  AppCompatActivity() , CoroutineScope {
         adapter.notifyDataSetChanged()
     }
 
-    private fun setData(pois: Pois){
+    private fun setData(pois: Pois) {
         val dataList = pois.poi.map {
             SearchResultEntity(
                 name = it.name ?: "빌딩명 없음",
                 address = makeMainAddress(it),
                 locationLatLng = LocationLatLngEntity(
-                    TMapPoint( it.noorLat, it.noorLon)
+                    TMapPoint(it.noorLat, it.noorLon)
                 )
             )
         }
         adapter.setSearchResultList(dataList) {
-            Toast.makeText(this, "빌딩이름 : ${it.name}, 주소 : ${it.address}, 위/경도 : ${it.locationLatLng}", Toast.LENGTH_SHORT).show()
-            startActivity(
-                Intent(this, MapActivity::class.java).apply {
-                 //   putExtra(SEARCH_RESULT_EXTRA_KEY, it)
-                }
-
-            )
+            Toast.makeText(
+                this,
+                "장소명 : ${it.name}, 주소 : ${it.address}, 위/경도 : ${it.locationLatLng}",
+                Toast.LENGTH_SHORT
+            ).show()
+            val selectedPlace = Place(it.name, it.locationLatLng.tpoint, it.address)
+            this@WhereActivity.selectedPlace = selectedPlace
+            Log.d("PLAN", "지역 선택 : $selectedPlace")
         }
     }
+
+
+
     private fun makeMainAddress(poi: Poi): String =
         if (poi.secondNo?.trim().isNullOrEmpty()){
             (poi.upperAddrName?.trim() ?: "") + " " +
@@ -132,7 +140,7 @@ class WhereActivity :  AppCompatActivity() , CoroutineScope {
                     if(response.isSuccessful){
                         val body = response.body()
                         withContext(Dispatchers.Main){
-                           Log.e("response", body.toString())
+                            Log.e("response", body.toString())
                             body?.let { searchResponse ->
                                 setData(searchResponse.searchPoiInfo.pois)
                             }
@@ -146,8 +154,8 @@ class WhereActivity :  AppCompatActivity() , CoroutineScope {
     }
 
     //private fun ListViewVisibility() {
-      //  if (placeListView.visibility != View.VISIBLE) {
-        //    placeListView.visibility = View.VISIBLE
-        //}
+    //  if (placeListView.visibility != View.VISIBLE) {
+    //    placeListView.visibility = View.VISIBLE
+    //}
     //}
 }
