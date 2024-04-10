@@ -27,6 +27,12 @@
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
+                <Button
+                    android:id="@+id/checklist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CheckList"/>
+
                 <EditText
                     android:id="@+id/id_edittext"
                     android:layout_width="289dp"
@@ -181,6 +187,7 @@
                         android:layout_height="wrap_content"
 
                         android:text="navi" />
+
                 </LinearLayout>
 
 

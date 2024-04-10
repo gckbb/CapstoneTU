@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.kakaotest.CheckList.CheckListActivity
 import com.example.kakaotest.Login.Email.EmailLogin
 import com.example.kakaotest.Login.Id.IdFindId
 import com.example.kakaotest.Login.Id.IdFindPw
@@ -99,6 +100,11 @@ class MainActivity : AppCompatActivity() {
         // 테스트 버튼
         binding.navi.setOnClickListener{
             val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
+        //체크리스트 테스트 버튼
+        binding.checklist.setOnClickListener {
+            val intent = Intent(this, CheckListActivity::class.java)
             startActivity(intent)
         }
 

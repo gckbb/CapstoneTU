@@ -20,7 +20,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        android:name=".CheckList.ApplicationClass"
+        >
+
+        <activity
+            android:name=".CheckList.EditTodoActivity"
+            android:exported="false" />
         <activity
             android:name=".CheckList.CheckListActivity"
             android:exported="false" />
