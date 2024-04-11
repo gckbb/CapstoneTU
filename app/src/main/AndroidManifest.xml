@@ -34,6 +34,9 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
+            android:name=".TourApi.TourApiActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreatedRoute1"
             android:exported="false" />
         <activity
