@@ -1,12 +1,12 @@
 <!-- res/layout/activity_selected_place.xml -->
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
-   >
+    >
 
 
     <ListView
@@ -21,16 +21,37 @@
         android:background="@drawable/edittext3" />
 
 
-    <Button
-        android:id="@+id/nextbutton"
-        android:layout_width="83dp"
-        android:layout_height="50dp"
-        android:background="@drawable/buttonshape1"
-        android:textColor="@color/white"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="10dp"
-        android:text="다음" />
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/ic_back"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <Button
+            android:id="@+id/nextbutton"
+            android:layout_width="83dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="250dp"
+            android:text="다음"
+            android:background="@drawable/buttonshape1"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
+    </LinearLayout>
 
 
 

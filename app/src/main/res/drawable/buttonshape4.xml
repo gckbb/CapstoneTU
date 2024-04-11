@@ -4,7 +4,7 @@
     <item android:state_selected="true">
         <shape android:shape="rectangle">
             <corners android:radius="9dp" />
-            <solid android:color="@color/Secondbutton" />
+            <solid android:color="@color/button" />
         </shape>
     </item>
 

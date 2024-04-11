@@ -50,7 +50,11 @@ class WhereActivity :  AppCompatActivity() , CoroutineScope {
         Log.d("PLAN","WhereActivity 화면 이동 성공")
         job = Job()
 
+        val backBtn = findViewById<ImageButton>(R.id.back_btn)
+        backBtn.setOnClickListener {
+            finish()
 
+        }
 
         binding.nextbutton.setOnClickListener {
             // 다음 액티비티로 이동하는 인텐트 생성

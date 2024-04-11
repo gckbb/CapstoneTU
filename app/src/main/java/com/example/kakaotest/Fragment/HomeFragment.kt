@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
         val view = binding.root
 
         // 검색 버튼 클릭 리스너 설정
-        binding.searchBtn.setOnClickListener {
+        binding.search.setOnClickListener {
                 val intent = Intent(requireActivity(), WhereActivity::class.java)
                 startActivity(intent)
             Log.d("PLAN","homefragment -> whereactivity")

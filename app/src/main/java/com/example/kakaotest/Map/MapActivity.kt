@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.Utility.tmap.ApiAdapter
 import com.example.kakaotest.Utility.tmap.MakeRoute
@@ -46,9 +47,22 @@ class MapActivity : AppCompatActivity() {
         mBinding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val previousScreen = intent.getStringExtra("previous_screen")
+
+        if (previousScreen == "PlanInfoInput") {
+            val receivedTravelPlan = intent.getParcelableExtra<TravelPlan>("travel_plan")
+            Toast.makeText(this,"$receivedTravelPlan", Toast.LENGTH_SHORT).show()
+        }
+       
         //이부분 tmap sdk에도 BuildConfig가 있어서 고생좀 함
         //여기 오류나면 상단바 Build -> Rebuild Project 누르면 됨
         //   val appKey: String = BuildConfig.app_key
+
+        binding.backBtn.setOnClickListener {
+            finish()
+            
+        }
+
 
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP")
@@ -239,6 +253,7 @@ class MapActivity : AppCompatActivity() {
 
 
 })}
+
 
     private fun isPlaceAlreadySelected(newPlace: SearchData): Boolean{
         // 중복된 장소인지 확인

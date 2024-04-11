@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.Utility.tmap.MakeRoute
@@ -29,7 +30,11 @@ class SelectedPlace : AppCompatActivity() {
         // 다른 클래스의 함수 호출하여 로그를 가져옴
 
 
+        val backBtn = findViewById<ImageButton>(R.id.back_btn)
+        backBtn.setOnClickListener {
+            finish()
 
+        }
 
 
         // val documnetID = SavedUser().getUserDataFromSharedPreferences(this) //회원정보 문서 ID

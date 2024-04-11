@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.ScrollView
 import android.widget.TextView
@@ -21,12 +22,19 @@ class RouteListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_create_route)
         val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
 
         val path_1: Button = findViewById<Button>(R.id.path_1)
         val path_2: Button = findViewById<Button>(R.id.path_2)
         val nextButton: Button = findViewById<Button>(R.id.nextbutton)
+
+        val backBtn = findViewById<ImageButton>(R.id.back_btn)
+        backBtn.setOnClickListener {
+            finish()
+
+        }
 
         // 클릭 이벤트 설정
         path_1.setOnClickListener {

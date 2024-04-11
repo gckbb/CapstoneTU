@@ -1,6 +1,7 @@
 package com.example.kakaotest.Map
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,8 @@ import com.example.kakaotest.DataModel.Place
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.Fragment.DatePickerFragment
 import com.example.kakaotest.R
+import com.example.kakaotest.databinding.ActivityMapBinding
+import com.example.kakaotest.databinding.ActivityPlanInfoBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.Balloon
@@ -29,10 +32,14 @@ import java.util.Calendar
 
  class PlanInfoInput : AppCompatActivity() {
 
-
+     private var mBinding: ActivityPlanInfoBinding? = null
+     private val binding get() = mBinding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_plan_info)
+
+        mBinding = ActivityPlanInfoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
 
         Log.d("Plan","PlaninfoInput Activity success")
         val selectedPlace = intent.getParcelableExtra<Place>("region")
@@ -51,14 +58,13 @@ import java.util.Calendar
 
         val firstdate: TextView = findViewById<TextView>(R.id.day1txt)
         val seconddate: TextView = findViewById<TextView>(R.id.day2txt)
-        val firstBtn = findViewById<Button>(R.id.day1btn)
-        val secondBtn = findViewById<Button>(R.id.day2btn)
+
         Log.d("Plan","place : $selectedPlace")
         /*언제?*/
         // 첫 번째 날짜 선택 버튼 클릭 이벤트 처리
         var  firstday : String = ""
 
-        firstBtn.setOnClickListener {
+        binding.day1btn.setOnClickListener {
             val dialogFragment = DatePickerFragment { year, month, day ->
                 if (month+1 >= 10 ){
                     if (day >= 10 ){
@@ -81,7 +87,7 @@ import java.util.Calendar
         var secondday : String = ""
 
         // 두 번째 날짜 선택 버튼 클릭 이벤트 처리
-        secondBtn.setOnClickListener {
+        binding.day2btn.setOnClickListener {
             val dialogFragment = DatePickerFragment { year, month, day ->
                 if (month+1 >= 10 ){
                     if (day >= 10 ){
@@ -205,19 +211,22 @@ import java.util.Calendar
 
 
 
-        val helpBtn=findViewById<ImageButton>(R.id.help)
+
         val helptxt = findViewById<ImageView>(R.id.helptxt)
-        helpBtn.setOnClickListener{
+        binding.help.setOnClickListener{
             helptxt.visibility = View.VISIBLE
         }
-        val backgroundLayout = findViewById<LinearLayout>(R.id.backgroundLayout)
 
-        backgroundLayout.setOnClickListener {
+
+        binding.backgroundLayout.setOnClickListener {
             // 배경 레이아웃 클릭 시 이미지뷰를 숨김
             helptxt.visibility = View.GONE
         }
 
+        binding.backBtn.setOnClickListener {
+            finish()
 
+        }
             val travelPlan = TravelPlan(
             where = selectedPlace,
             startDate = firstday,
@@ -228,6 +237,14 @@ import java.util.Calendar
             activity = activity,
             destinations = null
         )
+
+
+        binding.nextbutton.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+            intent.putExtra("travel_plan", travelPlan)
+            intent.putExtra("previous_screen", "PlanInfoInput")
+            startActivity(intent)
+        }
 
     }
 

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.Toast
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.R
@@ -28,6 +29,12 @@ class SecondRoute : AppCompatActivity() {
         sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP")
             .apply()
 
+
+        val backBtn = findViewById<ImageButton>(R.id.back_btn)
+        backBtn.setOnClickListener {
+            finish()
+
+        }
 
         // 값을 가져옴
         val appKey: String? = sharedPreferences.getString("app_key", null)
