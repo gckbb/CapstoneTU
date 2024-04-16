@@ -12,7 +12,11 @@ import androidx.appcompat.app.AlertDialog
 
 /*
 * 사용방법
-*  AlertDialogHelper().showAlertMessage(this,"msg","text",null,null) 등등
+*  AlertDialogHelper().showAlertMessage(this,"msg","text",null,null,
+                                DialogInterface.OnClickListener { dialog, which ->
+                                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                                        dialog.dismiss()
+                                    }})
 * */
 class AlertDialogHelper {
     fun showAlertMessage(

@@ -1,5 +1,6 @@
 package com.example.kakaotest.Map
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import androidx.core.view.isVisible
 import com.example.kakaotest.DataModel.Place
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.SearchRecyclerAdapter
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.example.kakaotest.Utility.tmap.RetrofitUtil
 import com.example.kakaotest.databinding.ActivityWhereBinding
 import com.example.kakaotest.response.search.Poi
@@ -113,6 +115,21 @@ class WhereActivity :  AppCompatActivity() , CoroutineScope {
             val selectedPlace = Place(it.name, it.locationLatLng.tpoint, it.address)
             this@WhereActivity.selectedPlace = selectedPlace
             Log.d("PLAN", "지역 선택 : $selectedPlace")
+            AlertDialogHelper().showAlertMessage(this,"${it.name}으로 여행 가시나요? . ","네","아니요",null,
+                DialogInterface.OnClickListener { dialog, which ->
+                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                        val intent = Intent(this, PlanInfoInput::class.java)
+                        // 선택한 장소가 있을 때에만 인텐트에 추가
+                        selectedPlace?.let { place ->
+                            intent.putExtra("region", place)
+                            startActivity(intent)
+                        }
+
+                    }
+                else if (which==DialogInterface.BUTTON_NEGATIVE){
+                        dialog.dismiss()
+                }})
+
         }
     }
 

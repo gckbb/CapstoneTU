@@ -85,5 +85,7 @@ dependencies {
 
     implementation ("com.github.skydoves:balloon:1.4.6")
     implementation ("com.tomergoldst.android:tooltips:1.1.1")
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+    implementation ("com.google.android.libraries.places:places:3.3.0")
 
 }
