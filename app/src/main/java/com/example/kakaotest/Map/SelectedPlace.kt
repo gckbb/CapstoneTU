@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kakaotest.Map.FoodSelectActivity
 import com.example.kakaotest.CreatedRoute1
 import com.example.kakaotest.Plan.PMakeRoute
 import com.example.kakaotest.Plan.SelectedPlaceData
@@ -56,7 +57,7 @@ class SelectedPlace : AppCompatActivity() {
         // next 버튼 클릭 시 CreatedPath 로 이동
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
-            val intent = Intent(this, CreatedRoute1::class.java)
+            val intent = Intent(this, FoodSelectActivity::class.java)
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
             startActivity(intent)
             Log.d("Item", receivedDataList.toString())

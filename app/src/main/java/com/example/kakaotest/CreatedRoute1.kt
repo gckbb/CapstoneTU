@@ -1,10 +1,7 @@
 package com.example.kakaotest
 
 import android.content.Intent
-import android.location.Address
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -25,6 +22,7 @@ class CreatedRoute1 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_route)
         val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
+        val receivedFoodDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedFoodDataList")
 
         val path_1: Button = findViewById<Button>(R.id.path_1)
         val path_2: Button = findViewById<Button>(R.id.path_2)
@@ -78,7 +76,7 @@ class CreatedRoute1 : AppCompatActivity() {
                 routetest.routeSet(receivedDataList!!, receivedDataList[0])
                 Log.d("PLAN", "Route Set")
                 // 비동기적으로 routeStart를 호출합니다.
-                routetest.routeStart(2, 6)
+                routetest.routeStart(2, 8, receivedFoodDataList!!)
                 Log.d("PLAN", "Route Started")
                 routetest.printTotalRoute()
                 Log.d("PLAN", "Total Route Printed")

@@ -63,6 +63,7 @@ class PMakeRoute {
     }
 
 
+
 /*
     // routeStart 함수는 주어진 totalDate 만큼의 날짜에 대해 루트를 생성하는 함수입니다.
     suspend fun routeStart(totalDate: Int, maxDayTime: Int) {
@@ -128,13 +129,14 @@ class PMakeRoute {
         }
     }*/
 
-    suspend fun routeStart(totalDate: Int, maxDayTime: Int) {
+    suspend fun routeStart(totalDate: Int, maxDayTime: Int, foodDataList:ArrayList<SelectedPlaceData>) {
         coroutineScope {
             try {
                 for (k in 0 until totalDate) {
                     var totalTime: Double = 0.0
                     var currentDayTime: Double = 0.0
                     var remainingTime: Int = maxDayTime * 3600 // 남은 시간을 초 단위로 계산
+                    var lunchcheck = 0
 
                     dayRouteList.add(PSearchRouteData(startPoint, 0))
                     Log.d("PLAN", "dayRouteList : ${dayRouteList.toString()}")
@@ -143,11 +145,36 @@ class PMakeRoute {
                     while (routeList.isNotEmpty() && currentDayTime + routeList.first().time.toInt() <= remainingTime) {
                         val minTime = routeList.minByOrNull { it.time.toInt() } ?: break
                         if (currentDayTime + minTime.time.toInt() > remainingTime) break
+                        if (currentDayTime > 4 * 3600 && lunchcheck == 0) {
+                            var minfood = 999999
+                            var mindata: SelectedPlaceData? = null
+                            for (i in 0 until foodDataList.size ) {
+                                val temp = apiRequest(dayRouteList.last.pointdata?.tpoint?.longitude!!,dayRouteList.last.pointdata?.tpoint?.latitude!!,
+                                    foodDataList[i].tpoint.longitude,foodDataList[i].tpoint.latitude)
+                                if (temp!!.toInt() < minfood.toInt()) {
+                                    minfood = temp.toInt()
+                                    mindata = foodDataList[i]
+                                }
+                            }
+
+                            dayRouteList.add(PSearchRouteData(mindata,minfood))
+                            currentDayTime += minfood.toInt()
+                            remainingTime -= minfood.toInt()
+                            currentDayTime += 3600
+
+                            lunchcheck = 1
+                            continue
+                        }
+
 
                         // 장소 추가
                         dayRouteList.add(minTime)
                         currentDayTime += minTime.time.toInt()
-                        remainingTime -= minTime.time.toInt()
+
+
+                        //장소당 기본체류시간 1시간 추가 설정 (테스트용)
+                        currentDayTime += 3600
+
 
                         // 해당 장소를 routeList에서 제거
                         routeList.remove(minTime)
@@ -156,7 +183,7 @@ class PMakeRoute {
                     Log.d("PLAN", "dayRouteList : ${dayRouteList.toString()}")
 
                     // 총 이동 시간 계산 (이동 시간 + 체류 시간)
-                    totalTime = currentDayTime +1 * (dayRouteList.size - 1)
+                    totalTime = currentDayTime
                     Log.d("PLAN","totalTime : ${totalTime}")
                     // 현재 일자의 경로를 추가
                     totalRouteList.add(DRouteData(totalTime, LinkedList(dayRouteList)))

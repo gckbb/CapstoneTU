@@ -23,7 +23,10 @@ class ApiAdapter {
         val routeCall = apiService.getRoute(input)
         var totalTime : Number?
 
+
+
         totalTime = routeCall.execute().body()?.features?.get(0)?.properties?.totalTime
+
 
 
         return totalTime

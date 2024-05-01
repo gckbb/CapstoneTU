@@ -74,6 +74,7 @@ dependencies {
 
     implementation(files("libs/vsm-tmap-sdk-v2-android-1.6.60.aar"))
     implementation(files("libs/tmap-sdk-1.2.aar"))
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")

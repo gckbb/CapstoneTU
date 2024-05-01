@@ -67,6 +67,7 @@ class MapActivity : AppCompatActivity() {
         val tMapGps = TMapPoint()
         val apiAdapter = ApiAdapter()
 
+
         // TMapView를 FrameLayout에 추가
         container.addView(tMapView)
         // 발급받은 키로 TMapView에 API 키 설정

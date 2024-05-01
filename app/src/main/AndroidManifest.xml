@@ -67,6 +67,9 @@
             android:name=".Map.MapActivity"
             android:exported="false" />
         <activity
+            android:name=".Map.FoodSelectActivity"
+            android:exported="false" />
+        <activity
             android:name=".Login.MainActivity"
             android:exported="true">
             <intent-filter>
