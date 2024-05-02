@@ -29,7 +29,6 @@ class FirstRoute : AppCompatActivity() {
         sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP")
             .apply()
 
-
         // 값을 가져옴
         val appKey: String? = sharedPreferences.getString("app_key", null)
         val container: FrameLayout = findViewById(R.id.tmapViewContainer)
@@ -78,35 +77,49 @@ class FirstRoute : AppCompatActivity() {
                 }
 
 
-                    // 선택된 장소들의 TMapPoint를 이용하여 리스트 생성
-                    for (selectedPlace in firstList!!) {
-                        selectedPlace.pointdata?.tpoint?.let { tMapPoint ->
-                            pointList.add(tMapPoint)
-                        }
+                // 선택된 장소들의 TMapPoint를 이용하여 리스트 생성
+                for (selectedPlace in firstList!!) {
+                    selectedPlace.pointdata?.tpoint?.let { tMapPoint ->
+                        pointList.add(tMapPoint)
                     }
-
-
-
-            // 선택된 장소들 간의 경로 표시
-            for (i in 0 until pointList.size - 1) {
-                val start = pointList[i]
-                val end = pointList[i + 1]
-
-
-
-                TMapData().findPathData(start, end) { tMapPolyLine ->
-
-                    val newPolyLine = TMapPolyLine("line1", pointList)
-
-                    // 지도에 추가
-                    tMapView.addTMapPolyLine(newPolyLine)
-
-                    // 경로 추가 후 지도의 중심 및 줌 조절
-                    val info = tMapView.getDisplayTMapInfo(newPolyLine.linePointList)
-                    tMapView.zoomLevel = info.zoom
-                    tMapView.setCenterPoint(info.point.latitude, info.point.longitude)
                 }
-            }
+
+
+                // 선택된 장소들 간의 경로 표시
+                Thread {
+                    try {
+                        var start: TMapPoint
+                        var end: TMapPoint
+                        var polyLines: TMapPolyLine
+                        var passList: ArrayList<TMapPoint> = arrayListOf<TMapPoint>()
+                        for (i in 1 until pointList.size - 1) {
+                            passList.add(pointList[i])
+                        }
+                        start = pointList[0]
+                        end = pointList.last()
+
+                        polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,start,end,passList,2)
+
+                        if (polyLines != null) {
+                            tMapView.addTMapPolyLine(polyLines)
+                            val info = tMapView.getDisplayTMapInfo(polyLines.linePointList)
+                            tMapView.zoomLevel = info.zoom
+                            tMapView.setCenterPoint(info.point.latitude, info.point.longitude)
+
+
+
+
+                        } else {
+
+
+                        }
+
+
+                    } catch (e: Exception) {
+
+
+                    }
+                }.start()
 
 
 
