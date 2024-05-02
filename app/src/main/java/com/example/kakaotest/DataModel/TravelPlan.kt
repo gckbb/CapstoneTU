@@ -4,14 +4,14 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class TravelPlan(
-    val where: Place?,
-    val startDate: String?,
-    val endDate: String?,
-    val who: String?,
-    val transportion: String?,
-    val theme: String?,
-    val activity: String?,
-    val destinations: List<Place>?
+    var where: Place?=null,
+    var startDate: String?=null,
+    var endDate: String?=null,
+    var who: String?=null,
+    var transportion: String?=null,
+    var theme: String?=null,
+    var activity: String?=null,
+    var destinations: List<Place>?=null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(Place::class.java.classLoader),

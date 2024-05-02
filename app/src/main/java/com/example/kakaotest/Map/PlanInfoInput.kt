@@ -13,8 +13,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import com.example.kakaotest.DataModel.Place
 import com.example.kakaotest.DataModel.TravelPlan
+import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.Fragment.DatePickerFragment
 import com.example.kakaotest.R
 import com.example.kakaotest.databinding.ActivityMapBinding
@@ -31,7 +33,7 @@ import java.util.Calendar
 
 
  class PlanInfoInput : AppCompatActivity() {
-
+     private val travelPlanList = mutableListOf<TravelPlan>()
      private var mBinding: ActivityPlanInfoBinding? = null
      private val binding get() = mBinding!!
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +41,8 @@ import java.util.Calendar
 
         mBinding = ActivityPlanInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
 
         Log.d("Plan","PlaninfoInput Activity success")
@@ -83,7 +87,9 @@ import java.util.Calendar
             }
             dialogFragment.show(supportFragmentManager, "firstDatePicker")
         }
-        Log.d("Plan","firstday : $firstday ")
+
+
+        Log.d("Plan","firstday : $firstdate ")
         var secondday : String = ""
 
         // 두 번째 날짜 선택 버튼 클릭 이벤트 처리
@@ -113,10 +119,12 @@ import java.util.Calendar
         val familyBtn = findViewById<Button>(R.id.family)
         val coupleBtn= findViewById<Button>(R.id.couple)
         val alonBtn = findViewById<Button>(R.id.alone)
-        val whoBtns = listOf(friendBtn, familyBtn, coupleBtn, alonBtn)
-        var who: String = ""
+        val whoBtns = listOf(friendBtn,familyBtn,coupleBtn,alonBtn)
+        var whoList = listOf("친구","가족","애인","혼자")
 
-        for (btn in whoBtns) {
+
+        var who=""
+       for (btn in whoBtns) {
             btn.background = ContextCompat.getDrawable(this, R.drawable.buttonshape4)
             btn.setOnTouchListener { view, motionEvent ->
                 when (motionEvent.action) {
@@ -127,13 +135,19 @@ import java.util.Calendar
                         }
                         else {
                             view.isSelected = true // 버튼이 선택되었음을 나타내는 상태를 설정
-                            who = (view as Button).text.toString() // 누른 버튼의 텍스트를 who 변수에 저장
+                            who = whoList[whoBtns.indexOf(btn)]// 누른 버튼의 텍스트를 who 변수에 저장
+                            Log.d("PLAN","who : "+who)
                         }}
                 }
                 false
             }
         }
-        Log.d("PLAN","who : $who")
+
+
+
+
+
+
         val taxiBtn = findViewById<Button>(R.id.taxi)
         val busBtn = findViewById<Button>(R.id.bus)
         val carBtn = findViewById<Button>(R.id.car)
@@ -141,6 +155,7 @@ import java.util.Calendar
 
 
         val transportBtn  =  listOf( carBtn ,taxiBtn,busBtn,walkBtn)
+        var transportList = listOf("자차","택시","버스","도보")
         var transport : String = ""
         for (btn in transportBtn){
             btn.background = ContextCompat.getDrawable(this, R.drawable.buttonshape4)
@@ -152,14 +167,15 @@ import java.util.Calendar
                             transport = ""
                         } else {
                             view.isSelected = true
-                            transport = (view as Button).text.toString() // 누른 버튼의 텍스트를 who 변수에 저장
+                            transport = transportList[transportBtn.indexOf(btn)]
+                            Log.d("PLAN","transport : $transport")
                         }
                     }
                 }
                 false
             }
         }
-        Log.d("PLAN","transport : $transport")
+
 
         val theme1Btn = findViewById<Button>(R.id.theme1)
         val theme2Btn = findViewById<Button>(R.id.theme2)
@@ -168,6 +184,9 @@ import java.util.Calendar
 
 
         val themeBtn = listOf(theme1Btn,theme2Btn,theme3Btn,theme4Btn)
+        var themeList = listOf("1","2","3","4")
+
+
         var theme : String = ""
         for (btn in themeBtn){
             btn.background = ContextCompat.getDrawable(this, R.drawable.buttonshape4)
@@ -179,17 +198,19 @@ import java.util.Calendar
                             theme = ""
                         } else {
                             view.isSelected = true
-                            theme = (view as Button).text.toString() // 누른 버튼의 텍스트를 who 변수에 저장
+                            theme = themeList[themeBtn.indexOf(btn)]
+                            Log.d("PLAN","theme : $theme")
                         }
                 }
                 false
             }
         }
-        Log.d("PLAN","theme : $theme")
+
         val lowBtn = findViewById<Button>(R.id.low_activity)
         val normalBtn = findViewById<Button>(R.id.normal_activity)
         val hardBtn = findViewById<Button>(R.id.hard_activity)
         val activityBtn = listOf(lowBtn,normalBtn,hardBtn)
+        var activityList = listOf("적음","보통","많음")
         var activity : String = ""
         for (btn in activityBtn){
             btn.background = ContextCompat.getDrawable(this, R.drawable.buttonshape4)
@@ -201,13 +222,14 @@ import java.util.Calendar
                             activity = ""
                         } else {
                             view.isSelected = true
-                            activity= (view as Button).text.toString() // 누른 버튼의 텍스트를 who 변수에 저장
+                            activity= activityList[activityBtn.indexOf(btn)] // 누른 버튼의 텍스트를 who 변수에 저장
+                            Log.d("PLAN","activity : $activity")
                         }}
                 }
                 false
             }
         }
-        Log.d("PLAN","activity : $activity")
+
 
 
 
@@ -227,22 +249,34 @@ import java.util.Calendar
             finish()
 
         }
-            val travelPlan = TravelPlan(
+
+
+        // 여행 계획 정보 생성
+
+        val selectedDate1 = binding.day1txt.text.toString()
+        val selectedDate2 = binding.day2txt.text.toString()
+        val selectedWho = who // 이전 코드에서 who 변수를 설정하는 부분이 있어야 함
+        val transportation = transport // 이전 코드에서 transport 변수를 설정하는 부분이 있어야 함
+        val themes = theme // 이전 코드에서 theme 변수를 설정하는 부분이 있어야 함
+        val activityLevel = activity // 이전 코드에서 activity 변수를 설정하는 부분이 있어야 함
+
+        val travelPlan = TravelPlan(
             where = selectedPlace,
-            startDate = firstday,
-            endDate = secondday,
-            who = who,
-            transportion = transport,
-            theme = theme,
-            activity = activity,
-            destinations = null
+            startDate = selectedDate1,
+            endDate = selectedDate2,
+            who = selectedWho,
+            transportion = transportation,
+            theme = themes,
+            activity = activityLevel,
+            destinations = listOf() // 목적지는 비어있는 리스트로 초기화하거나 필요에 따라 적절한 값으로 초기화해야 합니다.
         )
+
 
 
         binding.nextbutton.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
             intent.putExtra("travel_plan", travelPlan)
-            intent.putExtra("previous_screen", "PlanInfoInput")
+            Log.d("PLAN", travelPlan.toString())
             startActivity(intent)
         }
 
@@ -252,3 +286,4 @@ import java.util.Calendar
 
 
 }
+

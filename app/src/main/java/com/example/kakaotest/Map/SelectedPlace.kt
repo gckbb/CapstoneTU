@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
@@ -22,9 +23,10 @@ class SelectedPlace : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selected_place)
 
-
+        val receivedTravelPlan = intent.getParcelableExtra<TravelPlan>("travel_plan")
         val receivedDataList =
             intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
+        val travelPlanData = intent.getStringArrayExtra("travel_plan_data")
 
         //    Log.d("PLAN", "receivedDataList : ${receivedDataList.toString()}")
         // 다른 클래스의 함수 호출하여 로그를 가져옴
@@ -57,10 +59,11 @@ class SelectedPlace : AppCompatActivity() {
         Log.d("selectedPlaceNames", selectedPlaceNames.toString())
 
 
-        // next 버튼 클릭 시 CreatedPath 로 이동
+        // next 버튼 클릭 시 RouteListActivity 로 이동
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
             val intent = Intent(this, RouteListActivity::class.java)
+            intent.putExtra("travel_plan", receivedTravelPlan)
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
             startActivity(intent)
             Log.d("Item", receivedDataList.toString())
