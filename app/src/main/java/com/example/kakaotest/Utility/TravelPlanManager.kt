@@ -9,7 +9,7 @@ import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 class TravelPlanManager {
     private var travelPlan = TravelPlan()
 
-    fun updatePlan(where: SelectedPlaceData?=null, startDate: Date? = null, endDate: Date ?= null, who: String? = null, transport: String? = null, theme: String? = null, activity: String? = null, destination: ArrayList<SelectedPlaceData>?=null) {
+    fun updatePlan(where: Place?=null, startDate: Date? = null, endDate: Date ?= null, who: String? = null, transport: String? = null, theme: String? = null, activity: String? = null, destination: ArrayList<SelectedPlaceData>?=null) {
        where?.let{travelPlan.where=it}
         startDate?.let { travelPlan.startDate = it }
         endDate?.let { travelPlan.endDate = it}

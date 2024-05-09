@@ -67,7 +67,7 @@ class PlanInfoInput : AppCompatActivity() {
             val whereTextView = findViewById<TextView>(R.id.where)
             whereTextView.text = placeName
         }
-
+        travelPlanManager.updatePlan(where=selectedPlace)
         val firstdate: TextView = findViewById<TextView>(R.id.day1txt)
         val seconddate: TextView = findViewById<TextView>(R.id.day2txt)
 
@@ -135,7 +135,7 @@ class PlanInfoInput : AppCompatActivity() {
         val coupleBtn= findViewById<Button>(R.id.couple)
         val alonBtn = findViewById<Button>(R.id.alone)
         val whoBtns = listOf(friendBtn,familyBtn,coupleBtn,alonBtn)
-        var whoList = listOf("친구","가족","애인","혼자")
+        var whoList = listOf("#친구랑","#가족들","#애인","#혼자서")
 
 
 

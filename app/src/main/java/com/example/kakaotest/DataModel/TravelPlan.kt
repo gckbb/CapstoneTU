@@ -5,7 +5,7 @@ import android.os.Parcelable
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 
 data class TravelPlan(
-    var where: SelectedPlaceData?=null,
+    var where: Place?=null,
     var startDate: Date?=null,
     var endDate: Date?=null,
     var who: String?=null,
@@ -15,7 +15,7 @@ data class TravelPlan(
     var destinations: List<SelectedPlaceData>?=null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readParcelable(SelectedPlaceData::class.java.classLoader),
+        parcel.readParcelable(Place::class.java.classLoader),
         parcel.readParcelable(Date::class.java.classLoader),
         parcel.readParcelable(Date::class.java.classLoader),
         parcel.readString()!!,
