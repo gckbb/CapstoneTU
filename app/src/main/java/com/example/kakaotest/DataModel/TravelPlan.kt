@@ -2,32 +2,33 @@ package com.example.kakaotest.DataModel
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 
 data class TravelPlan(
-    var where: Place?=null,
-    var startDate: String?=null,
-    var endDate: String?=null,
+    var where: SelectedPlaceData?=null,
+    var startDate: Date?=null,
+    var endDate: Date?=null,
     var who: String?=null,
     var transportion: String?=null,
     var theme: String?=null,
     var activity: String?=null,
-    var destinations: List<Place>?=null
+    var destinations: List<SelectedPlaceData>?=null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readParcelable(Place::class.java.classLoader),
+        parcel.readParcelable(SelectedPlaceData::class.java.classLoader),
+        parcel.readParcelable(Date::class.java.classLoader),
+        parcel.readParcelable(Date::class.java.classLoader),
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.createTypedArrayList(Place)
+        parcel.createTypedArrayList(SelectedPlaceData)
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(where, flags)
-        parcel.writeString(startDate)
-        parcel.writeString(endDate)
+        parcel.writeParcelable(startDate,flags)
+        parcel.writeParcelable(endDate,flags)
         parcel.writeString(who)
             parcel.writeString(transportion)
         parcel.writeString(theme)

@@ -23,13 +23,10 @@ class SelectedPlace : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selected_place)
 
-        val receivedTravelPlan = intent.getParcelableExtra<TravelPlan>("travel_plan")
+
         val receivedDataList =
             intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
-        val travelPlanData = intent.getStringArrayExtra("travel_plan_data")
-
-        //    Log.d("PLAN", "receivedDataList : ${receivedDataList.toString()}")
-        // 다른 클래스의 함수 호출하여 로그를 가져옴
+        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
 
 
         val backBtn = findViewById<ImageButton>(R.id.back_btn)
@@ -63,7 +60,7 @@ class SelectedPlace : AppCompatActivity() {
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
             val intent = Intent(this, RouteListActivity::class.java)
-            intent.putExtra("travel_plan", receivedTravelPlan)
+            intent.putExtra("travelPlan", travelPlan)
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
             startActivity(intent)
             Log.d("Item", receivedDataList.toString())

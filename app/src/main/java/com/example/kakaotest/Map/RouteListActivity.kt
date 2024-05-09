@@ -28,7 +28,8 @@ class RouteListActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_create_route)
         val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
-        val receivedTravelPlan = intent.getParcelableExtra<TravelPlan>("travel_plan")
+        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+
         val path_1: Button = findViewById<Button>(R.id.path_1)
         val path_2: Button = findViewById<Button>(R.id.path_2)
         val nextButton: Button = findViewById<Button>(R.id.nextbutton)
@@ -79,10 +80,11 @@ class RouteListActivity : AppCompatActivity() {
             val secondDayData = routetest.printTotalRoute().getOrNull(1)
             val secondList = secondDayData!!.dayRoute
             val intent = Intent(this, ScheduleActivity::class.java)
-            intent.putExtra("travel_plan", receivedTravelPlan)
+
             intent.putExtra("firstList",firstPlaceList)
             intent.putExtra("secondList",  secondList)
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
+            intent.putExtra("travelPlan", travelPlan)
             startActivity(intent)
         }
 

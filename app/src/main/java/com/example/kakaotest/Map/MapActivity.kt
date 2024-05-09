@@ -48,16 +48,9 @@ class MapActivity : AppCompatActivity() {
         mBinding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
 
 
-
-            val receivedTravelPlan = intent.getParcelableExtra<TravelPlan>("travel_plan")
-         //   Toast.makeText(this,"$receivedTravelPlan", Toast.LENGTH_SHORT).show()
-
-       
-        //이부분 tmap sdk에도 BuildConfig가 있어서 고생좀 함
-        //여기 오류나면 상단바 Build -> Rebuild Project 누르면 됨
-        //   val appKey: String = BuildConfig.app_key
 
         binding.backBtn.setOnClickListener {
             finish()
@@ -142,11 +135,12 @@ class MapActivity : AppCompatActivity() {
 
                     binding.nextbutton.setOnClickListener {
                         val intent = Intent(this, SelectedPlace::class.java)
-                        intent.putExtra("travel_plan", receivedTravelPlan)
+
                         intent.putParcelableArrayListExtra(
                             "selectedPlaceDataList",
                             ArrayList(selectedPlaceDataList)
                         )
+                        intent.putExtra("travelPlan", travelPlan)
                         startActivity(intent)
                         Log.d("Item", selectedPlacesList.toString())
 
