@@ -21,15 +21,12 @@ import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
 import com.skt.tmap.TMapView.OnClickListenerCallback
 import com.skt.tmap.overlay.TMapMarkerItem
-import com.skt.tmap.overlay.TMapPolyLine
 import com.skt.tmap.poi.TMapPOIItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.ArrayList
-import java.util.HashMap
 
 
 class FoodSelectActivity : AppCompatActivity() {
@@ -151,7 +148,7 @@ class FoodSelectActivity : AppCompatActivity() {
                 p2: TMapPoint?,
                 p3: PointF?
             ) {
-                Toast.makeText(this@FoodSelectActivity, "onPressDown", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@FoodSelectActivity, "onPressDown", Toast.LENGTH_SHORT).show()
             }
 
             override fun onPressUp( // 떨어짐
@@ -160,7 +157,7 @@ class FoodSelectActivity : AppCompatActivity() {
                 p2: TMapPoint?,
                 p3: PointF?
             ) {
-                Toast.makeText(this@FoodSelectActivity, "onPressUp", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@FoodSelectActivity, "onPressUp", Toast.LENGTH_SHORT).show()
             }
         })
 

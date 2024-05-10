@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.graphics.PointF
 import android.os.Bundle
 import android.util.Log
 import android.widget.AdapterView
@@ -18,17 +17,13 @@ import com.skt.tmap.TMapData
 import com.skt.tmap.TMapData.OnFindAllPOIListener
 import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
-import com.skt.tmap.TMapView.OnClickListenerCallback
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.overlay.TMapPolyLine
-import com.skt.tmap.poi.TMapPOIItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.ArrayList
-import java.util.HashMap
 
 
 class MapActivity : AppCompatActivity() {
@@ -85,7 +80,7 @@ class MapActivity : AppCompatActivity() {
             tMapView.setCenterPoint(selectItem.tpoint.latitude,selectItem.tpoint.longitude)
             tMapView.zoomLevel = 15
 
-
+            //두 지점간의 경로 탐색
             if(startpoint==null || endpoint==null){
                 if(startpoint==null){
                     startpoint = selectItem.tpoint
@@ -140,30 +135,6 @@ class MapActivity : AppCompatActivity() {
             }
 
         }
-
-        // 클릭 이벤트 설정
-        tMapView.setOnClickListenerCallback(object : OnClickListenerCallback {
-            override fun onPressDown( // 터치함
-                p0: ArrayList<TMapMarkerItem>?,
-                p1: ArrayList<TMapPOIItem>?,
-                p2: TMapPoint?,
-                p3: PointF?
-            ) {
-                Toast.makeText(this@MapActivity, "onPressDown", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onPressUp( // 떨어짐
-                p0: ArrayList<TMapMarkerItem>?,
-                p1: ArrayList<TMapPOIItem>?,
-                p2: TMapPoint?,
-                p3: PointF?
-            ) {
-                Toast.makeText(this@MapActivity, "onPressUp", Toast.LENGTH_SHORT).show()
-            }
-        })
-
-
-
 
 
         // 맵 로딩 완료 시 동작할 리스너 설정

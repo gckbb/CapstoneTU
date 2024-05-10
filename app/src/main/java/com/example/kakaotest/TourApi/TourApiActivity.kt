@@ -6,47 +6,72 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaotest.R
-import com.example.kakaotest.TourApi.TourApiManager.Companion.searchRestaurantsInArea
+import com.example.kakaotest.databinding.ActivityTourapiBinding
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class TourApiActivity: AppCompatActivity() {
+class TourApiActivity : AppCompatActivity() {
+    private val tourApiManager = TourApiManager()
     private val scope = MainScope()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tourapi)
+
+        var binding = ActivityTourapiBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
 
-
-        // 서울시청을 중심으로 음식점 검색
         val latitude = 37.5665
         val longitude = 126.9780
 
-        scope.launch {
-            val restaurants =
-                searchRestaurantsInArea(latitude, longitude)
-
-            // 검색 결과를 로그로 출력
-            val items = restaurants.response.body.items
-            for (restaurant in items.item) {
-                Log.d("Restaurant", "음식점 이름: ${restaurant.title}, 주소: ${restaurant.addr1}")
-            }
-            val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-            recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)
-            val adapter = RestaurantAdapter(restaurants.response.body.items.item)
-            recyclerView.adapter = adapter
-
+        binding.restaurant.setOnClickListener {
+            searchRestaurantsInArea(latitude, longitude)
         }
-
-
-
+        binding.areaBased.setOnClickListener {
+            searchAreaBasedList(latitude, longitude)
+        }
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        scope.cancel() // Activity가 소멸될 때 코루틴을 취소하여 메모리 누수를 방지합니다.
+
+    private fun searchRestaurantsInArea(latitude: Double, longitude: Double) {
+        scope.launch {
+            try {
+                val restaurants = tourApiManager.searchRestaurantsInArea(latitude,longitude)
+                // 결과 처리
+                val items = restaurants.response.body.items
+                for (restaurant in items.item) {
+                    Log.d("Restaurant", "음식점 이름: ${restaurant.title}, 주소: ${restaurant.addr1}, 이미지: ${restaurant.firstimage2}")
+                }
+                // RecyclerView 설정
+                val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+                recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)
+                val adapter = RestaurantAdapter(restaurants.response.body.items.item)
+                recyclerView.adapter = adapter
+            } catch (e: Exception) {
+                // 오류 처리
+                Log.e("TourApiActivity", "음식점 검색 오류: $e")
+            }
+        }
+    }
+
+    private fun searchAreaBasedList(latitude: Double, longitude: Double) {
+        scope.launch {
+            try {
+                val areaData = tourApiManager.searchAreaBasedList(latitude, longitude)
+                // 결과 처리
+                val items = areaData.response.body.items
+                for (place in items.item) {
+                    Log.d("Place", "장소 이름: ${place.title}, 주소: ${place.addr1}")
+                }
+                // RecyclerView 설정
+                val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+                recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)
+                val adapter = AreaBasedAdapter(areaData.response.body.items.item)
+                recyclerView.adapter = adapter
+            } catch (e: Exception) {
+                // 오류 처리
+                Log.e("TourApiActivity", "지역 기반 리스트 검색 오류: $e")
+            }
+        }
     }
 }

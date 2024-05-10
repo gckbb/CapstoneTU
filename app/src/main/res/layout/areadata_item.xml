@@ -12,23 +12,19 @@
 
         <ImageView
             android:id="@+id/thumbnail"
-            android:layout_width="99dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:layout_weight="5"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
                 android:padding="8dp"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -37,7 +33,6 @@
                 android:id="@+id/textViewAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
                 android:padding="8dp"
                 android:textSize="14sp" />
         </LinearLayout>

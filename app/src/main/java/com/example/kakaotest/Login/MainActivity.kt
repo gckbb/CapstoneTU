@@ -107,22 +107,11 @@ class MainActivity : AppCompatActivity() {
         binding.tourApi.setOnClickListener {
             val intent = Intent(this, TourApiActivity::class.java)
             startActivity(intent)
-
-//            // 서울시청을 중심으로 음식점 검색
-//            val latitude = 37.5665
-//            val longitude = 126.9780
-//
-//            scope.launch {
-//                val restaurants =
-//                    searchRestaurantsInArea(latitude, longitude)
-//
-//                // 검색 결과를 로그로 출력
-//                val items = restaurants.response.body.items
-//                for (restaurant in items.item) {
-//                    Log.d("Restaurant", "음식점 이름: ${restaurant.title}, 주소: ${restaurant.addr1}")
-//                }
-//            }
         }
+//        binding.checklist.setOnClickListener {
+//            val intent = Intent(this, TourApiActivity::class.java)
+//            startActivity(intent)
+//        }
 
             //아이디 찾기
             val findidBtn = findViewById<TextView>(R.id.FindId)

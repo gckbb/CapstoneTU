@@ -37,6 +37,12 @@
             android:name=".TourApi.TourApiActivity"
             android:exported="false" />
         <activity
+            android:name=".TourApi.RestaurantDetailActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".TourApi.Detail_map_test"
+            android:exported="false"/>
+        <activity
             android:name=".CreatedRoute1"
             android:exported="false" />
         <activity
@@ -72,6 +78,7 @@
         <activity
             android:name=".Map.FoodSelectActivity"
             android:exported="false" />
+
         <activity
             android:name=".Login.MainActivity"
             android:exported="true">
