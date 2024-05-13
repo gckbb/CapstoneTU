@@ -8,8 +8,8 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.DataModel.Restaurant
-import com.example.kakaotest.Map.ApiAdapter
 import com.example.kakaotest.R
+import com.example.kakaotest.Utility.tmap.ApiAdapter
 import com.example.kakaotest.databinding.ActivityDetailMapBinding
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint

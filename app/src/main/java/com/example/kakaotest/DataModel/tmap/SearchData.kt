@@ -2,7 +2,7 @@ package com.example.kakaotest.DataModel.tmap
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.skt.tmap.*
+import com.skt.tmap.TMapPoint
 
 
 data class SearchData(val id: String, val tpoint: TMapPoint, val address: String) :
@@ -37,5 +37,4 @@ data class SearchData(val id: String, val tpoint: TMapPoint, val address: String
                 return arrayOfNulls(size)
             }
         }
-    }
-
+        }

@@ -10,10 +10,9 @@ import android.widget.ImageButton
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.DataModel.TravelPlan
-import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
-import java.util.ArrayList
+import com.example.kakaotest.Utility.tmap.MakeRoute
 
 
 class SelectedPlace : AppCompatActivity() {
@@ -57,9 +56,18 @@ class SelectedPlace : AppCompatActivity() {
 
 
         // next 버튼 클릭 시 RouteListActivity 로 이동
+//        val nextButton: Button = findViewById(R.id.nextbutton)
+//        nextButton.setOnClickListener {
+//            val intent = Intent(this, RouteListActivity::class.java)
+//            intent.putExtra("travelPlan", travelPlan)
+//            intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
+//            startActivity(intent)
+//            Log.d("Item", receivedDataList.toString())
+//        }
+        // next 버튼 클릭 시 CreatedPath 로 이동
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
-            val intent = Intent(this, RouteListActivity::class.java)
+            val intent = Intent(this, FoodSelectActivity::class.java)
             intent.putExtra("travelPlan", travelPlan)
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
             startActivity(intent)

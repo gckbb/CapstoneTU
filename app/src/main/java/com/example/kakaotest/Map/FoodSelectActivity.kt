@@ -11,9 +11,13 @@ import android.widget.AdapterView
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kakaotest.CreatedRoute1
+import com.example.kakaotest.DataModel.TravelPlan
+import com.example.kakaotest.DataModel.tmap.FeatureCollection
+import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.Plan.SelectedPlaceData
 import com.example.kakaotest.R
+import com.example.kakaotest.Utility.Adapter.DataAdapter
+import com.example.kakaotest.Utility.tmap.ApiService
 import com.example.kakaotest.databinding.ActivityFoodMapBinding
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapData.OnFindAllPOIListener
@@ -126,7 +130,9 @@ class FoodSelectActivity : AppCompatActivity() {
 
 
                 binding.nextbuttons.setOnClickListener {
-                    val intent = Intent(this, CreatedRoute1::class.java)
+                    val intent = Intent(this, RouteListActivity::class.java)
+                    val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+                    intent.putExtra("travelPlan", travelPlan)
                     intent.putParcelableArrayListExtra("selectedPlaceDataList", receivedDataList)
                     intent.putParcelableArrayListExtra("selectedFoodDataList", ArrayList(selectedPlaceDataList))
                     startActivity(intent)
@@ -260,13 +266,13 @@ class FoodSelectActivity : AppCompatActivity() {
         input["endX"] = endX
         input["totalValue"] = 2
 
-        val routeCall = apiService.getRoute(input)
+        val routeCall: Call<FeatureCollection> = apiService.getRoute(input)
         var totalTime: Number? = null
 
         routeCall.enqueue(object : Callback<FeatureCollection> {
             override fun onResponse(
-                call: Call<FeatureCollection>,
-                response: Response<FeatureCollection>
+                call: Call<FeatureCollection?>,
+                response: Response<FeatureCollection?>
             ) {
                 val RouteInfo: FeatureCollection? = response.body()
                 Log.d(ContentValues.TAG, "getPostList onResponse()")
@@ -286,7 +292,7 @@ class FoodSelectActivity : AppCompatActivity() {
                 totalTime = RouteInfo?.features?.get(0)?.properties?.totalTime
             }
 
-            override fun onFailure(call: Call<FeatureCollection>, t: Throwable) {
+            override fun onFailure(call: Call<FeatureCollection?>, t: Throwable) {
                 call.cancel()
                 Log.d(ContentValues.TAG, "api fail")
                 totalTime = null

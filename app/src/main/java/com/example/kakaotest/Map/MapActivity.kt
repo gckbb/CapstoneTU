@@ -12,12 +12,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchData
-import com.example.kakaotest.DataModel.tmap.SearchRouteData
-import com.example.kakaotest.Utility.tmap.ApiAdapter
-import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.DataAdapter
+import com.example.kakaotest.Utility.tmap.ApiAdapter
+import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.databinding.ActivityMapBinding
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapData.OnFindAllPOIListener
@@ -25,9 +24,7 @@ import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
 import com.skt.tmap.TMapView.OnClickListenerCallback
 import com.skt.tmap.overlay.TMapMarkerItem
-import com.skt.tmap.overlay.TMapPolyLine
 import com.skt.tmap.poi.TMapPOIItem
-import java.util.ArrayList
 
 
 class MapActivity : AppCompatActivity() {
@@ -54,7 +51,7 @@ class MapActivity : AppCompatActivity() {
 
         binding.backBtn.setOnClickListener {
             finish()
-            
+
         }
 
 

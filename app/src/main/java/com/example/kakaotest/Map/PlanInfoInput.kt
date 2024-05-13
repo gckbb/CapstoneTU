@@ -2,37 +2,25 @@ package com.example.kakaotest.Map
 
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.isGone
 import com.example.kakaotest.DataModel.Date
 import com.example.kakaotest.DataModel.Place
 import com.example.kakaotest.DataModel.TravelPlan
-import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.Fragment.DatePickerFragment
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.TravelPlanManager
-import com.example.kakaotest.databinding.ActivityMapBinding
 import com.example.kakaotest.databinding.ActivityPlanInfoBinding
-import com.google.firebase.firestore.FirebaseFirestore
-import com.skydoves.balloon.ArrowPositionRules
-import com.skydoves.balloon.Balloon
-import com.skydoves.balloon.BalloonAnimation
-import com.skydoves.balloon.BalloonSizeSpec
-import com.skydoves.balloon.createBalloon
-import com.skydoves.balloon.overlay.BalloonOverlayCircle
-
 import java.util.Calendar
+
 class PlanInfoInput : AppCompatActivity() {
     private var firstday: String = ""
     private var secondday : String = ""
