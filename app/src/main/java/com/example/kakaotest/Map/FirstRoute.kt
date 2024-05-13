@@ -52,30 +52,22 @@ class FirstRoute : AppCompatActivity() {
 
                 val iconList = listOf(
                     BitmapFactory.decodeResource(resources, R.drawable.start),
-                    BitmapFactory.decodeResource(resources, R.drawable.pass),
+                    BitmapFactory.decodeResource(resources, R.drawable.point1),
+                    BitmapFactory.decodeResource(resources, R.drawable.point2),
+                    BitmapFactory.decodeResource(resources, R.drawable.point3),
+                    BitmapFactory.decodeResource(resources, R.drawable.point4),
+                    BitmapFactory.decodeResource(resources, R.drawable.point5),
+                    BitmapFactory.decodeResource(resources, R.drawable.point6),
+                    BitmapFactory.decodeResource(resources, R.drawable.point7),
+                    BitmapFactory.decodeResource(resources, R.drawable.point8),
+                    BitmapFactory.decodeResource(resources, R.drawable.point9),
+                    BitmapFactory.decodeResource(resources, R.drawable.point10),
                     BitmapFactory.decodeResource(resources, R.drawable.end)
                 )
 
 
 
-                for ((index, selectedPlace) in firstList!!.withIndex()) {
-                    val tpoint = selectedPlace.pointdata!!.tpoint
 
-                    //선택된 장소들 표시
-                    if (tpoint != null) {
-                        val marker = TMapMarkerItem().apply {
-                            id = selectedPlace.pointdata.placeName
-                            setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))
-                            icon = if (index==0) iconList[0]
-                            else if (index == firstList.size-1) iconList[2]
-                            else iconList[1]
-
-                        }
-                        tMapView.addTMapMarkerItem(marker)
-                    }
-
-
-                }
 
 
                 // 선택된 장소들의 TMapPoint를 이용하여 리스트 생성
@@ -92,15 +84,27 @@ class FirstRoute : AppCompatActivity() {
                         var start: TMapPoint
                         var end: TMapPoint
                         var polyLines: TMapPolyLine
+                        var polyLineList: ArrayList<TMapPolyLine> = arrayListOf<TMapPolyLine>()
                         var passList: ArrayList<TMapPoint> = arrayListOf<TMapPoint>()
-                        for (i in 1 until pointList.size - 1) {
+                        var colorList  = arrayOf(Color.YELLOW,Color.BLUE,Color.GREEN,Color.MAGENTA,Color.CYAN,Color.RED,Color.TRANSPARENT)
+                        for (i in 1 until pointList.size) {
                             passList.add(pointList[i])
+                            polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,pointList[i-1],pointList[i])
+                            polyLines.setID("polylines${i}")
+                            polyLines.setLineColor(colorList[i%7])
+                            polyLineList.add(polyLines)
+                            if (polyLineList[i-1] != null) {
+                                tMapView.addTMapPolyLine(polyLineList[i-1])
+                                val info = tMapView.getDisplayTMapInfo(polyLineList[i-1].linePointList)
+                                tMapView.zoomLevel = info.zoom
+                                tMapView.setCenterPoint(info.point.latitude, info.point.longitude)
+                            }
                         }
-                        start = pointList[0]
-                        end = pointList.last()
+                        //start = pointList[0]
+                        //end = pointList.last()
 
-                        polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,start,end,passList,2)
-
+                        //polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,start,end,passList,2)
+/*
                         if (polyLines != null) {
                             tMapView.addTMapPolyLine(polyLines)
                             val info = tMapView.getDisplayTMapInfo(polyLines.linePointList)
@@ -114,6 +118,8 @@ class FirstRoute : AppCompatActivity() {
 
 
                         }
+                        */
+
 
 
                     } catch (e: Exception) {
@@ -121,6 +127,25 @@ class FirstRoute : AppCompatActivity() {
 
                     }
                 }.start()
+
+                for ((index, selectedPlace) in firstList!!.withIndex()) {
+                    val tpoint = selectedPlace.pointdata!!.tpoint
+
+                    //선택된 장소들 표시
+                    if (tpoint != null) {
+                        val marker = TMapMarkerItem().apply {
+                            id = selectedPlace.pointdata.placeName
+                            setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))
+                            icon = if (index==0) iconList[0]
+                            else if (index == firstList.size-1) iconList[11]
+                            else iconList[index]
+
+                        }
+                        tMapView.addTMapMarkerItem(marker)
+                    }
+
+
+                }
 
 
 
