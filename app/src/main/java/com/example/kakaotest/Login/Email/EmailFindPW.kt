@@ -6,7 +6,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.R
-import com.example.kakaotest.Utility.PwAuthDialogFragment
+import com.example.kakaotest.Utility.dialog.PwAuthDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 

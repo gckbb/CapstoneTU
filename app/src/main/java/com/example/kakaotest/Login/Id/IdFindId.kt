@@ -9,7 +9,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.R
-import com.example.kakaotest.Utility.AlertDialogHelper
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.google.firebase.firestore.FirebaseFirestore
 //자체 로그인 아이디 찾기
 

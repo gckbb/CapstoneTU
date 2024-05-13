@@ -22,13 +22,22 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".SecondRoute"
+            android:name=".Map.ScheduleActivity"
             android:exported="false" />
         <activity
-            android:name=".FirstRoute"
+            android:name=".scheduleActivity"
             android:exported="false" />
         <activity
-            android:name=".PlanInfoActivity"
+            android:name=".Map.MyTrip"
+            android:exported="false" />
+        <activity
+            android:name=".Map.WhereActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Map.SecondRoute"
+            android:exported="false" />
+        <activity
+            android:name=".Map.FirstRoute"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
@@ -43,7 +52,7 @@
             android:name=".TourApi.Detail_map_test"
             android:exported="false"/>
         <activity
-            android:name=".CreatedRoute1"
+            android:name=".Map.RouteListActivity"
             android:exported="false" />
         <activity
             android:name=".Login.Id.ResetPassword"
@@ -67,7 +76,7 @@
             android:name=".Login.Email.EmailLogin"
             android:exported="false" />
         <activity
-            android:name=".Map.CreatedPath"
+            android:name=".Map.PlanInfoInput"
             android:exported="false" />
         <activity
             android:name=".Map.SelectedPlace"

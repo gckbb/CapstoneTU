@@ -6,18 +6,18 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kakaotest.Map.FoodSelectActivity
-import com.example.kakaotest.CreatedRoute1
-import com.example.kakaotest.Plan.PMakeRoute
-import com.example.kakaotest.Plan.SelectedPlaceData
+import com.example.kakaotest.DataModel.TravelPlan
+import com.example.kakaotest.Utility.tmap.MakeRoute
+import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import java.util.ArrayList
 
 
 class SelectedPlace : AppCompatActivity() {
-    private val routetest = PMakeRoute()
+    private val routetest = MakeRoute()
     private val logList = mutableListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +26,14 @@ class SelectedPlace : AppCompatActivity() {
 
         val receivedDataList =
             intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
-
-        //    Log.d("PLAN", "receivedDataList : ${receivedDataList.toString()}")
-        // 다른 클래스의 함수 호출하여 로그를 가져옴
+        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
 
 
+        val backBtn = findViewById<ImageButton>(R.id.back_btn)
+        backBtn.setOnClickListener {
+            finish()
 
+        }
 
 
         // val documnetID = SavedUser().getUserDataFromSharedPreferences(this) //회원정보 문서 ID
@@ -54,10 +56,11 @@ class SelectedPlace : AppCompatActivity() {
         Log.d("selectedPlaceNames", selectedPlaceNames.toString())
 
 
-        // next 버튼 클릭 시 CreatedPath 로 이동
+        // next 버튼 클릭 시 RouteListActivity 로 이동
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
-            val intent = Intent(this, FoodSelectActivity::class.java)
+            val intent = Intent(this, RouteListActivity::class.java)
+            intent.putExtra("travelPlan", travelPlan)
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
             startActivity(intent)
             Log.d("Item", receivedDataList.toString())

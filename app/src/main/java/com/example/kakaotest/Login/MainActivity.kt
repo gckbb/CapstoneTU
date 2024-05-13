@@ -24,7 +24,9 @@ import com.example.kakaotest.Map.MapActivity
 import com.example.kakaotest.R
 import com.example.kakaotest.TourApi.TourApiActivity
 import com.example.kakaotest.Utility.AlertDialogHelper
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.example.kakaotest.databinding.ActivityMainBinding
+import com.example.kakaotest.HomeActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -94,13 +96,13 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         //지도 생성 테스트 버튼
-        binding.tmapViewbtn.setOnClickListener {
+        binding.tmapViewbtn.setOnClickListener{
             val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
         }
 
         // 테스트 버튼
-        binding.navi.setOnClickListener {
+        binding.navi.setOnClickListener{
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
@@ -113,32 +115,32 @@ class MainActivity : AppCompatActivity() {
 //            startActivity(intent)
 //        }
 
-            //아이디 찾기
-            val findidBtn = findViewById<TextView>(R.id.FindId)
-            findidBtn.setOnClickListener {
-                val intent = Intent(this, IdFindId::class.java)
-                startActivity(intent)
-            }
-            //비밀번호 찾기
-            val findPwBtn = findViewById<TextView>(R.id.FindPW)
-            findPwBtn.setOnClickListener {
-                val intent = Intent(this, IdFindPw::class.java)
-                startActivity(intent)
-            }
-            //자체 회원가입
-            val signUpBtn = findViewById<TextView>(R.id.signupbtn)
-            signUpBtn.setOnClickListener {
-                val intent = Intent(this, IdSignup::class.java)
-                startActivity(intent)
-            }
+        //아이디 찾기
+        val findidBtn =findViewById<TextView>(R.id.FindId)
+        findidBtn.setOnClickListener {
+            val intent = Intent(this, IdFindId::class.java)
+            startActivity(intent)
+        }
+        //비밀번호 찾기
+        val findPwBtn =findViewById<TextView>(R.id.FindPW)
+        findPwBtn.setOnClickListener {
+            val intent = Intent(this, IdFindPw::class.java)
+            startActivity(intent)
+        }
+        //자체 회원가입
+        val signUpBtn =findViewById<TextView>(R.id.signupbtn)
+        signUpBtn.setOnClickListener {
+            val intent = Intent(this, IdSignup::class.java)
+            startActivity(intent)
+        }
 
 
-            //이메일 로그인 및 회원가입 버튼
-            val emailsignbtn = findViewById<Button>(R.id.email_login_button)
-            emailsignbtn.setOnClickListener {
-                val intent = Intent(this, EmailLogin::class.java)
-                startActivity(intent)
-            }
+        //이메일 로그인 및 회원가입 버튼
+        val emailsignbtn =findViewById<Button>(R.id. email_login_button)
+        emailsignbtn.setOnClickListener {
+            val intent =Intent(this, EmailLogin::class.java)
+            startActivity(intent)
+        }
 
 
             // Firebase Firestore 초기화
