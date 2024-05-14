@@ -89,6 +89,19 @@
             android:exported="false" />
 
         <activity
+            android:name=".CheckList.CheckListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CheckList.EditTodoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CheckList.AfterSelectListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CheckList.ListSelectActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".Login.MainActivity"
             android:exported="true">
             <intent-filter>
