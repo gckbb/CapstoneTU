@@ -2,6 +2,7 @@ package com.example.kakaotest.DataModel
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 
 data class TravelPlan(
@@ -11,8 +12,10 @@ data class TravelPlan(
     var who: String?=null,
     var transportion: String?=null,
     var theme: String?=null,
-    var activity: String?=null,
-    var destinations: List<SelectedPlaceData>?=null
+    var activityTime: Int?=null,
+    var startTime: Time?=null,
+    var restaurant: String?=null,
+    var destinations: List<SearchRouteData>?=null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(Place::class.java.classLoader),
@@ -21,8 +24,10 @@ data class TravelPlan(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readInt()!!,
+        parcel.readParcelable(Time::class.java.classLoader),
         parcel.readString()!!,
-        parcel.createTypedArrayList(SelectedPlaceData)
+        parcel.createTypedArrayList(SearchRouteData)
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -32,7 +37,9 @@ data class TravelPlan(
         parcel.writeString(who)
             parcel.writeString(transportion)
         parcel.writeString(theme)
-        parcel.writeString(activity)
+        activityTime?.let { parcel.writeInt(it) }
+        parcel.writeParcelable(startTime, flags)
+        parcel.writeString(restaurant)
         parcel.writeTypedList(destinations)
     }
 

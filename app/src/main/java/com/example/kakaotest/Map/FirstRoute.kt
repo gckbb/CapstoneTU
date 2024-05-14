@@ -2,6 +2,7 @@ package com.example.kakaotest.Map
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -52,10 +53,18 @@ class FirstRoute : AppCompatActivity() {
 
                 val iconList = listOf(
                     BitmapFactory.decodeResource(resources, R.drawable.start),
-                    BitmapFactory.decodeResource(resources, R.drawable.pass),
+                    BitmapFactory.decodeResource(resources, R.drawable.point1),
+                    BitmapFactory.decodeResource(resources, R.drawable.point2),
+                    BitmapFactory.decodeResource(resources, R.drawable.point3),
+                    BitmapFactory.decodeResource(resources, R.drawable.point4),
+                    BitmapFactory.decodeResource(resources, R.drawable.point5),
+                    BitmapFactory.decodeResource(resources, R.drawable.point6),
+                    BitmapFactory.decodeResource(resources, R.drawable.point7),
+                    BitmapFactory.decodeResource(resources, R.drawable.point8),
+                    BitmapFactory.decodeResource(resources, R.drawable.point9),
+                    BitmapFactory.decodeResource(resources, R.drawable.point10),
                     BitmapFactory.decodeResource(resources, R.drawable.end)
                 )
-
 
 
                 for ((index, selectedPlace) in firstList!!.withIndex()) {
@@ -67,8 +76,8 @@ class FirstRoute : AppCompatActivity() {
                             id = selectedPlace.pointdata.placeName
                             setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))
                             icon = if (index==0) iconList[0]
-                            else if (index == firstList.size-1) iconList[2]
-                            else iconList[1]
+                            else if (index == firstList.size-1) iconList[11]
+                            else iconList[index]
 
                         }
                         tMapView.addTMapMarkerItem(marker)
@@ -86,28 +95,77 @@ class FirstRoute : AppCompatActivity() {
                     }
 
 
+/*
+                // 선택된 장소들 간의 경로 표시
+                Thread {
+                    try {
+                        var start: TMapPoint
+                        var end: TMapPoint
+                        var polyLines: TMapPolyLine
+                        var passList: ArrayList<TMapPoint> = arrayListOf<TMapPoint>()
+                        for (i in 1 until pointList.size - 1) {
+                            passList.add(pointList[i])
+                        }
+                        start = pointList[0]
+                        end = pointList.last()
 
-            // 선택된 장소들 간의 경로 표시
-            for (i in 0 until pointList.size - 1) {
-                val start = pointList[i]
-                val end = pointList[i + 1]
+                        polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,start,end,passList,2)
+
+                        if (polyLines != null) {
+                            tMapView.addTMapPolyLine(polyLines)
+                            val info = tMapView.getDisplayTMapInfo(polyLines.linePointList)
+                            tMapView.zoomLevel = info.zoom
+                            tMapView.setCenterPoint(info.point.latitude, info.point.longitude)
 
 
 
-                TMapData().findPathData(start, end) { tMapPolyLine ->
 
-                    val newPolyLine = TMapPolyLine("line1", pointList)
+                        } else {
 
-                    // 지도에 추가
-                    tMapView.addTMapPolyLine(newPolyLine)
 
-                    // 경로 추가 후 지도의 중심 및 줌 조절
-                    val info = tMapView.getDisplayTMapInfo(newPolyLine.linePointList)
-                    tMapView.zoomLevel = info.zoom
-                    tMapView.setCenterPoint(info.point.latitude, info.point.longitude)
-                }
-            }
+                        }
 
+
+                    } catch (e: Exception) {
+
+
+                    }
+                }.start()
+*/
+
+                Thread {
+                    try {
+                        var start: TMapPoint
+                        var end: TMapPoint
+                        var polyLines: TMapPolyLine
+                        var polyLineList: ArrayList<TMapPolyLine> = arrayListOf<TMapPolyLine>()
+                        var passList: ArrayList<TMapPoint> = arrayListOf<TMapPoint>()
+                        var colorList  = arrayOf(
+                            Color.YELLOW,
+                            Color.BLUE,
+                            Color.GREEN,
+                            Color.MAGENTA,
+                            Color.CYAN,
+                            Color.RED,
+                            Color.TRANSPARENT)
+                        for (i in 1 until pointList.size) {
+                            passList.add(pointList[i])
+                            polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,pointList[i-1],pointList[i])
+                            polyLines.setID("polylines${i}")
+                            polyLines.setLineColor(colorList[i%7])
+                            polyLineList.add(polyLines)
+                            if (polyLineList[i-1] != null) {
+                                tMapView.addTMapPolyLine(polyLineList[i-1])
+                                val info = tMapView.getDisplayTMapInfo(polyLineList[i-1].linePointList)
+                                tMapView.zoomLevel = info.zoom
+                                tMapView.setCenterPoint(info.point.latitude, info.point.longitude)
+                            }
+                        }
+                    } catch (e: Exception) {
+
+
+                    }
+                }.start()
     }})}}
 
 

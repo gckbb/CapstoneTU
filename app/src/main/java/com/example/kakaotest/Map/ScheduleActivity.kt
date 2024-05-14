@@ -8,18 +8,17 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
-import com.example.kakaotest.DataModel.Date
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
+import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 
 import com.example.kakaotest.R
-import com.example.kakaotest.databinding.ActivityHomeBinding
+import com.example.kakaotest.Utility.TravelPlanManager
 import com.example.kakaotest.databinding.ActivityScheduleBinding
 
 class ScheduleActivity : AppCompatActivity() {
+    private val travelPlanManager = TravelPlanManager()
 
-    private var isListView1Visible = true // 리스트뷰1 가시성 여부를 추적하는 변수
-    private var isListView2Visible = false // 리스트뷰2 가시성 여부를 추적하는 변수
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +28,12 @@ class ScheduleActivity : AppCompatActivity() {
         val firstList = intent.getParcelableArrayListExtra<SearchRouteData>("firstList") //경로
         val secondList = intent.getParcelableArrayListExtra<SearchRouteData>("secondList") //경로
 
+        val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
 
 
-        val dateList =intent.getParcelableArrayListExtra<Date>("selectedDay")
 
         val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+        Log.d("PLAN",travelPlan.toString())
         val placename = findViewById<TextView>(R.id.placename)
         val firstdate = findViewById<TextView>(R.id.date1)
         val lastdate = findViewById<TextView>(R.id.date2)
@@ -48,6 +48,7 @@ class ScheduleActivity : AppCompatActivity() {
         var day8 = findViewById<Button>(R.id.day8)
 
 
+
         travelPlan?.let { plan ->
             placename.text = plan.where?.placeName ?: ""
             firstdate.text = plan.startDate?.date ?: ""
@@ -56,6 +57,13 @@ class ScheduleActivity : AppCompatActivity() {
             day1.text = plan.startDate?.day.toString() ?: ""
             day2.text = (plan.startDate?.day?.plus(1)).toString()
         }
+
+        travelPlanManager.updatePlan(destination = firstList)
+        travelPlanManager.updatePlan(destination = secondList)
+
+
+        Log.d("travelPlan","travelPlan update : "+travelPlan)
+
 
         var firstListTime = firstList?.map { it.time }
         Log.d("PLAN",firstListTime.toString())
@@ -79,7 +87,7 @@ class ScheduleActivity : AppCompatActivity() {
         val time5_6 = findViewById<ImageView>(R.id.line5_6)
         val time6_7 = findViewById<ImageView>(R.id.line6_7)
         //  val time7_8 = findViewById<ImageView>(R.id.line6_7)
-        val timeLine = mutableListOf<ImageView>(time0_1,time1_2, time2_3, time3_4, time4_5, time5_6, time6_7)
+        val firsttimeLine = mutableListOf<ImageView>(time0_1,time1_2, time2_3, time3_4, time4_5, time5_6, time6_7)
 
 
         val adjustedFirstListTime = firstListTime?.drop(1) // 첫 번째 요소를 건너뛴 새로운 리스트
@@ -87,7 +95,7 @@ class ScheduleActivity : AppCompatActivity() {
         for (i in firstListTime!!.size until firstdayTime.size) {
 
             firstdayTime[i].visibility = View.GONE
-            timeLine[i].visibility=View.GONE
+            firsttimeLine[i].visibility=View.GONE
         }
 
 
@@ -98,13 +106,57 @@ class ScheduleActivity : AppCompatActivity() {
                 text = String.format("%02d:%02d", hours, minutes) // 시간 설정
             }
             // 라인 표시
-            if (index < timeLine.size) {
-                timeLine[index].visibility = View.VISIBLE
-                timeLine[index+1].visibility=View.VISIBLE
+            if (index < firsttimeLine.size) {
+                firsttimeLine[index].visibility = View.VISIBLE
+                firsttimeLine[index+1].visibility=View.VISIBLE
             }
         }
 
 
+        var secondListTime = secondList?.map { it.time }
+
+        val time_1=findViewById<TextView>(R.id.time_1)
+        val time_2=findViewById<TextView>(R.id.time_2)
+        val time_3=findViewById<TextView>(R.id.time_3)
+        val time_4=findViewById<TextView>(R.id.time_4)
+        val time_5=findViewById<TextView>(R.id.time_5)
+        val time_6=findViewById<TextView>(R.id.time_6)
+        val time_7=findViewById<TextView>(R.id.time_7)
+        val seconddayTime = mutableListOf<TextView>(time_1, time_2, time_3, time_4, time_5, time_6, time_7)
+
+
+        val time_0_1 = findViewById<ImageView>(R.id.line_0_1)
+        val time_1_2 = findViewById<ImageView>(R.id.line_1_2)
+        val time_2_3 = findViewById<ImageView>(R.id.line_2_3)
+        val time_3_4 = findViewById<ImageView>(R.id.line_3_4)
+        val time_4_5 = findViewById<ImageView>(R.id.line_4_5)
+        val time_5_6 = findViewById<ImageView>(R.id.line_5_6)
+        val time_6_7 = findViewById<ImageView>(R.id.line_6_7)
+        //  val time7_8 = findViewById<ImageView>(R.id.line6_7)
+        val secondtimeLine = mutableListOf<ImageView>(time_0_1,time_1_2, time_2_3, time_3_4, time_4_5, time_5_6, time_6_7)
+
+
+        val adjustedSecondListTime = secondListTime?.drop(1) // 첫 번째 요소를 건너뛴 새로운 리스트
+        // 이동시간이 없는 경우 나머지 숨기기
+        for (i in secondListTime!!.size until seconddayTime.size) {
+
+            seconddayTime[i].visibility = View.GONE
+            secondtimeLine[i].visibility=View.GONE
+        }
+
+
+        adjustedSecondListTime?.forEachIndexed { index, time ->
+            val (hours, minutes) = convertSecondsToTime(time.toDouble())
+            seconddayTime[index].apply {
+                visibility = View.VISIBLE
+                text = String.format("%02d:%02d", hours, minutes) // 시간 설정
+            }
+            // 라인 표시
+            if (index < secondtimeLine.size) {
+                secondtimeLine[index].visibility = View.VISIBLE
+                secondtimeLine[index+1].visibility=View.VISIBLE
+            }
+        }
 
 
 

@@ -16,6 +16,7 @@ import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.HomeActivity
 import com.example.kakaotest.R
+import com.example.kakaotest.Utility.TravelPlanManager
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 
@@ -29,6 +30,10 @@ class RouteListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_route)
         val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
         val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+        val receivedFoodDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedFoodDataList")
+
+
+
 
         val path_1: Button = findViewById<Button>(R.id.path_1)
         val path_2: Button = findViewById<Button>(R.id.path_2)
@@ -46,7 +51,7 @@ class RouteListActivity : AppCompatActivity() {
 
             val firstDayData = routetest.printTotalRoute().firstOrNull()
 
-            Log.d("PLAN","firstDayData : \n"+firstDayData)
+            Log.d("PLAN","firstDayData : "+firstDayData)
             // 첫 번째 날짜의 데이터가 있을 때 처리
             if (firstDayData != null) {
                 // 첫 번째 날짜의 선택된 장소 리스트 가져오기
@@ -56,6 +61,58 @@ class RouteListActivity : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 Log.e("PLAN", "No data available for the first day")
+            }
+        }
+
+        path_2.setOnClickListener {
+            val secondDayData = routetest.printTotalRoute().getOrNull(1)
+            val intent = Intent(this, SecondRoute::class.java)
+            Log.d("PLAN","secondDayData : "+secondDayData)
+            if (secondDayData != null) {
+
+                val secondList = secondDayData!!.dayRoute
+                // 두 번째 날짜의 선택된 장소 리스트 가져오기
+                intent.putExtra("secondList",  secondList)
+                startActivity(intent)
+            } else {
+                Log.e("PLAN", "No data available for the secondday")
+            }
+        }
+
+        nextButton.setOnClickListener {
+            val firstDayData = routetest.printTotalRoute().firstOrNull()
+            val firstPlaceList = firstDayData!!.dayRoute
+            val secondDayData = routetest.printTotalRoute().getOrNull(1)
+            val secondList = secondDayData!!.dayRoute
+            val intent = Intent(this, ScheduleActivity::class.java)
+
+            intent.putExtra("firstList",firstPlaceList)
+            intent.putExtra("secondList",  secondList)
+            intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
+            intent.putExtra("travelPlan", travelPlan)
+            Log.d("PLAN",travelPlan.toString())
+            startActivity(intent)
+        }
+
+
+
+
+        Log.d("PLAN","receivedDataList : \n"+ receivedDataList.toString())
+
+
+        lifecycleScope.launch {
+            try {
+                // 비동기적으로 routeSet을 호출합니다.
+                routetest.routeSet(receivedDataList!!, receivedDataList!![0])
+                Log.d("PLAN", "Route Set")
+                // 비동기적으로 routeStart를 호출합니다.
+                routetest.routeStart(2, 8, 1, receivedFoodDataList!!)
+                Log.d("PLAN", "Route Started")
+                routetest.printTotalRoute()
+                Log.d("PLAN", "Total Route Printed")
+                updateListView()
+            } catch (e: Exception) {
+                Log.e("CreatedRoute1", "Error: ${e.message}", e)
             }
         }
 
@@ -74,41 +131,12 @@ class RouteListActivity : AppCompatActivity() {
             }
         }
 
-        nextButton.setOnClickListener {
-            val firstDayData = routetest.printTotalRoute().firstOrNull()
-            val firstPlaceList = firstDayData!!.dayRoute
-            val secondDayData = routetest.printTotalRoute().getOrNull(1)
-            val secondList = secondDayData!!.dayRoute
-            val intent = Intent(this, ScheduleActivity::class.java)
 
-            intent.putExtra("firstList",firstPlaceList)
-            intent.putExtra("secondList",  secondList)
-            intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
-            intent.putExtra("travelPlan", travelPlan)
-            startActivity(intent)
-        }
-
-
-
-
-        Log.d("PLAN","receivedDataList : \n"+ receivedDataList.toString())
-
-        lifecycleScope.launch {
-            try {
-                // 비동기적으로 routeSet을 호출합니다.
-                routetest.routeSet(receivedDataList!!, receivedDataList[0])
-                Log.d("PLAN", "Route Set")
-                // 비동기적으로 routeStart를 호출합니다.
-                routetest.routeStart(2, 6)
-                Log.d("PLAN", "Route Started")
-                routetest.printTotalRoute()
-                Log.d("PLAN", "Total Route Printed")
-                updateListView()
-            } catch (e: Exception) {
-                Log.e("CreatedRoute1", "Error: ${e.message}", e)
-            }
-        }
     }
+
+
+
+
 
     private fun updateListView() {
         val listView1 = findViewById<ListView>(R.id.listView1)

@@ -1,6 +1,7 @@
 package com.example.kakaotest.Map
 
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import java.util.ArrayList
 
 
@@ -59,7 +61,8 @@ class SelectedPlace : AppCompatActivity() {
         // next 버튼 클릭 시 RouteListActivity 로 이동
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
-            val intent = Intent(this, RouteListActivity::class.java)
+            val intent = Intent(this, FoodSelectActivity::class.java)
+            // val intent = Intent(this, RouteListActivity::class.java)
             intent.putExtra("travelPlan", travelPlan)
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
             startActivity(intent)
@@ -68,5 +71,8 @@ class SelectedPlace : AppCompatActivity() {
 
 
     }
+
+
+
 
 }

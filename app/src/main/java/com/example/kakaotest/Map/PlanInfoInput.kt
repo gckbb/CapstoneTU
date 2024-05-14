@@ -8,29 +8,19 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
-import android.widget.ImageButton
+import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.isGone
 import com.example.kakaotest.DataModel.Date
 import com.example.kakaotest.DataModel.Place
+import com.example.kakaotest.DataModel.Time
 import com.example.kakaotest.DataModel.TravelPlan
-import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.Fragment.DatePickerFragment
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.TravelPlanManager
-import com.example.kakaotest.databinding.ActivityMapBinding
 import com.example.kakaotest.databinding.ActivityPlanInfoBinding
-import com.google.firebase.firestore.FirebaseFirestore
-import com.skydoves.balloon.ArrowPositionRules
-import com.skydoves.balloon.Balloon
-import com.skydoves.balloon.BalloonAnimation
-import com.skydoves.balloon.BalloonSizeSpec
-import com.skydoves.balloon.createBalloon
-import com.skydoves.balloon.overlay.BalloonOverlayCircle
 
 import java.util.Calendar
 class PlanInfoInput : AppCompatActivity() {
@@ -67,7 +57,7 @@ class PlanInfoInput : AppCompatActivity() {
             val whereTextView = findViewById<TextView>(R.id.where)
             whereTextView.text = placeName
         }
-        travelPlanManager.updatePlan(where=selectedPlace)
+        travelPlanManager.updatePlan(where =selectedPlace)
         val firstdate: TextView = findViewById<TextView>(R.id.day1txt)
         val seconddate: TextView = findViewById<TextView>(R.id.day2txt)
 
@@ -80,7 +70,7 @@ class PlanInfoInput : AppCompatActivity() {
         val date = ArrayList<Date>()
         val travelplan = ArrayList<TravelPlan>()
 
-        binding.day1btn.setOnClickListener {
+        binding.firstdayLayout.setOnClickListener {
             val dialogFragment = DatePickerFragment { year, month, day ->
                 start_selectedYear = year
                 start_selectedMonth = month + 1
@@ -108,7 +98,7 @@ class PlanInfoInput : AppCompatActivity() {
         var last_selectedDay: Int? = null
 
 
-        binding.day2btn.setOnClickListener {
+        binding.lastdayLayout.setOnClickListener {
             val dialogFragment = DatePickerFragment { year, month, day ->
                 last_selectedYear = year
                 last_selectedMonth =month + 1
@@ -153,7 +143,7 @@ class PlanInfoInput : AppCompatActivity() {
                             who = whoList[whoBtns.indexOf(btn)]// 누른 버튼의 텍스트를 who 변수에 저장
                             Log.d("PLAN","who : "+who)
 
-                            travelPlanManager.updatePlan(who=who)
+                            travelPlanManager.updatePlan(who =who)
                         }}
                 }
                 false
@@ -227,31 +217,6 @@ class PlanInfoInput : AppCompatActivity() {
             }
         }
 
-        val lowBtn = findViewById<Button>(R.id.low_activity)
-        val normalBtn = findViewById<Button>(R.id.normal_activity)
-        val hardBtn = findViewById<Button>(R.id.hard_activity)
-        val activityBtn = listOf(lowBtn,normalBtn,hardBtn)
-        var activityList = listOf("적음","보통","많음")
-
-        for (btn in activityBtn){
-            btn.background = ContextCompat.getDrawable(this, R.drawable.buttonshape4)
-            btn.setOnTouchListener { view, motionEvent ->
-                when (motionEvent.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        if (view.isSelected) {
-                            view.isSelected = false
-                            activity = ""
-                        } else {
-                            view.isSelected = true
-                            activity= activityList[activityBtn.indexOf(btn)] // 누른 버튼의 텍스트를 who 변수에 저장
-                            Log.d("PLAN","activity : $activity")
-
-                            travelPlanManager.updatePlan(activity = activity)
-                        }}
-                }
-                false
-            }
-        }
 
 
 
@@ -268,6 +233,54 @@ class PlanInfoInput : AppCompatActivity() {
             helptxt.visibility = View.GONE
         }
 
+
+
+
+
+
+
+
+        val helptxt2 = findViewById<ImageView>(R.id.helptxt)
+        binding.help2.setOnClickListener{
+            helptxt2.visibility = View.VISIBLE
+        }
+
+
+        binding.backgroundLayout.setOnClickListener {
+            // 배경 레이아웃 클릭 시 이미지뷰를 숨김
+            helptxt2.visibility = View.GONE
+        }
+
+
+        val yesBtn = findViewById<Button>(R.id.yes)
+        val noBtn = findViewById<Button>(R.id.no)
+
+
+        val restaurantBtn  =  listOf(yesBtn ,noBtn)
+        var restaurantList = listOf("음식점 추가O","음식점 추가X")
+
+        var restaurant : String? = ""
+        for (btn in restaurantBtn){
+            btn.background = ContextCompat.getDrawable(this, R.drawable.buttonshape4)
+            btn.setOnTouchListener { view, motionEvent ->
+                when (motionEvent.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        if (view.isSelected) {
+                            view.isSelected = false
+                            restaurant = ""
+                        } else {
+                            view.isSelected = true
+                            restaurant = restaurantList[restaurantBtn.indexOf(btn)]
+                            Log.d("PLAN","restaurant : $restaurant")
+
+                            travelPlanManager.updatePlan(restaurant = restaurant)
+                        }
+                    }
+                }
+                false
+            }
+        }
+
         binding.backBtn.setOnClickListener {
             finish()
 
@@ -278,6 +291,7 @@ class PlanInfoInput : AppCompatActivity() {
 
 
         binding.nextbutton.setOnClickListener {
+            EditText()
             val intent = Intent(this, MapActivity::class.java)
             intent.putExtra("travelPlan", travelPlanManager.getPlan())
             startActivity(intent)
@@ -288,7 +302,44 @@ class PlanInfoInput : AppCompatActivity() {
 
     }
 
+        private fun EditText(){
+            val start_hour = findViewById<EditText>(R.id.start_time_hour)
+            val startHourText = start_hour.text.toString()
+            val startHour = startHourText.toIntOrNull() ?: 0
 
+
+
+
+            val start_min = findViewById<EditText>(R.id.start_time_min)
+            val startMinText = start_min.text.toString()
+            val startMin = startMinText.toIntOrNull()
+
+
+            val startTime = ArrayList<Time>()
+            var start_Time = Time(time= startHourText+"시"+startMinText+"분",hour = startHour,min=startMin)
+            startTime.add(start_Time)
+            Log.d("PLAN","희망 출발시간 : " + startHour +"시"+ startMin +"분")
+
+            if (startHourText==null || startMinText ==null) {
+                Toast.makeText(this, "빈칸없이 작성해주세요", Toast.LENGTH_SHORT).show()
+            }else {
+
+                travelPlanManager.updatePlan(startTime = startTime[0])
+                Log.d("PLAN","startTime : "+startTime[0].time)
+            }
+
+
+            val activity_time = findViewById<EditText>(R.id.activity_time)
+            val activityTimeText = activity_time.text.toString()
+            val activityTime = activityTimeText.toIntOrNull()
+
+
+
+            travelPlanManager.updatePlan(activityTime = activityTime)
+
+            Log.d("PLAN","actvitiyTime : "+activityTime)
+
+        }
 
 
 
