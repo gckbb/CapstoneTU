@@ -1,6 +1,7 @@
 package com.example.kakaotest.TourApi
 
 import android.util.Log
+import com.example.kakaotest.DataModel.AreaDataResponse
 import com.example.kakaotest.DataModel.RestaurantResponse
 
 
@@ -31,18 +32,19 @@ class TourApiManager {
             return response
         }
 
-        suspend fun searchCategory(cat1: String, cat2: String, cat3: String): RestaurantResponse {
+        suspend fun searchAreaBasedList(latitude: Double, longitude: Double): AreaDataResponse {
             val apiService = TourApiClient.create()
             Log.d("areatest", "AreaData_apiservice 실행")
-            val response = apiService.searchCategory(
+            val response = apiService.searchAreaData(
                 apiKey = TourApiClient.API_KEY, // 여기를 변경
                 numOfRows = 10,
                 pageNo = 1,
                 mobileOS = "AND",
                 mobileApp = "AppTest",
-                cat1 = "cat1",
-                cat2 = "cat2",
-                cat3 = "cat3",
+                arrange = "A",
+                mapX = longitude,
+                mapY = latitude,
+                radius = 5000,
                 type = "json",
                 listYN = "Y",
                 contentTypeId = 39,

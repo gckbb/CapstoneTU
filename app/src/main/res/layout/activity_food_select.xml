@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".Map.MapActivity">
+    tools:context=".Map.FoodSelectActivity">
 
 
     <FrameLayout
         android:id="@+id/tmapViewContainer"
         android:layout_width="413dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/searchDataListView"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="372dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
 
@@ -21,7 +23,7 @@
     <ListView
         android:id="@+id/searchDataListView"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="300dp"
         app:layout_constraintBottom_toTopOf="@+id/searchButton"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -43,8 +45,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="13dp"
         android:background="@drawable/edittext"
-        android:imeOptions="actionDone"
-        android:hint="   장소를 입력하세요"
+        android:padding="10dp"
+        android:hint=" 식당을 입력하세요"
         android:inputType="text"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,7 +63,6 @@
 
     <LinearLayout
 
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -77,28 +78,37 @@
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="106dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="25dp"
 
-            android:text="관광지 검색"
-            android:textColor="@color/black"
+            android:text="식당 검색"
             android:textSize="25dp"
-            android:textStyle="bold" />
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <ImageButton
+            android:id="@+id/help"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/help"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
 
         <Button
             android:id="@+id/nextbutton"
             android:layout_width="83dp"
             android:layout_height="47dp"
-            android:layout_marginLeft="125dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/buttonshape1"
+            android:layout_marginLeft="120dp"
             android:text="다음"
+            android:background="@drawable/buttonshape1"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="18dp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="TouchTargetSizeCheck" />

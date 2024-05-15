@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
+import com.example.kakaotest.R
 import java.util.Calendar
 
 class DatePickerFragment(private val onDateSelected: (year: Int, month: Int, day: Int) -> Unit) : DialogFragment(), DatePickerDialog.OnDateSetListener {
@@ -14,7 +15,8 @@ class DatePickerFragment(private val onDateSelected: (year: Int, month: Int, day
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-        return DatePickerDialog(requireActivity(), this, year, month, day)
+        val dialog = DatePickerDialog(requireActivity(), R.style.CreateProfileTheme, this, year, month, day)
+        return dialog
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {

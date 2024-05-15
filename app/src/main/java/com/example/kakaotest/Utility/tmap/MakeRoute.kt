@@ -8,7 +8,9 @@ import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import java.lang.Exception
 import java.util.LinkedList
+import java.util.ArrayList
 
 class MakeRoute {
     private var totalRouteList = LinkedList<DayRouteData>()
@@ -28,19 +30,17 @@ class MakeRoute {
 
     suspend fun routeSet(selectedPlaceList: ArrayList<SelectedPlaceData>, startPoint: SelectedPlaceData) {
         try {
-            Log.d("PLAN", "Start Point: $startPoint")
+            Log.d("makeroute", "Start Point: $startPoint")
+            Log.d("makeroute", "routelist : $selectedPlaceList")
             this.startPoint = startPoint
             var routeData: SearchRouteData
             var time: Number?
 
             for (i in 1 until selectedPlaceList.size) {
-                Log.d("PLAN","time저장")
                 time = apiRequest(
                     startPoint.tpoint.longitude, startPoint.tpoint.latitude,
                     selectedPlaceList[i].tpoint.longitude, selectedPlaceList[i].tpoint.latitude
                 )
-                Log.d("PLAN","Selected: ${selectedPlaceList[i].tpoint.longitude}, ${selectedPlaceList[i].tpoint.latitude}")
-                Log.d("PLAN","time : ${time}")
 
                 if (time != null) {
                     routeData = SearchRouteData(selectedPlaceList[i], time)
@@ -66,36 +66,67 @@ class MakeRoute {
 
 
 
-    suspend fun routeStart(totalDate: Int, maxDayTime: Int) {
+    suspend fun routeStart(totalDate: Int, maxDayTime: Int,stayTimePerPlace : Int, foodDataList:ArrayList<SelectedPlaceData>) {
         coroutineScope {
             try {
+
                 for (k in 0 until totalDate) {
                     var totalTime: Double = 0.0
                     var currentDayTime: Double = 0.0
                     var remainingTime: Int = maxDayTime * 3600 // 남은 시간을 초 단위로 계산
+                    var lunchcheck = 0
+
+
 
                     dayRouteList.add(SearchRouteData(startPoint, 0))
-                    Log.d("PLAN", "dayRouteList : ${dayRouteList.toString()}")
 
                     // 최단 시간 경로를 구하는 대신, 최대한 많은 장소를 방문하는 로직 추가
                     while (routeList.isNotEmpty() && currentDayTime + routeList.first().time.toInt() <= remainingTime) {
                         val minTime = routeList.minByOrNull { it.time.toInt() } ?: break
+
                         if (currentDayTime + minTime.time.toInt() > remainingTime) break
 
-                        // 장소 추가
-                        dayRouteList.add(minTime)
-                        currentDayTime += minTime.time.toInt()
-                        remainingTime -= minTime.time.toInt()
+                        if(currentDayTime > 4 * 3600 && lunchcheck == 0){
+                            var minfood = 999999
+                            var mindata : SelectedPlaceData? = null
+                            for ( i in 0 until foodDataList.size){
 
-                        // 해당 장소를 routeList에서 제거
+                                val temp = apiRequest(dayRouteList.last.pointdata?.tpoint?.longitude!!,dayRouteList.last.pointdata?.tpoint?.latitude!!,
+                                    foodDataList[i].tpoint.longitude,foodDataList[i].tpoint.latitude)
+
+                                if (temp!!.toInt() < minfood.toInt()) {
+                                    minfood = temp.toInt()
+
+                                    mindata = foodDataList[i]
+
+
+
+                                }
+                            }
+
+
+                            dayRouteList.add(SearchRouteData(mindata,minfood))
+                            currentDayTime += minfood.toInt()
+
+                            currentDayTime += 3600
+
+                            lunchcheck = 1
+                            foodDataList.remove(mindata)
+                            continue
+                        }
+                        dayRouteList.add(minTime)
+
+
+                        currentDayTime += minTime.time.toInt() + 3600
+
                         routeList.remove(minTime)
                     }
 
-                    Log.d("PLAN", "dayRouteList : ${dayRouteList.toString()}")
+
 
                     // 총 이동 시간 계산 (이동 시간 + 체류 시간)
-                    totalTime = currentDayTime +1 * (dayRouteList.size - 1)
-                    Log.d("PLAN","totalTime : ${totalTime}")
+                    totalTime = currentDayTime + stayTimePerPlace * (dayRouteList.size - 1)
+
                     // 현재 일자의 경로를 추가
                     totalRouteList.add(DayRouteData(totalTime, LinkedList(dayRouteList)))
 
@@ -108,41 +139,55 @@ class MakeRoute {
         }
     }
 
+
+
     //경로의 마지막 장소와 가장 가까운 장소를 다음 장소로 추가하는 함수
-
-    suspend fun findMinPoint(startRouteData: SearchRouteData): Boolean = coroutineScope {
-        var minIndex: Int = 0
-        var minTime: Int? = null
-
-        val deferredRequests = routeList.map { route ->
-            async(Dispatchers.IO) {
-                apiAdapter.apiRequest(
-                    startRouteData.pointdata!!.tpoint.longitude,
-                    startRouteData.pointdata.tpoint.latitude,
-                    route.pointdata!!.tpoint.longitude,
-                    route.pointdata!!.tpoint.latitude
-                )?.toInt() ?: Int.MAX_VALUE // Handle null values gracefully
+    suspend fun findMinPoint(startRouteData: SearchRouteData): Boolean {
+        return try {
+            if (routeList.isEmpty()) {
+                Log.d("PLAN", "Route list is empty in findMinPoint")
+                return false
             }
-        }
 
-        val responseTimes = deferredRequests.map { it.await() }
+            val asyncResults = routeList.map { route ->
+                coroutineScope {
+                    async(Dispatchers.IO) {
+                        apiAdapter.apiRequest(
+                            startRouteData.pointdata!!.tpoint.longitude,
+                            startRouteData.pointdata.tpoint.latitude,
+                            route.pointdata!!.tpoint.longitude,
+                            route.pointdata!!.tpoint.latitude
+                        )
+                    }
+                }
+            }
 
-        minTime = responseTimes.minOrNull()
+            // 모든 비동기 작업 완료 및 결과를 times에 매핑
+            val times = asyncResults.mapNotNull { asyncResult -> asyncResult.await()?.toInt() }
 
-        if (minTime == null) {
-            Log.d(ContentValues.TAG, "findMinPoint break")
-            return@coroutineScope false
-        } else {
-            minIndex = responseTimes.indexOf(minTime)
+            if (times.isEmpty()) {
+                Log.d("PLAN", "Time list is empty in findMinPoint")
+                return false
+            }
+
+            // 최소 이동 시간 및 해당 인덱스 찾기
+            val minTime = times.minOrNull() ?: return false
+            val minIndex = times.indexOf(minTime)
+
+            // 최소 이동 시간의 장소를 dayRouteList에 추가하고 routeList에서 제거
             dayRouteList.add(routeList[minIndex])
+            Log.d("PLAN", "dayRouteList : ${dayRouteList.toString()}")
             routeList.removeAt(minIndex)
+            // 이동 시간 추가
             dayRouteList[0].time = dayRouteList[0].time.toInt() + minTime
-            return@coroutineScope true
+
+            true // 성공적으로 최소 이동 시간을 찾았으므로 true 반환
+        } catch (e: Exception) {
+            // 예외 발생 시 로그 출력 및 false 반환
+            Log.e("PLAN", "findMinPoint - Exception: ${e.toString()}", e)
+            false
         }
     }
-
-
-
 
     fun findInList(findData: SearchRouteData):Int {
         try {

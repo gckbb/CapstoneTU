@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.R
 
-class DataAdapter(val context: Context, val dataList: ArrayList<SearchData>): BaseAdapter() {
+class DataAdapter(val context: Context, val dataList:ArrayList<SearchData>): BaseAdapter() {
 //MapActivity에서의 ListView와 data_list.xml
 
 

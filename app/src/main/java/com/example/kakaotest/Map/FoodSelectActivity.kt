@@ -1,44 +1,33 @@
 package com.example.kakaotest.Map
 
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.AdapterView
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.DataModel.TravelPlan
-import com.example.kakaotest.DataModel.tmap.FeatureCollection
 import com.example.kakaotest.DataModel.tmap.SearchData
-import com.example.kakaotest.Plan.SelectedPlaceData
+import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.DataAdapter
-import com.example.kakaotest.Utility.tmap.ApiService
-import com.example.kakaotest.databinding.ActivityFoodMapBinding
+import com.example.kakaotest.databinding.ActivityFoodSelectBinding
 import com.skt.tmap.TMapData
-import com.skt.tmap.TMapData.OnFindAllPOIListener
 import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
-import com.skt.tmap.TMapView.OnClickListenerCallback
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.poi.TMapPOIItem
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-
 
 class FoodSelectActivity : AppCompatActivity() {
-    private val selectedFoodPlacesList = ArrayList<SearchData>() //선택한 장소 저장하는 list
+    private val selectedFoodPlacesList = java.util.ArrayList<SearchData>() //선택한 장소 저장하는 list
     val searchDataList = arrayListOf<SearchData>()
-    var searchDataList2 = ArrayList<SearchData>()
+    var searchDataList2 = java.util.ArrayList<SearchData>()
 
-    private var mBinding: ActivityFoodMapBinding ?= null
+    private var mBinding: ActivityFoodSelectBinding ?= null
     private val binding get() = mBinding!!
     var startpoint: TMapPoint? = null
     var endpoint: TMapPoint? = null
@@ -47,13 +36,13 @@ class FoodSelectActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding = ActivityFoodMapBinding.inflate(layoutInflater)
+        mBinding = ActivityFoodSelectBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
+        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+        Log.d("ITEM",receivedDataList.toString())
+        Log.d("ITEM", arrayListOf(receivedDataList).toString())
 
-        //이부분 tmap sdk에도 BuildConfig가 있어서 고생좀 함
-        //여기 오류나면 상단바 Build -> Rebuild Project 누르면 됨
-        //   val appKey: String = BuildConfig.app_key
 
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP").apply()
@@ -105,7 +94,7 @@ class FoodSelectActivity : AppCompatActivity() {
                 // 선택한 장소를 리스트에 추가
                 selectedFoodPlacesList.add(selectItem)
 
-
+                Log.d("ITEM", selectedFoodPlacesList.toString())
 
                 // 선택한 장소를 SelectedPlaceData에 추가
                 val selectedPlaceData = SelectedPlaceData(
@@ -115,7 +104,8 @@ class FoodSelectActivity : AppCompatActivity() {
 
                 )
 
-                Log.d("ITEM", selectItem.toString())
+
+                Log.d("ITEM", selectedPlaceData.toString())
 
                 // 리스트에 추가된 모든 장소를 SelectedPlaceData 리스트로 변환
                 val selectedPlaceDataList = selectedFoodPlacesList.map {
@@ -126,12 +116,10 @@ class FoodSelectActivity : AppCompatActivity() {
                     )
 
                 }
+                Log.d("ITEM", selectedPlaceDataList.last().toString())
 
-
-
-                binding.nextbuttons.setOnClickListener {
+                binding.nextbutton.setOnClickListener {
                     val intent = Intent(this, RouteListActivity::class.java)
-                    val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
                     intent.putExtra("travelPlan", travelPlan)
                     intent.putParcelableArrayListExtra("selectedPlaceDataList", receivedDataList)
                     intent.putParcelableArrayListExtra("selectedFoodDataList", ArrayList(selectedPlaceDataList))
@@ -147,23 +135,23 @@ class FoodSelectActivity : AppCompatActivity() {
         }
 
         // 클릭 이벤트 설정
-        tMapView.setOnClickListenerCallback(object : OnClickListenerCallback {
+        tMapView.setOnClickListenerCallback(object : TMapView.OnClickListenerCallback {
             override fun onPressDown( // 터치함
-                p0: ArrayList<TMapMarkerItem>?,
-                p1: ArrayList<TMapPOIItem>?,
+                p0: java.util.ArrayList<TMapMarkerItem>?,
+                p1: java.util.ArrayList<TMapPOIItem>?,
                 p2: TMapPoint?,
                 p3: PointF?
             ) {
-                //Toast.makeText(this@FoodSelectActivity, "onPressDown", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@FoodSelectActivity, "onPressDown", Toast.LENGTH_SHORT).show()
             }
 
             override fun onPressUp( // 떨어짐
-                p0: ArrayList<TMapMarkerItem>?,
-                p1: ArrayList<TMapPOIItem>?,
+                p0: java.util.ArrayList<TMapMarkerItem>?,
+                p1: java.util.ArrayList<TMapPOIItem>?,
                 p2: TMapPoint?,
                 p3: PointF?
             ) {
-                //Toast.makeText(this@FoodSelectActivity, "onPressUp", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@FoodSelectActivity, "onPressUp", Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -194,7 +182,7 @@ class FoodSelectActivity : AppCompatActivity() {
 
                     var strData = binding.searchText.text.toString()
                     tMapData.findAllPOI(strData,
-                        OnFindAllPOIListener { poiItemList ->
+                        TMapData.OnFindAllPOIListener { poiItemList ->
                             var num = 1
                             for (item in poiItemList) {
                                 Log.e(
@@ -203,13 +191,26 @@ class FoodSelectActivity : AppCompatActivity() {
                                 )
                                 marker.id = item.poiName
                                 marker.setTMapPoint(TMapPoint())
-                                marker.icon = BitmapFactory.decodeResource(resources,
+                                marker.icon = BitmapFactory.decodeResource(
+                                    resources,
                                     R.drawable.poi
                                 )
                                 tMapView.addTMapMarkerItem(marker)
-                                searchDataList2.add(SearchData(item.poiName,item.poiPoint,item.poiAddress))
-                                runOnUiThread{
-                                    searchDataList.add(SearchData(item.poiName,item.poiPoint,item.poiAddress))
+                                searchDataList2.add(
+                                    SearchData(
+                                        item.poiName,
+                                        item.poiPoint,
+                                        item.poiAddress
+                                    )
+                                )
+                                runOnUiThread {
+                                    searchDataList.add(
+                                        SearchData(
+                                            item.poiName,
+                                            item.poiPoint,
+                                            item.poiAddress
+                                        )
+                                    )
                                     searchDataAdapter.notifyDataSetChanged()
                                 }
                                 num += 1
@@ -250,55 +251,4 @@ class FoodSelectActivity : AppCompatActivity() {
             }
         }
         return false // 선택된 장소가 없으면 중복이 아님
-    }
-    fun apiRequest(startX: Number, startY: Number, endX: Number, endY: Number): Number? {
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://apis.openapi.sk.com/tmap/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val apiService: ApiService = retrofit.create(ApiService::class.java)
-
-        var input = HashMap<String, Any>()
-        input["startY"] = startY
-        input["startX"] = startX
-        input["endY"] = endY
-        input["endX"] = endX
-        input["totalValue"] = 2
-
-        val routeCall: Call<FeatureCollection> = apiService.getRoute(input)
-        var totalTime: Number? = null
-
-        routeCall.enqueue(object : Callback<FeatureCollection> {
-            override fun onResponse(
-                call: Call<FeatureCollection?>,
-                response: Response<FeatureCollection?>
-            ) {
-                val RouteInfo: FeatureCollection? = response.body()
-                Log.d(ContentValues.TAG, "getPostList onResponse()")
-                Log.d(ContentValues.TAG, "type : ${RouteInfo?.features?.get(0)?.type}")
-                Log.d(
-                    ContentValues.TAG,
-                    "TotalTime : ${RouteInfo?.features?.get(0)?.properties?.totalTime}"
-                )
-                Log.d(
-                    ContentValues.TAG,
-                    "TotalDistance : ${RouteInfo?.features?.get(0)?.properties?.totalDistance}"
-                )
-                Log.d(
-                    ContentValues.TAG,
-                    "TotalFare : ${RouteInfo?.features?.get(0)?.properties?.totalFare}"
-                )
-                totalTime = RouteInfo?.features?.get(0)?.properties?.totalTime
-            }
-
-            override fun onFailure(call: Call<FeatureCollection?>, t: Throwable) {
-                call.cancel()
-                Log.d(ContentValues.TAG, "api fail")
-                totalTime = null
-            }
-
-        })
-        return totalTime
-    }
-}
+    }}

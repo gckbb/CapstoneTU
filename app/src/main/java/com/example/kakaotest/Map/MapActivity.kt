@@ -1,17 +1,30 @@
 package com.example.kakaotest.Map
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchData
+import com.example.kakaotest.DataModel.tmap.SearchRouteData
+import com.example.kakaotest.Utility.tmap.ApiAdapter
+import com.example.kakaotest.Utility.tmap.MakeRoute
+import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
+import com.example.kakaotest.R
+import com.example.kakaotest.Utility.Adapter.DataAdapter
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.DataAdapter
@@ -24,14 +37,16 @@ import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
 import com.skt.tmap.TMapView.OnClickListenerCallback
 import com.skt.tmap.overlay.TMapMarkerItem
+import com.skt.tmap.overlay.TMapPolyLine
 import com.skt.tmap.poi.TMapPOIItem
+import java.util.ArrayList
 
 
 class MapActivity : AppCompatActivity() {
     private val selectedPlacesList = ArrayList<SearchData>() //선택한 장소 저장하는 list
     val searchDataList = arrayListOf<SearchData>()
     var searchDataList2 = ArrayList<SearchData>()
-
+    var isFirstPlaceSelected = false
     private var mBinding: ActivityMapBinding? = null
     private val binding get() = mBinding!!
     private val routetest = MakeRoute()
@@ -79,6 +94,22 @@ class MapActivity : AppCompatActivity() {
         binding.searchDataListView.adapter = searchDataAdapter
 
 
+/*
+        if( ){
+            AlertDialogHelper().showAlertMessage(this,"숙소를 선택해주세요!","네",null,null,
+                DialogInterface.OnClickListener { dialog, which ->
+                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                        dialog.dismiss()
+                    }})
+        } else if (selectedPlacesList[0] != null && selectedPlacesList[1] == null){
+            AlertDialogHelper().showAlertMessage(this,"가고싶은 장소를 선택해주세요! \n (식당 제외)","네",null,null,
+                DialogInterface.OnClickListener { dialog, which ->
+                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                        dialog.dismiss()
+                    }})
+        }
+
+*/
 
         binding.searchDataListView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -99,6 +130,9 @@ class MapActivity : AppCompatActivity() {
                         // Toast.makeText(this, "도착지역: ${selectItem.id}", Toast.LENGTH_SHORT).show()
                     }
                 }
+
+
+
 
                 // 중복된 장소인지 확인
                 if (!isPlaceAlreadySelected(selectItem)) {
@@ -171,6 +205,21 @@ class MapActivity : AppCompatActivity() {
         })
 
 
+        var editText = findViewById<EditText>(R.id.searchText)
+        editText.setOnEditorActionListener { textView, action, keyEvent ->
+            var handled = false
+
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                Log.d("성공",editText.text.toString())
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
+                handled = true
+            }
+
+            handled
+        }
+
+
         // 맵 로딩 완료 시 동작할 리스너 설정
         tMapView.setOnMapReadyListener(object : TMapView.OnMapReadyListener {
             override fun onMapReady() {
@@ -185,6 +234,7 @@ class MapActivity : AppCompatActivity() {
                 marker.setTMapPoint(tMapGps.katecLat, tMapGps.katecLon)
                 marker.icon = BitmapFactory.decodeResource(resources, R.drawable.point)
                 tMapView.addTMapMarkerItem(marker)
+
 
 
                 binding.searchButton.setOnClickListener {
@@ -257,4 +307,5 @@ class MapActivity : AppCompatActivity() {
         }
         return false // 선택된 장소가 없으면 중복이 아님
     }
+
 }

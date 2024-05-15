@@ -9,7 +9,7 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="저장하기"
+        android:text="지도"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
@@ -104,15 +104,5 @@
         </TableRow>
 
     </TableLayout>
-
-    <FrameLayout
-        android:id="@+id/tmapViewContainer"
-        android:layout_width="409dp"
-        android:layout_height="500dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
-
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

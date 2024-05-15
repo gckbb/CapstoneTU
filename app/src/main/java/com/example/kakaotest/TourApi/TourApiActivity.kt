@@ -1,9 +1,7 @@
 package com.example.kakaotest.TourApi
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,8 +20,7 @@ class TourApiActivity : AppCompatActivity() {
         var binding = ActivityTourapiBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sharedPreferences = getSharedPreferences("MySavedRestaurants", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
+
 
         val latitude = 37.5665
         val longitude = 126.9780
@@ -32,9 +29,7 @@ class TourApiActivity : AppCompatActivity() {
             searchRestaurantsInArea(latitude, longitude)
         }
         binding.areaBased.setOnClickListener {
-            editor.clear().apply()
-            Toast.makeText(this,"초기화 성공",Toast.LENGTH_SHORT).show()
-            //Log.d("add_test","초기화 성공")
+            searchAreaBasedList(latitude, longitude)
         }
     }
 
@@ -59,5 +54,24 @@ class TourApiActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun searchAreaBasedList(latitude: Double, longitude: Double) {
+        scope.launch {
+            try {
+                val areaData = tourApiManager.searchAreaBasedList(latitude, longitude)
+                // 결과 처리
+                val items = areaData.response.body.items
+                for (place in items.item) {
+                    Log.d("Place", "장소 이름: ${place.title}, 주소: ${place.addr1}")
+                }
+                // RecyclerView 설정
+                val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+                recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)
+                val adapter = AreaBasedAdapter(areaData.response.body.items.item)
+                recyclerView.adapter = adapter
+            } catch (e: Exception) {
+                // 오류 처리
+                Log.e("TourApiActivity", "지역 기반 리스트 검색 오류: $e")
+            }
+        }
+    }
 }

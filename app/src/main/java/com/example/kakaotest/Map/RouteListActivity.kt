@@ -12,10 +12,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.kakaotest.DataModel.TravelPlan
-import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
-import com.example.kakaotest.R
 import com.example.kakaotest.Utility.tmap.MakeRoute
+import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
+import com.example.kakaotest.HomeActivity
+import com.example.kakaotest.R
+import com.example.kakaotest.Utility.TravelPlanManager
 import kotlinx.coroutines.launch
+import java.util.ArrayList
 
 class RouteListActivity : AppCompatActivity() {
 
@@ -27,8 +30,10 @@ class RouteListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_route)
         val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
         val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+        val receivedFoodDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedFoodDataList")
 
-        val receivedFoodDataList = intent.getParcelableArrayListExtra<com.example.kakaotest.Plan.SelectedPlaceData>("selectedFoodDataList")
+
+
 
         val path_1: Button = findViewById<Button>(R.id.path_1)
         val path_2: Button = findViewById<Button>(R.id.path_2)
@@ -46,7 +51,7 @@ class RouteListActivity : AppCompatActivity() {
 
             val firstDayData = routetest.printTotalRoute().firstOrNull()
 
-            Log.d("PLAN","firstDayData : \n"+firstDayData)
+            Log.d("PLAN","firstDayData : "+firstDayData)
             // 첫 번째 날짜의 데이터가 있을 때 처리
             if (firstDayData != null) {
                 // 첫 번째 날짜의 선택된 장소 리스트 가져오기
@@ -62,7 +67,7 @@ class RouteListActivity : AppCompatActivity() {
         path_2.setOnClickListener {
             val secondDayData = routetest.printTotalRoute().getOrNull(1)
             val intent = Intent(this, SecondRoute::class.java)
-            Log.d("PLAN","secondDayData : \n"+secondDayData)
+            Log.d("PLAN","secondDayData : "+secondDayData)
             if (secondDayData != null) {
 
                 val secondList = secondDayData!!.dayRoute
@@ -70,7 +75,7 @@ class RouteListActivity : AppCompatActivity() {
                 intent.putExtra("secondList",  secondList)
                 startActivity(intent)
             } else {
-                Log.e("CreatedRoute1", "No data available for the secondday")
+                Log.e("PLAN", "No data available for the secondday")
             }
         }
 
@@ -85,6 +90,7 @@ class RouteListActivity : AppCompatActivity() {
             intent.putExtra("secondList",  secondList)
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
             intent.putExtra("travelPlan", travelPlan)
+            Log.d("PLAN",travelPlan.toString())
             startActivity(intent)
         }
 
@@ -93,13 +99,14 @@ class RouteListActivity : AppCompatActivity() {
 
         Log.d("PLAN","receivedDataList : \n"+ receivedDataList.toString())
 
+
         lifecycleScope.launch {
             try {
                 // 비동기적으로 routeSet을 호출합니다.
-                routetest.routeSet(receivedDataList!!, receivedDataList[0])
+                routetest.routeSet(receivedDataList!!, receivedDataList!![0])
                 Log.d("PLAN", "Route Set")
                 // 비동기적으로 routeStart를 호출합니다.
-                routetest.routeStart(2, 6)
+                routetest.routeStart(2, 8, 1, receivedFoodDataList!!)
                 Log.d("PLAN", "Route Started")
                 routetest.printTotalRoute()
                 Log.d("PLAN", "Total Route Printed")
@@ -108,7 +115,15 @@ class RouteListActivity : AppCompatActivity() {
                 Log.e("CreatedRoute1", "Error: ${e.message}", e)
             }
         }
+
+
+
+
     }
+
+
+
+
 
     private fun updateListView() {
         val listView1 = findViewById<ListView>(R.id.listView1)
