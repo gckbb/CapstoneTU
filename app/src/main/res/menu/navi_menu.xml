@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/ScheduleFragment"
+        android:title="일정"
+        android:icon="@drawable/schedule"/>
+
+    <item
+        android:id="@+id/CommunityFragment"
+        android:title="커뮤니티 "
+        android:icon="@drawable/community"/>
+    <item
+        android:id="@+id/HomeFragment"
+        android:title="홈"
+        android:icon="@drawable/home"/>
+    <item
+        android:id="@+id/RecommendFragment"
+        android:title="상품추천 "
+        android:icon="@drawable/recommend"/>
+
+    <item
+        android:id="@+id/AccountFragment"
+        android:title="계정"
+        android:icon="@drawable/account"/>
+
+
+</menu>

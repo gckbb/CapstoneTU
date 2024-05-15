@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.kakaotest">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".Map.ExplainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Map.FoodSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Map.ScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".scheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Map.MyTrip"
+            android:exported="false" />
+        <activity
+            android:name=".Map.WhereActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Map.SecondRoute"
+            android:exported="false" />
+        <activity
+            android:name=".Map.FirstRoute"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Map.RouteListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Login.Id.ResetPassword"
+            android:exported="false" />
+        <activity
+            android:name=".Login.Id.IdSignup"
+            android:exported="false" />
+        <activity
+            android:name=".Login.Id.IdFindId"
+            android:exported="false" />
+        <activity
+            android:name=".Login.Id.IdFindPw"
+            android:exported="false" />
+        <activity
+            android:name=".Login.Email.EmailFindPW"
+            android:exported="false" />
+        <activity
+            android:name=".Login.Email.Emailsignup"
+            android:exported="false" />
+        <activity
+            android:name=".Login.Email.EmailLogin"
+            android:exported="false" />
+        <activity
+            android:name=".Map.PlanInfoInput"
+            android:exported="false" />
+        <activity
+            android:name=".Map.SelectedPlace"
+            android:exported="false" />
+        <activity
+            android:name=".Map.MapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Login.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="oauth"
+                    android:scheme="@string/kakao_app_key2" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

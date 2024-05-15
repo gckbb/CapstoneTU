@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:id="@+id/homefragmend"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+
+
+        <FrameLayout
+            android:id="@+id/HomeFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+
+
+            <FrameLayout
+                android:id="@+id/search"
+                android:layout_width="373dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="63dp">
+
+                <TextView
+                    android:id="@+id/place_search"
+                    android:layout_width="370dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/edittext3"
+                    android:text="어디로 여행가세요?"
+
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <ImageButton
+                    android:id="@+id/searchBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="320dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_search"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            </FrameLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="170dp"
+                android:text="여행 테마별 추천"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/ThemeRecommend"
+                android:layout_width="370dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="215dp"
+                android:background="@drawable/edittext3"
+                android:fillViewport="true"
+                tools:ignore="SpeakableTextPresentCheck">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </androidx.core.widget.NestedScrollView>
+
+
+
+
+        </FrameLayout>
+
+
+    </ScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

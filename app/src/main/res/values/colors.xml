@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <color name="button">#FFBD59</color> //기본 버튼 색
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="Secondbutton">#FFDE59</color> //secondButton
+    <color name="box">#D7D7D7</color>
+    <color name="red">#FF0000</color>
+    <color name="grey">#EFEFEF</color>
+
+</resources>
