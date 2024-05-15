@@ -118,8 +118,7 @@ class FoodSelectActivity : AppCompatActivity() {
                     )
 
                 }
-                receivedDataList!!.add(selectedPlaceDataList[0])
-                Log.d("ITEM", receivedDataList.toString())
+                Log.d("ITEM", selectedPlaceDataList.last().toString())
 
                 binding.nextbutton.setOnClickListener {
                     val intent = Intent(this, RouteListActivity::class.java)

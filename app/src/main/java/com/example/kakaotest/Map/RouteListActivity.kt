@@ -115,7 +115,7 @@ class RouteListActivity : AppCompatActivity() {
                 Log.e("CreatedRoute1", "Error: ${e.message}", e)
             }
         }
-
+/*
         path_2.setOnClickListener {
             val secondDayData = routetest.printTotalRoute().getOrNull(1)
             val intent = Intent(this, SecondRoute::class.java)
@@ -130,6 +130,8 @@ class RouteListActivity : AppCompatActivity() {
                 Log.e("CreatedRoute1", "No data available for the secondday")
             }
         }
+*/
+
 
 
     }

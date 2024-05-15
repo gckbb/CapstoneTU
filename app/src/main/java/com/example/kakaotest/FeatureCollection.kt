@@ -1,6 +1,6 @@
 package com.example.kakaotest
 
-import com.example.kakaotest.Map.RouteFeature
+import com.example.kakaotest.DataModel.tmap.RouteFeature
 import com.google.gson.annotations.SerializedName
 
 data class FeatureCollection(

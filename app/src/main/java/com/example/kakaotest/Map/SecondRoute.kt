@@ -122,7 +122,7 @@ class SecondRoute : AppCompatActivity() {
                         for (i in 1 until pointList.size) {
                             passList.add(pointList[i])
                             polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,pointList[i-1],pointList[i])
-                            polyLines.setID("polylines${i}")
+                            polyLines.setID("secondpolylines${i}")
                             polyLines.setLineColor(colorList[i%7])
                             polyLineList.add(polyLines)
                             if (polyLineList[i-1] != null) {
@@ -136,4 +136,5 @@ class SecondRoute : AppCompatActivity() {
 
 
                     }
-            }}})}}
+            }.start()
+            }})}}
