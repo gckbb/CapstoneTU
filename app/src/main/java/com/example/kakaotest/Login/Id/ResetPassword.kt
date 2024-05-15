@@ -10,7 +10,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.Login.MainActivity
 import com.example.kakaotest.R
-import com.example.kakaotest.Utility.AlertDialogHelper
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 //자체 회원가입한 계정 비밀번호 재설정

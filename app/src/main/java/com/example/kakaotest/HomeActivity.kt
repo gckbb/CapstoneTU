@@ -1,21 +1,22 @@
 package com.example.kakaotest
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.Fragment.AccountFragment
 import com.example.kakaotest.Fragment.CommunityFragment
+import com.example.kakaotest.Fragment.HomeFragment
 import com.example.kakaotest.Fragment.RecommendFragment
-import com.example.kakaotest.Fragment.ScheduleFragment
 import com.example.kakaotest.databinding.ActivityHomeBinding
 
 private const val TAG_SCHEDULE = "schedule_fragment"
 private const val TAG_COMMUNITY = "community_fragment"
 private const val TAG_RECOMMEND = "reccmmend_fragment"
 private const val TAG_ACCOUNT = "account_fragment"
+private const val TAG_HOME = "home_fragment"
 class HomeActivity : AppCompatActivity() {
 
 
@@ -23,27 +24,24 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // 처음 화면은 startFragment로 설정
-        setFragment("start_fragment", HomeFragment.newInstance("value1", "value2"))
 
-        // 프래그먼트 인스턴스를 생성합니다.
-        val HomeFragment = HomeFragment.newInstance("value1", "value2")
+        // 처음 화면은 HomeFragment로 설정
+        setFragment(TAG_HOME, HomeFragment.newInstance("value1", "value2"))
 
-        // 프래그먼트를 트랜잭션을 통해 액티비티에 추가합니다.
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainFrameLayout, HomeFragment)
-            .commit()
 
+        val firstList = intent.getParcelableArrayListExtra<SearchRouteData>("firstList")
+        Log.d("PLAN","firstRoute \n"+ firstList.toString())
 
 
         // BottomNavigationView에 리스너 설정
         binding.navigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.ScheduleFragment -> {
-                    setFragment(TAG_SCHEDULE, ScheduleFragment())
-                }
+
                 R.id.CommunityFragment -> {
                     setFragment(TAG_COMMUNITY, CommunityFragment())
+                }
+                R.id.HomeFragment -> {
+                    setFragment(TAG_HOME, HomeFragment())
                 }
                 R.id.RecommendFragment -> {
                     setFragment(TAG_RECOMMEND, RecommendFragment())
@@ -59,24 +57,21 @@ class HomeActivity : AppCompatActivity() {
     private fun setFragment(tag: String, fragment: Fragment) {
         val manager: FragmentManager = supportFragmentManager
         val fragTransaction = manager.beginTransaction()
-
         // 모든 프래그먼트를 숨김
         for (existingFragment in manager.fragments) {
             fragTransaction.hide(existingFragment)
         }
 
         // 선택된 프래그먼트를 추가하거나 보이게 함
-        if (manager.findFragmentByTag(tag) == null) {
+        val addedFragment = manager.findFragmentByTag(tag)
+        if (addedFragment == null) {
+            // 프래그먼트가 추가되지 않은 경우, 새로운 프래그먼트를 추가
             fragTransaction.add(R.id.mainFrameLayout, fragment, tag)
         } else {
-            fragTransaction.show(fragment)
+            // 프래그먼트가 이미 추가된 경우, 해당 프래그먼트를 보여줌
+            fragTransaction.show(addedFragment)
         }
 
         fragTransaction.commitAllowingStateLoss()
-
-
-
-
-
-
-    }}
+    }
+}
