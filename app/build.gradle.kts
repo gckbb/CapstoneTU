@@ -62,7 +62,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.0")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.android.identity:identity-credential-android:20231002")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.10.2")
+    implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-inappmessaging-ktx:20.4.1")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-inappmessaging-ktx:20.4.1")

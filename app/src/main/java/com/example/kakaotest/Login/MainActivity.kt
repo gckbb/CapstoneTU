@@ -1,6 +1,5 @@
 package com.example.kakaotest.Login
 
-//이거 테스트임
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.content.Intent
@@ -17,7 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.kakaotest.CheckList.CheckListActivity
-import com.example.kakaotest.HomeActivity
+
 import com.example.kakaotest.Login.Email.EmailLogin
 import com.example.kakaotest.Login.Id.IdFindId
 import com.example.kakaotest.Login.Id.IdFindPw
