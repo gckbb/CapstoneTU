@@ -8,9 +8,7 @@ import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import java.lang.Exception
 import java.util.LinkedList
-import java.util.ArrayList
 
 class MakeRoute {
     private var totalRouteList = LinkedList<DayRouteData>()
@@ -36,10 +34,13 @@ class MakeRoute {
             var time: Number?
 
             for (i in 1 until selectedPlaceList.size) {
+                Log.d("PLAN","time저장")
                 time = apiRequest(
                     startPoint.tpoint.longitude, startPoint.tpoint.latitude,
                     selectedPlaceList[i].tpoint.longitude, selectedPlaceList[i].tpoint.latitude
                 )
+                Log.d("PLAN","Selected: ${selectedPlaceList[i].tpoint.longitude}, ${selectedPlaceList[i].tpoint.latitude}")
+                Log.d("PLAN","time : ${time}")
 
                 if (time != null) {
                     routeData = SearchRouteData(selectedPlaceList[i], time)

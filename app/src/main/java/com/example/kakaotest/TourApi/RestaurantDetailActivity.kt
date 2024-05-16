@@ -1,22 +1,23 @@
 package com.example.kakaotest.TourApi
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.kakaotest.DataModel.Restaurant
 import com.example.kakaotest.R
 import com.example.kakaotest.databinding.ActivityRestaurantDetailBinding
-import com.skt.tmap.TMapPoint
+import com.skt.tmap.TMapData
 import com.skt.tmap.TMapView
 import com.skt.tmap.overlay.TMapMarkerItem
+import com.skt.tmap.poi.TMapPOIItem
+import kotlinx.coroutines.MainScope
+
 
 class RestaurantDetailActivity : AppCompatActivity() {
-
+    private val tourApiManager = TourApiManager()
+    private val scope = MainScope()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityRestaurantDetailBinding.inflate(layoutInflater)
@@ -35,17 +36,19 @@ class RestaurantDetailActivity : AppCompatActivity() {
         val tMapView = TMapView(this)
 
         // TMapView를 FrameLayout에 추가
-        container.addView(tMapView)
+        //container.addView(tMapView)
 
         // 발급받은 키로 TMapView에 API 키 설정
-        tMapView.setSKTMapApiKey(appKey)
+        //tMapView.setSKTMapApiKey(appKey)
 
+        val tMapData = TMapData()
+        val tMapPOIItem = TMapPOIItem()
         val marker = TMapMarkerItem()
 
         // Restaurant 객체를 인텐트에서 가져옴
         val restaurant = intent.getSerializableExtra("restaurant") as? Restaurant
 
-        var selcted = TMapPoint(restaurant!!.mapx.toDouble(),restaurant.mapy.toDouble())
+
 
         if(restaurant != null) {
 
@@ -62,46 +65,32 @@ class RestaurantDetailActivity : AppCompatActivity() {
             binding.cat3.text = restaurant.cat3
         }
 
-        tMapView.setOnMapReadyListener(object : TMapView.OnMapReadyListener {
-            override fun onMapReady() {
-                // 맵 로딩이 완료된 후에 수행할 동작을 구현해주세요
-                // 예: 마커 추가, 경로 표시 등
-                Toast.makeText(this@RestaurantDetailActivity, "MapLoading", Toast.LENGTH_SHORT).show()
 
-                if (restaurant != null) {
-                    Log.d("restaurant","${restaurant.title}, ${restaurant.mapx}, ${restaurant.mapy.toDouble()}")
-                    Log.d("restaurant","1.${tMapView.centerPoint}")
-                    marker.setTMapPoint(selcted.latitude,selcted.longitude)
-                    marker.id = "marker1"
-                    marker.icon = BitmapFactory.decodeResource(resources, R.drawable.poi)
-                    marker.visible = true
+        binding.button.setOnClickListener {
+            //클릭하면 해당 장소를 기기에 저장
+            // SharedPreferences 객체 가져오기
+            val sharedPreferences = getSharedPreferences("MySavedRestaurants", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
 
-                    tMapView.addTMapMarkerItem(marker)
-                    tMapView.setCenterPoint(selcted.latitude,selcted.longitude)
-                    tMapView.setLocationPoint(selcted.latitude,selcted.longitude)
 
-                    Log.d("restaurant","2.${tMapView.centerPoint}")
-                }
-                //tMapView.zoomLevel = 15
 
-                binding.button.setOnClickListener {
-                    Log.d("restaurant","${restaurant.title}, ${restaurant.mapx}, ${restaurant.mapy.toDouble()}")
-                    Log.d("restaurant","3.${tMapView.centerPoint}")
-                    marker.setTMapPoint(selcted.latitude,selcted.longitude)
-                    marker.id = "marker1"
-                    marker.icon = BitmapFactory.decodeResource(resources, R.drawable.poi)
-                    marker.visible = true
 
-                    tMapView.addTMapMarkerItem(marker)
-                    tMapView.setCenterPoint(selcted.latitude,selcted.longitude)
-                    tMapView.setLocationPoint(selcted.latitude,selcted.longitude)
-                    tMapView.zoomLevel = 15
-
-                    Log.d("restaurant","4.${tMapView.centerPoint}")
-                }
+            // 사용자가 선택한 음식점의 정보를 SharedPreferences에 저장
+            if (restaurant != null) {
+                val mapx = String.format("%.8f", restaurant.mapx.toDouble())
+                val mapy = String.format("%.8f", restaurant.mapy.toDouble())
+                //Log.d("add_test","DetailActivity: ${mapx}_${mapy}")
+                editor.putString("restaurant_${mapx}_${mapy}_${restaurant.addr1}", restaurant.title)
             }
-        })
+            editor.apply()
+        }
+    }
+    private suspend fun searchCategory(cat1: String, cat2: String, cat3: String): Array<String> {
 
-
+        val restaurants = tourApiManager.searchCategory(cat1,cat2,cat3)
+        // 결과 처리
+        val items = restaurants.response.body.items
+        val cate = arrayOf(items.item[0].cat1,items.item[0].cat1,items.item[0].cat1)
+        return cate
     }
 }
