@@ -15,6 +15,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.kakaotest.CheckList.CheckListActivity
+
 import com.example.kakaotest.Login.Email.EmailLogin
 import com.example.kakaotest.Login.Id.IdFindId
 import com.example.kakaotest.Login.Id.IdFindPw
@@ -24,6 +26,8 @@ import com.example.kakaotest.R
 import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.example.kakaotest.databinding.ActivityMainBinding
 import com.example.kakaotest.HomeActivity
+import com.example.kakaotest.TourApi.TourApiActivity
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -102,6 +106,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.checklist.setOnClickListener {
+            val intent = Intent(this, CheckListActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.tourApi.setOnClickListener {
+            val intent = Intent(this,TourApiActivity::class.java)
+            startActivity(intent)
+        }
 
         //아이디 찾기
         val findidBtn =findViewById<TextView>(R.id.FindId)

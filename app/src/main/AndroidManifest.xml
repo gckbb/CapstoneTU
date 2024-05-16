@@ -21,20 +21,29 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".Map.ExplainActivity"
-            android:exported="false" />
+
         <activity
             android:name=".Map.FoodSelectActivity"
             android:exported="false" />
         <activity
+            android:name=".TourApi.Detail_map_test"
+            android:exported="false" />
+        <activity
+            android:name=".TourApi.RestaurantDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TourApi.TourApiActivity"
+            android:exported="false" />
+        <activity
             android:name=".Map.ScheduleActivity"
             android:exported="false" />
-        <activity
-            android:name=".scheduleActivity"
+       <activity android:name=".CheckList.AfterSelectListActivity"
+           android:exported="false" />
+        <activity android:name=".CheckList.CheckListActivity"
             android:exported="false" />
-        <activity
-            android:name=".Map.MyTrip"
+        <activity android:name=".CheckList.ListSelectActivity"
+            android:exported="false" />
+        <activity android:name=".CheckList.EditTodoActivity"
             android:exported="false" />
         <activity
             android:name=".Map.WhereActivity"

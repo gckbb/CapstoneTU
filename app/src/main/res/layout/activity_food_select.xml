@@ -49,6 +49,7 @@
         android:hint=" 식당을 입력하세요"
         android:inputType="text"
         android:text=""
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />

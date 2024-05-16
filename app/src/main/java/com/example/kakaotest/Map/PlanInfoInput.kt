@@ -243,7 +243,7 @@ class PlanInfoInput : AppCompatActivity() {
 
 
 
-        val helptxt2 = findViewById<TextView>(R.id.helptxt)
+        val helptxt2 = findViewById<TextView>(R.id.helptxt2)
         binding.help2.setOnClickListener{
             helptxt2.visibility = View.VISIBLE
         }
