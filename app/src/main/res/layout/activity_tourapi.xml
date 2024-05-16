@@ -25,7 +25,7 @@
             android:id="@+id/areaBased"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="위치기반"
+            android:text="저장된 음식점 초기화"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -60,6 +60,15 @@ class SelectedPlace : AppCompatActivity() {
         Log.d("selectedPlaceNames", selectedPlaceNames.toString())
 
 
+        // next 버튼 클릭 시 RouteListActivity 로 이동
+//        val nextButton: Button = findViewById(R.id.nextbutton)
+//        nextButton.setOnClickListener {
+//            val intent = Intent(this, RouteListActivity::class.java)
+//            intent.putExtra("travelPlan", travelPlan)
+//            intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
+//            startActivity(intent)
+//            Log.d("Item", receivedDataList.toString())
+//        }
         // next 버튼 클릭 시 CreatedPath 로 이동
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
@@ -118,8 +127,5 @@ class SelectedPlace : AppCompatActivity() {
         foundListView.adapter = adapter
 
     }
-
-
-
 
 }
