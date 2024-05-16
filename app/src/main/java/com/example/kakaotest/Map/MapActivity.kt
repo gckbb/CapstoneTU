@@ -1,13 +1,10 @@
 package com.example.kakaotest.Map
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -18,13 +15,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchData
-import com.example.kakaotest.DataModel.tmap.SearchRouteData
-import com.example.kakaotest.Utility.tmap.ApiAdapter
-import com.example.kakaotest.Utility.tmap.MakeRoute
-import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
-import com.example.kakaotest.R
-import com.example.kakaotest.Utility.Adapter.DataAdapter
-import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.DataAdapter
@@ -37,9 +27,7 @@ import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
 import com.skt.tmap.TMapView.OnClickListenerCallback
 import com.skt.tmap.overlay.TMapMarkerItem
-import com.skt.tmap.overlay.TMapPolyLine
 import com.skt.tmap.poi.TMapPOIItem
-import java.util.ArrayList
 
 
 class MapActivity : AppCompatActivity() {
