@@ -11,7 +11,10 @@
         android:id="@+id/CommunityFragment"
         android:title="커뮤니티 "
         android:icon="@drawable/community"/>
-
+    <item
+        android:id="@+id/HomeFragment"
+        android:title="홈"
+        android:icon="@drawable/home"/>
     <item
         android:id="@+id/RecommendFragment"
         android:title="상품추천 "

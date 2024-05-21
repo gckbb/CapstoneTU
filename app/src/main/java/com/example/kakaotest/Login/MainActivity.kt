@@ -1,5 +1,5 @@
 package com.example.kakaotest.Login
-//이거 테스트임
+
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.content.Intent
@@ -15,15 +15,18 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.kakaotest.CheckList.CheckListActivity
+
 import com.example.kakaotest.Login.Email.EmailLogin
 import com.example.kakaotest.Login.Id.IdFindId
 import com.example.kakaotest.Login.Id.IdFindPw
 import com.example.kakaotest.Login.Id.IdSignup
 import com.example.kakaotest.Map.MapActivity
 import com.example.kakaotest.R
-import com.example.kakaotest.Utility.AlertDialogHelper
-import com.example.kakaotest.databinding.ActivityMainBinding
 import com.example.kakaotest.HomeActivity
+import com.example.kakaotest.TourApi.TourApiActivity
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
+import com.example.kakaotest.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -37,12 +40,14 @@ import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.coroutines.MainScope
 import java.security.MessageDigest
 
 //첫 로그인 화면
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private val scope = MainScope()
 
     lateinit var kakaoCallback: (OAuthToken?, Throwable?) -> Unit
     private lateinit var binding: ActivityMainBinding
@@ -102,6 +107,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.tourApi.setOnClickListener {
+            val intent = Intent(this, TourApiActivity::class.java)
+            startActivity(intent)
+        }
+        binding.checklist.setOnClickListener {
+            val intent = Intent(this, CheckListActivity::class.java)
+            startActivity(intent)
+        }
 
         //아이디 찾기
         val findidBtn =findViewById<TextView>(R.id.FindId)

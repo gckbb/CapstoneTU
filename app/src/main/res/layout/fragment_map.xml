@@ -11,7 +11,6 @@
         android:layout_width="350dp"
         android:layout_height="500dp"
         android:layout_gravity="center"
-        android:background="@drawable/edittext3"
-      />
+        android:background="@drawable/edittext3" />
 
 </FrameLayout>

@@ -2,8 +2,9 @@ package com.example.kakaotest.Map
 
 import android.content.ContentValues
 import android.util.Log
+import com.example.kakaotest.DataModel.tmap.SearchData
+import com.example.kakaotest.Utility.tmap.ApiAdapter
 import java.util.LinkedList
-import java.util.ArrayList
 
 class MakeRoute {
     private var totalRouteList = LinkedList<DayRouteData>()

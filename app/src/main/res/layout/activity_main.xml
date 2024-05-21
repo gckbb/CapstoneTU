@@ -181,6 +181,20 @@
                         android:layout_height="wrap_content"
 
                         android:text="navi" />
+
+                    <Button
+                        android:id="@+id/tourApi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text="tourApi" />
+
+                    <Button
+                        android:id="@+id/checklist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text="checkList" />
                 </LinearLayout>
 
 

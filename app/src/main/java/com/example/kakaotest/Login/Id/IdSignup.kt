@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.Login.MainActivity
 import com.example.kakaotest.DataModel.UserData
 import com.example.kakaotest.R
-import com.example.kakaotest.Utility.AlertDialogHelper
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.google.firebase.firestore.FirebaseFirestore
 
 
