@@ -289,13 +289,12 @@
                     android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
                     android:visibility="gone"/>
-                <TextView
+                <Button
                     android:id="@+id/time1"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
                     android:background="@drawable/ellipse"
                     android:layout_gravity="center_horizontal"
-
                     android:text=""
                     android:textColor="@color/black"
                     android:gravity="center"
@@ -308,7 +307,7 @@
                     android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
                     android:visibility="gone"/>
-                <TextView
+                <Button
                     android:id="@+id/time2"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
@@ -326,7 +325,7 @@
                     android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
                     android:visibility="gone"/>
-                <TextView
+                <Button
                     android:id="@+id/time3"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
@@ -345,7 +344,7 @@
                     android:layout_gravity="center_horizontal"
                     android:visibility="gone"
                     />
-                <TextView
+                <Button
                     android:id="@+id/time4"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
@@ -362,7 +361,7 @@
                     android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
                     android:visibility="gone"/>
-                <TextView
+                <Button
                     android:id="@+id/time5"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
@@ -380,7 +379,7 @@
                     android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
                     android:visibility="gone"/>
-                <TextView
+                <Button
                     android:id="@+id/time6"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
@@ -399,7 +398,7 @@
                     android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
                     android:visibility="gone"/>
-                <TextView
+                <Button
                     android:id="@+id/time7"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
@@ -417,7 +416,7 @@
                     android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
                     android:visibility="gone"/>
-                <ImageView
+                <Button
                     android:id="@+id/line8_9"
                     android:layout_width="wrap_content"
                     android:layout_height="23dp"

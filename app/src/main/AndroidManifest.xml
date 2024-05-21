@@ -55,6 +55,9 @@
             android:name=".Map.FirstRoute"
             android:exported="false" />
         <activity
+            android:name=".Map.SingleRoute"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity

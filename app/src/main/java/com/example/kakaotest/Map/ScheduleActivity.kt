@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.ImageButton
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
@@ -89,14 +90,14 @@ class ScheduleActivity : AppCompatActivity() {
         Log.d("PLAN",firstListTime.toString())
 
 
-        val time1=findViewById<TextView>(R.id.time1)
-        val time2=findViewById<TextView>(R.id.time2)
-        val time3=findViewById<TextView>(R.id.time3)
-        val time4=findViewById<TextView>(R.id.time4)
-        val time5=findViewById<TextView>(R.id.time5)
-        val time6=findViewById<TextView>(R.id.time6)
-        val time7=findViewById<TextView>(R.id.time7)
-        val firstdayTime = mutableListOf<TextView>(time1, time2, time3, time4, time5, time6, time7)
+        val time1=findViewById<Button>(R.id.time1)
+        val time2=findViewById<Button>(R.id.time2)
+        val time3=findViewById<Button>(R.id.time3)
+        val time4=findViewById<Button>(R.id.time4)
+        val time5=findViewById<Button>(R.id.time5)
+        val time6=findViewById<Button>(R.id.time6)
+        val time7=findViewById<Button>(R.id.time7)
+        val firstdayTime = mutableListOf<Button>(time1, time2, time3, time4, time5, time6, time7)
 
 
         val time0_1 = findViewById<ImageView>(R.id.line0_1)
@@ -107,7 +108,7 @@ class ScheduleActivity : AppCompatActivity() {
         val time5_6 = findViewById<ImageView>(R.id.line5_6)
         val time6_7 = findViewById<ImageView>(R.id.line6_7)
         //  val time7_8 = findViewById<ImageView>(R.id.line6_7)
-        val firsttimeLine = mutableListOf<ImageView>(time0_1,time1_2, time2_3, time3_4, time4_5, time5_6, time6_7)
+        val firsttimeLine = mutableListOf<ImageView>(time0_1, time1_2, time2_3, time3_4, time4_5, time5_6, time6_7)
 
 
         val adjustedFirstListTime = firstListTime?.drop(1) // 첫 번째 요소를 건너뛴 새로운 리스트
@@ -126,7 +127,7 @@ class ScheduleActivity : AppCompatActivity() {
                 text = String.format("%02d:%02d", hours, minutes) // 시간 설정
             }
             // 라인 표시
-            if (index < firsttimeLine.size) {
+            if (index < firsttimeLine.size-1) {
                 firsttimeLine[index].visibility = View.VISIBLE
                 firsttimeLine[index+1].visibility=View.VISIBLE
             }
@@ -229,7 +230,48 @@ class ScheduleActivity : AppCompatActivity() {
             binding.placeListContainer1.visibility = View.GONE
 
         }
-
+        binding.time1.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",0)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time2.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",1)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time3.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",2)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time4.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",3)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time5.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",4)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time6.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",5)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time7.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",6)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
         binding.backBtn.setOnClickListener {
             finish()
         }
