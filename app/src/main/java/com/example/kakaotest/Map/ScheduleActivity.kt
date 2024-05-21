@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
+import com.example.kakaotest.CheckList.CheckListActivity
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
@@ -96,7 +97,10 @@ class ScheduleActivity : AppCompatActivity() {
         val time5=findViewById<TextView>(R.id.time5)
         val time6=findViewById<TextView>(R.id.time6)
         val time7=findViewById<TextView>(R.id.time7)
-        val firstdayTime = mutableListOf<TextView>(time1, time2, time3, time4, time5, time6, time7)
+        val time8=findViewById<TextView>(R.id.time8)
+        val time9=findViewById<TextView>(R.id.time9)
+        val time10=findViewById<TextView>(R.id.time10)
+        val firstdayTime = mutableListOf<TextView>(time1, time2, time3, time4, time5, time6, time7,time8, time9, time10)
 
 
         val time0_1 = findViewById<ImageView>(R.id.line0_1)
@@ -106,8 +110,10 @@ class ScheduleActivity : AppCompatActivity() {
         val time4_5 = findViewById<ImageView>(R.id.line4_5)
         val time5_6 = findViewById<ImageView>(R.id.line5_6)
         val time6_7 = findViewById<ImageView>(R.id.line6_7)
-        //  val time7_8 = findViewById<ImageView>(R.id.line6_7)
-        val firsttimeLine = mutableListOf<ImageView>(time0_1,time1_2, time2_3, time3_4, time4_5, time5_6, time6_7)
+          val time7_8 = findViewById<ImageView>(R.id.line7_8)
+        val time8_9 = findViewById<ImageView>(R.id.line8_9)
+        val time9_10 = findViewById<ImageView>(R.id.line9_10)
+        val firsttimeLine = mutableListOf<ImageView>(time0_1,time1_2, time2_3, time3_4, time4_5, time5_6, time6_7, time7_8, time8_9, time9_10)
 
 
         val adjustedFirstListTime = firstListTime?.drop(1) // 첫 번째 요소를 건너뛴 새로운 리스트
@@ -241,6 +247,11 @@ class ScheduleActivity : AppCompatActivity() {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
 
+        }
+
+        binding.checkList.setOnClickListener {
+            val intent = Intent(this, CheckListActivity ::class.java)
+            startActivity(intent)
         }
 
 

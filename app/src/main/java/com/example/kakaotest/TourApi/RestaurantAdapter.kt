@@ -52,4 +52,3 @@ class RestaurantAdapter(private val restaurants: List<Restaurant>) :
     }
 
 }
-

@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
@@ -61,7 +62,7 @@ class MapActivity : AppCompatActivity() {
 
         binding.backBtn.setOnClickListener {
             finish()
-            
+
         }
 
 
@@ -89,24 +90,32 @@ class MapActivity : AppCompatActivity() {
         binding.searchDataListView.adapter = searchDataAdapter
 
 
-/*
-        if( ){
-            AlertDialogHelper().showAlertMessage(this,"숙소를 선택해주세요!","네",null,null,
-                DialogInterface.OnClickListener { dialog, which ->
-                    if (which == DialogInterface.BUTTON_POSITIVE) {
-                        dialog.dismiss()
-                    }})
-        } else if (selectedPlacesList[0] != null && selectedPlacesList[1] == null){
-            AlertDialogHelper().showAlertMessage(this,"가고싶은 장소를 선택해주세요! \n (식당 제외)","네",null,null,
-                DialogInterface.OnClickListener { dialog, which ->
-                    if (which == DialogInterface.BUTTON_POSITIVE) {
-                        dialog.dismiss()
-                    }})
-        }
 
-*/
+        /*
+                if(selectedPlacesList[0] == null ){
+                    AlertDialogHelper().showAlertMessage(this,"숙소를 선택해주세요!","네",null,null,
+                        DialogInterface.OnClickListener { dialog, which ->
+                            if (which == DialogInterface.BUTTON_POSITIVE) {
+                                dialog.dismiss()
+                            }})
+                } else if (selectedPlacesList[0] != null && selectedPlacesList[1] == null){
+                    AlertDialogHelper().showAlertMessage(this,"가고싶은 장소를 선택해주세요! \n (식당 제외)","네",null,null,
+                        DialogInterface.OnClickListener { dialog, which ->
+                            if (which == DialogInterface.BUTTON_POSITIVE) {
+                                dialog.dismiss()
+                            }})
+                }
+
+        */
+
+
+
+
+
         binding.searchDataListView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
+
+
                 val selectItem = parent.getItemAtPosition(position) as SearchData
 
                 //apiAdapter.apiRequest(126.862833,35.151286,126.883917,35.153113)
@@ -285,11 +294,11 @@ class MapActivity : AppCompatActivity() {
 
 
 
-    }
+            }
 
 
 
-})}
+        })}
 
 
     private fun isPlaceAlreadySelected(newPlace: SearchData): Boolean{

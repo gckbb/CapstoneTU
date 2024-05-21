@@ -7,20 +7,30 @@
     tools:context=".Map.FirstRoute">
 
 
-            <ImageButton
-                android:id="@+id/back_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginTop="25dp"
-                android:background="@drawable/ic_back"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/ic_back"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 
 
+    </LinearLayout>
         <FrameLayout
             android:id="@+id/tmapViewContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"></FrameLayout>
-    </FrameLayout>
+
+
+
+</FrameLayout>

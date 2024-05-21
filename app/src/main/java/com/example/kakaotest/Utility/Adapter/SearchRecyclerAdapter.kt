@@ -1,11 +1,13 @@
 package com.example.kakaotest.Utility.Adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Adapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaotest.Map.WhereActivity
+import com.example.kakaotest.R
 import com.example.kakaotest.search.SearchResultEntity
 import com.example.kakaotest.databinding.ViewholderSearchResultItemBinding
 
@@ -21,9 +23,17 @@ class SearchRecyclerAdapter: RecyclerView.Adapter<SearchRecyclerAdapter.SearchRe
         }
 
         fun bindViews(data: SearchResultEntity) {
-            binding.root.setOnClickListener {
+            binding.selectBtn.setOnClickListener {
                 searchResultClickListener(data)
+             //   binding.selectBtn.setBackgroundColor(Color.YELLOW)
+                binding.selectBtn.setBackgroundResource(R.drawable.buttonshape2)
             }
+
+      //      binding.root.setOnClickListener {
+             //   searchResultClickListener(data)
+              //  binding.root.setBackgroundColor(Color.BLUE)
+
+         //   }
         }
     }
 
@@ -44,4 +54,9 @@ class SearchRecyclerAdapter: RecyclerView.Adapter<SearchRecyclerAdapter.SearchRe
         this.searchResultClickListener = searchResultClickListener
         notifyDataSetChanged()
     }
+
+
+
+
+
 }

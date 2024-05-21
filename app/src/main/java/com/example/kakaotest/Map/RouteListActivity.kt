@@ -14,9 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
-import com.example.kakaotest.HomeActivity
 import com.example.kakaotest.R
-import com.example.kakaotest.Utility.TravelPlanManager
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 
@@ -27,7 +25,7 @@ class RouteListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_create_route)
+        setContentView(R.layout.activity_route_list)
         val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
         val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
         val receivedFoodDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedFoodDataList")

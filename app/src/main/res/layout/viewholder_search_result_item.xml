@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+ android:id="@+id/layout"
+    >
 
     <TextView
         android:id="@+id/textTextView"
@@ -35,4 +38,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/black" />
 
+    <Button
+        android:id="@+id/selectBtn"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/edittext3"
+        android:text="선택"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

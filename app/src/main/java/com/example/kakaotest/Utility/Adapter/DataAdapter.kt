@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.R
+import com.example.kakaotest.search.SearchResultEntity
 
 class DataAdapter(val context: Context, val dataList:ArrayList<SearchData>): BaseAdapter() {
 //MapActivity에서의 ListView와 data_list.xml
 
-
+    var searchResultClickListener: (SearchData) -> Unit ={}
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = LayoutInflater.from(context).inflate(R.layout.data_list, null)
 
@@ -21,6 +23,9 @@ class DataAdapter(val context: Context, val dataList:ArrayList<SearchData>): Bas
         val dataphoto = view.findViewById<ImageView>(R.id.data_image)
         val dataname = view.findViewById<TextView>(R.id.data_name)
         val dataaddress = view.findViewById<TextView>(R.id.data_place)
+        val selectedBtn = view.findViewById<Button>(R.id.selectBtn)
+
+
 
         /* ArrayList<Dog>의 변수 dog의 이미지와 데이터를 ImageView와 TextView에 담는다. */
         val data = dataList[position]
@@ -29,8 +34,18 @@ class DataAdapter(val context: Context, val dataList:ArrayList<SearchData>): Bas
         dataname.text = data.id
         dataaddress.text = data.address
 
+
+
+        selectedBtn.setOnClickListener {
+            searchResultClickListener(data)
+            //   binding.selectBtn.setBackgroundColor(Color.YELLOW)
+            selectedBtn.setBackgroundResource(R.drawable.secondbutton)
+
+        }
         return view
     }
+
+
     override fun getCount(): Int {
         return dataList.size
     }
