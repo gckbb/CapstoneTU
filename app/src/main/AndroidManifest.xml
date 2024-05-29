@@ -45,6 +45,14 @@
             android:exported="false" />
         <activity android:name=".CheckList.EditTodoActivity"
             android:exported="false" />
+        <activity android:name=".CashBook.AfterSelectCashActivity"
+            android:exported="false" />
+        <activity android:name=".CashBook.CashSelectActivity"
+            android:exported="false" />
+        <activity android:name=".CashBook.EditCashActivity"
+            android:exported="false" />
+        <activity android:name=".CashBook.CashbookActivity"
+            android:exported="false" />
         <activity
             android:name=".Map.WhereActivity"
             android:exported="false" />

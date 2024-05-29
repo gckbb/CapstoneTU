@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.kakaotest.CashBook.CashbookActivity
 import com.example.kakaotest.CheckList.CheckListActivity
 
 import com.example.kakaotest.Login.Email.EmailLogin
@@ -113,6 +114,10 @@ class MainActivity : AppCompatActivity() {
         }
         binding.checklist.setOnClickListener {
             val intent = Intent(this, CheckListActivity::class.java)
+            startActivity(intent)
+        }
+        binding.cashbook.setOnClickListener {
+            val intent = Intent(this, CashbookActivity::class.java)
             startActivity(intent)
         }
 

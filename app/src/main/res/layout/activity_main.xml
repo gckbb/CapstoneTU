@@ -195,7 +195,15 @@
                         android:layout_height="wrap_content"
 
                         android:text="checkList" />
+
+                    <Button
+                        android:id="@+id/cashbook"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text="cashbook" />
                 </LinearLayout>
+
 
 
             </LinearLayout>
