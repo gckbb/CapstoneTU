@@ -49,8 +49,11 @@ class DataAdapter(
         selectBtn.tag = position
         selectBtn.setOnClickListener(this)
 
-
-        selectBtn.setBackgroundResource(R.drawable.buttonshape4)
+        if (!selectedPlacesList.contains(data)) {
+            selectBtn.setBackgroundResource(R.drawable.buttonshape4)
+        }else{
+            selectBtn.setBackgroundResource(R.drawable.buttonshape2)
+        }
 
 
         return itemView

@@ -113,8 +113,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edittext"
                 android:padding="8dp"
-                tools:listitem="@layout/data_list" />
 
+                tools:listitem="@layout/data_list" />
 
 
 

@@ -5,15 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.PointF
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Button
-import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -22,17 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchData
-import com.example.kakaotest.Utility.tmap.ApiAdapter
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.SelectRecyclerAdapter
 import com.example.kakaotest.databinding.ActivityMapBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.firestore.FirebaseFirestore
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
-import com.skt.tmap.TMapTapi
 import com.skt.tmap.TMapView
-import com.skt.tmap.TMapView.OnClickListenerCallback
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.poi.TMapPOIItem
 import java.util.ArrayList
@@ -45,7 +39,10 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
     private lateinit var selectRecyclerAdapter: SelectRecyclerAdapter
     private lateinit var tMapView: TMapView
     private lateinit var dataadapter: DataAdapter
-    private val marker = TMapMarkerItem()
+
+
+
+
     private val bottomSheetLayout by lazy { findViewById<LinearLayout>(R.id.bottom_sheet_layout) }
 
     private val bottomSheetHidePersistentButton by lazy { findViewById<Button>(R.id.hide_persistent_button) }
@@ -91,6 +88,8 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
         container.addView(tMapView)
         // 발급받은 키로 TMapView에 API 키 설정
         tMapView.setSKTMapApiKey(appKey)
+
+
         dataadapter = DataAdapter(this, R.layout.data_list, searchDataList, this)
 
         binding.searchDataListView.adapter = dataadapter
@@ -184,6 +183,7 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
             } as ArrayList<SelectedPlaceData>
 
             intent.putParcelableArrayListExtra("selectedPlaceDataList", selectedPlaceDataList)
+            intent.putExtra("travelPlan", travelPlan)
             startActivity(intent)
             Log.d("Item", selectedPlaceDataList.toString())
         }
@@ -350,7 +350,7 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
 
     fun onItemDelete(position: Int) {
         selectedPlacesList.removeAt(position)
-        selectRecyclerAdapter.deleteItem(position)
+     //   selectRecyclerAdapter.removeItem(selectPlaceList.get(position))
         updateMarkers()
     }
 
