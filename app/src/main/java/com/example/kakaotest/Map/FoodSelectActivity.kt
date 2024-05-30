@@ -1,8 +1,9 @@
 package com.example.kakaotest.Map
 
+import DataAdapter
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +15,8 @@ import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
-import com.example.kakaotest.Utility.Adapter.DataAdapter
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
+
 import com.example.kakaotest.databinding.ActivityFoodSelectBinding
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
@@ -22,16 +24,19 @@ import com.skt.tmap.TMapView
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.poi.TMapPOIItem
 
-class FoodSelectActivity : AppCompatActivity() {
+class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
     private val selectedFoodPlacesList = java.util.ArrayList<SearchData>() //선택한 장소 저장하는 list
     val searchDataList = arrayListOf<SearchData>()
     var searchDataList2 = java.util.ArrayList<SearchData>()
-
+    private lateinit var adapter: DataAdapter
     private var mBinding: ActivityFoodSelectBinding ?= null
     private val binding get() = mBinding!!
     var startpoint: TMapPoint? = null
     var endpoint: TMapPoint? = null
     lateinit var start: TMapPoint
+
+
+
     lateinit var end: TMapPoint
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +58,7 @@ class FoodSelectActivity : AppCompatActivity() {
         // FrameLayout 컨테이너를 XML에서 찾아옴
         val container: FrameLayout = findViewById(R.id.tmapViewContainer)
         // TMapView 인스턴스를 생성
-        val tMapView = TMapView(this@FoodSelectActivity)
+        val tMapView = TMapView(this)
         val tMapData = TMapData()
         val tMapGps = TMapPoint()
 
@@ -63,29 +68,19 @@ class FoodSelectActivity : AppCompatActivity() {
         // 발급받은 키로 TMapView에 API 키 설정
         tMapView.setSKTMapApiKey(appKey)
 
-        val searchDataAdapter = DataAdapter(this,searchDataList)
-        binding.searchDataListView.adapter = searchDataAdapter
 
+
+        adapter = DataAdapter(this,R.layout.data_list, searchDataList,this)
+        binding.searchDataListView.adapter = adapter
 
 
         binding.searchDataListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectItem = parent.getItemAtPosition(position) as SearchData
 
-            //apiAdapter.apiRequest(126.862833,35.151286,126.883917,35.153113)
-            // Toast.makeText(this, "${selectItem.tpoint.latitude}", Toast.LENGTH_SHORT).show()
+
             tMapView.setCenterPoint(selectItem.tpoint.latitude,selectItem.tpoint.longitude)
             tMapView.zoomLevel = 15
 
-
-            if(startpoint==null || endpoint==null){
-                if(startpoint==null){
-                    startpoint = selectItem.tpoint
-                    //  Toast.makeText(this, "시작지역: ${selectItem.id}", Toast.LENGTH_SHORT).show()
-                }else if(endpoint==null){
-                    endpoint = selectItem.tpoint
-                    // Toast.makeText(this, "도착지역: ${selectItem.id}", Toast.LENGTH_SHORT).show()
-                }
-            }
 
             // 중복된 장소인지 확인
             if (!isPlaceAlreadySelected(selectItem)) {
@@ -104,35 +99,27 @@ class FoodSelectActivity : AppCompatActivity() {
 
                 )
 
+                receivedDataList?.add(selectedPlaceData)
 
-                Log.d("ITEM", selectedPlaceData.toString())
 
-                // 리스트에 추가된 모든 장소를 SelectedPlaceData 리스트로 변환
-                val selectedPlaceDataList = selectedFoodPlacesList.map {
-                    SelectedPlaceData(
-                        placeName = it.id,
-                        tpoint = TMapPoint(it.tpoint.latitude, it.tpoint.longitude),
-                        address = it.address
-                    )
-
-                }
-                Log.d("ITEM", selectedPlaceDataList.last().toString())
-
-                binding.nextbutton.setOnClickListener {
-                    val intent = Intent(this, RouteListActivity::class.java)
-                    intent.putExtra("travelPlan", travelPlan)
-                    intent.putParcelableArrayListExtra("selectedPlaceDataList", receivedDataList)
-                    intent.putParcelableArrayListExtra("selectedFoodDataList", ArrayList(selectedPlaceDataList))
-                    startActivity(intent)
-                    Log.d("Item", selectedFoodPlacesList.toString())
-
-                }
 
             } else {
-                Toast.makeText(this, "이미 선택된 장소입니다.", Toast.LENGTH_SHORT).show()
+
+                AlertDialogHelper().showAlertMessage(this,"선택 취소하시겠습니까? ","네","아니요",null,
+                    DialogInterface.OnClickListener { dialog, which ->
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                            selectedFoodPlacesList.remove(selectItem)
+                            Log.d("PLAN","장소 선택 취소 : $selectedFoodPlacesList")
+                        }else if (which == DialogInterface.BUTTON_NEGATIVE){
+                            dialog.dismiss()
+                        }
+                    })
             }
 
+            Log.d("PLAN",receivedDataList.toString())
+
         }
+
 
         // 클릭 이벤트 설정
         tMapView.setOnClickListenerCallback(object : TMapView.OnClickListenerCallback {
@@ -158,91 +145,66 @@ class FoodSelectActivity : AppCompatActivity() {
 
 
 
+        // Map 로딩 완료 리스너 설정
+        tMapView.setOnMapReadyListener {
+            tMapView.setCenterPoint(126.9780, 37.5665)
+            tMapView.zoomLevel = 10
+        }
 
-        // 맵 로딩 완료 시 동작할 리스너 설정
-        tMapView.setOnMapReadyListener(object : TMapView.OnMapReadyListener {
-            override fun onMapReady() {
-                // 맵 로딩이 완료된 후에 수행할 동작을 구현해주세요
-                // 예: 마커 추가, 경로 표시 등
-                Toast.makeText(this@FoodSelectActivity, "MapLoading", Toast.LENGTH_SHORT).show()
-                tMapView.setCenterPoint(tMapGps.katecLat, tMapGps.katecLon)
-                tMapView.zoomLevel = 10
+        // Search Button 클릭 리스너 설정
+        binding.searchButton.setOnClickListener {
+            try {
 
-                val marker = TMapMarkerItem()
-                marker.id = "marker1"
-                marker.setTMapPoint(tMapGps.katecLat, tMapGps.katecLon)
-                marker.icon = BitmapFactory.decodeResource(resources, R.drawable.point)
-                tMapView.addTMapMarkerItem(marker)
-
-
-                binding.searchButton.setOnClickListener{
-                    tMapView.removeAllTMapMarkerItem()
-                    tMapView.removeAllTMapPOIItem()
-                    searchDataList.clear()
-
-                    var strData = binding.searchText.text.toString()
-                    tMapData.findAllPOI(strData,
-                        TMapData.OnFindAllPOIListener { poiItemList ->
-                            var num = 1
-                            for (item in poiItemList) {
-                                Log.e(
-                                    "Poi Item",
-                                    "name:" + item.poiName + " address:" + item.poiAddress
-                                )
-                                marker.id = item.poiName
-                                marker.setTMapPoint(TMapPoint())
-                                marker.icon = BitmapFactory.decodeResource(
-                                    resources,
-                                    R.drawable.poi
-                                )
-                                tMapView.addTMapMarkerItem(marker)
-                                searchDataList2.add(
-                                    SearchData(
-                                        item.poiName,
-                                        item.poiPoint,
-                                        item.poiAddress
-                                    )
-                                )
-                                runOnUiThread {
-                                    searchDataList.add(
-                                        SearchData(
-                                            item.poiName,
-                                            item.poiPoint,
-                                            item.poiAddress
-                                        )
-                                    )
-                                    searchDataAdapter.notifyDataSetChanged()
-                                }
-                                num += 1
-                            }
-
-                            /*
-                                                        routetest.routeSet(searchDataList2,searchDataList2[0])
-                                                        routetest.routeStart(2,6)
-                                                        routetest.printTotalRoute()
-                            */
-                            tMapView.addTMapPOIItem(poiItemList)
-                        })
-
-                }
-
-
-
-
+                tMapView.removeAllTMapMarkerItem()
+                searchDataList.clear()
+                val strData = binding.searchText.text.toString()
+                tMapData.findAllPOI(strData, TMapData.OnFindAllPOIListener { poiItemList ->
+                    for (item in poiItemList) {
+                        searchDataList.add(SearchData(item.poiName, item.poiPoint, item.poiAddress))
+                    }
+                    runOnUiThread {
+                        adapter.notifyDataSetChanged()
+                    }
+                })
+            }   catch (e: Exception) {
+                Log.e("FoodSelectActivity", "searchBtn action - Exception: ${e.toString()}", e)
             }
-        })
+        }
+
+        binding.nextbutton.setOnClickListener {
+            val intent = Intent(this, RouteListActivity::class.java)
+            intent.putExtra("travelPlan", travelPlan)
+            intent.putParcelableArrayListExtra("selectedPlaceDataList", receivedDataList)
+            Log.d("receivedDataList", " receivedDataList : " + receivedDataList.toString())
+            intent.putParcelableArrayListExtra("selectedFoodDataList", ArrayList(selectedFoodPlacesList))
 
 
+            startActivity(intent)
+            Log.d("selectedFoodPlacesList ","selectedFoodPlacesList :  "+selectedFoodPlacesList.toString())
 
-
+        }
 
 
 
 
     }
+    override fun onItemClick(item: SearchData) {
+        if (! selectedFoodPlacesList.contains(item)) {
+            selectedFoodPlacesList.add(item)
+            Toast.makeText(this, "${item.id} 추가", Toast.LENGTH_SHORT).show()
 
+        } else {
+            selectedFoodPlacesList.remove(item)
+            Toast.makeText(this, "${item.id} 삭제", Toast.LENGTH_SHORT).show()
 
-
+        }
+    }
+    override fun onListBtnClick(position: Int, updatedSelectedPlacesList: ArrayList<SearchData>) {
+        selectedFoodPlacesList.clear()
+        selectedFoodPlacesList.addAll(updatedSelectedPlacesList)
+        Toast.makeText(this, "아이템 ${position + 1} 클릭됨", Toast.LENGTH_SHORT).show()
+        Log.d("ClickedItems",  selectedFoodPlacesList.toString())
+    }
     private fun isPlaceAlreadySelected(newPlace: SearchData): Boolean {
         // 중복된 장소인지 확인
         for (selectedPlace in selectedFoodPlacesList) {

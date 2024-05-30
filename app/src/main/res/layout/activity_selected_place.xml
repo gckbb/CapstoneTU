@@ -59,7 +59,7 @@
                 <ListView
                     android:id="@+id/placeListView"
                     android:layout_width="371dp"
-                    android:layout_height="300dp"
+                    android:layout_height="500dp"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/edittext3"
                     android:padding="8dp" />
@@ -79,9 +79,9 @@
                     android:layout_width="371dp"
                     android:layout_height="300dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
+
                     android:background="@drawable/edittext3"
-                    android:dividerHeight="4dp"
+                  
                     android:padding="8dp"
                     android:layout_marginBottom="30dp">
 

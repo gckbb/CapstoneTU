@@ -85,6 +85,7 @@
         android:layout_marginTop="15dp"
         android:padding="8dp"
         android:layout_height="533dp"
+        tools:listitem="@layout/viewholder_search_result_item"
       />
 
     <TextView

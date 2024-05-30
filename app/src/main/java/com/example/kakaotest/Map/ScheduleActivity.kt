@@ -235,7 +235,48 @@ class ScheduleActivity : AppCompatActivity() {
             binding.placeListContainer1.visibility = View.GONE
 
         }
-
+        binding.time1.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",0)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time2.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",1)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time3.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",2)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time4.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",3)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time5.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",4)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time6.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",5)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
+        binding.time7.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",6)
+            intent.putExtra("dayList", firstList)
+            startActivity(intent)
+        }
         binding.backBtn.setOnClickListener {
             finish()
         }

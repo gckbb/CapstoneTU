@@ -112,13 +112,15 @@ class SecondRoute : AppCompatActivity() {
                         var polyLineList: ArrayList<TMapPolyLine> = arrayListOf<TMapPolyLine>()
                         var passList: ArrayList<TMapPoint> = arrayListOf<TMapPoint>()
                         var colorList  = arrayOf(
-                            Color.YELLOW,
-                            Color.BLUE,
-                            Color.GREEN,
-                            Color.MAGENTA,
-                            Color.CYAN,
-                            Color.RED,
-                            Color.TRANSPARENT)
+                            Color.rgb(255,191,0),
+                            Color.rgb(153,204,255),
+                            Color.rgb(63,232,127),
+                            Color.rgb(255,192,203),
+                            Color.rgb(92,255,209),
+                            Color.rgb(255,105,180),
+                            Color.rgb(121,236,255),
+                            Color.rgb(255,127,0)
+                        )
                         for (i in 1 until pointList.size) {
                             passList.add(pointList[i])
                             polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,pointList[i-1],pointList[i])

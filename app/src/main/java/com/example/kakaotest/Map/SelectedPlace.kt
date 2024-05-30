@@ -17,25 +17,31 @@ import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
+import com.example.kakaotest.Utility.Adapter.simpleListItem2Adapter
 import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.skt.tmap.TMapPoint
 import java.util.ArrayList
 
 
 class SelectedPlace : AppCompatActivity() {
-    private val routetest = MakeRoute()
-    private val logList = mutableListOf<String>()
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selected_place)
 
+        val receivedDataList: ArrayList<SelectedPlaceData>? =
+            intent.getParcelableArrayListExtra("selectedPlaceDataList")
 
-        val receivedDataList =
-            intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
         val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
 
-
+        if (receivedDataList != null) {
+            for (place in receivedDataList) {
+                Log.d("SelectedPlace", "Place: ${place.placeName}, Address: ${place.address}")
+            }
+        } else {
+            Log.d("SelectedPlace", "No places selected")
+        }
         val backBtn = findViewById<ImageButton>(R.id.back_btn)
         backBtn.setOnClickListener {
             finish()
@@ -52,10 +58,9 @@ class SelectedPlace : AppCompatActivity() {
         // 어댑터 생성 및 설정
         val selectedPlaceNames = receivedDataList?.map { "${it.placeName}" }?.toMutableList() ?: mutableListOf()
 
-
         // 어댑터 생성
         val nameAdapter =
-            ArrayAdapter(this, android.R.layout.simple_list_item_1, selectedPlaceNames)
+            simpleListItem2Adapter(this, receivedDataList!!.toMutableList())
 
         // ListView에 어댑터 설정
         placeListView.adapter = nameAdapter
@@ -68,7 +73,6 @@ class SelectedPlace : AppCompatActivity() {
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
             val intent = Intent(this, FoodSelectActivity::class.java)
-            // val intent = Intent(this, RouteListActivity::class.java)
             intent.putExtra("travelPlan", travelPlan)
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
             startActivity(intent)

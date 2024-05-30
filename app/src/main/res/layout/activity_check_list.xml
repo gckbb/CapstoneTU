@@ -23,10 +23,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:src="@drawable/ic_add"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/white"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:backgroundTint="@color/Secondbutton"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

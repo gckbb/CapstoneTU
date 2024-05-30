@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
@@ -17,14 +18,14 @@ import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.overlay.TMapPolyLine
 
 
-class FirstRoute : AppCompatActivity() {
+class SingleRoute : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_first_route)
+        setContentView(R.layout.activity_single_route)
 
-        val firstList = intent.getParcelableArrayListExtra<SearchRouteData>("firstList")
-        Log.d("PLAN","firstRoute \n"+ firstList.toString())
-
+        val dayList = intent.getParcelableArrayListExtra<SearchRouteData>("dayList")
+        Log.d("PLAN","singleroute \n"+ dayList.toString())
+        val timeindex = intent.getIntExtra("time",0)
         val pointList = ArrayList<TMapPoint>()
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP")
@@ -45,7 +46,7 @@ class FirstRoute : AppCompatActivity() {
         tMapView.setOnMapReadyListener(object : TMapView.OnMapReadyListener {
             override fun onMapReady() {
                 // 맵 로딩 완료 후 구현
-                Toast.makeText(this@FirstRoute, "MapLoading", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SingleRoute, "MapLoading", Toast.LENGTH_SHORT).show()
                 //지도 중심좌표로 이동
                 tMapView.setCenterPoint(37.566474, 126.985022);
                 tMapView.zoomLevel = 10
@@ -65,37 +66,28 @@ class FirstRoute : AppCompatActivity() {
                     BitmapFactory.decodeResource(resources, R.drawable.point10),
                     BitmapFactory.decodeResource(resources, R.drawable.end)
                 )
+                tMapView.removeAllTMapPolyLine()
+                tMapView.removeAllTMapMarkerItem()
+                for(i in timeindex until timeindex+2) {
+                    val tpoint = dayList?.get(i)?.pointdata
 
-
-                for ((index, selectedPlace) in firstList!!.withIndex()) {
-                    val tpoint = selectedPlace.pointdata!!.tpoint
-
-                    //선택된 장소들 표시
-                    if (tpoint != null) {
+                    if(tpoint != null) {
                         val marker = TMapMarkerItem().apply {
-                            id = selectedPlace.pointdata.placeName
-                            setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))
-                            icon = if (index==0) iconList[0]
-                            else if (index == firstList.size-1) iconList[11]
-                            else iconList[index]
-
+                            id = tpoint.placeName
+                            setTMapPoint(TMapPoint(tpoint.tpoint.latitude, tpoint.tpoint.longitude))
+                            icon = iconList[i]
                         }
                         tMapView.addTMapMarkerItem(marker)
                     }
-
-
                 }
 
 
-                    // 선택된 장소들의 TMapPoint를 이용하여 리스트 생성
-                    for (selectedPlace in firstList!!) {
-                        selectedPlace.pointdata?.tpoint?.let { tMapPoint ->
-                            pointList.add(tMapPoint)
-                        }
+                // 선택된 장소들의 TMapPoint를 이용하여 리스트 생성
+                for (selectedPlace in dayList!!) {
+                    selectedPlace.pointdata?.tpoint?.let { tMapPoint ->
+                        pointList.add(tMapPoint)
                     }
-
-
-
+                }
 
                 Thread {
                     try {
@@ -114,25 +106,21 @@ class FirstRoute : AppCompatActivity() {
                             Color.rgb(121,236,255),
                             Color.rgb(255,127,0)
                         )
-                        for (i in 1 until pointList.size) {
-                            passList.add(pointList[i])
-                            polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,pointList[i-1],pointList[i])
-                            polyLines.setID("polylines${i}")
-                            polyLines.setLineColor(colorList[i%7])
-                            polyLineList.add(polyLines)
-                            if (polyLineList[i-1] != null) {
-                                tMapView.addTMapPolyLine(polyLineList[i-1])
-                                val info = tMapView.getDisplayTMapInfo(polyLineList[i-1].linePointList)
-                                tMapView.zoomLevel = info.zoom
-                                tMapView.setCenterPoint(info.point.latitude, info.point.longitude)
-                            }
-                        }
+
+                        polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,dayList?.get(timeindex)?.pointdata?.tpoint,dayList?.get(timeindex+1)?.pointdata?.tpoint)
+                        polyLines.setID("polylines${timeindex}")
+                        polyLines.setLineColor(colorList[timeindex])
+                        tMapView.addTMapPolyLine(polyLines)
+                        val info = tMapView.getDisplayTMapInfo(polyLines.linePointList)
+                        tMapView.zoomLevel = info.zoom
+                        tMapView.setCenterPoint(info.point.latitude, info.point.longitude)
+
                     } catch (e: Exception) {
 
 
                     }
                 }.start()
-    }})}}
+            }})}}
 
 
 

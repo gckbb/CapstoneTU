@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet_layout"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:background="@drawable/background_bottom_sheet"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="140dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textColor="@color/black"
+        android:text="선택 목록"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/hide_persistent_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/close"
+        tools:ignore="SpeakableTextPresentCheck" />
+</LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/selectPlace"
+        tools:listitem="@layout/selected_place_item_list"
+        android:layout_width="370dp"
+        android:layout_height="142dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext"
+        android:padding="10dp" />
+
+
+
+
+
+
+</LinearLayout>

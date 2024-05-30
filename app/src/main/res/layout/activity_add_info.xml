@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/backgroundLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/ic_back"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <Button
+            android:id="@+id/nextbutton"
+            android:layout_width="83dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="250dp"
+            android:text="다음"
+            android:background="@drawable/buttonshape1"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="34dp"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="희망 활동시간?  "
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:clickable="false"
+                    android:layout_gravity="center"
+                    tools:ignore="MissingConstraints"/>
+
+
+                <ImageButton
+                    android:id="@+id/help"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/help"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+
+                <TextView
+                    android:id="@+id/helptxt"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/buttonshape2"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:text="하루 희망 활동시간을 바탕으로\n경로 생성해드려요!"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:layout_marginLeft="34dp"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+
+                <EditText
+                    android:id="@+id/activity_time"
+                    android:layout_width="70dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/edittext3"
+                    android:text=""
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:inputType="number"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+                    />
+
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
+                    android:text="시간"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+
+                    />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="34dp"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="희망 출발시간? "
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:clickable="false"
+                    tools:ignore="MissingConstraints"/>
+
+
+                <ImageButton
+                    android:id="@+id/help2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="3.5dp"
+                    android:background="@drawable/help"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+                <TextView
+                    android:id="@+id/helptxt2"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/buttonshape2"
+                    android:padding="10dp"
+                    android:text="희망 출발시간을 바탕으로\n경로 생성해드려요!"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:layout_marginLeft="34dp"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+
+                <EditText
+                    android:id="@+id/start_time_hour"
+                    android:layout_width="70dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/edittext3"
+                    android:text=""
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="시"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+
+                    />
+                <EditText
+                    android:id="@+id/start_time_min"
+                    android:layout_width="70dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/edittext3"
+                    android:text=""
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="number"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="분"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+
+                    />
+
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

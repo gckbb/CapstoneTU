@@ -21,7 +21,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Community.EditPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Community.ReadMyPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Community.ReadPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Community.WritePostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Community.MainCommunity"
+            android:exported="false" />
+        <activity
+            android:name=".AddInfoActivity"
+            android:exported="false" />
         <activity
             android:name=".Map.FoodSelectActivity"
             android:exported="false" />
@@ -37,13 +54,20 @@
         <activity
             android:name=".Map.ScheduleActivity"
             android:exported="false" />
-       <activity android:name=".CheckList.AfterSelectListActivity"
-           android:exported="false" />
-        <activity android:name=".CheckList.CheckListActivity"
+        <activity
+            android:name=".Map.SingleRoute"
             android:exported="false" />
-        <activity android:name=".CheckList.ListSelectActivity"
+        <activity
+            android:name=".CheckList.AfterSelectListActivity"
             android:exported="false" />
-        <activity android:name=".CheckList.EditTodoActivity"
+        <activity
+            android:name=".CheckList.CheckListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CheckList.ListSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CheckList.EditTodoActivity"
             android:exported="false" />
         <activity
             android:name=".Map.WhereActivity"

@@ -117,7 +117,7 @@ class WhereActivity :  AppCompatActivity() , CoroutineScope {
             Log.d("PLAN", "지역 선택 : $selectedPlace")
             AlertDialogHelper().showAlertMessage(this,"\n${it.name}(으)로 여행 가시나요?","네","아니요",null,
                 DialogInterface.OnClickListener { dialog, which ->
-                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                    if (which==DialogInterface.BUTTON_POSITIVE) {
                         val intent = Intent(this, PlanInfoInput::class.java)
                         // 선택한 장소가 있을 때에만 인텐트에 추가
                         selectedPlace?.let { place ->
