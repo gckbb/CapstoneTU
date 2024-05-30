@@ -260,7 +260,7 @@ class PlanInfoInput : AppCompatActivity() {
 
 
         val restaurantBtn  =  listOf(yesBtn ,noBtn)
-        var restaurantList = listOf("음식점 추가O","음식점 추가X")
+        var restaurantList = listOf("YES","NO")
 
         var restaurant : String? = ""
         for (btn in restaurantBtn){

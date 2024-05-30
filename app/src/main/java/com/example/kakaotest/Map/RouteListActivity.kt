@@ -32,6 +32,16 @@ class RouteListActivity : AppCompatActivity() {
         val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
         val receivedFoodDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedFoodDataList")
 
+        val startDate = travelPlan!!.startDate?.day ?: 0
+        val endDate = travelPlan.endDate?.day ?: 0
+        val dateRange = endDate - startDate
+        val activityTime = travelPlan.activityTime
+        var restaurant = travelPlan.restaurant
+        if(restaurant == null) {
+            restaurant = "YES"
+            Log.e("PLAN", "restaurant null error")
+        }
+
 
 
 
@@ -80,19 +90,24 @@ class RouteListActivity : AppCompatActivity() {
         }
 
         nextButton.setOnClickListener {
-            val firstDayData = routetest.printTotalRoute().firstOrNull()
-            val firstPlaceList = firstDayData!!.dayRoute
-            val secondDayData = routetest.printTotalRoute().getOrNull(1)
-            val secondList = secondDayData!!.dayRoute
             val intent = Intent(this, ScheduleActivity::class.java)
 
-            intent.putExtra("firstList",firstPlaceList)
-            intent.putExtra("secondList",  secondList)
-            intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
+            val firstDayData = routetest.printTotalRoute().firstOrNull()
+            val firstPlaceList = firstDayData!!.dayRoute
+
+            val secondDayData = routetest.printTotalRoute().getOrNull(1)
+            val secondList = secondDayData!!.dayRoute
+
+            for(i in 0 until dateRange+1) {
+                intent.putExtra("List${i+1}",routetest.printTotalRoute().getOrNull(i)?.dayRoute)
+            }
+
+
             intent.putExtra("travelPlan", travelPlan)
             Log.d("PLAN",travelPlan.toString())
             startActivity(intent)
         }
+
 
 
 
@@ -106,7 +121,7 @@ class RouteListActivity : AppCompatActivity() {
                 routetest.routeSet(receivedDataList!!, receivedDataList!![0])
                 Log.d("PLAN", "Route Set")
                 // 비동기적으로 routeStart를 호출합니다.
-                routetest.routeStart(2, 8, 1, receivedFoodDataList!!)
+                routetest.routeStart(dateRange, activityTime!!, 1, receivedFoodDataList!!,restaurant)
                 Log.d("PLAN", "Route Started")
                 routetest.printTotalRoute()
                 Log.d("PLAN", "Total Route Printed")

@@ -13,11 +13,14 @@ import android.widget.ImageButton
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
+import com.example.kakaotest.DataModel.tmap.DayRouteData
 import com.example.kakaotest.HomeActivity
+
 
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.TravelPlanManager
 import com.example.kakaotest.databinding.ActivityScheduleBinding
+import java.util.LinkedList
 
 class ScheduleActivity : AppCompatActivity() {
     private val travelPlanManager = TravelPlanManager()
@@ -28,15 +31,12 @@ class ScheduleActivity : AppCompatActivity() {
         val binding = ActivityScheduleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val firstList = intent.getParcelableArrayListExtra<SearchRouteData>("firstList") //경로
-        val secondList = intent.getParcelableArrayListExtra<SearchRouteData>("secondList") //경로
-
-        val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
-
-
-
+        val firstList = intent.getParcelableArrayListExtra<SearchRouteData>("List1") //경로
+        val secondList = intent.getParcelableArrayListExtra<SearchRouteData>("List2") //경로
         val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
         Log.d("PLAN",travelPlan.toString())
+
+
         val placename = findViewById<TextView>(R.id.placename)
         val firstdate = findViewById<TextView>(R.id.date1)
         val lastdate = findViewById<TextView>(R.id.date2)
@@ -182,7 +182,7 @@ class ScheduleActivity : AppCompatActivity() {
 
         binding.path1.setOnClickListener {
             val intent = Intent(this, FirstRoute::class.java)
-            intent.putExtra("firstList",  firstList)
+            intent.putExtra("firstList", firstList)
             startActivity(intent)
         }
 

@@ -66,11 +66,11 @@ class MakeRoute {
 
 
 
-    suspend fun routeStart(totalDate: Int, maxDayTime: Int,stayTimePerPlace : Int, foodDataList:ArrayList<SelectedPlaceData>) {
+    suspend fun routeStart(totalDate: Int, maxDayTime: Int,stayTimePerPlace : Int, foodDataList:ArrayList<SelectedPlaceData>, restaurant:String) {
         coroutineScope {
             try {
 
-                for (k in 0 until totalDate) {
+                for (k in 0 until totalDate+1) {
                     var totalTime: Double = 0.0
                     var currentDayTime: Double = 0.0
                     var remainingTime: Int = maxDayTime * 3600 // 남은 시간을 초 단위로 계산
@@ -86,7 +86,7 @@ class MakeRoute {
 
                         if (currentDayTime + minTime.time.toInt() > remainingTime) break
 
-                        if(currentDayTime > 4 * 3600 && lunchcheck == 0){
+                        if(currentDayTime > 4 * 3600 && lunchcheck == 0 && restaurant == "YES"){
                             var minfood = 999999
                             var mindata : SelectedPlaceData? = null
                             for ( i in 0 until foodDataList.size){
