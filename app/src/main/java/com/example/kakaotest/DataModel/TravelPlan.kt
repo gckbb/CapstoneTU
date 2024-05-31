@@ -17,16 +17,19 @@ data class TravelPlan(
     var restaurant: String?=null,
     var destinations: List<SearchRouteData>?=null
 ) : Parcelable {
+
+
+
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(Place::class.java.classLoader),
         parcel.readParcelable(Date::class.java.classLoader),
         parcel.readParcelable(Date::class.java.classLoader),
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readInt()!!,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readInt(),
         parcel.readParcelable(Time::class.java.classLoader),
-        parcel.readString()!!,
+        parcel.readString(),
         parcel.createTypedArrayList(SearchRouteData)
     )
 

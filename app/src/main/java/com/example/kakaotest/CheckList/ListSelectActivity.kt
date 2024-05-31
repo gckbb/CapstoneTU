@@ -37,6 +37,14 @@ class ListSelectActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "3선택", Toast.LENGTH_SHORT).show();
                     sNum = 3
                 }
+                R.id.rb_4 -> {
+                    Toast.makeText(applicationContext, "4선택", Toast.LENGTH_SHORT).show();
+                    sNum = 4
+                }
+                R.id.rb_5 -> {
+                    Toast.makeText(applicationContext, "5선택", Toast.LENGTH_SHORT).show();
+                    sNum = 5
+                }
             }
         }
 

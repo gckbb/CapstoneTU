@@ -259,7 +259,7 @@ class PlanInfoInput : AppCompatActivity() {
         }
 
 
-
+        travelPlanManager.updatePlan(restaurant = null)
 
 
         val helptxt = findViewById<TextView>(R.id.helptxt)

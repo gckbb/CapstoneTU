@@ -57,6 +57,10 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
         setContentView(binding.root)
 
         val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+        if (travelPlan == null) {
+            throw NullPointerException("TravelPlan is null")
+        }
+
 
         binding.backBtn.setOnClickListener {
             finish()
