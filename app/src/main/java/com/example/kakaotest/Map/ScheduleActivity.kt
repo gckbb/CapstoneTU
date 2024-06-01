@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import com.example.kakaotest.CheckList.CheckListActivity
@@ -90,30 +91,33 @@ class ScheduleActivity : AppCompatActivity() {
         Log.d("PLAN",firstListTime.toString())
 
 
-        val time1=findViewById<TextView>(R.id.time1)
-        val time2=findViewById<TextView>(R.id.time2)
-        val time3=findViewById<TextView>(R.id.time3)
-        val time4=findViewById<TextView>(R.id.time4)
-        val time5=findViewById<TextView>(R.id.time5)
-        val time6=findViewById<TextView>(R.id.time6)
-        val time7=findViewById<TextView>(R.id.time7)
-        val time8=findViewById<TextView>(R.id.time8)
-        val time9=findViewById<TextView>(R.id.time9)
-        val time10=findViewById<TextView>(R.id.time10)
-        val firstdayTime = mutableListOf<TextView>(time1, time2, time3, time4, time5, time6, time7,time8, time9, time10)
+        val time1_1=findViewById<TextView>(R.id.time1_1)
+        val time1_2=findViewById<TextView>(R.id.time1_2)
+        val time1_3=findViewById<TextView>(R.id.time1_3)
+        val time1_4=findViewById<TextView>(R.id.time1_4)
+        val time1_5=findViewById<TextView>(R.id.time1_5)
+        val time1_6=findViewById<TextView>(R.id.time1_6)
+        val time1_7=findViewById<TextView>(R.id.time1_7)
+        val time1_8=findViewById<TextView>(R.id.time1_8)
+        val time1_9=findViewById<TextView>(R.id.time1_9)
+        val time1_10=findViewById<TextView>(R.id.time1_10)
 
 
-        val time0_1 = findViewById<ImageView>(R.id.line0_1)
-        val time1_2 = findViewById<ImageView>(R.id.line1_2)
-        val time2_3 = findViewById<ImageView>(R.id.line2_3)
-        val time3_4 = findViewById<ImageView>(R.id.line3_4)
-        val time4_5 = findViewById<ImageView>(R.id.line4_5)
-        val time5_6 = findViewById<ImageView>(R.id.line5_6)
-        val time6_7 = findViewById<ImageView>(R.id.line6_7)
-          val time7_8 = findViewById<ImageView>(R.id.line7_8)
-        val time8_9 = findViewById<ImageView>(R.id.line8_9)
-        val time9_10 = findViewById<ImageView>(R.id.line9_10)
-        val firsttimeLine = mutableListOf<ImageView>(time0_1,time1_2, time2_3, time3_4, time4_5, time5_6, time6_7, time7_8, time8_9, time9_10)
+        val firstdayTime = mutableListOf<TextView>(
+            time1_1, time1_2, time1_3, time1_4,time1_5, time1_6,
+            time1_7,time1_8, time1_9,time1_10)
+
+        val time1_0_1 = findViewById<ImageView>(R.id.line1_0_1)
+        val time1_1_2 = findViewById<ImageView>(R.id.line1_1_2)
+        val time1_2_3 = findViewById<ImageView>(R.id.line1_2_3)
+        val time1_3_4 = findViewById<ImageView>(R.id.line1_3_4)
+        val time1_4_5 = findViewById<ImageView>(R.id.line1_4_5)
+        val time1_5_6 = findViewById<ImageView>(R.id.line1_5_6)
+        val time1_6_7 = findViewById<ImageView>(R.id.line1_6_7)
+          val time1_7_8 = findViewById<ImageView>(R.id.line1_7_8)
+        val time1_8_9 = findViewById<ImageView>(R.id.line1_8_9)
+        val time1_9_10 = findViewById<ImageView>(R.id.line1_9_10)
+        val firsttimeLine = mutableListOf<ImageView>(time1_0_1,time1_1_2, time1_2_3, time1_3_4, time1_4_5, time1_5_6, time1_6_7, time1_7_8, time1_8_9, time1_9_10)
 
 
         val adjustedFirstListTime = firstListTime?.drop(1) // 첫 번째 요소를 건너뛴 새로운 리스트
@@ -141,25 +145,25 @@ class ScheduleActivity : AppCompatActivity() {
 
         var secondListTime = secondList?.map { it.time }
 
-        val time_1=findViewById<TextView>(R.id.time_1)
-        val time_2=findViewById<TextView>(R.id.time_2)
-        val time_3=findViewById<TextView>(R.id.time_3)
-        val time_4=findViewById<TextView>(R.id.time_4)
-        val time_5=findViewById<TextView>(R.id.time_5)
-        val time_6=findViewById<TextView>(R.id.time_6)
-        val time_7=findViewById<TextView>(R.id.time_7)
-        val seconddayTime = mutableListOf<TextView>(time_1, time_2, time_3, time_4, time_5, time_6, time_7)
+        val time2_1=findViewById<TextView>(R.id.time2_1)
+        val time2_2=findViewById<TextView>(R.id.time2_2)
+        val time2_3=findViewById<TextView>(R.id.time2_3)
+        val time2_4=findViewById<TextView>(R.id.time2_4)
+        val time2_5=findViewById<TextView>(R.id.time2_5)
+        val time2_6=findViewById<TextView>(R.id.time2_6)
+        val time2_7=findViewById<TextView>(R.id.time2_7)
+        val seconddayTime = mutableListOf<TextView>(time2_1, time2_2, time2_3, time2_4, time2_5, time2_6, time2_7)
 
 
-        val time_0_1 = findViewById<ImageView>(R.id.line_0_1)
-        val time_1_2 = findViewById<ImageView>(R.id.line_1_2)
-        val time_2_3 = findViewById<ImageView>(R.id.line_2_3)
-        val time_3_4 = findViewById<ImageView>(R.id.line_3_4)
-        val time_4_5 = findViewById<ImageView>(R.id.line_4_5)
-        val time_5_6 = findViewById<ImageView>(R.id.line_5_6)
-        val time_6_7 = findViewById<ImageView>(R.id.line_6_7)
+        val time2_0_1 = findViewById<ImageView>(R.id.line2_0_1)
+        val time2_1_2 = findViewById<ImageView>(R.id.line2_1_2)
+        val time2_2_3 = findViewById<ImageView>(R.id.line2_2_3)
+        val time2_3_4 = findViewById<ImageView>(R.id.line2_3_4)
+        val time2_4_5 = findViewById<ImageView>(R.id.line2_4_5)
+        val time2_5_6 = findViewById<ImageView>(R.id.line2_5_6)
+        val time2_6_7 = findViewById<ImageView>(R.id.line2_6_7)
         //  val time7_8 = findViewById<ImageView>(R.id.line6_7)
-        val secondtimeLine = mutableListOf<ImageView>(time_0_1,time_1_2, time_2_3, time_3_4, time_4_5, time_5_6, time_6_7)
+        val secondtimeLine = mutableListOf<ImageView>(time2_0_1,time2_1_2, time2_2_3, time2_3_4, time2_4_5, time2_5_6, time2_6_7)
 
 
         val adjustedSecondListTime = secondListTime?.drop(1) // 첫 번째 요소를 건너뛴 새로운 리스트
@@ -225,58 +229,38 @@ class ScheduleActivity : AppCompatActivity() {
         binding.placeListView2.adapter = secondAdapter
 
 
-        binding.day1.setOnClickListener {
-            binding.placeListContainer1.visibility = View.VISIBLE //listView1이 나타나져 있을 때 클릭하면 그대로 보이고
-            binding.placeListContainer2.visibility = View.GONE //얘는 없어
 
-        }
-        binding.day2.setOnClickListener {
-            binding.placeListContainer2.visibility = View.VISIBLE //listView1이 나타나져있을 때 day2를 클릭하면 listView2나오고 1은 사라져
-            binding.placeListContainer1.visibility = View.GONE
+        val placeListContainerList = mutableListOf<LinearLayout>(
+            binding.placeListContainer1,binding.placeListContainer2,binding.placeListContainer3,binding.placeListContainer4,
+            binding.placeListContainer5,binding.placeListContainer6,binding.placeListContainer7,binding.placeListContainer8)
 
+        dayListShow(binding.day1, placeListContainerList, 0)
+        dayListShow(binding.day2, placeListContainerList, 1)
+        dayListShow(binding.day3, placeListContainerList, 2)
+        dayListShow(binding.day4, placeListContainerList, 3)
+        dayListShow(binding.day5, placeListContainerList, 4)
+        dayListShow(binding.day6, placeListContainerList, 5)
+        dayListShow(binding.day7, placeListContainerList, 6)
+        dayListShow(binding.day8, placeListContainerList, 7)
+
+
+
+        // firstList가 null이 아닌지 확인
+        if (firstList != null) {
+            singleRoute(time1_1, 0, firstList)
+            singleRoute(time1_2, 1, firstList)
+            singleRoute(time1_3, 2, firstList)
+            singleRoute(time1_4, 3, firstList)
+            singleRoute(time1_5, 4, firstList)
+            singleRoute(time1_6, 5, firstList)
+            singleRoute(time1_7, 6, firstList)
+        } else {
+            // firstList가 null일 때의 처리
+            Log.e("MainActivity", "firstList is null")
         }
-        binding.time1.setOnClickListener {
-            val intent = Intent(this, SingleRoute::class.java)
-            intent.putExtra("time",0)
-            intent.putExtra("dayList", firstList)
-            startActivity(intent)
-        }
-        binding.time2.setOnClickListener {
-            val intent = Intent(this, SingleRoute::class.java)
-            intent.putExtra("time",1)
-            intent.putExtra("dayList", firstList)
-            startActivity(intent)
-        }
-        binding.time3.setOnClickListener {
-            val intent = Intent(this, SingleRoute::class.java)
-            intent.putExtra("time",2)
-            intent.putExtra("dayList", firstList)
-            startActivity(intent)
-        }
-        binding.time4.setOnClickListener {
-            val intent = Intent(this, SingleRoute::class.java)
-            intent.putExtra("time",3)
-            intent.putExtra("dayList", firstList)
-            startActivity(intent)
-        }
-        binding.time5.setOnClickListener {
-            val intent = Intent(this, SingleRoute::class.java)
-            intent.putExtra("time",4)
-            intent.putExtra("dayList", firstList)
-            startActivity(intent)
-        }
-        binding.time6.setOnClickListener {
-            val intent = Intent(this, SingleRoute::class.java)
-            intent.putExtra("time",5)
-            intent.putExtra("dayList", firstList)
-            startActivity(intent)
-        }
-        binding.time7.setOnClickListener {
-            val intent = Intent(this, SingleRoute::class.java)
-            intent.putExtra("time",6)
-            intent.putExtra("dayList", firstList)
-            startActivity(intent)
-        }
+
+        //singleRouteShow(firstList)
+
         binding.backBtn.setOnClickListener {
             finish()
         }
@@ -302,6 +286,47 @@ class ScheduleActivity : AppCompatActivity() {
         val hours = seconds?.div(3600)?.toInt()
         val minutes = (seconds?.rem(3600))?.div(60)?.toInt()
         return Pair(hours, minutes)
+    }
+
+/*
+    fun singleRouteShow(daylist:ArrayList<SearchRouteData>){
+        // firstList가 null이 아닌지 확인
+        if (daylist != null) {
+            singleRoute(time1_1, 0, daylist)
+            singleRoute(time1_2, 1, daylist)
+            singleRoute(time1_3, 2, firstList)
+            singleRoute(time1_4, 3, firstList)
+            singleRoute(time1_5, 4, firstList)
+            singleRoute(time1_6, 5, firstList)
+            singleRoute(time1_7, 6, firstList)
+        } else {
+            // firstList가 null일 때의 처리
+            Log.e("MainActivity", "$daylist is null")
+        }
+
+    }*/
+
+
+    fun singleRoute(time:TextView,value : Int,daylist:ArrayList<SearchRouteData>){
+        time.setOnClickListener {
+            val intent = Intent(this, SingleRoute::class.java)
+            intent.putExtra("time",value)
+            intent.putExtra("dayList", daylist)
+            startActivity(intent)
+        }
+
+    }
+
+    fun dayListShow(day: Button, placeListContainerList: List<LinearLayout>, i: Int) {
+        day.setOnClickListener {
+            for (index in placeListContainerList.indices) {
+                if (index == i) {
+                    placeListContainerList[index].visibility = View.VISIBLE
+                } else {
+                    placeListContainerList[index].visibility = View.GONE
+                }
+            }
+        }
     }
 
 }
