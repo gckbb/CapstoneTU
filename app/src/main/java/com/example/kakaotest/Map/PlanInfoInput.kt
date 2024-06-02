@@ -34,6 +34,7 @@ class PlanInfoInput : AppCompatActivity() {
     private var transport : String = ""
     private var theme : String ?= ""
     private var activity : String ?= ""
+    private var restaurant : String ?= ""
     private var plan = TravelPlan()
     private val travelPlanManager = TravelPlanManager()
     private var mBinding: ActivityPlanInfoBinding? = null
@@ -239,7 +240,7 @@ class PlanInfoInput : AppCompatActivity() {
                             view.isSelected = false
                             theme = ""
                         } else {
-                            for (otherBtn in whoBtns) {
+                            for (otherBtn in themeBtn) {
                                 // 이미 선택된 버튼이 있다면 선택을 해제
                                 if (otherBtn.isSelected) {
                                     otherBtn.isSelected = false
@@ -270,10 +271,40 @@ class PlanInfoInput : AppCompatActivity() {
 
 
 
+        val yesBtn = findViewById<Button>(R.id.yes)
+        val noBtn = findViewById<Button>(R.id.no)
 
 
+        val restaurantBtn = listOf(yesBtn,noBtn)
+        var restaurantList = listOf("yes","no")
 
+        for (btn in restaurantBtn){
+            btn.background = ContextCompat.getDrawable(this, R.drawable.buttonshape4)
+            btn.setOnTouchListener { view, motionEvent ->
+                when (motionEvent.action) {
+                    MotionEvent.ACTION_DOWN ->
+                        if (view.isSelected) {
+                            view.isSelected = false
+                            restaurant = ""
+                        } else {
+                            for (otherBtn in restaurantBtn) {
+                                // 이미 선택된 버튼이 있다면 선택을 해제
+                                if (otherBtn.isSelected) {
+                                    otherBtn.isSelected = false
+                                    travelPlanManager.updatePlan(restaurant = "")// 선택 해제된 값을 업데이트
+                                }
+                            }
+                            view.isSelected = true
+                            restaurant = restaurantList[restaurantBtn.indexOf(btn)]
+                            Log.d("PLAN","restaurant : $restaurant")
 
+                            travelPlanManager.updatePlan(restaurant = restaurant)
+
+                        }
+                }
+                false
+            }
+        }
 
 
         val helptxt2 = findViewById<TextView>(R.id.helptxt2)

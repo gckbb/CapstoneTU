@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.example.kakaotest.CheckList.CheckListActivity
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
@@ -309,6 +310,8 @@ class ScheduleActivity : AppCompatActivity() {
 
     fun singleRoute(time:TextView,value : Int,daylist:ArrayList<SearchRouteData>){
         time.setOnClickListener {
+       //     time.setBackgroundColor(R.color.button)
+            time.background = ContextCompat.getDrawable(this, R.color.button)
             val intent = Intent(this, SingleRoute::class.java)
             intent.putExtra("time",value)
             intent.putExtra("dayList", daylist)

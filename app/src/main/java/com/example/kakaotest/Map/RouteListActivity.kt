@@ -40,9 +40,21 @@ class RouteListActivity : AppCompatActivity() {
         Log.d("RouteListActivity",receivedFoodDataList.toString()) //arraylistof<SearchData>
 
 
+
+
         if (receivedFoodDataList != null) {
             convertedFoodDataList = convertList(receivedFoodDataList)
             receivedDataList?.addAll(convertedFoodDataList!!)
+        }
+
+        val startDate = travelPlan!!.startDate?.day ?: 0
+        val endDate = travelPlan.endDate?.day ?: 0
+        val dateRange = endDate - startDate
+        val activityTime = travelPlan.activityTime
+        var restaurant = travelPlan.restaurant
+        if(restaurant == null) {
+            restaurant = "YES"
+            Log.e("PLAN", "restaurant null error")
         }
 
 
@@ -95,7 +107,8 @@ class RouteListActivity : AppCompatActivity() {
                 routetest.routeSet(receivedDataList!!, receivedDataList!![0])
                 Log.d("PLAN", "Route Set")
                 // 비동기적으로 routeStart를 호출합니다.
-                routetest.routeStart(2, 8, 1, convertedFoodDataList!!)
+         //       routetest.routeStart(2, 8, 1, convertedFoodDataList!!)
+                routetest.routeStart(dateRange, activityTime!!, 1, convertedFoodDataList!!,restaurant)
                 Log.d("PLAN", "Route Started")
                 routetest.printTotalRoute()
                 Log.d("PLAN", "Total Route Printed")

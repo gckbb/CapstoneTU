@@ -490,6 +490,89 @@
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
             </FrameLayout>
 
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="34dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            tools:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:text="식당 추가?"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="*"
+                android:textColor="@color/button"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text=" 필수"
+                android:textColor="@color/button"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints,TextSizeCheck" />
+            <TextView
+                android:id="@+id/trans_error2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textSize="14dp"
+                android:layout_marginLeft="7dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="34dp"
+            android:layout_marginTop="11dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
+
+
+            <Button
+                android:id="@+id/yes"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edittext3"
+                android:clickable="false"
+                android:text="YES"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+            <Button
+                android:id="@+id/no"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/edittext3"
+                android:text="NO"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+
+                /></LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

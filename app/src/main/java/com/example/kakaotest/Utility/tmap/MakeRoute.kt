@@ -65,7 +65,7 @@ class MakeRoute {
         }
     }
 
-    suspend fun routeStart(totalDate: Int, maxDayTime: Int, stayTimePerPlace: Int, foodDataList: ArrayList<SelectedPlaceData>) {
+    suspend fun routeStart(totalDate: Int, maxDayTime: Int, stayTimePerPlace: Int, foodDataList: ArrayList<SelectedPlaceData>,restaurant:String) {
         coroutineScope {
             try {
                 for (k in 0 until totalDate) {
@@ -78,7 +78,8 @@ class MakeRoute {
 
                     // 최단 시간 경로를 구하는 대신, 최대한 많은 장소를 방문하는 로직 추가
                     while (routeList.isNotEmpty() && currentDayTime + routeList.first().time.toInt() <= remainingTime) {
-                        if (currentDayTime > 4 * 3600 && lunchcheck == 0) {  // 4인 이유는 am8로 생각하고 4시간 후인 12시를 점심시간이라고 가정함
+
+                        if (currentDayTime > 4 * 3600 && lunchcheck == 0 && restaurant=="YES") {  // 4인 이유는 am8로 생각하고 4시간 후인 12시를 점심시간이라고 가정함
                             var minfood = 999999
                             var mindata: SelectedPlaceData? = null
 
@@ -168,13 +169,19 @@ class MakeRoute {
         return true
     }
 
-    fun findInList(findData: SearchRouteData): Int {
-        for (i in 0 until saveList.count()) {
-            if (saveList[i] == findData) {
-                return i
+    fun findInList(findData: SearchRouteData):Int {
+        try {
+            for (i in 0 until saveList.count()) {
+                if (saveList[i] == findData) {
+
+                    return i
+                }
             }
+            return -1
+        } catch (e: Exception) {
+            Log.e("PLAN", "Exception: ${e.toString()}", e)
+            return -1
         }
-        return -1
     }
 
     fun PrintTotalRoute() {
