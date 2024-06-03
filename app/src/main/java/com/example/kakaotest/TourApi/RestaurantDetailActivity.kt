@@ -2,6 +2,7 @@ package com.example.kakaotest.TourApi
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -13,6 +14,7 @@ import com.skt.tmap.TMapView
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.poi.TMapPOIItem
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 
 class RestaurantDetailActivity : AppCompatActivity() {
@@ -49,31 +51,28 @@ class RestaurantDetailActivity : AppCompatActivity() {
         val restaurant = intent.getSerializableExtra("restaurant") as? Restaurant
 
 
-
         if(restaurant != null) {
-
             Glide.with(this)
                 .load(restaurant.firstimage)
                 .into(binding.mainImage)
-
             binding.textViewTitle.text = restaurant.title
             binding.textViewAddress.text = restaurant.addr1
-            binding.textViewTitle.text = restaurant.tel
+            binding.textViewTel.text = restaurant.tel
             binding.textViewAddressDetail.text = restaurant.addr2
-            binding.cat1.text = restaurant.cat1
-            binding.cat2.text = restaurant.cat2
-            binding.cat3.text = restaurant.cat3
+//            binding.cat1.text = cat[0]
+//            binding.cat2.text = cat[1]
+//            binding.cat3.text = cat[2]
         }
-
+        scope.launch{
+            Log.d("category","${restaurant!!.cat1},${restaurant.cat2},${restaurant.cat3}")
+            searchCategory(restaurant!!.cat1,restaurant.cat2,restaurant.cat3)
+        }
 
         binding.button.setOnClickListener {
             //클릭하면 해당 장소를 기기에 저장
             // SharedPreferences 객체 가져오기
             val sharedPreferences = getSharedPreferences("MySavedRestaurants", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
-
-
-
 
             // 사용자가 선택한 음식점의 정보를 SharedPreferences에 저장
             if (restaurant != null) {
@@ -85,12 +84,19 @@ class RestaurantDetailActivity : AppCompatActivity() {
             editor.apply()
         }
     }
-    private suspend fun searchCategory(cat1: String, cat2: String, cat3: String): Array<String> {
+    private suspend fun searchCategory(cat1: String,cat2: String,cat3: String) {
+        try{
+            val binding = ActivityRestaurantDetailBinding.inflate(layoutInflater)
+            val restaurants = tourApiManager.searchCategory(cat1,cat2,cat3)
+            // 결과 처리
+            val items = restaurants.response.body.items.item[0]
+            //binding.cat1.text = items.name
+            binding.cat1.setText(items.name)
+            Log.d("category","${items.name},${items.rnum},${items.code}")
+        }
+        catch(e : Exception){
+            Log.d("category","카테고리 호출 에러, ${e},")
+        }
 
-        val restaurants = tourApiManager.searchCategory(cat1,cat2,cat3)
-        // 결과 처리
-        val items = restaurants.response.body.items
-        val cate = arrayOf(items.item[0].cat1,items.item[0].cat1,items.item[0].cat1)
-        return cate
     }
 }
