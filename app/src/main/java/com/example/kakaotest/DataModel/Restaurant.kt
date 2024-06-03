@@ -48,5 +48,8 @@ data class Restaurant(
     val modifiedtime: String,   //수정일
     val sigungucode: String,    //시군코드
     val tel: String,    //전화번호
-    val title: String   //제목
+    val title: String,   //제목
+    val rnum: String, //일련번호
+    val code: String, //코드 : 대,중,소분류코드
+    val name: String //코드명 : 대,중,소분류코드명
 ): Serializable

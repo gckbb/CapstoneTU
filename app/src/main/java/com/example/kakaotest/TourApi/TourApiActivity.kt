@@ -28,7 +28,7 @@ class TourApiActivity : AppCompatActivity() {
         val latitude = 37.5665
         val longitude = 126.9780
 
-        binding.restaurant.setOnClickListener {
+        binding.tourapiSearch.setOnClickListener {
             searchRestaurantsInArea(latitude, longitude)
         }
         binding.areaBased.setOnClickListener {
