@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener
 
 class CashbookAdapter(private var itemList: ArrayList<CashbookData>, private val listTitle: String, private val totalCostListener: TotalCostListener) :
     RecyclerView.Adapter<CashbookAdapter.CashbookViewHolder>() {
-
+//item_cash_list 어댑터 -> 가격작성하고 보여주는 리스트 어댑터
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val myRef: DatabaseReference = database.reference.child("cashbook").child(listTitle).child("cashbook-list")
     val dbTool = CashbookDB()
@@ -75,7 +75,7 @@ class CashbookAdapter(private var itemList: ArrayList<CashbookData>, private val
 
         var todoname = itemView.findViewById<TextView>(R.id.tvTodoItem)
         var todocontent = itemView.findViewById<TextView>(R.id.tvContent)
-        var todochecked = itemView.findViewById<CheckBox>(R.id.cbCheck)
+        var todochecked = itemView.findViewById<CheckBox>(R.id.Check)
 
         fun onBind(data: CashbookData) {
             todoname.text = data.itemName
@@ -136,13 +136,16 @@ class CashbookAdapter(private var itemList: ArrayList<CashbookData>, private val
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CashbookViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_todo_list, parent, false)
+            .inflate(R.layout.item_cash_list, parent, false)
         return CashbookViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return itemList.count()
     }
+
+
+
 
     override fun onBindViewHolder(holder: CashbookViewHolder, position: Int) {
         holder.onBind(itemList[position])

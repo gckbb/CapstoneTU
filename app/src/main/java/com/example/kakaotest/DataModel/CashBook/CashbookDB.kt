@@ -33,7 +33,7 @@ class CashbookDB {
         myRef.child(listName).child("cashbook-list").child(todoTitle).removeValue()
     }
 
-    //산바다계곡
+
     fun sNum1(listName:String){
         AddTodo(listName,"식사비용", 100000, false)
         AddTodo(listName,"숙소비용", 200000, false)

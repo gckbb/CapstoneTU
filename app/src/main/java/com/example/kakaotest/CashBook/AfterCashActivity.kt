@@ -1,33 +1,34 @@
-import android.annotation.SuppressLint
-import android.content.DialogInterface
+package com.example.kakaotest.CashBook
+
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kakaotest.CashBook.EditCashFragment
 import com.example.kakaotest.DataModel.CashBook.CashbookDB
 import com.example.kakaotest.DataModel.CashBook.CashbookData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.CashbookAdapter
+import com.example.kakaotest.databinding.ActivityAfterCashBinding
 import com.example.kakaotest.databinding.ActivityAfterSelectCashBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import android.util.Log
+
 interface OnDataPassedListener {
     fun onDataPassed(data: Any)
 }
-class AfterSelectCashActivity : AppCompatActivity(), CashbookAdapter.TotalCostListener,OnDataPassedListener {
-    private lateinit var binding: ActivityAfterSelectCashBinding
+
+class AfterCashActivity : AppCompatActivity(), CashbookAdapter.TotalCostListener,OnDataPassedListener {
+    private lateinit var binding: ActivityAfterCashBinding
     private lateinit var todoadapter: CashbookAdapter
     private lateinit var todoTitle: String
     private val dbTool = CashbookDB()
@@ -38,7 +39,7 @@ class AfterSelectCashActivity : AppCompatActivity(), CashbookAdapter.TotalCostLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityAfterSelectCashBinding.inflate(layoutInflater)
+        binding =  ActivityAfterCashBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
@@ -46,7 +47,7 @@ class AfterSelectCashActivity : AppCompatActivity(), CashbookAdapter.TotalCostLi
         todoTitle = listTitle!!
 
         binding.tvListTitle.text = listTitle
-        Log.d("AfterSelectCashActivity", "onCreate() called") // 로그 추가
+        Log.d("AfterCashActivity", "onCreate() called") // 로그 추가
 
         val rv_todolist = findViewById<RecyclerView>(R.id.rvTodoList)
         todoadapter = CashbookAdapter(ArrayList(), todoTitle, this)
@@ -79,7 +80,7 @@ class AfterSelectCashActivity : AppCompatActivity(), CashbookAdapter.TotalCostLi
             CoroutineScope(Dispatchers.IO).launch {
                 dbTool.AddTodo(todoTitle, title, content.toInt(), false)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@AfterSelectCashActivity, "추가되었습니다.", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@AfterCashActivity, "추가되었습니다.", Toast.LENGTH_SHORT)
                         .show()
                     edit_title.text.clear()
                     edit_cost.text.clear()
@@ -89,15 +90,16 @@ class AfterSelectCashActivity : AppCompatActivity(), CashbookAdapter.TotalCostLi
 
         todoadapter.setItemClickListener(object : CashbookAdapter.ItemClickListener {
             override fun onClick(view: View, position: Int, titleName: String) {
-                Toast.makeText(this@AfterSelectCashActivity, "$titleName", Toast.LENGTH_SHORT)
-                    .show()
-                val intent = Intent(
-                    this@AfterSelectCashActivity,
-                    AfterSelectCashActivity::class.java
-                ).apply {
-                    putExtra("titleName", titleName)
-                }
-                startActivity(intent)
+                Toast.makeText(this@AfterCashActivity, "$titleName", Toast.LENGTH_SHORT).show()
+                val fragment = EditCashFragment() // 여기에 프래그먼트 이름을 넣으세요
+                val bundle = Bundle()
+                bundle.putString("titleName", titleName)
+                fragment.arguments = bundle
+
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
             }
 
             override fun onItemClick(view: View, position: Int, item: CashbookData) {
@@ -107,6 +109,7 @@ class AfterSelectCashActivity : AppCompatActivity(), CashbookAdapter.TotalCostLi
                     .addToBackStack(null)
                     .commit()
             }
+
         })
 
         //체크박스 토글기능
@@ -126,7 +129,7 @@ class AfterSelectCashActivity : AppCompatActivity(), CashbookAdapter.TotalCostLi
     }
 
     private fun hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager = getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 

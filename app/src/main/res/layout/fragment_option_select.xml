@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
 
         android:gravity="center_horizontal"
-        android:text="기본 옵션 선택"
+        android:text="추가 옵션 선택"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"

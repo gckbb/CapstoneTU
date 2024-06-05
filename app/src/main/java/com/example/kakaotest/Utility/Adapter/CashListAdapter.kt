@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class CashListAdapter(private var itemList: ArrayList<CashListData>): RecyclerView.Adapter<CashListAdapter.CashListViewHolder>() {
-
+//가계부 첫 메인화면 리스트 어댑터
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val myRef: DatabaseReference = database.reference.child("cashbook")
     val dbTool = CashbookDB()

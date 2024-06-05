@@ -6,7 +6,7 @@
             <stroke
                 android:width="2dp"
                 android:color="#CCCCCC" />
-
+            <solid android:color="@color/Secondbutton" />
             <corners android:radius="9dp"/>
 
         </shape>
