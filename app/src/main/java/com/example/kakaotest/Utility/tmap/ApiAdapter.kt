@@ -3,6 +3,10 @@ package com.example.kakaotest.Utility.tmap
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.HashMap
+import com.example.kakaotest.DataModel.metaRoute.MetaRoute
+import com.example.kakaotest.DataModel.tmap.*
+
+
 
 class ApiAdapter {
     fun apiRequest(startX :Number,startY :Number,endX :Number,endY :Number) : Number?{
@@ -28,4 +32,5 @@ class ApiAdapter {
 
         return totalTime
     }
+
 }

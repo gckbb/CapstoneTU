@@ -3,7 +3,6 @@ package com.example.kakaotest.Map
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,11 +13,9 @@ import android.widget.ListView
 import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.DataModel.TravelPlan
-import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.simpleListItem2Adapter
-import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.skt.tmap.TMapPoint
 import java.util.ArrayList
 

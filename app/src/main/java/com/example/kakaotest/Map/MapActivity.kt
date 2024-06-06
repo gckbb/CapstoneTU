@@ -23,7 +23,6 @@ import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.SelectRecyclerAdapter
 import com.example.kakaotest.databinding.ActivityMapBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.firebase.firestore.FirebaseFirestore
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView

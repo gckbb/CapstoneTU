@@ -18,7 +18,7 @@ import java.util.HashMap
 interface ApiService {
 
     @FormUrlEncoded
-    @POST("routes?version=1&callback=function")
+    @POST("routes")
     @Headers("appKey: 8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP")
     fun getRoute(
         @FieldMap param: HashMap<String, Any>

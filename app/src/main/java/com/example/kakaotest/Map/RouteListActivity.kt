@@ -36,6 +36,7 @@ class RouteListActivity : AppCompatActivity() {
         val receivedFoodDataList = intent.getParcelableArrayListExtra<SearchData>("selectedFoodDataList")
 
 
+
         Log.d("RouteListActivity",receivedDataList.toString()) //arraylistof<SelectedPlaceData>
         Log.d("RouteListActivity",receivedFoodDataList.toString()) //arraylistof<SearchData>
 
@@ -44,9 +45,8 @@ class RouteListActivity : AppCompatActivity() {
 
         if (receivedFoodDataList != null) {
             convertedFoodDataList = convertList(receivedFoodDataList)
-            receivedDataList?.addAll(convertedFoodDataList!!)
         }
-
+        val rentStartPoint:SelectedPlaceData
         val startDate = travelPlan!!.startDate?.day ?: 0
         val endDate = travelPlan.endDate?.day ?: 0
         val dateRange = endDate - startDate
@@ -86,11 +86,12 @@ class RouteListActivity : AppCompatActivity() {
             startActivity(intent)
         }
         nextButton.setOnClickListener {
-            val firstPlaceList =DayRoute(0)
-            val secondPlaceList =DayRoute(1)
             val intent = Intent(this, ScheduleActivity::class.java)
-            intent.putExtra("firstList",firstPlaceList)
-            intent.putExtra("secondList",  secondPlaceList)
+
+            for(i in 0 until dateRange+1) {
+                intent.putExtra("List${i+1}",routetest.printTotalRoute().getOrNull(i)?.dayRoute)
+            }
+
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
             intent.putExtra("travelPlan", travelPlan)
             Log.d("PLAN",travelPlan.toString())
@@ -104,12 +105,26 @@ class RouteListActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 // 비동기적으로 routeSet을 호출합니다.
-                routetest.routeSet(receivedDataList!!, receivedDataList!![0])
-                Log.d("PLAN", "Route Set")
-                // 비동기적으로 routeStart를 호출합니다.
-         //       routetest.routeStart(2, 8, 1, convertedFoodDataList!!)
-                routetest.routeStart(dateRange, activityTime!!, 1, convertedFoodDataList!!,restaurant)
-                Log.d("PLAN", "Route Started")
+                if(travelPlan.transportion == "자차" || travelPlan.transportion == "택시") {
+                    routetest.routeSet(receivedDataList!!, receivedDataList!![0],0)
+                    Log.d("PLAN", "Route type 0 Set")
+                    routetest.routeStart(dateRange, activityTime!!, 1, convertedFoodDataList!!,restaurant,0)
+                    Log.d("PLAN", "Route type 0 Started")
+                }
+                else if(travelPlan.transportion == "렌트") {
+                    //렌트 선택 추가되면 테스트
+                    //routetest.routeSet(receivedDataList!!, rentStartPoint,0)
+                }
+                else if(travelPlan.transportion == "버스") {
+                    //할당량문제로 테스트 부족함
+                    //routetest.routeSet(receivedDataList!!, receivedDataList!![0],1)
+                }
+                else if(travelPlan.transportion == "도보") { //도보 의미가없음...
+                    routetest.routeSet(receivedDataList!!, receivedDataList!![0],2)
+                    Log.d("PLAN", "Route type 2 Set ")
+                    routetest.routeStart(dateRange, activityTime!!, 1, convertedFoodDataList!!,restaurant,2)
+                    Log.d("PLAN", "Route type 2 Started")
+                }
                 routetest.printTotalRoute()
                 Log.d("PLAN", "Total Route Printed")
                 updateListView()

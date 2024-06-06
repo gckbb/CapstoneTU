@@ -17,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.kakaotest.CashBook.CashBookActivity
 import com.example.kakaotest.CheckList.CheckListActivity
+import com.example.kakaotest.DataModel.metaRoute.MetaData
+import com.example.kakaotest.DataModel.metaRoute.MetaRoute
+import com.example.kakaotest.DataModel.tmap.SearchRouteData
 
 import com.example.kakaotest.Login.Email.EmailLogin
 import com.example.kakaotest.Login.Id.IdFindId
@@ -28,6 +31,8 @@ import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.example.kakaotest.databinding.ActivityMainBinding
 import com.example.kakaotest.HomeActivity
 import com.example.kakaotest.TourApi.TourApiActivity
+import com.example.kakaotest.Utility.tmap.ApiAdapter
+import com.example.kakaotest.Utility.tmap.ApiAdapter2
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -42,10 +47,16 @@ import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import java.security.MessageDigest
+import kotlin.concurrent.thread
 
 //첫 로그인 화면
 class MainActivity : AppCompatActivity() {
+
+    private val apiAdapter2 = ApiAdapter2()
 
     private lateinit var auth: FirebaseAuth
 
@@ -97,9 +108,21 @@ class MainActivity : AppCompatActivity() {
 
         //지도 생성 테스트 버튼
         binding.tmapViewbtn.setOnClickListener{
-            val intent = Intent(this, MapActivity::class.java)
-            startActivity(intent)
+            /*
+            thread{
+                val metaRoute: MetaRoute? = apiAdapter2.apiRequest2(
+                    126.926493082645,37.6134436427887,
+                    127.126936754911,37.5004198786564
+                )
+                Log.d("meta","meta is work")
+
+            }
+
+             */
+
         }
+
+
 
         // 테스트 버튼
         binding.navi.setOnClickListener{

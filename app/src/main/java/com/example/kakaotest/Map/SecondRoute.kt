@@ -16,6 +16,7 @@ import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.overlay.TMapPolyLine
+import com.skt.tmap.navirenderer.route.RouteLine
 
 class SecondRoute : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
