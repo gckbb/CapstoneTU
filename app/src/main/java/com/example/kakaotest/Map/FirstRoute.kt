@@ -95,43 +95,7 @@ class FirstRoute : AppCompatActivity() {
                     }
 
 
-/*
-                // 선택된 장소들 간의 경로 표시
-                Thread {
-                    try {
-                        var start: TMapPoint
-                        var end: TMapPoint
-                        var polyLines: TMapPolyLine
-                        var passList: ArrayList<TMapPoint> = arrayListOf<TMapPoint>()
-                        for (i in 1 until pointList.size - 1) {
-                            passList.add(pointList[i])
-                        }
-                        start = pointList[0]
-                        end = pointList.last()
 
-                        polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,start,end,passList,2)
-
-                        if (polyLines != null) {
-                            tMapView.addTMapPolyLine(polyLines)
-                            val info = tMapView.getDisplayTMapInfo(polyLines.linePointList)
-                            tMapView.zoomLevel = info.zoom
-                            tMapView.setCenterPoint(info.point.latitude, info.point.longitude)
-
-
-
-
-                        } else {
-
-
-                        }
-
-
-                    } catch (e: Exception) {
-
-
-                    }
-                }.start()
-*/
 
                 Thread {
                     try {
@@ -149,12 +113,12 @@ class FirstRoute : AppCompatActivity() {
                             Color.rgb(255,105,180),
                             Color.rgb(121,236,255),
                             Color.rgb(255,127,0)
-                           )
+                        )
                         for (i in 1 until pointList.size) {
                             passList.add(pointList[i])
                             polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,pointList[i-1],pointList[i])
                             polyLines.setID("polylines${i}")
-                            polyLines.setLineColor(colorList[(i-1)%7])
+                            polyLines.setLineColor(colorList[i%7])
                             polyLineList.add(polyLines)
                             if (polyLineList[i-1] != null) {
                                 tMapView.addTMapPolyLine(polyLineList[i-1])

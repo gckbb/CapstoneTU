@@ -54,7 +54,7 @@
                 android:layout_width="370dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
-                android:hint=" 장소를 입력하세요"
+                android:hint=" 지역을 입력하세요"
                 android:background="@drawable/edittext3"
                 android:text=""
                 android:inputType="text"
@@ -85,6 +85,7 @@
         android:layout_marginTop="15dp"
         android:padding="8dp"
         android:layout_height="533dp"
+        tools:listitem="@layout/viewholder_search_result_item"
       />
 
     <TextView

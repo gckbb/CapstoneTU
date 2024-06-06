@@ -1,3 +1,5 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="design_fab_size_normal" tools:override="true">45dp</dimen>  <!--전체 버튼 크기-->
+    <dimen name="design_fab_size_image_size" tools:override="true">45dp</dimen><!--버튼 안 사진의 크기  크기-->
 </resources>

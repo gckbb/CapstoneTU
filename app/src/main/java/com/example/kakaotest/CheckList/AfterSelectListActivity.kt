@@ -4,15 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kakaotest.DataModel.CheckList.CheckListDB
 import com.example.kakaotest.databinding.ActivityAfterSelectListBinding
-import com.example.kakaotest.databinding.ActivityEditTodoBinding
-import com.example.kakaotest.databinding.ActivityMainBinding
 import com.example.kakaotest.R
+import com.example.kakaotest.Utility.Adapter.TodoAdapter
+import com.example.kakaotest.DataModel.CheckList.TodoListData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,7 +52,7 @@ class AfterSelectListActivity : AppCompatActivity() {
         }
 
         //이미 생성된 리스트 선택하면 해당 투두리스트 화면으로 가야함
-        todoadapter.setItemClickListener(object: TodoAdapter.ItemClickListener{
+        todoadapter.setItemClickListener(object: TodoAdapter.ItemClickListener {
             override fun onClick(view: View, position: Int, titleName: String) {
                 Toast.makeText(this@AfterSelectListActivity, "$titleName", Toast.LENGTH_SHORT).show()
                 CoroutineScope(Dispatchers.IO).launch {
@@ -75,7 +75,7 @@ class AfterSelectListActivity : AppCompatActivity() {
         })
 
         //체크박스 토글기능
-        todoadapter.setItemCheckBoxClickListener(object: TodoAdapter.ItemCheckBoxClickListener{
+        todoadapter.setItemCheckBoxClickListener(object: TodoAdapter.ItemCheckBoxClickListener {
             override fun onClick(view: View, position: Int, itemid: TodoListData) {
                 CoroutineScope(Dispatchers.IO).launch {
                     val currentItem = itemList[position]
@@ -106,5 +106,3 @@ class AfterSelectListActivity : AppCompatActivity() {
     }
 
 }
-
-

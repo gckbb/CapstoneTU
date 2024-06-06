@@ -18,7 +18,7 @@ import java.util.HashMap
 interface ApiService {
 
     @FormUrlEncoded
-    @POST("routes?version=1&callback=function")
+    @POST("routes")
     @Headers("appKey: 8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP")
     fun getRoute(
         @FieldMap param: HashMap<String, Any>
@@ -29,7 +29,7 @@ interface ApiService {
         @Header("appKey") appKey: String = "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP",
         @Query("version") version: Int = 1,
         @Query("callback") callback: String? = null,
-        @Query("count") count: Int = 20,
+        @Query("count") count: Int = 200,
         @Query("searchKeyword") keyword: String,
         @Query("areaLLCode") areaLLCode: String? = null,
         @Query("areaLMCode") areaLMCode: String? = null,

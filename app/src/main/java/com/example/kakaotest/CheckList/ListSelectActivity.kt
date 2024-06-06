@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.kakaotest.DataModel.CheckList.CheckListData
 import com.example.kakaotest.databinding.ActivityListSelectBinding
 import com.example.kakaotest.R
 import java.text.SimpleDateFormat
@@ -35,6 +36,14 @@ class ListSelectActivity : AppCompatActivity() {
                 R.id.rb_3 -> {
                     Toast.makeText(applicationContext, "3선택", Toast.LENGTH_SHORT).show();
                     sNum = 3
+                }
+                R.id.rb_4 -> {
+                    Toast.makeText(applicationContext, "4선택", Toast.LENGTH_SHORT).show();
+                    sNum = 4
+                }
+                R.id.rb_5 -> {
+                    Toast.makeText(applicationContext, "5선택", Toast.LENGTH_SHORT).show();
+                    sNum = 5
                 }
             }
         }

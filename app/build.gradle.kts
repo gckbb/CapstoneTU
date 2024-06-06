@@ -64,8 +64,6 @@ dependencies {
     implementation("com.android.identity:identity-credential-android:20231002")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-inappmessaging-ktx:20.4.1")
-    implementation("com.google.firebase:firebase-firestore-ktx")
-    implementation("com.google.firebase:firebase-inappmessaging-ktx:20.4.1")
     implementation("com.google.firebase:firebase-database-ktx")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -95,5 +93,6 @@ dependencies {
     implementation ("com.tomergoldst.android:tooltips:1.1.1")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation ("com.google.android.libraries.places:places:3.3.0")
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
 }

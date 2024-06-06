@@ -3,10 +3,8 @@ package com.example.kakaotest.CheckList
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.kakaotest.databinding.ActivityCheckListBinding
+import com.example.kakaotest.DataModel.CheckList.TodoListData
 import com.example.kakaotest.databinding.ActivityEditTodoBinding
-import com.example.kakaotest.databinding.ActivityMainBinding
-import java.text.SimpleDateFormat
 
 class EditTodoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditTodoBinding

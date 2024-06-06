@@ -15,7 +15,12 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.kakaotest.CashBook.CashBookActivity
 import com.example.kakaotest.CheckList.CheckListActivity
+import com.example.kakaotest.DataModel.metaRoute.MetaData
+import com.example.kakaotest.DataModel.metaRoute.MetaRoute
+import com.example.kakaotest.DataModel.tmap.SearchRouteData
+
 
 import com.example.kakaotest.Login.Email.EmailLogin
 import com.example.kakaotest.Login.Id.IdFindId
@@ -27,6 +32,9 @@ import com.example.kakaotest.HomeActivity
 import com.example.kakaotest.TourApi.TourApiActivity
 import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.example.kakaotest.databinding.ActivityMainBinding
+import com.example.kakaotest.Utility.tmap.ApiAdapter
+import com.example.kakaotest.Utility.tmap.ApiAdapter2
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -45,6 +53,8 @@ import java.security.MessageDigest
 
 //첫 로그인 화면
 class MainActivity : AppCompatActivity() {
+
+    private val apiAdapter2 = ApiAdapter2()
 
     private lateinit var auth: FirebaseAuth
     private val scope = MainScope()
@@ -106,13 +116,22 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
-
         binding.tourApi.setOnClickListener {
             val intent = Intent(this, TourApiActivity::class.java)
             startActivity(intent)
         }
         binding.checklist.setOnClickListener {
             val intent = Intent(this, CheckListActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.tourApi.setOnClickListener {
+            val intent = Intent(this,TourApiActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cashbook.setOnClickListener {
+            val intent = Intent(this, CashBookActivity::class.java)
             startActivity(intent)
         }
 

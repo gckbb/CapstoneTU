@@ -56,12 +56,11 @@
             android:layout_height="wrap_content"
 
             android:layout_marginTop="25dp"
+            android:hint="place"
             android:text=""
-            android:hint="placename"
-            android:textSize="25dp"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            />
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/who"
@@ -69,12 +68,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="25dp"
-            android:text=""
             android:hint="who"
-            android:textSize="15dp"
+            android:text=""
             android:textColor="@color/black"
-            android:textStyle="bold"
-            />
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -89,33 +87,31 @@
             android:id="@+id/date1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
             android:hint="yy.mm.dd"
-            android:textSize="18dp"
+            android:text=""
             android:textColor="@color/black"
-            android:textStyle="bold"
-            />
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="~"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:textSize="18dp"
+            android:text="~"
             android:textColor="@color/black"
-            android:textStyle="bold"/>
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/date2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
             android:hint="yy.mm.dd"
-            android:textSize="18dp"
+            android:text=""
             android:textColor="@color/black"
-            android:textStyle="bold"
-            />
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -131,15 +127,14 @@
             android:layout_width="65dp"
             android:layout_height="25dp"
             android:background="@drawable/buttonshape2"
-            android:text="숙소"
-            />
+            android:text="숙소" />
 
         <Button
             android:id="@+id/checkList"
             android:layout_width="85dp"
             android:layout_height="25dp"
-            android:background="@drawable/buttonshape2"
             android:layout_marginLeft="8dp"
+            android:background="@drawable/buttonshape2"
             android:text="체크리스트" />
 
 
@@ -147,30 +142,30 @@
             android:id="@+id/cash"
             android:layout_width="68dp"
             android:layout_height="25dp"
-            android:background="@drawable/buttonshape2"
-            android:text="가계부"
             android:layout_marginLeft="8dp"
-            />
+            android:background="@drawable/buttonshape2"
+            android:text="가계부" />
 
         <Button
             android:id="@+id/invite"
             android:layout_width="65dp"
             android:layout_height="25dp"
-            android:background="@drawable/buttonshape2"
-            android:text="초대"
             android:layout_marginLeft="8dp"
-            />
+            android:background="@drawable/buttonshape2"
+            android:text="초대" />
 
 
     </LinearLayout>
 
+
+    <!--날짜 버튼 -->
     <FrameLayout
         android:layout_width="371dp"
         android:layout_height="40dp"
-        android:background="@drawable/dateoutline"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        >
+        android:background="@drawable/dateoutline">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -180,49 +175,50 @@
                 android:id="@+id/day1"
                 android:layout_width="47dp"
                 android:layout_height="38dp"
-                android:background="@drawable/first"/>
+                android:background="@drawable/first" />
 
             <Button
                 android:id="@+id/day2"
                 android:layout_width="47dp"
                 android:layout_height="37dp"
 
-                android:background="@drawable/middle"/>
+                android:background="@drawable/middle" />
+
             <Button
                 android:id="@+id/day3"
                 android:layout_width="47dp"
                 android:layout_height="37dp"
-                android:background="@drawable/middle"/>
+                android:background="@drawable/middle" />
 
             <Button
                 android:id="@+id/day4"
                 android:layout_width="47dp"
                 android:layout_height="37dp"
-                android:background="@drawable/middle"/>
+                android:background="@drawable/middle" />
 
             <Button
                 android:id="@+id/day5"
                 android:layout_width="47dp"
                 android:layout_height="37dp"
-                android:background="@drawable/middle"/>
+                android:background="@drawable/middle" />
 
             <Button
                 android:id="@+id/day6"
                 android:layout_width="47dp"
                 android:layout_height="37dp"
-                android:background="@drawable/middle"/>
+                android:background="@drawable/middle" />
 
             <Button
                 android:id="@+id/day7"
                 android:layout_width="47dp"
                 android:layout_height="37dp"
-                android:background="@drawable/middle"/>
+                android:background="@drawable/middle" />
 
             <Button
                 android:id="@+id/day8"
                 android:layout_width="41dp"
                 android:layout_height="37dp"
-                android:background="@drawable/last"/>
+                android:background="@drawable/last" />
 
         </LinearLayout>
     </FrameLayout>
@@ -233,7 +229,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
-
+        <!--1일째-->
         <LinearLayout
             android:id="@+id/placeListContainer1"
             android:layout_width="match_parent"
@@ -248,372 +244,1756 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/edittext3"
-                />
-
-
+                android:background="@drawable/edittext3" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"
+                android:orientation="vertical"
 
 
                 >
-                <Button
-                    android:id="@+id/path_1"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="35dp"
-                    android:background="@drawable/map"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    tools:ignore="TouchTargetSizeCheck" />
 
-                <TextView
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="예상 시간"
-                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
-                    android:textColor="@color/black"
-                    />
+                    <Button
+                        android:id="@+id/path_1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:background="@drawable/map"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="이동\n예상 시간"
+                        android:textColor="@color/black" />
+                </FrameLayout>
 
                 <ImageView
-                    android:id="@+id/line0_1"
+                    android:id="@+id/line1_0_1"
                     android:layout_width="wrap_content"
                     android:layout_height="15dp"
+                    android:layout_gravity="center_horizontal"
                     android:background="@drawable/dashline"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <Button
-                    android:id="@+id/time1"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:background="@drawable/ellipse"
-                    android:layout_gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/line1_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:background="@drawable/dashline"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <Button
-                    android:id="@+id/time2"
+                <TextView
+                    android:id="@+id/time1_1"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
-                    android:background="@drawable/ellipse"
                     android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:text=""
-                    android:visibility="gone"/>
+                    android:background="@drawable/ellipse"
 
-                <ImageView
-                    android:id="@+id/line2_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:background="@drawable/dashline"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <Button
-                    android:id="@+id/time3"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:background="@drawable/ellipse"
-                    android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/black"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/line3_4"
+                    android:id="@+id/line1_1_2"
                     android:layout_width="wrap_content"
                     android:layout_height="23dp"
-                    android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
-                    android:visibility="gone"
-                    />
-                <Button
-                    android:id="@+id/time4"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time1_2"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
-                    android:background="@drawable/ellipse"
                     android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
                     android:gravity="center"
-                    android:textColor="@color/black"
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:id="@+id/line4_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:background="@drawable/dashline"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <Button
-                    android:id="@+id/time5"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:text=""
-                    android:background="@drawable/ellipse"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:id="@+id/line5_6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:background="@drawable/dashline"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <Button
-                    android:id="@+id/time6"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:background="@drawable/ellipse"
-                    android:text=""
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:visibility="gone"/>
-
-
-                <ImageView
-                    android:id="@+id/line6_7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:background="@drawable/dashline"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <Button
-                    android:id="@+id/time7"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:background="@drawable/ellipse"
-                    android:layout_gravity="center_horizontal"
                     android:text=""
                     android:textColor="@color/black"
-                    android:gravity="center"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/line7_8"
+                    android:id="@+id/line1_2_3"
                     android:layout_width="wrap_content"
                     android:layout_height="23dp"
-                    android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <Button
-                    android:id="@+id/line8_9"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time1_3"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line1_3_4"
                     android:layout_width="wrap_content"
                     android:layout_height="23dp"
-                    android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time1_4"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line1_4_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time1_5"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line1_5_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time1_6"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+
+                <ImageView
+                    android:id="@+id/line1_6_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time1_7"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line1_7_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time1_8"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line1_8_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time1_9"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line1_9_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time1_10"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line1_10_11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line1_11_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-
-
+        <!--2일째-->
         <LinearLayout
             android:id="@+id/placeListContainer2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="gone">
+
             <ListView
                 android:id="@+id/placeListView2"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/edittext3"
-                />
+                android:background="@drawable/edittext3" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"
+                android:orientation="vertical"
 
 
                 >
-                <Button
-                    android:id="@+id/path_2"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="35dp"
-                    android:background="@drawable/map"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    tools:ignore="TouchTargetSizeCheck" />
-                <TextView
+
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="예상 시간"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    />
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/path_2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:background="@drawable/map"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="이동\n예상 시간"
+                        android:textColor="@color/black" />
+                </FrameLayout>
 
                 <ImageView
-                    android:id="@+id/line_0_1"
+                    android:id="@+id/line2_0_1"
                     android:layout_width="wrap_content"
                     android:layout_height="15dp"
-                    android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
                 <TextView
-                    android:id="@+id/time_1"
+                    android:id="@+id/time2_1"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
                     android:background="@drawable/ellipse"
-                    android:layout_gravity="center_horizontal"
 
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:id="@+id/line_1_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:background="@drawable/dashline"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <TextView
-                    android:id="@+id/time_2"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:background="@drawable/ellipse"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:text=""
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:id="@+id/line_2_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:background="@drawable/dashline"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <TextView
-                    android:id="@+id/time_3"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:background="@drawable/ellipse"
-                    android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/black"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/line_3_4"
+                    android:id="@+id/line2_1_2"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
-                    android:visibility="gone"
-                    />
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
                 <TextView
-                    android:id="@+id/time_4"
+                    android:id="@+id/time2_2"
                     android:layout_width="50dp"
                     android:layout_height="27dp"
-                    android:background="@drawable/ellipse"
                     android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
                     android:gravity="center"
-                    android:textColor="@color/black"
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:id="@+id/line_4_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:background="@drawable/dashline"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <TextView
-                    android:id="@+id/time_5"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:text=""
-                    android:background="@drawable/ellipse"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:id="@+id/line_5_6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:background="@drawable/dashline"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <TextView
-                    android:id="@+id/time_6"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:background="@drawable/ellipse"
-                    android:text=""
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:visibility="gone"/>
-
-
-                <ImageView
-                    android:id="@+id/line_6_7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:background="@drawable/dashline"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
-                <TextView
-                    android:id="@+id/time_7"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:background="@drawable/ellipse"
-                    android:layout_gravity="center_horizontal"
                     android:text=""
                     android:textColor="@color/black"
-                    android:gravity="center"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/line_7_8"
+                    android:id="@+id/line2_2_3"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time2_3"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
                 <ImageView
-                    android:id="@+id/line_8_9"
+                    android:id="@+id/line2_3_4"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:background="@drawable/dashline"
                     android:layout_gravity="center_horizontal"
-                    android:visibility="gone"/>
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time2_4"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line2_4_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time2_5"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line2_5_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time2_6"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+
+                <ImageView
+                    android:id="@+id/line2_6_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time2_7"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line2_7_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line2_8_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+
+                <TextView
+                    android:id="@+id/time2_9"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line2_9_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time2_10"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line2_10_11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line2_11_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--3일째-->
+        <LinearLayout
+            android:id="@+id/placeListContainer3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/placeListView3"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittext3" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+
+
+                >
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/path_3"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:background="@drawable/map"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="이동\n예상 시간"
+                        android:textColor="@color/black" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/line3_0_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time3_1"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line3_1_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time3_2"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line3_2_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time3_3"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line3_3_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time3_4"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line3_4_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time3_5"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line3_5_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time3_6"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+
+                <ImageView
+                    android:id="@+id/line3_6_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time3_7"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line3_7_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line3_8_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+
+
+                <TextView
+                    android:id="@+id/time3_9"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line3_9_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time3_10"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line3_10_11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line3_11_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!--4일째-->
+        <LinearLayout
+            android:id="@+id/placeListContainer4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/placeListView4"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittext3" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+
+
+                >
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/path_4"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:background="@drawable/map"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="이동\n예상 시간"
+                        android:textColor="@color/black" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/line4_0_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time4_1"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line4_1_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time4_2"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line4_2_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time4_3"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line4_3_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time4_4"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line4_4_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time4_5"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line4_5_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time4_6"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+
+                <ImageView
+                    android:id="@+id/line4_6_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time4_7"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line4_7_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line4_8_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--5일째-->
+        <LinearLayout
+            android:id="@+id/placeListContainer5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/placeListView5"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittext3" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+
+
+                >
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/path_5"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:background="@drawable/map"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="이동\n예상 시간"
+                        android:textColor="@color/black" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/line5_0_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time5_1"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line5_1_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time5_2"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line5_2_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time5_3"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/lin5_3_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time5_4"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line5_4_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time5_5"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line5_5_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time5_6"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+
+                <ImageView
+                    android:id="@+id/line5_6_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time5_7"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line5_7_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line5_8_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!--6일째-->
+        <LinearLayout
+            android:id="@+id/placeListContainer6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/placeListView6"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittext3" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+
+
+                >
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/path_6"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:background="@drawable/map"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="이동\n예상 시간"
+                        android:textColor="@color/black" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/line6_0_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time6_1"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line6_1_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time6_2"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line6_2_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time6_3"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line6_3_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time6_4"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line6_4_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time6_5"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line6_5_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time6_6"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+
+                <ImageView
+                    android:id="@+id/line6_6_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time6_7"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line6_7_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line6_8_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!--7일째-->
+        <LinearLayout
+            android:id="@+id/placeListContainer7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/placeListView7"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittext3" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+
+
+                >
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/path_7"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:background="@drawable/map"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="이동\n예상 시간"
+                        android:textColor="@color/black" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/line7_0_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time7_1"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line7_1_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time7_2"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line7_2_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time7_3"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line7_3_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time7_4"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line7_4_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time7_5"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line7_5_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time7_6"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+
+                <ImageView
+                    android:id="@+id/line7_6_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time7_7"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line7_7_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line7_8_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!--8일째-->
+        <LinearLayout
+            android:id="@+id/placeListContainer8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/placeListView8"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittext3" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+
+
+                >
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/path_8"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:background="@drawable/map"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="이동\n예상 시간"
+                        android:textColor="@color/black" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/line8_0_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time8_1"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line8_1_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time8_2"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line8_2_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time8_3"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line8_3_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time8_4"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line8_4_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time8_5"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line8_5_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time8_6"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+
+                <ImageView
+                    android:id="@+id/line8_6_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time8_7"
+                    android:layout_width="50dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ellipse"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line8_7_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/line8_8_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/dashline"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
