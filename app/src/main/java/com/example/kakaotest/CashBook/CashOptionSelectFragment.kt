@@ -83,7 +83,7 @@ class CashOptionSelectFragment : Fragment() {
             }
         }
         // 버튼 클릭 리스너 설정
-        binding.lsBtn.setOnClickListener {
+        binding.okbtn.setOnClickListener {
             // 체크리스트 목록 이름, 생성 일자, 분류 초기 설정
             val listTitle = binding.etTitle.text.toString()
             val currentDate = SimpleDateFormat(
@@ -98,6 +98,15 @@ class CashOptionSelectFragment : Fragment() {
 
 
             }
+
+            (activity as? CashBookActivity)?.hideOverlay()
+            parentFragmentManager.popBackStack()
+        }
+
+
+        binding.nobtn.setOnClickListener {
+            (activity as? CashBookActivity)?.hideOverlay()
+            parentFragmentManager.popBackStack()
         }
     }
     override fun onAttach(context: Context) {

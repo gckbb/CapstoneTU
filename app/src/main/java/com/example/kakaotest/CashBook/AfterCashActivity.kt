@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaotest.DataModel.CashBook.CashbookDB
@@ -17,7 +18,7 @@ import com.example.kakaotest.DataModel.CashBook.CashbookData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.CashbookAdapter
 import com.example.kakaotest.databinding.ActivityAfterCashBinding
-import com.example.kakaotest.databinding.ActivityAfterSelectCashBinding
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -91,6 +92,7 @@ class AfterCashActivity : AppCompatActivity(), CashbookAdapter.TotalCostListener
         todoadapter.setItemClickListener(object : CashbookAdapter.ItemClickListener {
             override fun onClick(view: View, position: Int, titleName: String) {
                 Toast.makeText(this@AfterCashActivity, "$titleName", Toast.LENGTH_SHORT).show()
+               /*
                 val fragment = EditCashFragment() // 여기에 프래그먼트 이름을 넣으세요
                 val bundle = Bundle()
                 bundle.putString("titleName", titleName)
@@ -99,15 +101,17 @@ class AfterCashActivity : AppCompatActivity(), CashbookAdapter.TotalCostListener
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .addToBackStack(null)
-                    .commit()
+                    .commit()*/
+                showFragment( EditCashFragment())
             }
 
             override fun onItemClick(view: View, position: Int, item: CashbookData) {
-                val fragment = EditCashFragment.newInstance(item)
+             /*   val fragment = EditCashFragment.newInstance(item)
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .addToBackStack(null)
-                    .commit()
+                    .commit()*/
+                showFragment(EditCashFragment.newInstance(item))
             }
 
         })
@@ -124,6 +128,31 @@ class AfterCashActivity : AppCompatActivity(), CashbookAdapter.TotalCostListener
         })
     }
 
+
+    fun hideOverlay() {
+        val overlay = findViewById<View>(R.id.overlay)
+        overlay.visibility = View.GONE
+    }
+
+    override fun onBackPressed() {
+        val overlay = findViewById<View>(R.id.overlay)
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            overlay.visibility = View.GONE
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    private fun showFragment(fragment: Fragment) {
+        val overlay = findViewById<View>(R.id.overlay)
+        overlay.visibility = View.VISIBLE
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
     override fun onTotalCostUpdated(totalCost: Int) {
         binding.totalWon.text = totalCost.toString()
     }

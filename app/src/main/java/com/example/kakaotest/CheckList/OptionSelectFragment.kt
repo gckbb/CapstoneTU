@@ -13,6 +13,7 @@ import com.example.kakaotest.databinding.FragmentOptionSelectBinding
 import java.text.SimpleDateFormat
 import android.content.Context
 import android.content.Intent
+import com.example.kakaotest.CashBook.CashBookActivity
 import java.util.Locale
 
 class OptionSelectFragment : Fragment() {
@@ -91,7 +92,7 @@ class OptionSelectFragment : Fragment() {
         }
 
         // 버튼 클릭 리스너 설정
-        binding.lsBtn.setOnClickListener {
+        binding.okbtn.setOnClickListener {
             // 체크리스트 목록 이름, 생성 일자, 분류 초기 설정
             val listTitle = binding.etTitle.text.toString()
             val currentDate = SimpleDateFormat(
@@ -106,6 +107,14 @@ class OptionSelectFragment : Fragment() {
 
 
             }
+            (activity as? CheckListActivity)?.hideOverlay()
+            parentFragmentManager.popBackStack()
+        }
+
+
+        binding.nobtn.setOnClickListener {
+            (activity as? CheckListActivity)?.hideOverlay()
+            parentFragmentManager.popBackStack()
         }
 
     }

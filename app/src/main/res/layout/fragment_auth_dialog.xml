@@ -6,6 +6,7 @@
     android:layout_height="127dp"
     android:layout_margin="4dp"
     app:cardBackgroundColor="@color/grey"
+    android:clickable="true"
     app:cardCornerRadius="9dp">
 
     <LinearLayout

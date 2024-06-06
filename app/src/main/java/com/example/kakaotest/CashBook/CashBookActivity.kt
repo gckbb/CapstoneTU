@@ -1,12 +1,13 @@
 package com.example.kakaotest.CashBook
 
-import AfterSelectCashActivity
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaotest.CheckList.DataPassListener
@@ -81,12 +82,19 @@ class CashBookActivity : AppCompatActivity() , DataPassListener {
             val fragmentManager = supportFragmentManager
             if (optionSelectFragment != null && isFragmentVisible) {
                 fragmentManager.beginTransaction().remove(optionSelectFragment!!).commit()
+                hideOverlay()
                 isFragmentVisible = false
+
             } else if (optionSelectFragment== null || !isFragmentVisible) {
                 optionSelectFragment = CashOptionSelectFragment()
+
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, optionSelectFragment!!)
+                    .addToBackStack(null)
                     .commit()
+
+                val overlay = findViewById<View>(R.id.overlay)
+                overlay.visibility = View.VISIBLE
                 isFragmentVisible = true
             }
         }
@@ -107,6 +115,30 @@ class CashBookActivity : AppCompatActivity() , DataPassListener {
             }
     }
 
+
+    fun hideOverlay() {
+        val overlay = findViewById<View>(R.id.overlay)
+        overlay.visibility = View.GONE
+    }
+    override fun onBackPressed() {
+        val overlay = findViewById<View>(R.id.overlay)
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            overlay.visibility = View.GONE
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    private fun showFragment(fragment: Fragment) {
+        val overlay = findViewById<View>(R.id.overlay)
+        overlay.visibility = View.VISIBLE
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
 
    override  fun onDataPassed(listTitle: String, currentDate: String, sNum: Int) {
         Toast.makeText(this, "List Selected: $listTitle, Date: $currentDate, Num: $sNum", Toast.LENGTH_SHORT).show()

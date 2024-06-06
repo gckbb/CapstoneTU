@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CashBook.AfterSelectCashActivity"
+    tools:context=".CashBook.AfterCashActivity"
     android:id="@+id/backgroundLayout">
 
 
@@ -21,7 +21,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone" />
     <TextView
         android:id="@+id/tv_list_title"
         android:text=""
@@ -250,15 +255,19 @@
         android:id="@+id/fragment_container"
         android:layout_width="wrap_content"
         android:layout_height="330dp"
-        android:layout_marginVertical="100dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
 
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.471"
+        app:layout_constraintVertical_bias="0.625"
         tools:ignore="MissingConstraints" />
+
+
+
+
     <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
          android:id="@+id/fabAdd"
          android:layout_width="wrap_content"

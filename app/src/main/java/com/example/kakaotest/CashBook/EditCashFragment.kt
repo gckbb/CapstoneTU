@@ -1,6 +1,6 @@
 package com.example.kakaotest.CashBook
 
-import OnDataPassedListener
+
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
@@ -24,6 +24,7 @@ class EditCashFragment : Fragment() {
     private lateinit var editTitle: EditText
     private lateinit var editContent: EditText
     private lateinit var saveButton: Button
+    private lateinit var cancelButton : Button
 
     companion object {
         // 프래그먼트 인스턴스 생성을 위한 정적 메서드입니다.
@@ -47,6 +48,7 @@ class EditCashFragment : Fragment() {
         editTitle = view.findViewById(R.id.editTextText)
         editContent = view.findViewById(R.id.editTextText2)
         saveButton = view.findViewById(R.id.okbtn)
+        cancelButton = view.findViewById(R.id.nobtn)
 
         // 전달된 아이템을 가져옵니다.
         item = arguments?.getSerializable("item") as CashbookData
@@ -65,6 +67,14 @@ class EditCashFragment : Fragment() {
             // 여기에서는 수정 후 프래그먼트를 닫습니다.
             activity?.supportFragmentManager?.popBackStack()
         }
+
+
+        cancelButton.setOnClickListener {
+            (activity as? AfterCashActivity)?.hideOverlay()
+            parentFragmentManager.popBackStack()
+         //   fragmentManager?.beginTransaction()?.remove(this)?.commit()
+        }
+
 
         return view
     }
