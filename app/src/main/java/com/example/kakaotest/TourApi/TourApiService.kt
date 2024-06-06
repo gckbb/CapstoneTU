@@ -14,6 +14,7 @@ interface TourApiService {
         @Query("arrange") arrange: String,
         @Query("cat3") cat3: String,
         @Query("_type") type: String,
+        @Query("numOfRows") numOfRows: Int
     ): RestaurantResponse
     @GET("categoryCode1")
     suspend fun searchCategory(

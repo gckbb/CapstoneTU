@@ -14,15 +14,12 @@ class TourApiManager {
         Log.d("restest", "apiservice 실행")
         val response = apiService.searchRestaurants(
             apiKey = TourApiClient.API_KEY, // 여기를 변경
-//            numOfRows = 20,
-//            pageNo = 5,
             mobileOS = "AND",
             mobileApp = "AppTest",
             arrange = "A",
             cat3 = cat3,
             type = "json",
-//            listYN = "Y",
-//            modifiedtime = ""
+            numOfRows = 30
         )
         Log.d("restest", "searchRestaurants 실행")
         return response
