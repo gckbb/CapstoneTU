@@ -1,8 +1,11 @@
 package com.example.kakaotest.Community
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import com.bumptech.glide.Glide
 import com.example.kakaotest.HomeActivity
 import com.example.kakaotest.R
 import com.example.kakaotest.databinding.ActivityMainCommunityBinding
@@ -26,7 +29,13 @@ class ReadPostActivity : AppCompatActivity() {
         binding.content.text = postContent
         binding.timestamp.text = timestamp
         binding.userId.text = UID
-        //binding.image.text = postPhoto
+        Log.d("photo", "photo: $postPhoto")
+        // 이미지 URI를 Glide를 사용하여 이미지뷰에 표시
+        if (postPhoto != null) {
+            Glide.with(this)
+                .load(postPhoto)
+                .into(binding.image)
+        }
 
         // 뒤로가기
         binding.backBtn.setOnClickListener{
