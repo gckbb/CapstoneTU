@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-    <Button
+    <!--<Button
         android:id="@+id/image"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -52,7 +52,18 @@
         android:textColor="@color/button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/back_btn"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints" />-->
+
+    <ImageButton
+        android:id="@+id/image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/edittext"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back_btn"/>
+
 
     <EditText
         android:id="@+id/title"
@@ -61,7 +72,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
-        android:hint="제목을 작성하세요."
+        android:hint="글 제목"
         android:paddingHorizontal="15dp"
         android:background="@drawable/edittext"
         app:layout_constraintStart_toStartOf="parent"

@@ -21,6 +21,7 @@ import com.example.kakaotest.DataModel.metaRoute.MetaData
 import com.example.kakaotest.DataModel.metaRoute.MetaRoute
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 
+import com.example.kakaotest.Community.MainCommunity
 
 import com.example.kakaotest.Login.Email.EmailLogin
 import com.example.kakaotest.Login.Id.IdFindId
@@ -28,10 +29,11 @@ import com.example.kakaotest.Login.Id.IdFindPw
 import com.example.kakaotest.Login.Id.IdSignup
 import com.example.kakaotest.Map.MapActivity
 import com.example.kakaotest.R
-import com.example.kakaotest.HomeActivity
-import com.example.kakaotest.TourApi.TourApiActivity
 import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.example.kakaotest.databinding.ActivityMainBinding
+import com.example.kakaotest.HomeActivity
+import com.example.kakaotest.TourApi.TourApiActivity
+import com.example.kakaotest.databinding.ActivityMainCommunityBinding
 import com.example.kakaotest.Utility.tmap.ApiAdapter
 import com.example.kakaotest.Utility.tmap.ApiAdapter2
 
@@ -133,6 +135,21 @@ class MainActivity : AppCompatActivity() {
         binding.cashbook.setOnClickListener {
             val intent = Intent(this, CashBookActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.community.setOnClickListener {
+            //auth.signInWithEmailAndPassword("hjk@mail.com", "hjkhjk")
+            auth.signInWithEmailAndPassword("qwerasdf@mail.com", "qwerasdf")
+                .addOnCompleteListener(this){ task ->
+                    if(task.isSuccessful){
+                        Toast.makeText(baseContext, "Login Success.", Toast.LENGTH_SHORT).show()
+                        val user = auth.currentUser
+                        val intent = Intent(this, MainCommunity::class.java)
+                        startActivity(intent)
+                    }else{
+                        Toast.makeText(baseContext, "Login Failed.", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
 
         //아이디 찾기
