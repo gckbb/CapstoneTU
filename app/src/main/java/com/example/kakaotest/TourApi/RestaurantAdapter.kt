@@ -23,14 +23,13 @@ class RestaurantAdapter(private val restaurants: List<Restaurant>) :
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
         val currentItem = restaurants[position]
 
-        // Glide를 사용하여 이미지 설정
+            // Glide를 사용하여 이미지 설정
         Glide.with(holder.itemView.context)
             .load(currentItem.firstimage2) // 이미지 URL
             .into(holder.thumbnail) // ImageView에 설정
 
         holder.textViewTitle.text = currentItem.title
         holder.textViewAddress.text = currentItem.addr1
-
         // 아이템 클릭 리스너 설정
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
@@ -48,7 +47,6 @@ class RestaurantAdapter(private val restaurants: List<Restaurant>) :
         val thumbnail: ImageView = itemView.findViewById(R.id.thumbnail) ?: throw NullPointerException("Thumbnail ImageView is null")
         val textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle) ?: throw NullPointerException("TextViewTitle is null")
         val textViewAddress: TextView = itemView.findViewById(R.id.textViewAddress) ?: throw NullPointerException("TextViewAddress is null")
-
     }
 
 }

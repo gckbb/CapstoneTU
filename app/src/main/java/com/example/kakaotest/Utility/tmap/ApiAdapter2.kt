@@ -1,11 +1,10 @@
 package com.example.kakaotest.Utility.tmap
 
 import android.util.Log
+import com.example.kakaotest.DataModel.metaRoute.JsonModel
+import com.example.kakaotest.DataModel.metaRoute.MetaRoute
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.HashMap
-import com.example.kakaotest.DataModel.metaRoute.*
-import com.example.kakaotest.DataModel.tmap.*
 
 
 

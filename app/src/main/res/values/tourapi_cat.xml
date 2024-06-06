@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name = "category1">
+        <item>자연</item>
+        <item>인문(문화/예술/역사)</item>
+        <item>레포츠</item>
+        <item>쇼핑</item>
+        <item>음식</item>
+        <item>숙박</item>
+        <item>추천코스</item>
+    </string-array>
+
+    <string-array name = "category_A01">
+        <item>자연관광지</item>
+        <item>관광자원</item>
+    </string-array>
+
+    <string-array name = "category_A0101">
+        <item>국립공원</item>
+        <item>도립공원</item>
+        <item>군립공원</item>
+        <item>산</item>
+        <item>자연생태관광지</item>
+        <item>자연휴양림</item>
+        <item>수목원</item>
+        <item>폭포</item>
+        <item>계곡</item>
+        <item>약수터</item>
+        <item>해안절경</item>
+        <item>해수욕장</item>
+        <item>섬</item>
+        <item>항구/포구</item>
+        <item>등대</item>
+        <item>호수</item>
+        <item>강</item>
+        <item>동굴</item>
+    </string-array>
+
+    <string-array name = "category_A0101_values">
+        <item>A01010100</item><!--> 국립공원-->
+        <item>A01010200</item><!--> 도립공원-->
+        <item>A01010300</item><!--> 군립공원-->
+        <item>A01010400</item><!--> 산-->
+        <item>A01010500</item><!--> 자연생태관광지-->
+        <item>A01010600</item><!--> 자연휴양림-->
+        <item>A01010700</item><!--> 수목원-->
+        <item>A01010800</item><!--> 폭포-->
+        <item>A01010900</item><!--> 계곡-->
+        <item>A01011000</item><!--> 약수터-->
+        <item>A01011100</item><!--> 해안절경-->
+        <item>A01011200</item><!--> 해수욕장-->
+        <item>A01011300</item><!--> 섬-->
+        <item>A01011400</item><!--> 항구/포구-->
+        <item>A01011600</item><!--> 등대-->
+        <item>A01011700</item><!--> 호수-->
+        <item>A01011800</item><!--> 강-->
+        <item>A01011900</item><!--> 동굴-->
+    </string-array>
+
+    <string-array name = "category_A0102">
+        <item>희귀동,식물</item>
+        <item>기암관석</item>
+    </string-array>
+
+    <string-array name = "category_A0102_values">
+        <item>A01020100</item><!--> 희귀동,식물-->
+        <item>A01020200</item><!--> 기암관석-->
+    </string-array>
+
+    <string-array name = "category_A02">
+        <item>역사관광지</item>
+        <item>휴양관광지</item>
+        <item>체험관광지</item>
+        <item>산업관광지</item>
+        <item>건축/조형물</item>
+        <item>문화시설</item>
+        <item>축제</item>
+        <item>공연/행사</item>
+    </string-array>
+
+    <string-array name="category_A0201">
+        <item>고궁</item>
+        <item>성</item>
+        <item>문</item>
+        <item>고택</item>
+        <item>생가</item>
+        <item>민속마을</item>
+        <item>유적지/사적지</item>
+        <item>사찰</item>
+        <item>종교성지</item>
+        <item>안보관광</item>
+    </string-array>
+
+    <string-array name = "category_A0201_values">
+        <item>A02010100</item><!--> 고궁-->
+        <item>A02010200</item><!--> 성-->
+        <item>A02010300</item><!--> 문-->
+        <item>A02010400</item><!--> 고택-->
+        <item>A02010500</item><!--> 생가-->
+        <item>A02010600</item><!--> 민속마을-->
+        <item>A02010700</item><!--> 유적지/사적지-->
+        <item>A02010800</item><!--> 사찰-->
+        <item>A02010900</item><!--> 종교성지-->
+        <item>A02011000</item><!--> 안보관광-->
+    </string-array>
+
+    <string-array name="category_A0202">
+        <item>관광단지</item>
+        <item>온천/욕장/스파</item>
+        <item>이색찜질방</item>
+        <item>헬스투어</item>
+        <item>테마공원</item>
+        <item>공원</item>
+        <item>유람선/잠수함관광</item>
+    </string-array>
+
+    <string-array name = "category_A0202_values">
+        <item>A02020200</item><!--> 관광단지-->
+        <item>A02020300</item><!--> 온천/욕장/스파-->
+        <item>A02020400</item><!--> 이색찜질방-->
+        <item>A02020500</item><!--> 헬스투어-->
+        <item>A02020600</item><!--> 테마공원-->
+        <item>A02020700</item><!--> 공원-->
+        <item>A02020800</item><!--> 유람선/잠수함관광-->
+    </string-array>
+
+    <string-array name="category_A0203">
+        <item>농.산.어촌 체험</item>
+        <item>전통체험</item>
+        <item>산사체험</item>
+        <item>이색체험</item>
+        <item>이색거리</item>
+    </string-array>
+
+    <string-array name = "category_A0203_values">
+        <item>A02030100</item><!--> 농.산.어촌 체험-->
+        <item>A02030200</item><!--> 전통체험-->
+        <item>A02030300</item><!--> 산사체험-->
+        <item>A02030400</item><!--> 이색체험-->
+        <item>A02030600</item><!--> 이색거리-->
+    </string-array>
+
+    <string-array name="category_A0204">
+        <item>발전소</item>
+        <item>식음료</item>
+        <item>기타</item>
+        <item>전자-반도체</item>
+        <item>자동차</item>
+    </string-array>
+
+    <string-array name = "category_A0204_values">
+        <item>A02040400</item><!--> 발전소-->
+        <item>A02040600</item><!--> 식음료-->
+        <item>A02040800</item><!--> 기타-->
+        <item>A02040900</item><!--> 전자-반도체-->
+        <item>A02041000</item><!--> 자동차-->
+    </string-array>
+
+    <string-array name="category_A0205">
+        <item>다리/대교</item>
+        <item>기념탑/기념비/전망대</item>
+        <item>분수</item>
+        <item>동상</item>
+        <item>터널</item>
+        <item>유명건물</item>
+    </string-array>
+
+    <string-array name = "category_A0205_values">
+        <item>A02050100</item><!--> 관광단지-->
+        <item>A02050200</item><!--> 온천/욕장/스파-->
+        <item>A02050300</item><!--> 이색찜질방-->
+        <item>A02050400</item><!--> 헬스투어-->
+        <item>A02050500</item><!--> 테마공원-->
+        <item>A02050600</item><!--> 공원-->
+    </string-array>
+
+
+
+</resources>

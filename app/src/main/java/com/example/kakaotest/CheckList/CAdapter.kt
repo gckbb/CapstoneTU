@@ -60,7 +60,7 @@ class CAdapter(private var itemList: ArrayList<CheckListData>): RecyclerView.Ada
             }
 
             //리스트 삭제 시
-            itemView.findViewById<Button>(R.id.delete_btn).setOnClickListener {
+            itemView.findViewById<Button>(R.id.btn_delete).setOnClickListener {
                 val position = adapterPosition
                 if(position != RecyclerView.NO_POSITION){
                     val currentItem = itemList[position]

@@ -30,5 +30,5 @@ data class CategoryData(
 data class Category(
     val rnum: String, //일련번호
     val code: String, //코드 : 대,중,소분류코드
-    val name: String //코드명 : 대,중,소분류코드명
+    val name: String, //코드명 : 대,중,소분류코드명
 ): Serializable

@@ -1,11 +1,6 @@
 package com.example.kakaotest.Utility.Adapter
 
-import com.example.kakaotest.DataModel.CashBook.CashbookDB
-import com.example.kakaotest.DataModel.CashBook.CashbookData
 
-
-import android.app.Activity
-import android.content.Context
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kakaotest.DataModel.CashBook.CashbookDB
+import com.example.kakaotest.DataModel.CashBook.CashbookData
 import com.example.kakaotest.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

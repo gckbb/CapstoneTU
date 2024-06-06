@@ -12,196 +12,24 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RadioGroup
-                android:id="@+id/tourapi_cat1"
+            <Spinner
+                android:id="@+id/tourapi_spinner1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content" />
 
-                <RadioButton
-                    android:id="@+id/tourapi_nature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="자연" />
-
-                <RadioButton
-                    android:id="@+id/tourapi_humanities"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="인문" />
-
-                <RadioButton
-                    android:id="@+id/tourapi_sports"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="레포츠" />
-
-                <RadioButton
-                    android:id="@+id/tourapi_shopping"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="쇼핑" />
-
-                <RadioButton
-                    android:id="@+id/tourapi_food"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="음식점" />
-
-            </RadioGroup>
-
-            <RadioGroup
-                android:id="@+id/tourapi_cat2"
+            <Spinner
+                android:id="@+id/tourapi_spinner2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="visible">
+                android:layout_height="wrap_content" />
 
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="자연관광지" />
-
-                <RadioButton
-                    android:id="@+id/tourapi_nature_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="관광자원" />
-            </RadioGroup>
-
-            <RadioGroup
-                android:id="@+id/tourapi_cat3"
+            <Spinner
+                android:id="@+id/tourapi_spinner3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content" />
 
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="국립공원" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="도립공원" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="군립공원" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="산" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="자연생태관광지" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="자연휴양림" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="수목원" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="폭포" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="계곡" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="약수터" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="해안절경" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="해수욕장" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="섬" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="항구/포구" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="등대" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="호수" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="ㅇ" />
-                <RadioButton
-                    android:id="@+id/tourapi_nature_1_18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="RadioButton" />
-            </RadioGroup>
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -242,6 +70,7 @@
                 android:scrollbars="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </ScrollView>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

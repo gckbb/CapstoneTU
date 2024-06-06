@@ -1,18 +1,16 @@
 package com.example.kakaotest.CheckList
 
-import android.app.Activity
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.kakaotest.DataModel.CheckList.CheckListData
 import com.example.kakaotest.R
 import com.example.kakaotest.databinding.FragmentOptionSelectBinding
 import java.text.SimpleDateFormat
-import android.content.Context
-import android.content.Intent
 import java.util.Locale
 
 class OptionSelectFragment : Fragment() {
