@@ -37,8 +37,6 @@ class PostAdapter(private var itemList: ArrayList<PostData>) :
                     val timestamp = itemSnapshot.child("timestamp").getValue(String::class.java)
                     val UID = itemSnapshot.child("uid").getValue(String::class.java)
 
-                    Log.d("PostAdapter", "PostTitle: $postTitle, PostContent: $postContent, PostPhoto: $postPhoto, Timestamp: $timestamp, UID: $UID")
-
                     /*postTitle?.let { title ->
                         postContent?.let { content ->
                             timestamp?.let { timestamp ->
@@ -51,11 +49,9 @@ class PostAdapter(private var itemList: ArrayList<PostData>) :
                             }
                         }
                     }*/
-                    //사진 관련 코드 없어서 일단 이걸로 대체, 코드 완성 시 위 코드로
                     itemList.add(PostData(postTitle, postContent, postPhoto ?: "", timestamp, UID))
 
                 }
-                Log.d("PostAdapter", "itemList: $itemList")
                 notifyDataSetChanged()
             }
 
@@ -77,7 +73,6 @@ class PostAdapter(private var itemList: ArrayList<PostData>) :
             Content.text = data.postContent
             timestamp.text = data.timestamp
             UID.text = data.uid
-            Log.d("PostAdapter", "data: $data")
 
             itemView.setOnClickListener {
                 val position = adapterPosition

@@ -38,7 +38,6 @@ class MainCommunity : AppCompatActivity() {
         var currentUID = auth.currentUser?.uid
         Toast.makeText(this, currentUID, Toast.LENGTH_SHORT).show()
 
-
         //리사이클러 뷰
         val rvpost = findViewById<RecyclerView>(R.id.post_rv)
         postAdapter = PostAdapter(itemList)
