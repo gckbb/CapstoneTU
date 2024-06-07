@@ -3,6 +3,8 @@ package com.example.kakaotest.DataModel
 import android.os.Parcel
 import android.os.Parcelable
 
+
+
 data class Date(
     var date : String?,
     var year : Int?,

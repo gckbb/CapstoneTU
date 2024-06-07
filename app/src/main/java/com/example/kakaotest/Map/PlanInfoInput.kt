@@ -1,7 +1,9 @@
 package com.example.kakaotest.Map
 
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -19,12 +21,17 @@ import com.example.kakaotest.DataModel.Date
 import com.example.kakaotest.DataModel.Place
 import com.example.kakaotest.DataModel.Time
 import com.example.kakaotest.DataModel.TravelPlan
+import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.Fragment.DatePickerFragment
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.TravelPlanManager
 import com.example.kakaotest.Utility.NullCheck
+import com.example.kakaotest.Utility.SharedPreferenceUtil
 import com.example.kakaotest.databinding.ActivityPlanInfoBinding
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.w3c.dom.Text
+
 
 import java.util.Calendar
 class PlanInfoInput : AppCompatActivity() {
@@ -201,7 +208,7 @@ class PlanInfoInput : AppCompatActivity() {
                             travelPlanManager.updatePlan(transport=transport)
                         } else { // 선택되지 않은 버튼 누르면 선택
                             for (otherBtn in transportBtn){
-                            // 이미 선택된 버튼이 있다면 그 버튼 선택해제하고 저장한 값 초기화
+                                // 이미 선택된 버튼이 있다면 그 버튼 선택해제하고 저장한 값 초기화
                                 if (otherBtn.isSelected) {
                                     otherBtn.isSelected = false
                                     travelPlanManager.updatePlan(transport = "") // 선택 해제된 값을 업데이트
@@ -394,6 +401,8 @@ class PlanInfoInput : AppCompatActivity() {
             if (activityTime != null) {
                 travelPlanManager.updatePlan(activityTime = activityTime)
                 Log.d("PLAN", "activity time : $activityTime")
+            }else {
+                travelPlanManager.updatePlan(activityTime = 8)
             }
 
             if (!checkConditions(transportBtn, findViewById(R.id.transport))) {
@@ -407,7 +416,9 @@ class PlanInfoInput : AppCompatActivity() {
             }
             if (isValid) {
                 val intent = Intent(this, MapActivity::class.java)
-                intent.putExtra("travelPlan", travelPlanManager.getPlan())
+                var travel = travelPlanManager.getPlan()
+                SharedPreferenceUtil.saveTravelPlanToSharedPreferences(this,travel)
+          //      intent.putExtra("travelPlan", travelPlanManager.getPlan())
                 startActivity(intent)
             }else{
                 Toast.makeText(this, "유효한 값을 입력 및 선택해주세요.", Toast.LENGTH_LONG).show()
@@ -419,12 +430,32 @@ class PlanInfoInput : AppCompatActivity() {
 
 
     }
+    fun travelSharedPreferences(travelPlan : ArrayList<TravelPlan>){
+        val sharedPreferences: SharedPreferences = getSharedPreferences("travelplan", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(travelPlanManager.getPlan())
+        editor.putString("travelplan", json)
+        editor.apply()
+    }
 
+    fun travelGetSharedPreferences(): ArrayList<TravelPlan>?{
+        val travel = ArrayList<TravelPlan>()
+        val travelSharedPreferences: SharedPreferences = getSharedPreferences("travelplan", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = travelSharedPreferences.getString("travelplan", null)
+        return if (json != null) {
+            val type = object : TypeToken<ArrayList<TravelPlan>>() {}.type
+            gson.fromJson(json, type)
+        } else {
+            ArrayList() // 저장된 데이터가 없을 경우 빈 리스트 반환
+        }
+    }
 
 
     private fun dateNullCheck(dateText1: TextView, dateText2: TextView, titleText: TextView): Boolean {
         return if (dateText1.text.isEmpty() || dateText2.text.isEmpty()) {
-       //     titleText.setTextColor(Color.RED)
+            //     titleText.setTextColor(Color.RED)
             datenullCheck()
             false
         } else {
@@ -449,7 +480,7 @@ class PlanInfoInput : AppCompatActivity() {
     private fun checkConditions(buttons: List<Button>, text: TextView): Boolean {
         val anyButtonSelected = buttons.any { it.isSelected }
         return if (!anyButtonSelected) {
-       //     text.setTextColor(Color.RED)
+            //     text.setTextColor(Color.RED)
             buttonnullCheck()
             false
         } else {

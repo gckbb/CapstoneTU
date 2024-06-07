@@ -6,7 +6,98 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
+        <Button
+            android:id="@+id/leftBtn"
+            android:layout_width="15dp"
+            android:layout_height="18dp"
+            android:background="@drawable/left"
+            android:layout_marginEnd="8dp"
+
+            />
+        <!--날짜 버튼 -->
+        <FrameLayout
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+
+            android:background="@drawable/dateoutline">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/day1"
+                    android:layout_width="40dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/first" />
+
+                <Button
+                    android:id="@+id/day2"
+                    android:layout_width="40dp"
+                    android:layout_height="37dp"
+
+                    android:background="@drawable/middle" />
+
+                <Button
+                    android:id="@+id/day3"
+                    android:layout_width="40dp"
+                    android:layout_height="37dp"
+                    android:background="@drawable/middle" />
+
+                <Button
+                    android:id="@+id/day4"
+                    android:layout_width="40dp"
+                    android:layout_height="37dp"
+                    android:background="@drawable/middle" />
+
+                <Button
+                    android:id="@+id/day5"
+                    android:layout_width="40dp"
+                    android:layout_height="37dp"
+                    android:background="@drawable/middle" />
+
+                <Button
+                    android:id="@+id/day6"
+                    android:layout_width="40dp"
+                    android:layout_height="37dp"
+                    android:background="@drawable/middle" />
+
+                <Button
+                    android:id="@+id/day7"
+                    android:layout_width="40dp"
+                    android:layout_height="37dp"
+                    android:background="@drawable/middle" />
+
+
+                <Button
+                    android:id="@+id/day8"
+                    android:layout_width="40dp"
+                    android:layout_height="37dp"
+                    android:background="@drawable/last" />
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/rightBtn"
+            android:layout_width="15dp"
+            android:layout_height="18dp"
+            android:background="@drawable/right"
+            android:layout_marginStart="8dp"
+
+            />
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollView"

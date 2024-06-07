@@ -22,7 +22,7 @@ class FirstRoute : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first_route)
 
-        val firstList = intent.getParcelableArrayListExtra<SearchRouteData>("firstList")
+        val firstList = intent.getParcelableArrayListExtra<SearchRouteData>("dayList")
         Log.d("PLAN","firstRoute \n"+ firstList.toString())
 
         val pointList = ArrayList<TMapPoint>()
@@ -87,12 +87,12 @@ class FirstRoute : AppCompatActivity() {
                 }
 
 
-                    // 선택된 장소들의 TMapPoint를 이용하여 리스트 생성
-                    for (selectedPlace in firstList!!) {
-                        selectedPlace.pointdata?.tpoint?.let { tMapPoint ->
-                            pointList.add(tMapPoint)
-                        }
+                // 선택된 장소들의 TMapPoint를 이용하여 리스트 생성
+                for (selectedPlace in firstList!!) {
+                    selectedPlace.pointdata?.tpoint?.let { tMapPoint ->
+                        pointList.add(tMapPoint)
                     }
+                }
 
 
 
@@ -132,8 +132,7 @@ class FirstRoute : AppCompatActivity() {
 
                     }
                 }.start()
-    }})}}
-
+            }})}}
 
 
 

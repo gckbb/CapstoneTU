@@ -37,8 +37,9 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val firstList = intent.getParcelableArrayListExtra<SearchRouteData>("firstList")
-        Log.d("PLAN", "firstRoute \n" + firstList.toString())
+
+
+
 
 
         binding.homefragmend.setOnScrollChangeListener{ v, scrollX, scrollY, oldScrollX, oldScrollY ->

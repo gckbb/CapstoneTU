@@ -30,9 +30,18 @@ class TravelPlanManager {
         activityTime?.let { travelPlan.activityTime = it }
         startTime?.let { travelPlan.startTime = it }
         restaurant?. let{travelPlan.restaurant = it}
-        destination?.let { travelPlan.destinations = it }
+        destination?.let {
+            if (travelPlan.destinations == null) {
+                travelPlan.destinations = it
+            } else {
+                travelPlan.destinations = travelPlan.destinations!! + it
+            }
+        }
     }
 
+    fun clearDestinations() {
+        travelPlan.destinations = emptyList()
+    }
     fun getPlan(): TravelPlan {
         return travelPlan
     }

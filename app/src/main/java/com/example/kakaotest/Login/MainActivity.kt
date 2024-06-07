@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.kakaotest.CashBook.CashBookActivity
 import com.example.kakaotest.CheckList.CheckListActivity
+import com.example.kakaotest.Community.MainCommunity
 
 import com.example.kakaotest.Login.Email.EmailLogin
 import com.example.kakaotest.Login.Id.IdFindId
@@ -122,6 +123,20 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.community.setOnClickListener {
+            //auth.signInWithEmailAndPassword("hjk@mail.com", "hjkhjk")
+            auth.signInWithEmailAndPassword("qwerasdf@mail.com", "qwerasdf")
+                .addOnCompleteListener(this){ task ->
+                    if(task.isSuccessful){
+                        Toast.makeText(baseContext, "Login Success.", Toast.LENGTH_SHORT).show()
+                        val user = auth.currentUser
+                        val intent = Intent(this, MainCommunity::class.java)
+                        startActivity(intent)
+                    }else{
+                        Toast.makeText(baseContext, "Login Failed.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
         //아이디 찾기
         val findidBtn =findViewById<TextView>(R.id.FindId)
         findidBtn.setOnClickListener {

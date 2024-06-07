@@ -38,7 +38,7 @@ data class TravelPlan(
         parcel.writeParcelable(startDate,flags)
         parcel.writeParcelable(endDate,flags)
         parcel.writeString(who)
-            parcel.writeString(transportion)
+        parcel.writeString(transportion)
         parcel.writeString(theme)
         activityTime?.let { parcel.writeInt(it) }
         parcel.writeParcelable(startTime, flags)
@@ -60,6 +60,5 @@ data class TravelPlan(
         }
     }
 }
-
 
 

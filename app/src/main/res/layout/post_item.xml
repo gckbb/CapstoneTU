@@ -16,7 +16,7 @@
         android:background="@drawable/edittext"
         tools:ignore="MissingConstraints">
     <TextView
-        android:id="@+id/textTextView"
+        android:id="@+id/post_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -28,33 +28,31 @@
         app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/post_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-
+            android:layout_marginStart="8dp"
             android:text="yyyy.mm.dd"
             android:textSize="16dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/subTextTextView"
-            app:layout_constraintStart_toEndOf="@+id/textTextView"
+            app:layout_constraintBottom_toTopOf="@+id/post_content"
+            app:layout_constraintStart_toEndOf="@+id/post_title"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/subTextTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="내용"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/textTextView"
-        app:layout_constraintTop_toBottomOf="@id/textTextView" />
+        <TextView
+            android:id="@+id/post_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="내용"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/post_title"
+            app:layout_constraintTop_toBottomOf="@+id/post_title" />
 
 <TextView
-    android:id="@+id/userId"
+    android:id="@+id/post_uid"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:layout_constraintEnd_toEndOf="parent"

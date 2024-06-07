@@ -5,7 +5,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 class TourApiClient {
     companion object {
         private const val BASE_URL = "http://apis.data.go.kr/B551011/KorService1/"

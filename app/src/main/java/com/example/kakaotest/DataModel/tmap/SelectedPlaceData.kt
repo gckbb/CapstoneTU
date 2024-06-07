@@ -12,7 +12,7 @@ data class SelectedPlaceData(
     val tpoint: TMapPoint, // TMapPoint는 Parcelable이어야 함
     val address: String,
 
-) : Parcelable {
+    ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
         TMapPoint(

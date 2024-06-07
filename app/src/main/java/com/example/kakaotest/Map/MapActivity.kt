@@ -29,7 +29,12 @@ import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.poi.TMapPOIItem
-import java.util.ArrayList
+
+import android.content.SharedPreferences
+import com.example.kakaotest.Utility.SharedPreferenceUtil
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+
 
 class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
     private val selectedPlacesList = ArrayList<SearchData>() //선택한 장소 저장하는 list
@@ -56,11 +61,6 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
         mBinding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
-        if (travelPlan == null) {
-            throw NullPointerException("TravelPlan is null")
-        }
-
 
         binding.backBtn.setOnClickListener {
             finish()
@@ -77,7 +77,7 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
 
         // TMapView 인스턴스를 생성
         tMapView = TMapView(this@MapActivity)
-       tMapView.setSKTMapApiKey ("app_key")
+        tMapView.setSKTMapApiKey ("app_key")
         val tMapData = TMapData()
         val tMapGps = TMapPoint()
 
@@ -107,6 +107,11 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
         selectPlaceList.adapter = selectRecyclerAdapter
 
         dataadapter.selectRecyclerAdapter = selectRecyclerAdapter
+
+        // 어댑터를 초기화한 후
+        dataadapter.setOnDeleteListener { position ->
+            dataadapter.deleteItem(position)
+        }
 
 
         binding.searchDataListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -176,20 +181,24 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
         }
 
         binding.nextbutton.setOnClickListener {
-            val intent = Intent(this, SelectedPlace::class.java)
+            try {
+                val intent = Intent(this, SelectedPlace::class.java)
 
-            val selectedPlaceDataList = selectedPlacesList.map {
-                SelectedPlaceData(
-                    placeName = it.id,
-                    tpoint = TMapPoint(it.tpoint.latitude, it.tpoint.longitude),
-                    address = it.address
-                )
-            } as ArrayList<SelectedPlaceData>
+                val selectedPlaceDataList = selectedPlacesList.map {
+                    SelectedPlaceData(
+                        placeName = it.id,
+                        tpoint = TMapPoint(it.tpoint.latitude, it.tpoint.longitude),
+                        address = it.address
+                    )
+                } as ArrayList<SelectedPlaceData>
 
-            intent.putParcelableArrayListExtra("selectedPlaceDataList", selectedPlaceDataList)
-            intent.putExtra("travelPlan", travelPlan)
-            startActivity(intent)
-            Log.d("Item", selectedPlaceDataList.toString())
+                SharedPreferenceUtil.saveDataToSharedPreferences(this,selectedPlaceDataList)
+
+                startActivity(intent)
+                Log.d("Item", selectedPlaceDataList.toString())
+            }catch (e:Exception){
+                Log.e("MapActivity","error - $e")
+            }
         }
 
         tMapView.setOnMapReadyListener(object : TMapView.OnMapReadyListener {
@@ -274,10 +283,6 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
 
         }
 
-
-
-
-
     }
 
 
@@ -300,7 +305,7 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
             // 마커가 제대로 설정되었는지 로그로 확인
             Log.d("MapActivity", "Marker added: ${place.id}, ${place.tpoint.latitude}, ${place.tpoint.longitude}")
 
-       //     tMapView.addTMapMarkerItem(marker)
+            //     tMapView.addTMapMarkerItem(marker)
             tMapView.setCenterPoint(place.tpoint.latitude,place.tpoint.latitude)
 
 
@@ -347,6 +352,7 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
         tMapView.removeAllTMapPOIItem()
         selectedPlacesList.clear()
         selectedPlacesList.addAll(updatedSelectedPlacesList)
+
         updateMarkers()
         selectRecyclerAdapter.notifyDataSetChanged() // RecyclerView 어댑터에 데이터 변경 알림
         Log.d("ClickedItems", selectedPlacesList.toString())
@@ -354,7 +360,7 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
 
     fun onItemDelete(position: Int) {
         selectedPlacesList.removeAt(position)
-     //   selectRecyclerAdapter.removeItem(selectPlaceList.get(position))
+        //   selectRecyclerAdapter.removeItem(selectPlaceList.get(position))
         updateMarkers()
     }
 

@@ -30,7 +30,6 @@ class RestaurantAdapter(private val restaurants: List<Restaurant>) :
 
         holder.textViewTitle.text = currentItem.title
         holder.textViewAddress.text = currentItem.addr1
-
         // 아이템 클릭 리스너 설정
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
@@ -48,7 +47,7 @@ class RestaurantAdapter(private val restaurants: List<Restaurant>) :
         val thumbnail: ImageView = itemView.findViewById(R.id.thumbnail) ?: throw NullPointerException("Thumbnail ImageView is null")
         val textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle) ?: throw NullPointerException("TextViewTitle is null")
         val textViewAddress: TextView = itemView.findViewById(R.id.textViewAddress) ?: throw NullPointerException("TextViewAddress is null")
-
     }
 
 }
+

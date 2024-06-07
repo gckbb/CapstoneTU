@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.example.kakaotest.CashBook.CashBookActivity
 import com.example.kakaotest.CheckList.CheckListActivity
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
@@ -18,8 +19,10 @@ import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.HomeActivity
 
 import com.example.kakaotest.R
+import com.example.kakaotest.Utility.SharedPreferenceUtil
 import com.example.kakaotest.Utility.TravelPlanManager
 import com.example.kakaotest.databinding.ActivityScheduleBinding
+import com.google.api.Distribution.BucketOptions.Linear
 
 class ScheduleActivity : AppCompatActivity() {
     private val travelPlanManager = TravelPlanManager()
@@ -31,13 +34,25 @@ class ScheduleActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val firstList = intent.getParcelableArrayListExtra<SearchRouteData>("firstList") //경로
-        val secondList = intent.getParcelableArrayListExtra<SearchRouteData>("secondList") //경로
+    //    val secondList = intent.getParcelableArrayListExtra<SearchRouteData>("secondList") //경로
 
-        val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
+        val dayRouteList = mutableListOf<ArrayList<SearchRouteData>?>()
+        val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
+        val startDate = travelPlan!!.startDate?.day ?: 0
+        val endDate = travelPlan.endDate?.day ?: 0
+        val dateRange = endDate - startDate
 
 
+        for(i in 0 until dateRange+1) {
+            val routeData: ArrayList<SearchRouteData>? =
+                intent.getParcelableArrayListExtra("List${i + 1}")
+            dayRouteList.add(routeData ?: ArrayList())
+        }
 
-        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+        val receivedDataList : ArrayList<SelectedPlaceData>? = SharedPreferenceUtil.getRouteFromSharedPreferences(this)
+
+
+   //     val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
         Log.d("PLAN",travelPlan.toString())
         val placename = findViewById<TextView>(R.id.placename)
         val firstdate = findViewById<TextView>(R.id.date1)
@@ -59,12 +74,10 @@ class ScheduleActivity : AppCompatActivity() {
             firstdate.text = plan.startDate?.date ?: ""
             lastdate.text = plan.endDate?.date ?: ""
             who.text = plan.who ?: ""
-       //     day1.text = plan.startDate?.day.toString() ?: ""
-          //  day2.text = (plan.startDate?.day?.plus(1)).toString()
+            //     day1.text = plan.startDate?.day.toString() ?: ""
+            //  day2.text = (plan.startDate?.day?.plus(1)).toString()
         }
-        val startDate = travelPlan!!.startDate?.day ?: 0
-        val endDate = travelPlan.endDate?.day ?: 0
-        val dateRange = endDate - startDate
+
 
         for (i in 0..dateRange) {
             val textView = when (i) {
@@ -81,15 +94,49 @@ class ScheduleActivity : AppCompatActivity() {
             }
             textView?.text = (startDate + i).toString()
         }
-        travelPlanManager.updatePlan(destination = firstList)
-        travelPlanManager.updatePlan(destination = secondList)
+     //   travelPlanManager.updatePlan(destination = firstList)
+    //    travelPlanManager.updatePlan(destination = secondList)
 
 
         Log.d("travelPlan","travelPlan update : "+travelPlan)
 
+    /*    binding.path1.setOnClickListener {
+            val intent = Intent(this, FirstRoute::class.java)
+            intent.putExtra("firstList",  firstList)
+            startActivity(intent)
+        }
 
-        var firstListTime = firstList?.map { it.time }
-        Log.d("PLAN",firstListTime.toString())
+
+
+        binding.path1.setOnClickListener {
+            val intent = Intent(this, SecondRoute::class.java)
+            intent.putExtra("secondList",  secondList)
+            startActivity(intent)
+        }*/
+
+        // 리스트뷰를 찾아냅니다.
+        val placeListView1 = findViewById<ListView>(R.id.placeListView1)
+
+
+        updateListView(placeListView1,dayRouteList[0]!!)
+        time(dayRouteList[0]!!)
+
+        binding.day1.setOnClickListener {
+            updateListView(placeListView1, dayRouteList[0]!!)
+            time(dayRouteList[0]!!)
+
+        }
+        binding.day2.setOnClickListener {
+            updateListView(placeListView1, dayRouteList[1]!!)
+            time(dayRouteList[1]!!)
+        }
+
+
+
+        binding.cash.setOnClickListener {
+            val intent = Intent(this, CashBookActivity::class.java)
+            startActivity(intent)
+        }
 
 
         val time1_1=findViewById<TextView>(R.id.time1_1)
@@ -104,146 +151,6 @@ class ScheduleActivity : AppCompatActivity() {
         val time1_10=findViewById<TextView>(R.id.time1_10)
 
 
-        val firstdayTime = mutableListOf<TextView>(
-            time1_1, time1_2, time1_3, time1_4,time1_5, time1_6,
-            time1_7,time1_8, time1_9,time1_10)
-
-        val time1_0_1 = findViewById<ImageView>(R.id.line1_0_1)
-        val time1_1_2 = findViewById<ImageView>(R.id.line1_1_2)
-        val time1_2_3 = findViewById<ImageView>(R.id.line1_2_3)
-        val time1_3_4 = findViewById<ImageView>(R.id.line1_3_4)
-        val time1_4_5 = findViewById<ImageView>(R.id.line1_4_5)
-        val time1_5_6 = findViewById<ImageView>(R.id.line1_5_6)
-        val time1_6_7 = findViewById<ImageView>(R.id.line1_6_7)
-          val time1_7_8 = findViewById<ImageView>(R.id.line1_7_8)
-        val time1_8_9 = findViewById<ImageView>(R.id.line1_8_9)
-        val time1_9_10 = findViewById<ImageView>(R.id.line1_9_10)
-        val firsttimeLine = mutableListOf<ImageView>(time1_0_1,time1_1_2, time1_2_3, time1_3_4, time1_4_5, time1_5_6, time1_6_7, time1_7_8, time1_8_9, time1_9_10)
-
-
-        val adjustedFirstListTime = firstListTime?.drop(1) // 첫 번째 요소를 건너뛴 새로운 리스트
-        // 이동시간이 없는 경우 나머지 숨기기
-        for (i in firstListTime!!.size until firstdayTime.size) {
-
-            firstdayTime[i].visibility = View.GONE
-            firsttimeLine[i].visibility=View.GONE
-        }
-
-
-        adjustedFirstListTime?.forEachIndexed { index, time ->
-            val (hours, minutes) = convertSecondsToTime(time.toDouble())
-            firstdayTime[index].apply {
-                visibility = View.VISIBLE
-                text = String.format("%02d:%02d", hours, minutes) // 시간 설정
-            }
-            // 라인 표시
-            if (index < firsttimeLine.size) {
-                firsttimeLine[index].visibility = View.VISIBLE
-                firsttimeLine[index+1].visibility=View.VISIBLE
-            }
-        }
-
-
-        var secondListTime = secondList?.map { it.time }
-
-        val time2_1=findViewById<TextView>(R.id.time2_1)
-        val time2_2=findViewById<TextView>(R.id.time2_2)
-        val time2_3=findViewById<TextView>(R.id.time2_3)
-        val time2_4=findViewById<TextView>(R.id.time2_4)
-        val time2_5=findViewById<TextView>(R.id.time2_5)
-        val time2_6=findViewById<TextView>(R.id.time2_6)
-        val time2_7=findViewById<TextView>(R.id.time2_7)
-        val seconddayTime = mutableListOf<TextView>(time2_1, time2_2, time2_3, time2_4, time2_5, time2_6, time2_7)
-
-
-        val time2_0_1 = findViewById<ImageView>(R.id.line2_0_1)
-        val time2_1_2 = findViewById<ImageView>(R.id.line2_1_2)
-        val time2_2_3 = findViewById<ImageView>(R.id.line2_2_3)
-        val time2_3_4 = findViewById<ImageView>(R.id.line2_3_4)
-        val time2_4_5 = findViewById<ImageView>(R.id.line2_4_5)
-        val time2_5_6 = findViewById<ImageView>(R.id.line2_5_6)
-        val time2_6_7 = findViewById<ImageView>(R.id.line2_6_7)
-        //  val time7_8 = findViewById<ImageView>(R.id.line6_7)
-        val secondtimeLine = mutableListOf<ImageView>(time2_0_1,time2_1_2, time2_2_3, time2_3_4, time2_4_5, time2_5_6, time2_6_7)
-
-
-        val adjustedSecondListTime = secondListTime?.drop(1) // 첫 번째 요소를 건너뛴 새로운 리스트
-        // 이동시간이 없는 경우 나머지 숨기기
-        for (i in secondListTime!!.size until seconddayTime.size) {
-
-            seconddayTime[i].visibility = View.GONE
-            secondtimeLine[i].visibility=View.GONE
-        }
-
-
-        adjustedSecondListTime?.forEachIndexed { index, time ->
-            val (hours, minutes) = convertSecondsToTime(time.toDouble())
-            seconddayTime[index].apply {
-                visibility = View.VISIBLE
-                text = String.format("%02d:%02d", hours, minutes) // 시간 설정
-            }
-            // 라인 표시
-            if (index < secondtimeLine.size) {
-                secondtimeLine[index].visibility = View.VISIBLE
-                secondtimeLine[index+1].visibility=View.VISIBLE
-            }
-        }
-
-
-        binding.path1.setOnClickListener {
-            val intent = Intent(this, FirstRoute::class.java)
-            intent.putExtra("firstList",  firstList)
-            startActivity(intent)
-        }
-
-        binding.path2.setOnClickListener {
-            val intent = Intent(this, SecondRoute::class.java)
-            intent.putExtra("secondList",  secondList)
-            startActivity(intent)
-        }
-
-        // 리스트뷰를 찾아냅니다.
-        val placeListView1 = findViewById<ListView>(R.id.placeListView1)
-        // 어댑터 생성 및 설정
-        val firstListView = firstList?.map { "${it.pointdata?.placeName}" } ?: emptyList()
-
-        // 어댑터 생성
-        val firstAdapter =
-            ArrayAdapter(this, android.R.layout.simple_list_item_1,  firstListView)
-
-        // ListView에 어댑터 설정
-        placeListView1.adapter = firstAdapter
-
-        binding.placeListContainer1.visibility = View.VISIBLE
-
-
-
-        val placeListView2 = findViewById<ListView>(R.id.placeListView2)
-        // 어댑터 생성 및 설정
-        val secondListView = secondList?.map { "${it.pointdata?.placeName}" } ?: emptyList()
-
-        // 어댑터 생성
-        val secondAdapter =
-            ArrayAdapter(this, android.R.layout.simple_list_item_1,  secondListView)
-
-        // ListView에 어댑터 설정
-        binding.placeListView2.adapter = secondAdapter
-
-
-
-        val placeListContainerList = mutableListOf<LinearLayout>(
-            binding.placeListContainer1,binding.placeListContainer2,binding.placeListContainer3,binding.placeListContainer4,
-            binding.placeListContainer5,binding.placeListContainer6,binding.placeListContainer7,binding.placeListContainer8)
-
-        dayListShow(binding.day1, placeListContainerList, 0)
-        dayListShow(binding.day2, placeListContainerList, 1)
-        dayListShow(binding.day3, placeListContainerList, 2)
-        dayListShow(binding.day4, placeListContainerList, 3)
-        dayListShow(binding.day5, placeListContainerList, 4)
-        dayListShow(binding.day6, placeListContainerList, 5)
-        dayListShow(binding.day7, placeListContainerList, 6)
-        dayListShow(binding.day8, placeListContainerList, 7)
-
 
 
         // firstList가 null이 아닌지 확인
@@ -251,13 +158,13 @@ class ScheduleActivity : AppCompatActivity() {
             singleRoute(time1_1, 0, firstList)
             singleRoute(time1_2, 1, firstList)
             singleRoute(time1_3, 2, firstList)
-            singleRoute(time1_4, 3, firstList)
+            singleRoute(time1_4, 3,firstList)
             singleRoute(time1_5, 4, firstList)
             singleRoute(time1_6, 5, firstList)
             singleRoute(time1_7, 6, firstList)
         } else {
             // firstList가 null일 때의 처리
-            Log.e("MainActivity", "firstList is null")
+            Log.e("ScheduleActivity", "firstList is null")
         }
 
         //singleRouteShow(firstList)
@@ -289,29 +196,70 @@ class ScheduleActivity : AppCompatActivity() {
         return Pair(hours, minutes)
     }
 
-/*
-    fun singleRouteShow(daylist:ArrayList<SearchRouteData>){
-        // firstList가 null이 아닌지 확인
-        if (daylist != null) {
-            singleRoute(time1_1, 0, daylist)
-            singleRoute(time1_2, 1, daylist)
-            singleRoute(time1_3, 2, firstList)
-            singleRoute(time1_4, 3, firstList)
-            singleRoute(time1_5, 4, firstList)
-            singleRoute(time1_6, 5, firstList)
-            singleRoute(time1_7, 6, firstList)
-        } else {
-            // firstList가 null일 때의 처리
-            Log.e("MainActivity", "$daylist is null")
+
+
+    fun time(daylist: ArrayList<SearchRouteData>){
+        val time1_1=findViewById<TextView>(R.id.time1_1)
+        val time1_2=findViewById<TextView>(R.id.time1_2)
+        val time1_3=findViewById<TextView>(R.id.time1_3)
+        val time1_4=findViewById<TextView>(R.id.time1_4)
+        val time1_5=findViewById<TextView>(R.id.time1_5)
+        val time1_6=findViewById<TextView>(R.id.time1_6)
+        val time1_7=findViewById<TextView>(R.id.time1_7)
+        val time1_8=findViewById<TextView>(R.id.time1_8)
+        val time1_9=findViewById<TextView>(R.id.time1_9)
+        val time1_10=findViewById<TextView>(R.id.time1_10)
+
+
+        val dayTime = mutableListOf<TextView>(
+            time1_1, time1_2, time1_3, time1_4,time1_5, time1_6,
+            time1_7,time1_8, time1_9,time1_10)
+
+        val time1_0_1 = findViewById<ImageView>(R.id.line1_0_1)
+        val time1_1_2 = findViewById<ImageView>(R.id.line1_1_2)
+        val time1_2_3 = findViewById<ImageView>(R.id.line1_2_3)
+        val time1_3_4 = findViewById<ImageView>(R.id.line1_3_4)
+        val time1_4_5 = findViewById<ImageView>(R.id.line1_4_5)
+        val time1_5_6 = findViewById<ImageView>(R.id.line1_5_6)
+        val time1_6_7 = findViewById<ImageView>(R.id.line1_6_7)
+        val time1_7_8 = findViewById<ImageView>(R.id.line1_7_8)
+        val time1_8_9 = findViewById<ImageView>(R.id.line1_8_9)
+        val time1_9_10 = findViewById<ImageView>(R.id.line1_9_10)
+        val timeLine = mutableListOf<ImageView>(time1_0_1,time1_1_2, time1_2_3, time1_3_4, time1_4_5, time1_5_6, time1_6_7, time1_7_8, time1_8_9, time1_9_10)
+
+        dayTime.forEach { it.visibility = View.GONE }
+        timeLine.forEach { it.visibility = View.GONE }
+
+        var ListTime = daylist?.map{it.time}
+        val adjustedListTime = ListTime?.drop(1)
+
+
+        // 이동시간이 없는 경우 나머지 숨기기
+        for (i in ListTime!!.size until ListTime.size) {
+
+            dayTime[i].visibility = View.GONE
+            timeLine[i].visibility=View.GONE
         }
 
-    }*/
 
+        adjustedListTime?.forEachIndexed { index, time ->
+            val (hours, minutes) = convertSecondsToTime(time.toDouble())
+            dayTime[index].apply {
+                visibility = View.VISIBLE
+                text = String.format("%02d:%02d", hours, minutes) // 시간 설정
+            }
+            // 라인 표시
+            if (index < timeLine.size) {
+                timeLine[index].visibility = View.VISIBLE
+                timeLine[index+1].visibility=View.VISIBLE
+            }
+        }
+
+    }
 
     fun singleRoute(time:TextView,value : Int,daylist:ArrayList<SearchRouteData>){
         time.setOnClickListener {
-       //     time.setBackgroundColor(R.color.button)
-            time.background = ContextCompat.getDrawable(this, R.color.button)
+
             val intent = Intent(this, SingleRoute::class.java)
             intent.putExtra("time",value)
             intent.putExtra("dayList", daylist)
@@ -319,6 +267,40 @@ class ScheduleActivity : AppCompatActivity() {
         }
 
     }
+
+    fun allRoute(path:Button,data : ArrayList<SearchRouteData>){
+        path.setOnClickListener {
+            val intent = Intent(this,FirstRoute::class.java)
+
+            intent.putExtra("dayList",data)
+            startActivity(intent)
+        }
+    }
+
+
+    private fun updateListView(listView:ListView,data : ArrayList<SearchRouteData>){
+
+
+
+        val dateList = data?.map { "${it.pointdata?.placeName}" } ?: emptyList()
+
+        // 어댑터 생성
+        val dateAdapter =
+            ArrayAdapter(this, android.R.layout.simple_list_item_1,  dateList)
+
+        // ListView에 어댑터 설정
+        listView.adapter = dateAdapter
+
+        val listcontainer = findViewById<LinearLayout>(R.id.placeListContainer1)
+        listcontainer.visibility = View.VISIBLE
+
+        val pathBtn = findViewById<Button>(R.id.path_1)
+        allRoute(pathBtn,data)
+
+    }
+
+
+
 
     fun dayListShow(day: Button, placeListContainerList: List<LinearLayout>, i: Int) {
         day.setOnClickListener {

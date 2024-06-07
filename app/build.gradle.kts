@@ -93,5 +93,5 @@ dependencies {
     implementation ("com.tomergoldst.android:tooltips:1.1.1")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation ("com.google.android.libraries.places:places:3.3.0")
-
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 }

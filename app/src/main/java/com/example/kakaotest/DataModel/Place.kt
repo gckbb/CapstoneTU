@@ -12,12 +12,12 @@ data class Place( //여행하는 도시나 지역의 장소
 ) :   Parcelable {
 
     constructor(parcel: Parcel) : this(
-    parcel.readString() ?: "",
-    TMapPoint(
-        parcel.readDouble(),
-        parcel.readDouble()
-    ),
-    parcel.readString() ?: ""
+        parcel.readString() ?: "",
+        TMapPoint(
+            parcel.readDouble(),
+            parcel.readDouble()
+        ),
+        parcel.readString() ?: ""
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -41,4 +41,3 @@ data class Place( //여행하는 도시나 지역의 장소
         }
     }
 }
-

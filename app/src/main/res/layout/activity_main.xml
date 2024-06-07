@@ -203,6 +203,12 @@
                         android:layout_height="wrap_content"
 
                         android:text="cashbook" />
+                    <Button
+                        android:id="@+id/community"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text="community" />
 
                 </LinearLayout>
 

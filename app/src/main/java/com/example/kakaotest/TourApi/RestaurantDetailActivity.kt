@@ -1,22 +1,21 @@
 package com.example.kakaotest.TourApi
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.widget.FrameLayout
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.kakaotest.DataModel.Restaurant
 import com.example.kakaotest.R
 import com.example.kakaotest.databinding.ActivityRestaurantDetailBinding
 import com.skt.tmap.TMapData
-import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.poi.TMapPOIItem
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 
 class RestaurantDetailActivity : AppCompatActivity() {
@@ -62,11 +61,10 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
             binding.textViewTitle.text = restaurant.title
             binding.textViewAddress.text = restaurant.addr1
-            binding.textViewTitle.text = restaurant.tel
+            binding.textViewTel.text = restaurant.tel
             binding.textViewAddressDetail.text = restaurant.addr2
-            binding.cat1.text = restaurant.cat1
-            binding.cat2.text = restaurant.cat2
-            binding.cat3.text = restaurant.cat3
+            Log.d("Restaurant","searchCategory 실행")
+            searchCategory(restaurant.cat1,restaurant.cat2,restaurant.cat3)
         }
 
 
@@ -89,12 +87,37 @@ class RestaurantDetailActivity : AppCompatActivity() {
             editor.apply()
         }
     }
-    private suspend fun searchCategory(cat1: String, cat2: String, cat3: String): Array<String> {
+    private fun searchCategory(cat1: String, cat2: String, cat3: String)  {
+        scope.launch {
+            try {
+                Log.d("Restaurant","tourApiManager.searchCategory(cat1,cat2,cat3)")
+                val cate_1 = tourApiManager.searchCategory(cat1,cat2,cat3)
+                val cate_3 = tourApiManager.searchCategory3(cat1)
+                val cate_4 = tourApiManager.searchCategory4()
+                var cate_items_1 = cate_1.response.body.items.item
+                var cate_items_3 = cate_3.response.body.items.item
+                var cate_items_4 = cate_4.response.body.items.item
 
-        val restaurants = tourApiManager.searchCategory(cat1,cat2,cat3)
-        // 결과 처리
-        val items = restaurants.response.body.items
-        val cate = arrayOf(items.item[0].cat1,items.item[0].cat1,items.item[0].cat1)
-        return cate
+                var cate1 : TextView = findViewById(R.id.cat1)
+                for(item in cate_items_4){
+                    if(item.code.equals(cat1))
+                        cate1.text = item.name
+                }
+                Log.d("Restaurant","${cate1.text}")
+                var cate2 : TextView = findViewById(R.id.cat2)
+                for(item in cate_items_3){
+                    if(item.code == cat2)
+                        cate2.text = item.name
+                }
+                Log.d("Restaurant","${cate2.text}")
+                var cate3 : TextView = findViewById(R.id.cat3)
+                cate3.text = cate_items_1[0].name
+                Log.d("Restaurant","${cate3.text}")
+
+            } catch (e: Exception) {
+                // 오류 처리
+                Log.e("TourApiActivity", "음식점 검색 오류: $e")
+            }
+        }
     }
 }

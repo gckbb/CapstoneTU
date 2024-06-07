@@ -21,6 +21,7 @@ import com.skt.tmap.TMapPoint
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 import java.util.LinkedList
+import com.example.kakaotest.Utility.SharedPreferenceUtil
 
 class RouteListActivity : AppCompatActivity() {
 
@@ -31,9 +32,13 @@ class RouteListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_route_list)
-        val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
-        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
-        val receivedFoodDataList = intent.getParcelableArrayListExtra<SearchData>("selectedFoodDataList")
+   //     val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
+     //   val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+       // val receivedFoodDataList = intent.getParcelableArrayListExtra<SearchData>("selectedFoodDataList")
+
+        val receivedDataList : ArrayList<SelectedPlaceData>? = SharedPreferenceUtil.getDataFromSharedPreferences(this)
+        val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
+        val receivedFoodDataList: ArrayList<SearchData>? = SharedPreferenceUtil.getFoodFromSharedPreferences(this)
 
 
         Log.d("RouteListActivity",receivedDataList.toString()) //arraylistof<SelectedPlaceData>
@@ -46,6 +51,7 @@ class RouteListActivity : AppCompatActivity() {
             convertedFoodDataList = convertList(receivedFoodDataList)
             receivedDataList?.addAll(convertedFoodDataList!!)
         }
+        val rentStartPoint:SelectedPlaceData
 
         val startDate = travelPlan!!.startDate?.day ?: 0
         val endDate = travelPlan.endDate?.day ?: 0
@@ -89,8 +95,13 @@ class RouteListActivity : AppCompatActivity() {
             val firstPlaceList =DayRoute(0)
             val secondPlaceList =DayRoute(1)
             val intent = Intent(this, ScheduleActivity::class.java)
-            intent.putExtra("firstList",firstPlaceList)
-            intent.putExtra("secondList",  secondPlaceList)
+
+            for(i in 0 until dateRange+1) {
+                intent.putExtra("List${i+1}",routetest.printTotalRoute().getOrNull(i)?.dayRoute)
+            }
+
+     //       intent.putExtra("firstList",firstPlaceList)
+       //     intent.putExtra("secondList",  secondPlaceList)
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
             intent.putExtra("travelPlan", travelPlan)
             Log.d("PLAN",travelPlan.toString())
@@ -100,20 +111,51 @@ class RouteListActivity : AppCompatActivity() {
 
 
         Log.d("PLAN","receivedDataList : \n"+ receivedDataList.toString())
-
+/*
         lifecycleScope.launch {
             try {
                 // 비동기적으로 routeSet을 호출합니다.
                 routetest.routeSet(receivedDataList!!, receivedDataList!![0])
                 Log.d("PLAN", "Route Set")
                 // 비동기적으로 routeStart를 호출합니다.
-         //       routetest.routeStart(2, 8, 1, convertedFoodDataList!!)
+                //       routetest.routeStart(2, 8, 1, convertedFoodDataList!!)
                 routetest.routeStart(dateRange, activityTime!!, 1, convertedFoodDataList!!,restaurant)
                 Log.d("PLAN", "Route Started")
                 routetest.printTotalRoute()
                 Log.d("PLAN", "Total Route Printed")
                 updateListView()
             } catch (e: Exception) {
+                Log.e("CreatedRoute1", "Error: ${e.message}", e)
+            }
+        }
+*/
+        lifecycleScope.launch {
+            try {
+                if(travelPlan.transportion == "자차" || travelPlan.transportion == "택시"){
+                    routetest.routeSet(receivedDataList!!,receivedDataList!![0],0)
+                    Log.d("PLAN","Route type 0 set")
+                    routetest.routeStart(dateRange,activityTime!!,1,convertedFoodDataList!!,restaurant,0)
+                    Log.d("PLAN", "Route type 0 Started")
+                }
+                else if(travelPlan.transportion == "렌트") {
+                    //렌트 선택 추가되면 테스트
+                    //routetest.routeSet(receivedDataList!!, rentStartPoint,0)
+                }
+                else if(travelPlan.transportion == "버스") {
+                    //할당량문제로 테스트 부족함
+                    //routetest.routeSet(receivedDataList!!, receivedDataList!![0],1)
+                }
+                else if(travelPlan.transportion == "도보") { //도보 의미가없음...
+                    routetest.routeSet(receivedDataList!!, receivedDataList!![0],2)
+                    Log.d("PLAN", "Route type 2 Set ")
+                    routetest.routeStart(dateRange, activityTime!!, 1, convertedFoodDataList!!,restaurant,2)
+                    Log.d("PLAN", "Route type 2 Started")
+                }
+                routetest.printTotalRoute()
+                Log.d("PLAN", "Total Route Printed")
+                updateListView()
+
+            } catch (e:Exception){
                 Log.e("CreatedRoute1", "Error: ${e.message}", e)
             }
         }
