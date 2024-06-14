@@ -1,6 +1,7 @@
 package com.example.kakaotest.TourApi
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.FrameLayout
@@ -51,6 +52,10 @@ class RestaurantDetailActivity : AppCompatActivity() {
         // Restaurant 객체를 인텐트에서 가져옴
         val restaurant = intent.getSerializableExtra("restaurant") as? Restaurant
 
+
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
 
 
         if(restaurant != null) {

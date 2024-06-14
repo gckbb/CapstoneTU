@@ -187,7 +187,7 @@
                 <Button
                     android:id="@+id/day1"
                     android:layout_width="40dp"
-                    android:layout_height="38dp"
+                    android:layout_height="match_parent"
                     android:background="@drawable/first" />
 
                 <Button

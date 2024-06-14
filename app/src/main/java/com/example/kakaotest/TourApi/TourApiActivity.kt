@@ -1,24 +1,35 @@
 package com.example.kakaotest.TourApi
 
+
+
 import android.content.Context
+import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kakaotest.HomeActivity
+import com.example.kakaotest.Map.SelectedPlace
 import com.example.kakaotest.R
+import com.example.kakaotest.Utility.Adapter.SpinnerAdapter
 import com.example.kakaotest.databinding.ActivityTourapiBinding
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+
 
 class TourApiActivity : AppCompatActivity() {
     private val tourApiManager = TourApiManager()
     private val scope = MainScope()
     private lateinit var categoryValues: Array<String>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +46,35 @@ class TourApiActivity : AppCompatActivity() {
 //        val latitude = 37.5665
 //        val longitude = 126.9780
 
+        val category1Array: Array<String> = resources.getStringArray(R.array.category1)
+        val category1List: ArrayList<String> = ArrayList(category1Array.asList())
 
+        val spinner : Spinner = findViewById(R.id.tourapi_spinner1)
+
+        val adapter : ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_item, category1List)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        binding.recyclerView.visibility = View.GONE
+
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+        binding.fabSave.setOnClickListener {
+            val intent = Intent(this, PlaceSaveActivity::class.java)
+            startActivity(intent)
+        }
+        binding.home.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
+
+        /*
         tourapiSpinner1.adapter = ArrayAdapter.createFromResource(
             this,
             R.array.category1,
             android.R.layout.simple_spinner_item
-        )
+        )*/
 
 // 첫 번째 스피너의 선택 이벤트 리스너 설정
         tourapiSpinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -106,6 +140,7 @@ class TourApiActivity : AppCompatActivity() {
             Log.d("Restaurant","선택된 카테고리: ${tourapiSpinner3.selectedItem}")
             val selectedPosition = tourapiSpinner3.selectedItemPosition
             val selectedValue = categoryValues[selectedPosition]
+            //binding.text.visibility=View.GONE
             searchRestaurantsInArea(selectedValue)
         }
         binding.areaBased.setOnClickListener {
@@ -129,6 +164,9 @@ class TourApiActivity : AppCompatActivity() {
                 }
                 // RecyclerView 설정
                 val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+                val text : TextView = findViewById<TextView>(R.id.text)
+                text.visibility=View.GONE
+                recyclerView.visibility=View.VISIBLE
                 recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)
                 val adapter = RestaurantAdapter(restaurants.response.body.items.item)
                 recyclerView.adapter = adapter

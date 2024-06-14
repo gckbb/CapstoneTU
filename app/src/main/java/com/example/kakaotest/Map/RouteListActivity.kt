@@ -111,24 +111,7 @@ class RouteListActivity : AppCompatActivity() {
 
 
         Log.d("PLAN","receivedDataList : \n"+ receivedDataList.toString())
-/*
-        lifecycleScope.launch {
-            try {
-                // 비동기적으로 routeSet을 호출합니다.
-                routetest.routeSet(receivedDataList!!, receivedDataList!![0])
-                Log.d("PLAN", "Route Set")
-                // 비동기적으로 routeStart를 호출합니다.
-                //       routetest.routeStart(2, 8, 1, convertedFoodDataList!!)
-                routetest.routeStart(dateRange, activityTime!!, 1, convertedFoodDataList!!,restaurant)
-                Log.d("PLAN", "Route Started")
-                routetest.printTotalRoute()
-                Log.d("PLAN", "Total Route Printed")
-                updateListView()
-            } catch (e: Exception) {
-                Log.e("CreatedRoute1", "Error: ${e.message}", e)
-            }
-        }
-*/
+
         lifecycleScope.launch {
             try {
                 if(travelPlan.transportion == "자차" || travelPlan.transportion == "택시"){
