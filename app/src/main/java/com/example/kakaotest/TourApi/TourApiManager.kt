@@ -3,7 +3,7 @@ package com.example.kakaotest.TourApi
 import android.util.Log
 import com.example.kakaotest.DataModel.AreaDataResponse
 import com.example.kakaotest.DataModel.CategoryResponse
-import com.example.kakaotest.DataModel.RestaurantResponse
+import com.example.kakaotest.DataModel.RecommendResponse
 
 
 class TourApiManager {
@@ -12,9 +12,9 @@ class TourApiManager {
         cat3 : String,
         area : String,
         contentId : String
-    ): RestaurantResponse {
+    ): RecommendResponse {
         val apiService = TourApiClient.create()
-        Log.d("restest", "apiservice 실행")
+        Log.d("AreCode", "apiservice 실행")
         val response = apiService.searchRecommend(
             apiKey = TourApiClient.API_KEY, // 여기를 변경
             mobileOS = "AND",
@@ -26,7 +26,7 @@ class TourApiManager {
             type = "json",
             numOfRows = 30
         )
-        Log.d("restest", "searchRestaurants 실행")
+        Log.d("AreCode", "searchRestaurants 실행")
         return response
     }
 

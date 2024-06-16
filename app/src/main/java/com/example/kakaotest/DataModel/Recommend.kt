@@ -2,7 +2,7 @@ package com.example.kakaotest.DataModel
 
 import java.io.Serializable
 
-data class RestaurantResponse(
+data class RecommendResponse(
     val response: ResponseData
 )
 

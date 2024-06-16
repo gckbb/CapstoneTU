@@ -2,7 +2,7 @@ package com.example.kakaotest.TourApi
 
 import com.example.kakaotest.DataModel.AreaDataResponse
 import com.example.kakaotest.DataModel.CategoryResponse
-import com.example.kakaotest.DataModel.RestaurantResponse
+import com.example.kakaotest.DataModel.RecommendResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -18,7 +18,7 @@ interface TourApiService {
         @Query("numOfRows") numOfRows: Int,
         @Query("areaCode") areaCode: String,
         @Query("contentTypeId") contentTypeId: String
-    ): RestaurantResponse
+    ): RecommendResponse
     @GET("categoryCode1")
     suspend fun searchCategory(
         @Query("serviceKey") apiKey: String,
