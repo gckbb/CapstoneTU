@@ -2,6 +2,7 @@ package com.example.kakaotest.DataModel
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 
@@ -15,7 +16,8 @@ data class TravelPlan(
     var activityTime: Int?=null,
     var startTime: Time?=null,
     var restaurant: String?=null,
-    var destinations: List<SearchRouteData>?=null
+    var destinations: List<SearchRouteData>?=null,
+    var destinations2: List<SearchMetaData>?=null
 ) : Parcelable {
 
 
@@ -30,7 +32,8 @@ data class TravelPlan(
         parcel.readInt(),
         parcel.readParcelable(Time::class.java.classLoader),
         parcel.readString(),
-        parcel.createTypedArrayList(SearchRouteData)
+        parcel.createTypedArrayList(SearchRouteData),
+        parcel.createTypedArrayList(SearchMetaData)
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -44,6 +47,7 @@ data class TravelPlan(
         parcel.writeParcelable(startTime, flags)
         parcel.writeString(restaurant)
         parcel.writeTypedList(destinations)
+        parcel.writeTypedList(destinations2)
     }
 
     override fun describeContents(): Int {

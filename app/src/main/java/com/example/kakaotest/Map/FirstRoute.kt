@@ -8,13 +8,18 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
+import com.example.kakaotest.DataModel.TravelPlan
+import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
+import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.R
+import com.google.gson.Gson
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.overlay.TMapPolyLine
+import java.util.LinkedList
 
 
 class FirstRoute : AppCompatActivity() {
@@ -22,8 +27,20 @@ class FirstRoute : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first_route)
 
-        val firstList = intent.getParcelableArrayListExtra<SearchRouteData>("firstList")
-        Log.d("PLAN","firstRoute \n"+ firstList.toString())
+        val gson = Gson()
+        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+        lateinit var firstList:ArrayList<SearchRouteData>
+        lateinit var firstList2:MetaDayRoute
+
+        intent.getStringExtra("firstList2")?.let { firstListdata2 ->
+            firstList2 = gson.fromJson(firstListdata2, MetaDayRoute::class.java)
+            Log.d("PLAN","firstRoute \n"+ firstList2.toString())
+        }
+        intent.getParcelableArrayListExtra<SearchRouteData>("firstList")?.let { firstListdata ->
+            firstList = firstListdata
+            Log.d("PLAN","firstRoute \n"+ firstList.toString())
+        }
+
 
         val pointList = ArrayList<TMapPoint>()
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
@@ -66,33 +83,51 @@ class FirstRoute : AppCompatActivity() {
                     BitmapFactory.decodeResource(resources, R.drawable.end)
                 )
 
-
-                for ((index, selectedPlace) in firstList!!.withIndex()) {
-                    val tpoint = selectedPlace.pointdata!!.tpoint
-
-                    //선택된 장소들 표시
-                    if (tpoint != null) {
-                        val marker = TMapMarkerItem().apply {
-                            id = selectedPlace.pointdata.placeName
-                            setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))
-                            icon = if (index==0) iconList[0]
-                            else if (index == firstList.size-1) iconList[11]
-                            else iconList[index]
-
+                if(travelPlan?.transportion == "버스") {
+                    for ((index, selectedPlace) in firstList2!!.dayRoute.withIndex()) {
+                        val tpoint = selectedPlace.pointdata!!.tpoint
+                        //선택된 장소들 표시
+                        if (tpoint != null) {
+                            val marker = TMapMarkerItem().apply {
+                                id = selectedPlace.pointdata.placeName
+                                setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))
+                                icon = if (index == 0) iconList[0]
+                                else if (index == firstList2.dayRoute.size - 1) iconList[11]
+                                else iconList[index]
+                            }
+                            tMapView.addTMapMarkerItem(marker)
                         }
-                        tMapView.addTMapMarkerItem(marker)
                     }
-
-
+                    // 선택된 장소들의 TMapPoint를 이용하여 리스트 생성
+                    for (selectedPlace in firstList2!!.dayRoute) {
+                        selectedPlace.pointdata?.tpoint?.let { tMapPoint ->
+                            pointList.add(tMapPoint)
+                        }
+                    }
                 }
-
-
+                else {
+                    for ((index, selectedPlace) in firstList!!.withIndex()) {
+                        val tpoint = selectedPlace.pointdata!!.tpoint
+                        //선택된 장소들 표시
+                        if (tpoint != null) {
+                            val marker = TMapMarkerItem().apply {
+                                id = selectedPlace.pointdata.placeName
+                                setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))
+                                icon = if (index == 0) iconList[0]
+                                else if (index == firstList.size - 1) iconList[11]
+                                else iconList[index]
+                            }
+                            tMapView.addTMapMarkerItem(marker)
+                        }
+                    }
                     // 선택된 장소들의 TMapPoint를 이용하여 리스트 생성
                     for (selectedPlace in firstList!!) {
                         selectedPlace.pointdata?.tpoint?.let { tMapPoint ->
                             pointList.add(tMapPoint)
                         }
                     }
+                }
+
 
 
 

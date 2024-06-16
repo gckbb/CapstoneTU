@@ -52,6 +52,7 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.MainScope
 import java.security.MessageDigest
+import kotlin.concurrent.thread
 
 //첫 로그인 화면
 class MainActivity : AppCompatActivity() {
@@ -109,6 +110,18 @@ class MainActivity : AppCompatActivity() {
 
         //지도 생성 테스트 버튼
         binding.tmapViewbtn.setOnClickListener{
+            var metaRoute: MetaRoute?
+            thread{
+                metaRoute = apiAdapter2.apiRequest2(
+                    126.926493082645,37.6134436427887,
+                    127.126936754911,37.5004198786564
+                )
+                Log.d("meta","meta is work")
+
+            }
+            Log.d("Plan","plan")
+
+
             val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
         }

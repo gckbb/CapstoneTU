@@ -9,8 +9,11 @@ import android.os.Parcelable
 import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
+import com.example.kakaotest.DataModel.TravelPlan
+import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.R
+import com.google.gson.Gson
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
@@ -23,8 +26,13 @@ class SingleRoute : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_single_route)
 
-        val dayList = intent.getParcelableArrayListExtra<SearchRouteData>("dayList")
-        Log.d("PLAN","singleroute \n"+ dayList.toString())
+        val gson = Gson()
+        lateinit var dayList:ArrayList<SearchRouteData>
+        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+        intent.getParcelableArrayListExtra<SearchRouteData>("dayList")?.let { dayListdata ->
+            dayList = dayListdata
+            Log.d("PLAN","firstRoute \n"+ dayList.toString())
+        }
         val timeindex = intent.getIntExtra("time",0)
         val pointList = ArrayList<TMapPoint>()
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
