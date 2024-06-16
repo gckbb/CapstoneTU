@@ -23,7 +23,7 @@ class RecommendAdapter(private val recommends: List<Recommend>) :
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
         val currentItem = recommends[position]
 
-            // Glide를 사용하여 이미지 설정
+        // Glide를 사용하여 이미지 설정
         Glide.with(holder.itemView.context)
             .load(currentItem.firstimage2) // 이미지 URL
             .into(holder.thumbnail) // ImageView에 설정
@@ -35,7 +35,7 @@ class RecommendAdapter(private val recommends: List<Recommend>) :
             val context = holder.itemView.context
             val intent = Intent(context, RecommendDetailActivity::class.java).apply {
                 // 클릭된 아이템의 상세 정보를 인텐트에 추가
-                putExtra("restaurant", currentItem)
+                putExtra("recommend", currentItem)
             }
             context.startActivity(intent)
         }
@@ -44,10 +44,14 @@ class RecommendAdapter(private val recommends: List<Recommend>) :
     override fun getItemCount() = recommends.size
 
     class RestaurantViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val thumbnail: ImageView = itemView.findViewById(R.id.thumbnail) ?: throw NullPointerException("Thumbnail ImageView is null")
-        val textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle) ?: throw NullPointerException("TextViewTitle is null")
-        val textViewAddress: TextView = itemView.findViewById(R.id.textViewAddress) ?: throw NullPointerException("TextViewAddress is null")
+        val thumbnail: ImageView = itemView.findViewById(R.id.thumbnail)
+            ?: throw NullPointerException("Thumbnail ImageView is null")
+        val textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle)
+            ?: throw NullPointerException("TextViewTitle is null")
+        val textViewAddress: TextView = itemView.findViewById(R.id.textViewAddress)
+            ?: throw NullPointerException("TextViewAddress is null")
     }
+
 
 }
 

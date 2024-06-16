@@ -1,5 +1,6 @@
 package com.example.kakaotest.TourApi
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -109,6 +110,7 @@ class TourApiActivity : AppCompatActivity() {
 
 // 두 번째 스피너의 선택 이벤트 리스너 설정
         tourapiSpinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            @SuppressLint("SuspiciousIndentation")
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View?,

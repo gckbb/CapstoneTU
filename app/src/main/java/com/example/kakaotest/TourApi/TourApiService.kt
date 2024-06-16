@@ -64,4 +64,14 @@ interface TourApiService {
         @Query("MobileApp") mobileApp: String,
         @Query("_type") type: String
     ): AreaDataResponse
+
+    @GET("detailIntro1")
+    suspend fun getdetailIntro(
+        @Query("serviceKey") apiKey: String,
+        @Query("MobileOS") mobileOS: String,
+        @Query("MobileApp") mobileApp: String,
+        @Query("_type") type: String,
+        @Query("contentId") contentId: String,
+        @Query("contentTypeId") contentTypeId: String
+    ):RecommendResponse
 }

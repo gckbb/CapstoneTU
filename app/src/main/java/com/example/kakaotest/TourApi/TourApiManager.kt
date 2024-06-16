@@ -100,4 +100,22 @@ class TourApiManager {
         Log.d("AreaCode", "areadata 실행완료")
         return response
     }
+
+    suspend fun getDetailIntro(
+        contentTypeId: String,
+        contentId : String
+    ): RecommendResponse {
+        val apiService = TourApiClient.create()
+        Log.d("detailCode", "apiservice 실행")
+        val response = apiService.getdetailIntro(
+            apiKey = TourApiClient.API_KEY, // 여기를 변경
+            mobileOS = "AND",
+            mobileApp = "AppTest",
+            type = "json",
+            contentId = contentId,
+            contentTypeId = contentTypeId,
+        )
+        Log.d("detailCode", "getDetail 실행")
+        return response
+    }
 }
