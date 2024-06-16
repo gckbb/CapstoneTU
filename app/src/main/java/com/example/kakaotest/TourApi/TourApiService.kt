@@ -73,5 +73,6 @@ interface TourApiService {
         @Query("_type") type: String,
         @Query("contentId") contentId: String,
         @Query("contentTypeId") contentTypeId: String
-    ):RecommendResponse
+    ): RecommendResponse
+
 }

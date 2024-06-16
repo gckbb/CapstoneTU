@@ -9,9 +9,9 @@ import com.example.kakaotest.DataModel.RecommendResponse
 class TourApiManager {
 
     suspend fun searchRecommendInArea(
-        cat3 : String,
-        area : String,
-        contentId : String
+        cat3: String,
+        area: String,
+        contentId: String
     ): RecommendResponse {
         val apiService = TourApiClient.create()
         Log.d("AreCode", "apiservice 실행")
@@ -26,9 +26,32 @@ class TourApiManager {
             type = "json",
             numOfRows = 30
         )
-        Log.d("AreCode", "searchRestaurants 실행")
+        Log.d("detailCode", "searchRestaurants 실행")
+        Log.d("detailCode", "Response: ${response.toString()}") // 응답 데이터 로깅
         return response
     }
+
+    suspend fun getDetailIntro(
+        contentId: String,
+        contentTypeId: String
+    ): RecommendResponse {
+        val apiService = TourApiClient.create()
+        Log.d("detailCode", "apiservice 실행")
+        val response = apiService.getdetailIntro(
+            apiKey = TourApiClient.API_KEY,
+            mobileOS = "AND",
+            mobileApp = "AppTest",
+            type = "json",
+            contentId = contentId,
+            contentTypeId = contentTypeId
+        )
+        Log.d("detailCode", "getDetail 실행")
+        Log.d("detailCode", "Response: ${response}")
+        return response
+    }
+
+
+
 
     suspend fun searchCategory(cat1: String,cat2: String,cat3: String): CategoryResponse {
         val apiService = TourApiClient.create()
@@ -101,21 +124,5 @@ class TourApiManager {
         return response
     }
 
-    suspend fun getDetailIntro(
-        contentTypeId: String,
-        contentId : String
-    ): RecommendResponse {
-        val apiService = TourApiClient.create()
-        Log.d("detailCode", "apiservice 실행")
-        val response = apiService.getdetailIntro(
-            apiKey = TourApiClient.API_KEY, // 여기를 변경
-            mobileOS = "AND",
-            mobileApp = "AppTest",
-            type = "json",
-            contentId = contentId,
-            contentTypeId = contentTypeId,
-        )
-        Log.d("detailCode", "getDetail 실행")
-        return response
-    }
+
 }
