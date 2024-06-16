@@ -24,10 +24,10 @@ data class BodyData(
 )
 
 data class ItemsData(
-    val item: List<Restaurant>
+    val item: List<Recommend>
 )
 
-data class Restaurant(
+data class Recommend(
     val addr1: String,  //주소
     val addr2: String?, //상세주소
     val areacode: String,   //지역코드

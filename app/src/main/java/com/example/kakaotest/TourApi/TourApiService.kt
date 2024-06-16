@@ -1,5 +1,6 @@
 package com.example.kakaotest.TourApi
 
+import com.example.kakaotest.DataModel.AreaDataResponse
 import com.example.kakaotest.DataModel.CategoryResponse
 import com.example.kakaotest.DataModel.RestaurantResponse
 import retrofit2.http.GET
@@ -7,14 +8,16 @@ import retrofit2.http.Query
 
 interface TourApiService {
     @GET("areaBasedList1")
-    suspend fun searchRestaurants(
+    suspend fun searchRecommend(
         @Query("serviceKey") apiKey: String,
         @Query("MobileOS") mobileOS: String,
         @Query("MobileApp") mobileApp: String,
         @Query("arrange") arrange: String,
         @Query("cat3") cat3: String,
         @Query("_type") type: String,
-        @Query("numOfRows") numOfRows: Int
+        @Query("numOfRows") numOfRows: Int,
+        @Query("areaCode") areaCode: String,
+        @Query("contentTypeId") contentTypeId: String
     ): RestaurantResponse
     @GET("categoryCode1")
     suspend fun searchCategory(
@@ -53,4 +56,12 @@ interface TourApiService {
         @Query("MobileApp") mobileApp: String,
         @Query("_type") type: String,
     ): CategoryResponse
+
+    @GET("areaCode1")
+    suspend fun searchAreaCode(
+        @Query("serviceKey") apiKey: String,
+        @Query("MobileOS") mobileOS: String,
+        @Query("MobileApp") mobileApp: String,
+        @Query("_type") type: String
+    ): AreaDataResponse
 }

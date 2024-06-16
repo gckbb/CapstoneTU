@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,118 +20,94 @@ class TourApiActivity : AppCompatActivity() {
     private val tourApiManager = TourApiManager()
     private val scope = MainScope()
     private lateinit var categoryValues: Array<String>
+    var tourapiSpinner: Spinner= binding.tourapiSpinnerArea
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         var binding = ActivityTourapiBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val sharedPreferences = getSharedPreferences("MySavedRestaurants", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
+        val tourapiSpinner = binding.tourapiSpinnerArea
+        val tourapiSpinner_content = binding.tourapiSpinnerContentId
         val tourapiSpinner1 = binding.tourapiSpinner1
         val tourapiSpinner2 = binding.tourapiSpinner2
         val tourapiSpinner3 = binding.tourapiSpinner3
 
-//        val latitude = 37.5665
-//        val longitude = 126.9780
+        searchAreaCode()
 
-
-        tourapiSpinner1.adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.category1,
-            android.R.layout.simple_spinner_item
+        // 카테고리와 하위 카테고리를 직접 정의합니다.
+        val categories = listOf(
+            Category("자연", listOf(
+                Subcategory("자연관광지", listOf("A01010100", "A01010200", "A01010300")),
+                Subcategory("관광자원", listOf("A01020100", "A01020200"))
+            )),
+            Category("인문(문화/예술/역사)", listOf(
+                Subcategory("역사관광지", listOf("A02010100", "A02010200")),
+                Subcategory("휴양관광지", listOf("A02020100", "A02020200")),
+                Subcategory("체험관광지", listOf("A02030100", "A02030200")),
+                Subcategory("산업관광지", listOf("A02040100", "A02040200")),
+                Subcategory("건축/조형물", listOf("A02050100", "A02050200")),
+                Subcategory("문화시설", listOf("A02060100", "A02060200")),
+                Subcategory("축제", listOf("A02070100", "A02070200")),
+                Subcategory("공연/행사", listOf("A02080100", "A02080200"))
+            ))
+            // 다른 카테고리와 하위 카테고리도 비슷하게 추가합니다.
         )
 
-// 첫 번째 스피너의 선택 이벤트 리스너 설정
+        // 첫 번째 스피너에 카테고리 이름을 설정합니다.
+        val categoryNames = categories.map { it.name }
+        tourapiSpinner1.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categoryNames)
+
+        // 첫 번째 스피너 선택 리스너 설정
         tourapiSpinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                // 첫 번째 스피너에서 선택된 항목에 따라 두 번째 스피너의 어댑터 업데이트
-                val selectedCategory1 = tourapiSpinner1.selectedItem.toString()
-                val category2ArrayId = findCategory(selectedCategory1)
-                tourapiSpinner2.adapter = ArrayAdapter.createFromResource(
-                    this@TourApiActivity,
-                    category2ArrayId,
-                    android.R.layout.simple_spinner_item
-                )
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedCategory = categories[position]
+                val subcategoryNames = selectedCategory.subcategories.map { it.name }
+                tourapiSpinner2.adapter = ArrayAdapter(this@TourApiActivity, android.R.layout.simple_spinner_item, subcategoryNames)
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // 아무 것도 선택되지 않았을 때의 처리 (필요시 구현)
-            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
-// 두 번째 스피너의 선택 이벤트 리스너 설정
+        // 두 번째 스피너 선택 리스너 설정
         tourapiSpinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                // 두 번째 스피너에서 선택된 항목에 따라 세 번째 스피너의 어댑터 업데이트
-                val selectedCategory2 = tourapiSpinner2.selectedItem.toString()
-                val category3ArrayId = findCategory(selectedCategory2)
-                tourapiSpinner3.adapter = ArrayAdapter.createFromResource(
-                    this@TourApiActivity,
-                    category3ArrayId,
-                    android.R.layout.simple_spinner_item
-                )
-
-                categoryValues = getCategoryValues(selectedCategory2)
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedCategory = categories[tourapiSpinner1.selectedItemPosition]
+                val selectedSubcategory = selectedCategory.subcategories[position]
+                val subcategoryValues = selectedSubcategory.values
+                tourapiSpinner3.adapter = ArrayAdapter(this@TourApiActivity, android.R.layout.simple_spinner_item, subcategoryValues)
+                categoryValues = subcategoryValues.toTypedArray()  // 나중에 사용할 값을 저장합니다.
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // 아무 것도 선택되지 않았을 때의 처리 (필요시 구현)
-            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
-// 세 번째 스피너의 선택 이벤트 리스너 설정 (필요시 구현)
-//        tourapiSpinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-//
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {
-//                // 아무 것도 선택되지 않았을 때의 처리 (필요시 구현)
-//            }
-//        }
-
-
+        // 검색 버튼 클릭 리스너 설정
         binding.tourapiSearch.setOnClickListener {
-            Log.d("Restaurant","선택된 카테고리: ${tourapiSpinner3.selectedItem}")
-            val selectedPosition = tourapiSpinner3.selectedItemPosition
-            val selectedValue = categoryValues[selectedPosition]
-            searchRestaurantsInArea(selectedValue)
+            val selectedValuePosition = tourapiSpinner3.selectedItemPosition
+            val selectedValue = categoryValues[selectedValuePosition]
+            val selectedArea = tourapiSpinner.selectedItem.toString()
+            val selectedContentId = tourapiSpinner_content.selectedItem.toString()
+            searchRecommendInArea(selectedValue, selectedArea, selectedContentId)
         }
+
+        // 초기화 버튼 클릭 리스너 설정
         binding.areaBased.setOnClickListener {
             editor.clear().apply()
             Toast.makeText(this, "초기화 성공", Toast.LENGTH_SHORT).show()
-            //Log.d("add_test","초기화 성공")
         }
     }
 
-    private fun searchRestaurantsInArea(cat3: String) {
+    private fun searchRecommendInArea(cat3: String, area: String, contentId: String) {
         scope.launch {
             try {
-                val restaurants = tourApiManager.searchRestaurantsInArea(cat3)
-                // 결과 처리
-                val items = restaurants.response.body.items
-                for (restaurant in items.item) {
-                    Log.d(
-                        "Restaurant",
-                        "음식점 이름: ${restaurant.title}, 주소: ${restaurant.addr1}, 이미지: ${restaurant.firstimage2}"
-                    )
-                }
+                val recommends = tourApiManager.searchRecommendInArea(cat3, area, contentId)
                 // RecyclerView 설정
                 val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
                 recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)
-                val adapter = RestaurantAdapter(restaurants.response.body.items.item)
+                val adapter = RecommendAdapter(recommends.response.body.items.item)
                 recyclerView.adapter = adapter
             } catch (e: Exception) {
                 // 오류 처리
@@ -139,45 +116,28 @@ class TourApiActivity : AppCompatActivity() {
         }
     }
 
-    private fun findCategory(cat: String): Int {
-        return when (cat) {
-            "자연" -> R.array.category_A01
-            "인문(문화/예술/역사)" -> R.array.category_A02
-            "레포츠" -> 1 // 레포츠 배열을 정의해야 함
-            "쇼핑" -> 1 // 쇼핑 배열을 정의해야 함
-            "음식" -> 1 // 음식 배열을 정의해야 함
-            "숙박" -> 1 // 숙박 배열을 정의해야 함
-            "추천코스" -> 0 // 추천코스 배열을 정의해야 함
-
-            "자연관광지" -> R.array.category_A0101
-            "관광자원" -> R.array.category_A0102
-
-            "역사관광지" -> R.array.category_A0201
-            "휴양관광지" -> R.array.category_A0202
-            "체험관광지" -> R.array.category_A0203
-            "산업관광지" -> R.array.category_A0204
-            "건축/조형물" -> R.array.category_A0205
-            "문화시설" -> 1 // 문화시설 배열을 정의해야 함
-            "축제" -> 1 // 축제 배열을 정의해야 함
-            "공연/행사" -> 1 // 공연/행사 배열을 정의해야 함
-            else -> 1 // 기본 배열 리소스 (필요시)
+    private fun searchAreaCode() {
+        scope.launch {
+            try {
+                val area = tourApiManager.searchAreaCode()
+                if (area.response.header.resultCode == "0000") {
+                    val areaNames = area.response.body.items.item.map { it.name }
+                    updateSpinner(areaNames)
+                } else {
+                    Log.d("Areacode", "API 호출 실패: ${area.response.header.resultMsg}")
+                }
+            } catch (e: Exception) {
+                Log.d("Areacode", "API 호출 중 오류 발생: ${e.message}")
+            }
         }
     }
 
-
-    private fun getCategoryValues(cat: String): Array<String> {
-        return when (cat) {
-            "자연관광지" -> resources.getStringArray(R.array.category_A0101_values)
-            "관광자원" -> resources.getStringArray(R.array.category_A0102_values)
-
-            "역사관광지" -> resources.getStringArray(R.array.category_A0201_values)
-            "휴양관광지" -> resources.getStringArray(R.array.category_A0202_values)
-            "체험관광지" -> resources.getStringArray(R.array.category_A0203_values)
-            "산업관광지" -> resources.getStringArray(R.array.category_A0204_values)
-            "건축/조형물" -> resources.getStringArray(R.array.category_A0205_values)
-            // 다른 하위 카테고리들의 값 배열 추가
-            else -> arrayOf()
-        }
+    private fun updateSpinner(areaNames: List<String>) {
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, areaNames)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        tourapiSpinner.adapter = adapter
     }
 
+    data class Category(val name: String, val subcategories: List<Subcategory>)
+    data class Subcategory(val name: String, val values: List<String>)
 }

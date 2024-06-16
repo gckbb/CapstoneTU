@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kakaotest.DataModel.Restaurant
+import com.example.kakaotest.DataModel.Recommend
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.tmap.ApiAdapter
 import com.example.kakaotest.databinding.ActivityDetailMapBinding
@@ -43,7 +43,7 @@ class Detail_map_test : AppCompatActivity() {
         // 발급받은 키로 TMapView에 API 키 설정
         tMapView.setSKTMapApiKey(appKey)
 
-        val selected_place = intent.getSerializableExtra("restaurant") as? Restaurant
+        val selected_place = intent.getSerializableExtra("restaurant") as? Recommend
 
 
 

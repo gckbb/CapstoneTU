@@ -1,23 +1,28 @@
 package com.example.kakaotest.TourApi
 
 import android.util.Log
+import com.example.kakaotest.DataModel.AreaDataResponse
 import com.example.kakaotest.DataModel.CategoryResponse
 import com.example.kakaotest.DataModel.RestaurantResponse
 
 
 class TourApiManager {
 
-    suspend fun searchRestaurantsInArea(
-        cat3 : String
+    suspend fun searchRecommendInArea(
+        cat3 : String,
+        area : String,
+        contentId : String
     ): RestaurantResponse {
         val apiService = TourApiClient.create()
         Log.d("restest", "apiservice 실행")
-        val response = apiService.searchRestaurants(
+        val response = apiService.searchRecommend(
             apiKey = TourApiClient.API_KEY, // 여기를 변경
             mobileOS = "AND",
             mobileApp = "AppTest",
             arrange = "A",
             cat3 = cat3,
+            areaCode = area,
+            contentTypeId = contentId,
             type = "json",
             numOfRows = 30
         )
@@ -80,6 +85,19 @@ class TourApiManager {
             type = "json"
         )
         Log.d("Restaurant", "category 실행완료")
+        return response
+    }
+
+    suspend fun searchAreaCode(): AreaDataResponse {
+        val apiService = TourApiClient.create()
+        Log.d("AreaCode", "areadata 실행")
+        val response = apiService.searchAreaCode(
+            apiKey = TourApiClient.API_KEY, // 여기를 변경
+            mobileOS = "AND",
+            mobileApp = "AppTest",
+            type = "json"
+        )
+        Log.d("AreaCode", "areadata 실행완료")
         return response
     }
 }

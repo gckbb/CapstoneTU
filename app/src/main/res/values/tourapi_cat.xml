@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="areaCode">
+        <item>서울</item>
+        <item>인천</item>
+        <item>대전</item>
+        <item>대구</item>
+        <item>광주</item>
+        <item>부산</item>
+        <item>울산</item>
+        <item>세종특별자치시</item>
+        <item>경기도</item>
+        <item>강원특별자치도</item>
+    </string-array>
+
+    <string-array name="areaCode_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>31</item>
+        <item>32</item>
+    </string-array>
+
+    <string-array name="contentId">
+        <item>관광지</item>
+        <item>문화시설</item>
+        <item>축제공연행사</item>
+        <item>여행코스</item>
+        <item>레포츠</item>
+        <item>숙박</item>
+        <item>쇼핑</item>
+        <item>음식점</item>
+    </string-array>
+
+    <string-array name="contentId_values">
+        <item>12</item>
+        <item>14</item>
+        <item>15</item>
+        <item>25</item>
+        <item>28</item>
+        <item>32</item>
+        <item>38</item>
+        <item>39</item>
+    </string-array>
+
+    <string-array name="contentTypeId">
+        12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점
+    </string-array>
+
     <string-array name = "category1">
         <item>자연</item>
         <item>인문(문화/예술/역사)</item>

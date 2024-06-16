@@ -52,6 +52,16 @@
         android:orientation="vertical">
 
         <Spinner
+            android:id="@+id/tourapi_spinner_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/tourapi_spinner_contentId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
             android:id="@+id/tourapi_spinner1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -86,7 +96,7 @@
             android:id="@+id/areaBased"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="저장된 음식점 초기화"
+            android:text="저장된 장소 초기화"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

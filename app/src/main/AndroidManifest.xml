@@ -63,7 +63,7 @@
             android:name=".TourApi.Detail_map_test"
             android:exported="false" />
         <activity
-            android:name=".TourApi.RestaurantDetailActivity"
+            android:name=".TourApi.RecommendDetailActivity"
             android:exported="false" />
         <activity
             android:name=".TourApi.TourApiActivity"
