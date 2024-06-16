@@ -6,11 +6,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.HashMap
 import com.example.kakaotest.DataModel.metaRoute.*
 import com.example.kakaotest.DataModel.tmap.*
-
+import retrofit2.await
+import retrofit2.awaitResponse
 
 
 class ApiAdapter2 {
-    fun apiRequest2(startX :Number,startY :Number,endX :Number,endY :Number) : MetaRoute?{
+    fun apiRequest2(startX :Number, startY :Number, endX :Number, endY :Number) : MetaRoute?{
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://apis.openapi.sk.com/transit/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -24,8 +25,10 @@ class ApiAdapter2 {
 
         val routeCall = apiService.getRoute(input)
         var totalTime : MetaRoute?
-        Log.d("ERROR",routeCall.execute().errorBody()?.string().toString())
-        totalTime = routeCall.execute().body()
+        val routeData = routeCall.execute()
+        Log.d("ERROR",routeData.errorBody()?.string().toString())
+        routeData.body()?.toString()?.let { Log.d("Plan", it) }
+        totalTime = routeData.body()
 
         return totalTime
     }

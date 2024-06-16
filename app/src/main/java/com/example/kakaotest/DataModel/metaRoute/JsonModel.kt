@@ -1,5 +1,8 @@
 package com.example.kakaotest.DataModel.metaRoute
 
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class JsonModel(
     val startX:String,
     val startY:String,

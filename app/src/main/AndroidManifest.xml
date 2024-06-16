@@ -28,15 +28,14 @@
             android:name=".CashBook.EditCashActivity"
             android:exported="false" />
         <activity
+            android:name=".Map.SingleMetaRoute"
+            android:exported="false" />
+        <activity
             android:name=".CashBook.CashSelectActivity"
             android:exported="false" />
         <activity
             android:name=".CashBook.CashBookActivity"
             android:exported="false" />
-        <activity
-            android:name=".CashBook.AfterSelectCashActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".Community.EditPostActivity"
             android:exported="false" />

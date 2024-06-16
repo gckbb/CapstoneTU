@@ -4,6 +4,7 @@ import com.example.kakaotest.DataModel.Date
 import com.example.kakaotest.DataModel.Place
 import com.example.kakaotest.DataModel.Time
 import com.example.kakaotest.DataModel.TravelPlan
+import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 
 class TravelPlanManager {
@@ -19,7 +20,8 @@ class TravelPlanManager {
         activityTime: Int? = null,
         startTime:Time? = null,
         restaurant : String? = null,
-        destination: List<SearchRouteData>? = null
+        destination: List<SearchRouteData>? = null,
+        destination2: List<SearchMetaData>? = null
     ) {
         where?.let { travelPlan.where = it }
         startDate?.let { travelPlan.startDate = it }
@@ -31,6 +33,7 @@ class TravelPlanManager {
         startTime?.let { travelPlan.startTime = it }
         restaurant?. let{travelPlan.restaurant = it}
         destination?.let { travelPlan.destinations = it }
+        destination2?.let { travelPlan.destinations2 = it }
     }
 
     fun getPlan(): TravelPlan {

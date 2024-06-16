@@ -12,11 +12,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.kakaotest.DataModel.TravelPlan
+import com.example.kakaotest.DataModel.metaRoute.*
 import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
+import com.google.gson.Gson
 import com.skt.tmap.TMapPoint
 import kotlinx.coroutines.launch
 import java.util.ArrayList
@@ -34,6 +36,7 @@ class RouteListActivity : AppCompatActivity() {
         val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
         val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
         val receivedFoodDataList = intent.getParcelableArrayListExtra<SearchData>("selectedFoodDataList")
+        val gson = Gson()
 
 
 
@@ -53,7 +56,7 @@ class RouteListActivity : AppCompatActivity() {
         val activityTime = travelPlan.activityTime
         var restaurant = travelPlan.restaurant
         if(restaurant == null) {
-            restaurant = "YES"
+            restaurant = "yes"
             Log.e("PLAN", "restaurant null error")
         }
 
@@ -72,24 +75,47 @@ class RouteListActivity : AppCompatActivity() {
         // 클릭 이벤트 설정
         path_1.setOnClickListener {
             val intent = Intent(this, FirstRoute::class.java)
-            val firstPlaceList =DayRoute(0)
-            intent.putExtra("firstList", firstPlaceList)
+            if(travelPlan.transportion == "버스") {
+                val firstPlaceList = gson.toJson(DayRoute2(0))
+                intent.putExtra("firstList2", firstPlaceList)
+            }
+            else {
+                val firstPlaceList = DayRoute(0)
+                intent.putExtra("firstList", firstPlaceList)
+            }
+            intent.putExtra("travelPlan",travelPlan)
+
             startActivity(intent)
 
         }
 
         path_2.setOnClickListener {
-            val secondPlaceList =DayRoute(1)
             val intent = Intent(this, SecondRoute::class.java)
+            if(travelPlan.transportion == "버스") {
+                val secondPlaceList = gson.toJson(DayRoute2(1))
+                intent.putExtra("SecondList2", secondPlaceList)
+            }
+            else {
+                val secondPlaceList = DayRoute(1)
+                intent.putExtra("SecondList", secondPlaceList)
+            }
+            intent.putExtra("travelPlan",travelPlan)
 
-            intent.putExtra("secondList",  secondPlaceList)
             startActivity(intent)
+
         }
         nextButton.setOnClickListener {
             val intent = Intent(this, ScheduleActivity::class.java)
 
-            for(i in 0 until dateRange+1) {
-                intent.putExtra("List${i+1}",routetest.printTotalRoute().getOrNull(i)?.dayRoute)
+            if(travelPlan.transportion == "버스") {
+                for(i in 0 until dateRange+1) {
+                    intent.putExtra("List${i+1}",gson.toJson(routetest.printTotalRoute2().getOrNull(i)))
+                }
+            }
+            else {
+                for(i in 0 until dateRange+1) {
+                    intent.putExtra("List${i+1}",routetest.printTotalRoute().getOrNull(i)?.dayRoute)
+                }
             }
 
             intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
@@ -116,8 +142,8 @@ class RouteListActivity : AppCompatActivity() {
                     //routetest.routeSet(receivedDataList!!, rentStartPoint,0)
                 }
                 else if(travelPlan.transportion == "버스") {
-                    //할당량문제로 테스트 부족함
-                    //routetest.routeSet(receivedDataList!!, receivedDataList!![0],1)
+                    routetest.routeSet(receivedDataList!!, receivedDataList!![0],1)
+                    routetest.routeStart2(dateRange, activityTime!!, 1, convertedFoodDataList!!,restaurant,1)
                 }
                 else if(travelPlan.transportion == "도보") { //도보 의미가없음...
                     routetest.routeSet(receivedDataList!!, receivedDataList!![0],2)
@@ -127,7 +153,10 @@ class RouteListActivity : AppCompatActivity() {
                 }
                 routetest.printTotalRoute()
                 Log.d("PLAN", "Total Route Printed")
-                updateListView()
+
+                if(travelPlan.transportion == "버스") updateListView2()
+                else updateListView()
+
             } catch (e: Exception) {
                 Log.e("CreatedRoute1", "Error: ${e.message}", e)
             }
@@ -153,10 +182,36 @@ class RouteListActivity : AppCompatActivity() {
         return  DayPlaceList
     }
 
+    private fun DayRoute2(day : Int): MetaDayRoute? {
+        val DayData = routetest.printTotalRoute2().getOrNull(day)
+        var DayPlaceList = LinkedList<SearchMetaData>()
+        if (DayData != null) {
+            // 첫 번째 날짜의 선택된 장소 리스트 가져오기
+            DayPlaceList = DayData!!.dayRoute!!
+            if ( DayPlaceList == null ||  DayPlaceList.isEmpty()) {
+                Log.e("PLAN", "selectedPlaceList is null or empty")
+            }
+        }else {
+            Log.e("PLAN", "No data available for the ${day+1}day")
+        }
+        Log.d("PLAN","${day+1}일차 선택장소 : $DayPlaceList")
+        return DayData
+    }
+
+
+
 
     //날짜별 총 이동시간 (초->시간 변환)  반환
     private fun totalTime(day: Int): Double { //time은 n일차의 총 이동시간  (eg. firstDayData.totalTime 첫 번째 날짜의 총 이동 시간)
         val DayData = routetest.printTotalRoute().getOrNull(day)
+        val totalTime =  DayData!!.totalTime.toDouble() / 3600
+        val totalHour : Double = String.format("%.1f", totalTime).toDouble()
+        Log.d("PLAN","${day+1}일차 총 이동예상 시간 : ${totalHour.toString()}")
+        return totalHour
+    }
+
+    private fun totalTime2(day: Int): Double { //time은 n일차의 총 이동시간  (eg. firstDayData.totalTime 첫 번째 날짜의 총 이동 시간)
+        val DayData = routetest.printTotalRoute2().getOrNull(day)
         val totalTime =  DayData!!.totalTime.toDouble() / 3600
         val totalHour : Double = String.format("%.1f", totalTime).toDouble()
         Log.d("PLAN","${day+1}일차 총 이동예상 시간 : ${totalHour.toString()}")
@@ -196,6 +251,42 @@ class RouteListActivity : AppCompatActivity() {
 
 
         totalTime_2.text = totalTime(1).toString() +"시간"
+
+
+
+    }
+
+    private fun updateListView2() {
+        val listView1 = findViewById<ListView>(R.id.listView1)
+        val listView2 = findViewById<ListView>(R.id.listView2)
+        val scrollView = findViewById<ScrollView>(R.id.scrollView)
+        val totalTime_1 = findViewById<TextView>(R.id.totalTime_1)
+        val totalTime_2 = findViewById<TextView>(R.id.totalTime_2)
+
+
+        val firstDayPlace = DayRoute2(0)!!.dayRoute.map { it.pointdata?.placeName?: "Unknown Place"}
+        val adapter1 = ArrayAdapter(this, android.R.layout.simple_list_item_1, firstDayPlace)
+        listView1.adapter = adapter1
+        listView1.setOnTouchListener { _, _ ->
+            scrollView.requestDisallowInterceptTouchEvent(true)
+            false
+        }
+
+
+        totalTime_1.text = totalTime2(0).toString() +"시간"
+
+
+
+        val SecondDayPlace = DayRoute2(1)!!.dayRoute.map { it.pointdata?.placeName ?: "Unknown Place"}
+        val adapter2 = ArrayAdapter(this, android.R.layout.simple_list_item_1, SecondDayPlace)
+        listView2.adapter = adapter2
+        listView2.setOnTouchListener { _, _ ->
+            scrollView.requestDisallowInterceptTouchEvent(true)
+            false
+        }
+
+
+        totalTime_2.text = totalTime2(1).toString() +"시간"
 
 
 

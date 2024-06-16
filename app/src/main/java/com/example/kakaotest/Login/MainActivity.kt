@@ -108,17 +108,17 @@ class MainActivity : AppCompatActivity() {
 
         //지도 생성 테스트 버튼
         binding.tmapViewbtn.setOnClickListener{
-            /*
+            var metaRoute: MetaRoute?
             thread{
-                val metaRoute: MetaRoute? = apiAdapter2.apiRequest2(
+                metaRoute = apiAdapter2.apiRequest2(
                     126.926493082645,37.6134436427887,
                     127.126936754911,37.5004198786564
                 )
                 Log.d("meta","meta is work")
 
             }
+            Log.d("Plan","plan")
 
-             */
 
         }
 

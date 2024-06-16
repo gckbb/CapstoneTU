@@ -19,6 +19,12 @@ class MakeRoute {
     private var routeList = LinkedList<SearchRouteData>()
     private var saveList = LinkedList<SearchRouteData>()
     private var dayRouteList = LinkedList<SearchRouteData>()
+
+    private var totalRouteList2 = LinkedList<MetaDayRoute>()
+    private var routeList2 = LinkedList<SearchMetaData>()
+    private var saveList2 = LinkedList<SearchMetaData>()
+    private var dayRouteList2 = LinkedList<SearchMetaData>()
+
     private val apiAdapter = ApiAdapter()
     private val apiAdapter2 = ApiAdapter2()
     private lateinit var startPoint: SelectedPlaceData
@@ -95,8 +101,8 @@ class MakeRoute {
                         }
                         val time = deferredData.await()?.metaData?.plan?.itineraries?.get(0)?.totalTime
                         if (time != null) {
-                            val routeData = SearchRouteData(selectedPlaceList[i], time!!)
-                            routeList.add(routeData!!)
+                            val routeData = SearchMetaData(deferredData.await()?.metaData!!,selectedPlaceList[i],time!!)
+                            routeList2.add(routeData!!)
                             println("time is $time for ${selectedPlaceList[i].placeName}")
                         } else {
                             Log.e(
@@ -107,13 +113,96 @@ class MakeRoute {
                     }
                 }
             }
-            routeList.removeAt(0)
-            saveList = routeList
+            if(type == 0 || type == 2) {
+                routeList.removeAt(0)
+                saveList = routeList
+            }
+            else if (type == 1) {
+                routeList2.removeAt(0)
+                saveList2 = routeList2
+            }
+
+
 
 
         } catch (e: Exception) {
             Log.e("PLAN", "routeSet - Exception in routeSet: ${e.toString()}")
             e.printStackTrace()
+        }
+    }
+
+    suspend fun routeStart2(totalDate: Int, maxDayTime: Int, stayTimePerPlace: Int, foodDataList: ArrayList<SelectedPlaceData>,restaurant:String,type:Int) { // 대중교통
+        coroutineScope {
+            try {
+                for (k in 0 until totalDate+1) {
+                    var totalTime: Double = 0.0 // 하루의 총 소요 시간
+                    var currentDayTime: Double = 0.0  // 현재까지 경로의 소요시간
+                    var remainingTime: Int = maxDayTime * 3600 // 남은 시간을 초 단위로 계산
+                    var lunchcheck = 0  // 점심 식사 여부 체크하는 변수
+
+                    dayRouteList2.add(SearchMetaData(null,startPoint,0))
+
+                    // 최단 시간 경로를 구하는 대신, 최대한 많은 장소를 방문하는 로직 추가
+                    while (routeList2.isNotEmpty() && currentDayTime + routeList2.first().time.toInt() <= remainingTime) {
+
+                        if (currentDayTime > 4 * 3600 && lunchcheck == 0 && restaurant=="yes") {  // 4인 이유는 am8로 생각하고 4시간 후인 12시를 점심시간이라고 가정함
+                            var minfood = 999999
+                            var mindata: MetaData? = null
+                            var minfoodindex:Int? = null
+
+                            for (i in 0 until foodDataList.size) {
+                                val temp = apiRequest2(
+                                    dayRouteList2.last.pointdata?.tpoint?.longitude!!, dayRouteList2.last.pointdata?.tpoint?.latitude!!,
+                                    foodDataList[i].tpoint.longitude, foodDataList[i].tpoint.latitude
+                                )
+                                // 최소거리보다 더 짧은 거리인 음식점
+                                if (temp!!.metaData?.plan?.itineraries?.get(0)?.totalTime!! < minfood) {
+                                    minfood = temp!!.metaData?.plan?.itineraries?.get(0)?.totalTime!!
+                                    mindata = temp.metaData
+                                    minfoodindex = i
+
+                                }
+                                Log.d("mindata", "$mindata")
+                            }
+
+                            mindata?.let {
+                                dayRouteList2.add(SearchMetaData(it,foodDataList[minfoodindex!!], minfood))
+                                currentDayTime += minfood + 3600 // 점심 시간 1시간 추가
+                                lunchcheck = 1
+                                foodDataList.removeAt(minfoodindex)
+                                Log.d("PLAN", "점심 장소 추가: ${dayRouteList2.last.pointdata?.placeName}, 거리: $minfood")
+                            }
+
+                            continue
+                        }
+                        var minIndex: SearchMetaData
+                        minIndex = findMinPoint2(dayRouteList2.last(),1)
+                        if(minIndex == null) {
+                            Log.d("Error","Route Start findMinPoint error ")
+                            break
+                        }
+
+                        if (currentDayTime + minIndex.time.toInt() > remainingTime) break
+                        if (!dayRouteList2.any { route -> route.pointdata?.placeName == minIndex.pointdata?.placeName }) { // 중복 체크
+                            dayRouteList2.add(minIndex) // 가장 적게 걸리는 장소 추가
+                            currentDayTime += minIndex.time.toInt() + 3600
+                            Log.d("PLAN", "다음 장소 추가: ${minIndex.pointdata?.placeName}, 거리: ${minIndex.time.toInt()}")
+                        }
+
+                    }
+
+                    // 총 이동 시간 계산 (이동 시간 + 체류 시간)
+                    totalTime = currentDayTime + stayTimePerPlace * (dayRouteList2.size - 1)
+
+                    // 현재 일자의 경로를 추가
+                    totalRouteList2.add(MetaDayRoute(totalTime, LinkedList(dayRouteList2)))
+
+                    // 현재 일자의 경로가 선택되면, dayRouteList를 초기화
+                    dayRouteList2.clear()
+                }
+            } catch (e: Exception) {
+                Log.e("PLAN", "routeStart - Exception: ${e.toString()}", e)
+            }
         }
     }
 
@@ -222,6 +311,47 @@ class MakeRoute {
         return minIndex
     }
 
+    suspend fun findMinPoint2(startRouteData: SearchMetaData, multi: Int): SearchMetaData { // 대중교통
+        var minIndex: Int = 0
+        var minTime: Int? = apiRequest2(
+            startRouteData.pointdata!!.tpoint.longitude,
+            startRouteData.pointdata.tpoint.latitude,
+            routeList2[0].pointdata!!.tpoint.longitude,
+            routeList2[0].pointdata!!.tpoint.latitude
+        )?.metaData?.plan?.itineraries?.get(0)?.totalTime
+        var tempTime: Int?
+
+        for (i in 1 until routeList2.count()) {
+            tempTime = routeList2[i].pointdata?.tpoint?.let {
+                apiRequest2(
+                    startRouteData.pointdata.tpoint.longitude,
+                    startRouteData.pointdata.tpoint.latitude,
+                    it.longitude, it.latitude
+                )?.metaData?.plan?.itineraries?.get(0)?.totalTime
+            }
+            if (tempTime == null || minTime == null) {
+                Log.d(ContentValues.TAG, "findMinPoint break")
+            } else if (minTime > tempTime) {
+                minIndex = i
+                minTime = tempTime
+            }
+        }
+        var tempData = apiRequest2(
+            startRouteData.pointdata.tpoint.longitude,
+            startRouteData.pointdata.tpoint.latitude,
+            routeList2[minIndex].pointdata?.tpoint?.longitude!!,
+            routeList2[minIndex].pointdata?.tpoint?.latitude!!
+        )
+        var minData: SearchMetaData
+        minData = SearchMetaData(
+            tempData?.metaData,
+            routeList2[minIndex].pointdata,
+            tempData?.metaData?.plan?.itineraries?.get(0)?.totalTime!!
+        )
+        routeList2.removeAt(minIndex)
+        return minData
+    }
+
     fun findInList(findData: SearchRouteData):Int {
         try {
             for (i in 0 until saveList.count()) {
@@ -269,6 +399,29 @@ class MakeRoute {
         }
 
         return totalRouteList
+    }
+
+    fun printTotalRoute2(): LinkedList<MetaDayRoute> {
+        try {
+            for (i in 0 until totalRouteList2.count()) {
+                println("${i + 1} Day")
+                for (k in 0 until (totalRouteList2[i].dayRoute?.count() ?: 0)) {
+                    val placeInfo = totalRouteList2[i].dayRoute?.get(k)
+                    Log.d("PLAN", placeInfo?.pointdata!!.placeName)
+                }
+
+                val hour = totalRouteList2[i].totalTime.toDouble() / 3600
+                // Log.d("PLAN","${i}일째 총 이동시간 : "+hour.toString())
+                val totalHour: Double = String.format("%.1f", hour).toDouble()
+                Log.d("PLAN", "${i + 1}일째 총 이동시간 : " + totalHour)
+                val totalTime = "총 이동시간 : ${totalHour} 시간"
+                // println(totalTime)
+            }
+        } catch (e: Exception) {
+            Log.e("PLAN", "getTotalRouteList - Exception: ${e.toString()}", e)
+        }
+
+        return totalRouteList2
     }
 
     fun printAllRoute() {
