@@ -67,6 +67,18 @@
         app:tint="@color/white"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabshare_CheckList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/Secondbutton"
+        android:src="@drawable/ic_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/fabAdd_CheckList"
+        app:tint="@color/white"
+        tools:ignore="SpeakableTextPresentCheck" />
+
 
     <FrameLayout
         android:id="@+id/fragment_container"

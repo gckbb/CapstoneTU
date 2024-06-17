@@ -48,6 +48,11 @@ class ListSelectActivity : AppCompatActivity() {
             }
         }
 
+        //뒤로가기 버튼
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         //선택 완료
         binding.lsBtn.setOnClickListener {
 

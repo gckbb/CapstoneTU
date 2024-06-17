@@ -27,6 +27,11 @@ class EditTodoActivity : AppCompatActivity() {
             binding.etTodoContent.setText(content)
         }
 
+        //뒤로가기 버튼
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         binding.btnSave.setOnClickListener {
             val title = binding.etTodoTitle.text.toString()
             val content = binding.etTodoContent.text.toString()
