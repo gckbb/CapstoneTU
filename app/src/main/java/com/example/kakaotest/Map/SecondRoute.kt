@@ -76,7 +76,6 @@ class SecondRoute : AppCompatActivity() {
 
                 for ((index, selectedPlace) in secondList!!.withIndex()) {
                     val tpoint = selectedPlace.pointdata!!.tpoint
-
                     //선택된 장소들 표시
                     if (tpoint != null) {
                         val marker = TMapMarkerItem().apply {
@@ -89,8 +88,6 @@ class SecondRoute : AppCompatActivity() {
                         }
                         tMapView.addTMapMarkerItem(marker)
                     }
-
-
                 }
 
 

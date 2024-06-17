@@ -79,6 +79,18 @@ class SingleMetaRoute : AppCompatActivity() {
                 )
                 tMapView.removeAllTMapPolyLine()
                 tMapView.removeAllTMapMarkerItem()
+                val tpoint = dayList?.dayRoute?.get(timeindex+1)?.pointdata
+
+                if(tpoint != null) {
+                    val marker = TMapMarkerItem().apply {
+                        id = tpoint.placeName
+                        setTMapPoint(TMapPoint(tpoint.tpoint.latitude, tpoint.tpoint.longitude))
+                        icon = iconList[11]
+                    }
+                    tMapView.addTMapMarkerItem(marker)
+                }
+
+                /*
                 for(i in timeindex until timeindex+2) {
                     val tpoint = dayList?.dayRoute?.get(i)?.pointdata
 
@@ -91,6 +103,7 @@ class SingleMetaRoute : AppCompatActivity() {
                         tMapView.addTMapMarkerItem(marker)
                     }
                 }
+                */
 
 
 
@@ -101,7 +114,7 @@ class SingleMetaRoute : AppCompatActivity() {
                         var polyLines: TMapPolyLine
                         var tpointList: ArrayList<TMapPoint> = ArrayList<TMapPoint>()
                         var tpointPathList: ArrayList<TMapPoint> = ArrayList<TMapPoint>()
-                        tpointList.add(TMapPoint(dayList.dayRoute?.get(timeindex+1)?.metaData?.requestParameters?.startX?.toDouble()!!,dayList.dayRoute?.get(timeindex+1)?.metaData?.requestParameters?.startY?.toDouble()!!))
+                        tpointList.add(TMapPoint(dayList.dayRoute?.get(timeindex+1)?.metaData?.requestParameters?.startY?.toDouble()!!,dayList.dayRoute?.get(timeindex+1)?.metaData?.requestParameters?.startX?.toDouble()!!))
                         var dashStyle: IntArray = IntArray(2)  // 점선
                         dashStyle[0] = 10
                         dashStyle[1] = 20
@@ -135,9 +148,9 @@ class SingleMetaRoute : AppCompatActivity() {
                                     else iconList[13]
                                 }
                                 tMapView.addTMapMarkerItem(marker)
-                                for(i in 1 until selectedRoute.passStopList?.stationList?.size!!) {
-                                    tpointList?.add(TMapPoint(selectedRoute.passStopList?.stationList.get(i).lat.toDouble(),selectedRoute.passStopList?.stationList.get(i).lon.toDouble()))
 
+                                    tpointList?.add(TMapPoint(selectedRoute.start?.lat?.toDouble()!!,selectedRoute.start?.lon?.toDouble()!!))
+                                        /*
                                         polyLines = tMapData.findPathDataWithType(
                                             TMapData.TMapPathType.CAR_PATH,
                                             TMapPoint(
@@ -151,19 +164,16 @@ class SingleMetaRoute : AppCompatActivity() {
                                         )
 
 
-                                 /*       tpointPathList.add(
-                                            TMapPoint(
-                                                selectedRoute.start?.lat?.toDouble()!!,
-                                                selectedRoute.start?.lon?.toDouble()!!
-                                            )
-                                        )
+                                         */
+
+
                                         val split =
-                                            selectedRoute.passShape?.lineString?.split(",", " ")
+                                            selectedRoute.passShape?.linestring?.split(",", " ")
                                         for (i in 0 until split?.size!! / 2) {
                                             tpointPathList.add(
                                                 TMapPoint(
-                                                    split.get(i * 2).toDouble(),
-                                                    split.get((i * 2) + 1).toDouble()
+                                                    split.get(i * 2+1).toDouble(),
+                                                    split.get((i * 2)).toDouble()
                                                 )
                                             )
                                         }
@@ -175,15 +185,15 @@ class SingleMetaRoute : AppCompatActivity() {
                                         )
                                         polyLines = TMapPolyLine("polylines${polylineindex}",tpointPathList)
 
-                                  */
 
 
-                                    if(selectedRoute.mode == "BUS") polyLines.setLineColor(Color.BLUE)
-                                    else polyLines.setLineColor(Color.GREEN)
+
+                                    if(selectedRoute.mode == "BUS"){polyLines.setLineColor(Color.BLUE)}
+                                    else{polyLines.setLineColor(Color.GREEN)}
                                     polyLines.pathEffect = dashStyle2
                                     tMapView.addTMapPolyLine(polyLines)
                                     polylineindex++
-                                }
+                                    tpointPathList.clear()
 
                             }
                         }
