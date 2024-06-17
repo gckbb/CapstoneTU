@@ -49,6 +49,11 @@ class TourApiActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_item
         )
 
+        //뒤로가기 버튼
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         tourapiSpinner_content.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(

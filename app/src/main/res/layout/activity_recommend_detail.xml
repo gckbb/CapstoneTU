@@ -223,9 +223,10 @@
                         android:layout_height="match_parent" />
 
                     <TableLayout
-                        android:id="@+id/tablerow_39"
+                        android:id="@+id/tablerow_food"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
 
                         <!-- 신용카드 가능 정보 -->
                         <TableRow
@@ -542,6 +543,1557 @@
 
                             <TextView
                                 android:id="@+id/text_lcnsno"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                    </TableLayout>
+
+
+
+                    <TableLayout
+                        android:id="@+id/tablerow_tour"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
+
+                        <!-- 세계문화유산유무 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/heritage1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="세계문화유산유무" />
+
+                            <TextView
+                                android:id="@+id/text_heritage1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 세계자연유산유무 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/heritage2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="세계자연유산유무" />
+
+                            <TextView
+                                android:id="@+id/text_heritage2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 세계기록유산유무 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/heritage3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="세계기록유산유무" />
+
+                            <TextView
+                                android:id="@+id/text_heritage3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 문의 및 안내 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/infocenter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="문의 및 안내" />
+
+                            <TextView
+                                android:id="@+id/text_infocenter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 개장일 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/opendate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="개장일" />
+
+                            <TextView
+                                android:id="@+id/text_opendate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 쉬는날 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/restdate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="쉬는날" />
+
+                            <TextView
+                                android:id="@+id/text_restdate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 체험안내 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/expguide"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="체험안내" />
+
+                            <TextView
+                                android:id="@+id/text_expguide"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 체험가능연령 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/expagerange"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="체험가능연령" />
+
+                            <TextView
+                                android:id="@+id/text_expagerange"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 수용인원 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/accomcount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="수용인원" />
+
+                            <TextView
+                                android:id="@+id/text_accomcount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 이용시기 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/useseason"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="이용시기" />
+
+                            <TextView
+                                android:id="@+id/text_useseason"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 이용시간 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/usetime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="이용시간" />
+
+                            <TextView
+                                android:id="@+id/text_usetime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 주차시설 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/parking"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="주차시설" />
+
+                            <TextView
+                                android:id="@+id/text_parking"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 유모차대여정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkbabycarriage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="유모차대여정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkbabycarriage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 애완동물동반가능정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkpet"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="애완동물동반가능정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkpet"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+
+                        <!-- 신용카드가능정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkcreditcard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="신용카드가능정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkcreditcard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <TableLayout
+                        android:id="@+id/tablerow_culture"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
+
+                        <!-- 신용카드가능정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkcreditcardculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="신용카드가능정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkcreditcardculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 유모차대여정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkbabycarriageculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="유모차대여정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkbabycarriageculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 애완동물동반가능정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkpetculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="애완동물동반가능정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkpetculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 할인정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/discountinfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="할인정보" />
+
+                            <TextView
+                                android:id="@+id/text_discountinfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 문의및안내 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/infocenterculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="문의및안내" />
+
+                            <TextView
+                                android:id="@+id/text_infocenterculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 주차시설 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/parkingculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="주차시설" />
+
+                            <TextView
+                                android:id="@+id/text_parkingculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 주차요금 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/parkingfee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="주차요금" />
+
+                            <TextView
+                                android:id="@+id/text_parkingfee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 쉬는날 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/restdateculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="쉬는날" />
+
+                            <TextView
+                                android:id="@+id/text_restdateculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 이용요금 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/usefee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="이용요금" />
+
+                            <TextView
+                                android:id="@+id/text_usefee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 이용시간 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/usetimeculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="이용시간" />
+
+                            <TextView
+                                android:id="@+id/text_usetimeculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 규모 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/scale"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="규모" />
+
+                            <TextView
+                                android:id="@+id/text_scale"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 관람소요시간 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/spendtime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="관람소요시간" />
+
+                            <TextView
+                                android:id="@+id/text_spendtime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 수용인원 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/accomcountculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="수용인원" />
+
+                            <TextView
+                                android:id="@+id/text_accomcountculture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                    </TableLayout>
+
+
+                    <TableLayout
+                        android:id="@+id/tablerow_festival"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
+
+                        <!-- 주최자정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/sponsor1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="주최자정보" />
+
+                            <TextView
+                                android:id="@+id/text_sponsor1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 주최자연락처 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/sponsor1tel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="주최자연락처" />
+
+                            <TextView
+                                android:id="@+id/text_sponsor1tel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 주관사정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/sponsor2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="주관사정보" />
+
+                            <TextView
+                                android:id="@+id/text_sponsor2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 주관사연락처 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/sponsor2tel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="주관사연락처" />
+
+                            <TextView
+                                android:id="@+id/text_sponsor2tel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 행사종료일 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/eventenddate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="행사종료일" />
+
+                            <TextView
+                                android:id="@+id/text_eventenddate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 공연시간 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/playtime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="공연시간" />
+
+                            <TextView
+                                android:id="@+id/text_playtime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 행사장소 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/eventplace"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="행사장소" />
+
+                            <TextView
+                                android:id="@+id/text_eventplace"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 행사홈페이지 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/eventhomepage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="행사홈페이지" />
+
+                            <TextView
+                                android:id="@+id/text_eventhomepage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 관람가능연령 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/agelimit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="관람가능연령" />
+
+                            <TextView
+                                android:id="@+id/text_agelimit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 행사장위치안내 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/placeinfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="행사장위치안내" />
+
+                            <TextView
+                                android:id="@+id/text_placeinfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 예매처 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/bookingplace"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="예매처" />
+
+                            <TextView
+                                android:id="@+id/text_bookingplace"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 부대행사 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/subevent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="부대행사" />
+
+                            <TextView
+                                android:id="@+id/text_subevent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 행사프로그램 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/program"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="행사프로그램" />
+
+                            <TextView
+                                android:id="@+id/text_program"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 행사시작일 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/eventstartdate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="행사시작일" />
+
+                            <TextView
+                                android:id="@+id/text_eventstartdate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 이용요금 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/usetimefestival"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="이용요금" />
+
+                            <TextView
+                                android:id="@+id/text_usetimefestival"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 할인정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/discountinfofestival"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="할인정보" />
+
+                            <TextView
+                                android:id="@+id/text_discountinfofestival"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 관람소요시간 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/spendtimefestival"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="관람소요시간" />
+
+                            <TextView
+                                android:id="@+id/text_spendtimefestival"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 축제등급 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/festivalgrade"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="축제등급" />
+
+                            <TextView
+                                android:id="@+id/text_festivalgrade"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                    </TableLayout>
+
+
+                    <TableLayout
+                        android:id="@+id/tablerow_leports"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
+
+                        <!-- 개장기간 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/openperiod"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="개장기간" />
+
+                            <TextView
+                                android:id="@+id/text_openperiod"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 예약안내 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/reservation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="예약안내" />
+
+                            <TextView
+                                android:id="@+id/text_reservation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 문의및안내 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/infocenterleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="문의및안내" />
+
+                            <TextView
+                                android:id="@+id/text_infocenterleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 규모 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/scaleleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="규모" />
+
+                            <TextView
+                                android:id="@+id/text_scaleleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 수용인원 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/accomcountleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="수용인원" />
+
+                            <TextView
+                                android:id="@+id/text_accomcountleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 쉬는날 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/restdateleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="쉬는날" />
+
+                            <TextView
+                                android:id="@+id/text_restdateleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 이용시간 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/usetimeleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="이용시간" />
+
+                            <TextView
+                                android:id="@+id/text_usetimeleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 입장료 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/usefeeleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="입장료" />
+
+                            <TextView
+                                android:id="@+id/text_usefeeleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 체험가능연령 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/expagerangeleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="체험가능연령" />
+
+                            <TextView
+                                android:id="@+id/text_expagerangeleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 주차시설 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/parkingleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="주차시설" />
+
+                            <TextView
+                                android:id="@+id/text_parkingleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 주차요금 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/parkingfeeleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="주차요금" />
+
+                            <TextView
+                                android:id="@+id/text_parkingfeeleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 유모차대여정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkbabycarriageleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="유모차대여정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkbabycarriageleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 애완동물동반가능정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkpetleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="애완동물동반가능정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkpetleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 신용카드가능정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkcreditcardleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="신용카드가능정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkcreditcardleports"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                    </TableLayout>
+
+
+                    <TableLayout
+                        android:id="@+id/tablerow_shopping"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
+
+                        <!-- 판매품목 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/saleitem"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="판매품목" />
+
+                            <TextView
+                                android:id="@+id/text_saleitem"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 판매품목별가격 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/saleitemcost"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="판매품목별가격" />
+
+                            <TextView
+                                android:id="@+id/text_saleitemcost"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 장서는날 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/fairday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="장서는날" />
+
+                            <TextView
+                                android:id="@+id/text_fairday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 개장일 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/opendateshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="개장일" />
+
+                            <TextView
+                                android:id="@+id/text_opendateshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 매장안내 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/shopguide"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="매장안내" />
+
+                            <TextView
+                                android:id="@+id/text_shopguide"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 문화센터바로가기 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/culturecenter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="문화센터바로가기" />
+
+                            <TextView
+                                android:id="@+id/text_culturecenter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 화장실설명 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/restroom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="화장실설명" />
+
+                            <TextView
+                                android:id="@+id/text_restroom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 문의및안내 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/infocentershopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="문의및안내" />
+
+                            <TextView
+                                android:id="@+id/text_infocentershopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 규모 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/scaleshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="규모" />
+
+                            <TextView
+                                android:id="@+id/text_scaleshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 쉬는날 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/restdateshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="쉬는날" />
+
+                            <TextView
+                                android:id="@+id/text_restdateshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 주차시설 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/parkingshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="주차시설" />
+
+                            <TextView
+                                android:id="@+id/text_parkingshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 유모차대여정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkbabycarriageshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="유모차대여정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkbabycarriageshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 애완동물동반가능정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkpetshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="애완동물동반가능정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkpetshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 신용카드가능정보 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/chkcreditcardshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="신용카드가능정보" />
+
+                            <TextView
+                                android:id="@+id/text_chkcreditcardshopping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="내용을 입력하세요" />
+                        </TableRow>
+
+                        <!-- 영업시간 -->
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/opentime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="영업시간" />
+
+                            <TextView
+                                android:id="@+id/text_opentime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="8dp"
