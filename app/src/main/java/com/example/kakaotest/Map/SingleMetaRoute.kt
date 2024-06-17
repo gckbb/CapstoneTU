@@ -79,6 +79,18 @@ class SingleMetaRoute : AppCompatActivity() {
                 )
                 tMapView.removeAllTMapPolyLine()
                 tMapView.removeAllTMapMarkerItem()
+                val tpoint = dayList?.dayRoute?.get(timeindex+1)?.pointdata
+
+                if(tpoint != null) {
+                    val marker = TMapMarkerItem().apply {
+                        id = tpoint.placeName
+                        setTMapPoint(TMapPoint(tpoint.tpoint.latitude, tpoint.tpoint.longitude))
+                        icon = iconList[11]
+                    }
+                    tMapView.addTMapMarkerItem(marker)
+                }
+
+                /*
                 for(i in timeindex until timeindex+2) {
                     val tpoint = dayList?.dayRoute?.get(i)?.pointdata
 
@@ -91,6 +103,7 @@ class SingleMetaRoute : AppCompatActivity() {
                         tMapView.addTMapMarkerItem(marker)
                     }
                 }
+                */
 
 
 
