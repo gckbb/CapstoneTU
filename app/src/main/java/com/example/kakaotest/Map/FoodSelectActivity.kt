@@ -121,29 +121,6 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
         }
 
 
-        // 클릭 이벤트 설정
-        tMapView.setOnClickListenerCallback(object : TMapView.OnClickListenerCallback {
-            override fun onPressDown( // 터치함
-                p0: java.util.ArrayList<TMapMarkerItem>?,
-                p1: java.util.ArrayList<TMapPOIItem>?,
-                p2: TMapPoint?,
-                p3: PointF?
-            ) {
-                Toast.makeText(this@FoodSelectActivity, "onPressDown", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onPressUp( // 떨어짐
-                p0: java.util.ArrayList<TMapMarkerItem>?,
-                p1: java.util.ArrayList<TMapPOIItem>?,
-                p2: TMapPoint?,
-                p3: PointF?
-            ) {
-                Toast.makeText(this@FoodSelectActivity, "onPressUp", Toast.LENGTH_SHORT).show()
-            }
-        })
-
-
-
 
         // Map 로딩 완료 리스너 설정
         tMapView.setOnMapReadyListener {
