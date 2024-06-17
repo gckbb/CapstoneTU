@@ -90,14 +90,14 @@ class RouteListActivity : AppCompatActivity() {
         }
 
         path_2.setOnClickListener {
-            val intent = Intent(this, SecondRoute::class.java)
+            val intent = Intent(this, FirstRoute::class.java)
             if(travelPlan.transportion == "버스") {
                 val secondPlaceList = gson.toJson(DayRoute2(1))
-                intent.putExtra("SecondList2", secondPlaceList)
+                intent.putExtra("firstList2", secondPlaceList)
             }
             else {
                 val secondPlaceList = DayRoute(1)
-                intent.putExtra("SecondList", secondPlaceList)
+                intent.putExtra("firstList", secondPlaceList)
             }
             intent.putExtra("travelPlan",travelPlan)
 

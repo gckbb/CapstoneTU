@@ -246,13 +246,13 @@ class ScheduleActivity : AppCompatActivity() {
         }
 
         binding.path2.setOnClickListener {
-            val intent = Intent(this, SecondRoute::class.java)
+            val intent = Intent(this, FirstRoute::class.java)
             if(travelPlan.transportion == "버스") {
                 val secondPlaceList = gson.toJson(dayRouteList2[1])
-                intent.putExtra("secondList2", secondPlaceList)
+                intent.putExtra("firstList2", secondPlaceList)
             }
             else {
-                intent.putExtra("secondList",  dayRouteList[1])
+                intent.putExtra("firstList",  dayRouteList[1])
             }
             intent.putExtra("travelPlan",travelPlan)
             startActivity(intent)

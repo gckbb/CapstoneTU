@@ -193,7 +193,7 @@ class SingleMetaRoute : AppCompatActivity() {
                                     polyLines.pathEffect = dashStyle2
                                     tMapView.addTMapPolyLine(polyLines)
                                     polylineindex++
-
+                                    tpointPathList.clear()
 
                             }
                         }
