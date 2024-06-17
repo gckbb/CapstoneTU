@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 
 data class PassShape(
-    val lineString:String?
+    val linestring:String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(parcel.readString()) {
     }
@@ -16,7 +16,7 @@ data class PassShape(
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(lineString)
+        dest.writeString(linestring)
     }
 
     companion object CREATOR : Parcelable.Creator<PassShape> {
