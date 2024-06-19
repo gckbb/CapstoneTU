@@ -15,6 +15,7 @@ data class Legs(
     val distance:Int,
     val start:Start?,
     val end:End?,
+    val route:String?,
     val steps: List<Steps>?,
     val routeColor: String?,
     val routeId: String?,
@@ -32,6 +33,7 @@ data class Legs(
         parcel.readInt(),
         parcel.readParcelable(Start::class.java.classLoader),
         parcel.readParcelable(End::class.java.classLoader),
+        parcel.readString(),
         parcel.createTypedArrayList(Steps.CREATOR),
         parcel.readString(),
         parcel.readString(),
@@ -50,6 +52,7 @@ data class Legs(
         parcel.writeInt(distance)
         parcel.writeParcelable(start, flags)
         parcel.writeParcelable(end, flags)
+        parcel.writeString(route)
         parcel.writeParcelableList(steps, flags)
         parcel.writeString(routeColor)
         parcel.writeString(routeId)
