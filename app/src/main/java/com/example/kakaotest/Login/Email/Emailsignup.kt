@@ -27,24 +27,14 @@ class Emailsignup : AppCompatActivity() {
 
         // UI 요소 초기화
 
-
         val sign_email: EditText = findViewById<EditText>(R.id.email_email)
         val sign_pw = findViewById<EditText>(R.id.email_pw)
         val sign_pw_check = findViewById<EditText>(R.id.emailpw_check)
 
         val joinBtn = findViewById<Button>(R.id.email_signup_button)
 
-
-
-
         var firestore : FirebaseFirestore? = null
         firestore = FirebaseFirestore.getInstance()
-
-
-
-
-
-
 
 
         // 이메일 회원가입

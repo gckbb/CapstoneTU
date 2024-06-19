@@ -19,29 +19,29 @@ class CAdapter(private var itemList: ArrayList<CheckListData>): RecyclerView.Ada
     private val myRef: DatabaseReference = database.reference.child("checklist")
     val dbTool = CheckListDB()
 
-    init {
-        // Firebase Realtime Database에서 데이터를 가져와서 itemList에 추가
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                itemList.clear()
-                for (itemSnapshot in snapshot.children) {
-                    val listName = itemSnapshot.child("listName").getValue(String::class.java)
-                    val todoTimestamp =
-                        itemSnapshot.child("todoTimestamp").getValue(String::class.java)
-                    listName?.let { name ->
-                        todoTimestamp?.let { timestamp ->
-                            itemList.add(CheckListData(name, timestamp))
-                        }
-                    }
-                }
-                notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // 데이터 읽기 실패 시 처리
-            }
-        })
-    }
+//    init {
+//        // Firebase Realtime Database에서 데이터를 가져와서 itemList에 추가
+//        myRef.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                itemList.clear()
+//                for (itemSnapshot in snapshot.children) {
+//                    val listName = itemSnapshot.child("listName").getValue(String::class.java)
+//                    val todoTimestamp =
+//                        itemSnapshot.child("todoTimestamp").getValue(String::class.java)
+//                    listName?.let { name ->
+//                        todoTimestamp?.let { timestamp ->
+//                            itemList.add(CheckListData(name, timestamp))
+//                        }
+//                    }
+//                }
+//                notifyDataSetChanged()
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                // 데이터 읽기 실패 시 처리
+//            }
+//        })
+//    }
 
     inner class CheckListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 

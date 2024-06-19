@@ -74,6 +74,8 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
         }
     }
+    //로그아웃 버튼
+
 
 
     //구글 로그인
@@ -107,6 +109,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        val logoutButton = findViewById<Button>(R.id.logout_button)
+        logoutButton.setOnClickListener {
+            auth.signOut() // Firebase 로그아웃
+            googleSignInClient.signOut() // 구글 로그아웃
+            UserApiClient.instance.logout { error -> // 카카오 로그아웃
+                if (error != null) {
+                    Log.e(TAG, "카카오 로그아웃 실패", error)
+                } else {
+                    Log.i(TAG, "카카오 로그아웃 성공")
+                }
+            }
+
+            Toast.makeText(this,"로그아웃 성공",Toast.LENGTH_LONG).show()
+            // 로그아웃 후 로그인 화면으로 이동
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish() // 현재 액티비티 종료
+        }
 
         //지도 생성 테스트 버튼
         binding.tmapViewbtn.setOnClickListener{
@@ -239,8 +260,9 @@ class MainActivity : AppCompatActivity() {
                                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                                 SavedUser().saveUserDataToSharedPreferences(this, document.id)
                                 Toast.makeText(this, "저장된 document Id = $document.id", Toast.LENGTH_SHORT).show()
+                                Log.d("usercheck", "${auth.currentUser?.email}")
                                 // 로그인 성공 후 홈 화면으로 이동
-                                val nextIntent = Intent(this, MapActivity::class.java)
+                                val nextIntent = Intent(this, MainActivity::class.java)
                                 startActivity(nextIntent)
                             } else {
                                 // 비밀번호가 일치하지 않는 경우

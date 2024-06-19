@@ -6,5 +6,5 @@ data class CheckListData(
     val listName: String = "",
     val todoTimestamp: String = "",
     val sharecode: String = "",
+    val userIds: MutableList<String> = mutableListOf()
 ):Serializable
- //intent로 넘기기 위해 상속

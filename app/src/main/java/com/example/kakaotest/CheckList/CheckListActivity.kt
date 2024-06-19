@@ -1,29 +1,24 @@
 package com.example.kakaotest.CheckList
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kakaotest.CheckList.OptionSelectFragment.OnListSelectListener
-import com.example.kakaotest.Utility.Adapter.CAdapter
 import com.example.kakaotest.DataModel.CheckList.CheckListDB
 import com.example.kakaotest.DataModel.CheckList.CheckListData
 import com.example.kakaotest.R
+import com.example.kakaotest.Utility.Adapter.CAdapter
 import com.example.kakaotest.databinding.ActivityCheckListBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 interface DataPassListener {
     fun onDataPassed(listTitle: String, currentDate: String, sNum: Int)
@@ -32,10 +27,9 @@ interface DataPassListener {
 class CheckListActivity : AppCompatActivity(), DataPassListener {
     private lateinit var binding: ActivityCheckListBinding
     private lateinit var cadapter: CAdapter
-    val itemList = ArrayList<CheckListData>()
-    val dbTool = CheckListDB()
+    private val itemList = ArrayList<CheckListData>()
+    private val dbTool = CheckListDB()
     private var isFragmentVisible = false
-
     private var optionSelectFragment: OptionSelectFragment? = null
 
     // Firebase 초기화
@@ -50,18 +44,15 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
         val view = binding.root
         setContentView(view)
 
-        val rv_checklist = findViewById<RecyclerView>(R.id.rvCheckList)
-        // 갱신
+        // RecyclerView 초기화
+        val rvChecklist = findViewById<RecyclerView>(R.id.rvCheckList)
         cadapter = CAdapter(itemList)
-        cadapter.notifyDataSetChanged()
-        // 어댑터
-        rv_checklist.adapter = cadapter
-        rv_checklist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rvChecklist.adapter = cadapter
+        rvChecklist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        // 이미 생성된 리스트 선택하면 해당 체크리스트 화면으로 가야함
+        // 어댑터 아이템 클릭 리스너 설정
         cadapter.setItemClickListener(object : CAdapter.ItemClickListener {
             override fun onClick(view: View, position: Int, titleName: String) {
-                Toast.makeText(this@CheckListActivity, "$titleName", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@CheckListActivity, AfterSelectListActivity::class.java).apply {
                     putExtra("titleName", titleName)
                 }
@@ -76,13 +67,13 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
             }
         })
 
-        // 리스트 생성 누르면 여행 분류 선택
+        // 리스트 생성 버튼 클릭 리스너
         binding.fabAddCheckList.setOnClickListener {
             val fragmentManager = supportFragmentManager
             if (optionSelectFragment != null && isFragmentVisible) {
                 fragmentManager.beginTransaction().remove(optionSelectFragment!!).commit()
                 isFragmentVisible = false
-            } else if (optionSelectFragment == null || !isFragmentVisible) {
+            } else {
                 optionSelectFragment = OptionSelectFragment()
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, optionSelectFragment!!)
@@ -95,22 +86,14 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
             showShareCodeDialog()
         }
 
-        // 뒤로가기 버튼
         binding.backBtn.setOnClickListener {
             finish()
         }
+    }
 
-        // 여행 분류 다녀온 후
-        val requestActivity =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                if (it.resultCode == RESULT_OK) {
-                    val data = it.data
-                    val listTitle = data?.getStringExtra("listTitle")
-                    val currentDate = data?.getStringExtra("currentDate")
-                    val sNum = data?.getIntExtra("sNum", 0)
-                    onDataPassed(listTitle!!, currentDate!!, sNum!!)
-                }
-            }
+    override fun onResume() {
+        super.onResume()
+        loadUserCheckLists()
     }
 
     override fun onDataPassed(listTitle: String, currentDate: String, sNum: Int) {
@@ -121,9 +104,10 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
 
         // 공유 코드 생성
         val shareCode = generateSharingCode(6)
+        val userId = auth.currentUser?.email ?: return // 현재 사용자 ID 가져오기
 
         // 체크리스트 생성
-        val newList = CheckListData(listTitle, currentDate, shareCode)
+        val newList = CheckListData(listTitle, currentDate, shareCode, mutableListOf(userId))
 
         // Firebase Database에 체크리스트 저장
         dbReference.child(listTitle).setValue(newList)
@@ -137,7 +121,6 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
                 Toast.makeText(this, "목록 생성 실패", Toast.LENGTH_SHORT).show()
             }
 
-        // 리스트 이름, 생성 일자 넣어서 목록 일단 생성
         dbTool.initCheckList(listTitle, currentDate)
         when (sNum) {
             1 -> dbTool.sNum1(listTitle)
@@ -147,7 +130,7 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
         Toast.makeText(this, "목록 생성 완료", Toast.LENGTH_SHORT).show()
     }
 
-    fun showShareCodeDialog() {
+    private fun showShareCodeDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("공유 코드 입력")
 
@@ -167,7 +150,7 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
         builder.show()
     }
 
-    fun accessCheckListViaShareCode(shareCode: String) {
+    private fun accessCheckListViaShareCode(shareCode: String) {
         val userId = auth.currentUser?.uid ?: return
         firestore.collection("checklists")
             .whereEqualTo("sharecode", shareCode)
@@ -178,6 +161,11 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
                 } else {
                     for (document in documents) {
                         val checkList = document.toObject(CheckListData::class.java)
+                        // 사용자 ID 추가
+                        if (!checkList.userIds.contains(userId)) {
+                            checkList.userIds.add(userId)
+                            firestore.collection("checklists").document(checkList.listName).set(checkList)
+                        }
                         Toast.makeText(this, "체크리스트: ${checkList.listName}에 접근합니다.", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, AfterSelectListActivity::class.java).apply {
                             putExtra("titleName", checkList.listName)
@@ -193,9 +181,7 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
 
     private fun generateSharingCode(length: Int): String {
         val allowedChars = ('A'..'Z') + ('0'..'9') // 허용된 문자 범위
-        return (1..length)
-            .map { allowedChars.random() }
-            .joinToString("")
+        return (1..length).map { allowedChars.random() }.joinToString("")
     }
 
     private fun loadUserCheckLists() {
@@ -214,10 +200,5 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
             .addOnFailureListener {
                 Toast.makeText(this, "체크리스트 불러오기 실패", Toast.LENGTH_SHORT).show()
             }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        loadUserCheckLists()
     }
 }
