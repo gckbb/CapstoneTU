@@ -332,6 +332,35 @@ class ScheduleActivity : AppCompatActivity() {
             }
         }
 
+        if(travelPlan.transportion == "버스") {
+            if (dayRouteList2[1] != null) {
+                singleRoute2(time2_1, 0, dayRouteList2[1])
+                singleRoute2(time2_2, 1, dayRouteList2[1])
+                singleRoute2(time2_3, 2, dayRouteList2[1])
+                singleRoute2(time2_4, 3, dayRouteList2[1])
+                singleRoute2(time2_5, 4, dayRouteList2[1])
+                singleRoute2(time2_6, 5, dayRouteList2[1])
+                singleRoute2(time2_7, 6, dayRouteList2[1])
+            } else {
+                // firstList가 null일 때의 처리
+                Log.e("MainActivity", "secondList is null")
+            }
+        }
+        else {
+            if (dayRouteList[1] != null) {
+                singleRoute(time2_1, 0, dayRouteList[1])
+                singleRoute(time2_2, 1, dayRouteList[1])
+                singleRoute(time2_3, 2, dayRouteList[1])
+                singleRoute(time2_4, 3, dayRouteList[1])
+                singleRoute(time2_5, 4, dayRouteList[1])
+                singleRoute(time2_6, 5, dayRouteList[1])
+                singleRoute(time2_7, 6, dayRouteList[1])
+            } else {
+                // firstList가 null일 때의 처리
+                Log.e("MainActivity", "secondList is null")
+            }
+        }
+
         //singleRouteShow(firstList)
 
         binding.backBtn.setOnClickListener {
