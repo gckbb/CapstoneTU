@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="80dp"
+    android:layout_height="70dp"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+    <ImageButton
+        android:id="@+id/delete"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/out"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+    <ImageView
+        android:id="@+id/placeImage"
+        android:layout_width="66dp"
+        android:layout_height="45dp"
+
+        android:layout_marginTop="5dp"
+        tools:ignore="MissingConstraints" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@id/placename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="2dp"
+        android:hint="장소명"/>
+
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CreateProfileTheme" parent="ThemeOverlay.MaterialComponents.Dialog">
+
+        <!-- 전체적인ㄴ 배경색 -->
+        <item name="android:windowBackground">@color/white</item>
+        <!-- 상단 Title 배경색 -->
+        <item name="colorAccent">@color/button</item>
+
+        <!-- 선택한 날짜 배경 색 -->
+        <item name="colorControlActivated">@color/button</item>
+
+        <!-- Highlight item color-->
+        <item name="colorControlHighlight">@color/black</item>
+
+
+
+        <!--Calender Background color -->
+        <item name="android:colorBackground">@color/white</item>
+
+        <!-- Week TextColor-->
+        <item name="android:textColorSecondary">@color/black</item>
+
+        <!-- Calender Number color arrow color (< >) -->
+        <item name="android:textColorPrimary">@color/black</item>
+
+        <!--day , month TextColor-->
+        <item name="android:textColorPrimaryInverse">@color/black</item>
+
+        <!-- year-->
+        <item name="android:textColorSecondaryInverse">@color/black</item>
+
+        <!-- 취소/확인버튼 색상 -->
+        <item name="android:textColor">@color/button</item>
+
+
+
+
+    </style>
+
+
+    <style name="CustomAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/button</item>
+    </style>
+
+</resources>

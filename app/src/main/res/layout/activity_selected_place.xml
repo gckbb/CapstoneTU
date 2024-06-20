@@ -1,0 +1,95 @@
+<!-- res/layout/activity_selected_place.xml -->
+
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/ic_back"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <Button
+            android:id="@+id/nextbutton"
+            android:layout_width="83dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="250dp"
+            android:text="다음"
+            android:background="@drawable/buttonshape1"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
+    </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="90dp"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
+
+                <ListView
+                    android:id="@+id/placeListView"
+                    android:layout_width="371dp"
+                    android:layout_height="500dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edittext3"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="저장된 장소들" />
+
+                <ListView
+                    android:id="@+id/foundListView"
+                    android:layout_width="371dp"
+                    android:layout_height="300dp"
+                    android:layout_gravity="center_horizontal"
+
+                    android:background="@drawable/edittext3"
+                  
+                    android:padding="8dp"
+                    android:layout_marginBottom="30dp">
+
+                </ListView>
+            </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
+
+
+
+</FrameLayout>

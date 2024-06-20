@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="areaCode">
+        <item>지역선택</item>
+        <item>서울</item>
+        <item>인천</item>
+        <item>대전</item>
+        <item>대구</item>
+        <item>광주</item>
+        <item>부산</item>
+        <item>울산</item>
+        <item>세종특별자치시</item>
+        <item>경기도</item>
+        <item>강원특별자치도</item>
+    </string-array>
+
+    <string-array name="areaCode_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>31</item>
+        <item>32</item>
+    </string-array>
+
+    <string-array name="contentId">
+        <item>장소종류</item>
+        <item>관광지</item>
+        <item>문화시설</item>
+        <item>축제공연행사</item>
+        <item>레포츠</item>
+        <item>쇼핑</item>
+        <item>음식</item>
+    </string-array>
+
+    <string-array name="contentId_values">
+        <item>0</item>
+        <item>12</item>
+        <item>14</item>
+        <item>15</item>
+        <item>28</item>
+        <item>38</item>
+        <item>39</item>
+    </string-array>
+
+<!--    <string-array name="contentTypeId">-->
+<!--        12:관광지, 14:문화시설, 15:축제공연행사,  28:레포츠, 38:쇼핑, 39:음식점-->
+<!--    </string-array>-->
+
+    <string-array name = "category1_1">
+        <item>자연</item>
+        <item>인문(문화/예술/역사)</item>
+    </string-array>
+    <string-array name="category1_2">
+        <item>인문(문화/예술/역사)</item>
+    </string-array>
+    <string-array name="category1_3">
+        <item>인문(문화/예술/역사)</item>
+    </string-array>
+    <string-array name="category1_4">
+        <item>레포츠</item>
+    </string-array>
+    <string-array name="category1_5">
+        <item>쇼핑</item>
+    </string-array>
+    <string-array name="category1_6">
+        <item>음식</item>
+    </string-array>
+
+    <string-array name = "category_A01">
+        <item>자연관광지</item>
+        <item>관광자원</item>
+    </string-array>
+
+    <string-array name = "category_A0101">
+        <item>국립공원</item>
+        <item>도립공원</item>
+        <item>군립공원</item>
+        <item>산</item>
+        <item>자연생태관광지</item>
+        <item>자연휴양림</item>
+        <item>수목원</item>
+        <item>폭포</item>
+        <item>계곡</item>
+        <item>약수터</item>
+        <item>해안절경</item>
+        <item>해수욕장</item>
+        <item>섬</item>
+        <item>항구/포구</item>
+        <item>등대</item>
+        <item>호수</item>
+        <item>강</item>
+        <item>동굴</item>
+    </string-array>
+
+    <string-array name = "category_A0101_values">
+        <item>A01010100</item><!--> 국립공원-->
+        <item>A01010200</item><!--> 도립공원-->
+        <item>A01010300</item><!--> 군립공원-->
+        <item>A01010400</item><!--> 산-->
+        <item>A01010500</item><!--> 자연생태관광지-->
+        <item>A01010600</item><!--> 자연휴양림-->
+        <item>A01010700</item><!--> 수목원-->
+        <item>A01010800</item><!--> 폭포-->
+        <item>A01010900</item><!--> 계곡-->
+        <item>A01011000</item><!--> 약수터-->
+        <item>A01011100</item><!--> 해안절경-->
+        <item>A01011200</item><!--> 해수욕장-->
+        <item>A01011300</item><!--> 섬-->
+        <item>A01011400</item><!--> 항구/포구-->
+        <item>A01011600</item><!--> 등대-->
+        <item>A01011700</item><!--> 호수-->
+        <item>A01011800</item><!--> 강-->
+        <item>A01011900</item><!--> 동굴-->
+    </string-array>
+
+    <string-array name = "category_A0102">
+        <item>희귀동,식물</item>
+        <item>기암관석</item>
+    </string-array>
+
+    <string-array name = "category_A0102_values">
+        <item>A01020100</item><!--> 희귀동,식물-->
+        <item>A01020200</item><!--> 기암관석-->
+    </string-array>
+
+    <string-array name = "category_A02_1">
+        <item>역사관광지</item>
+        <item>휴양관광지</item>
+        <item>체험관광지</item>
+        <item>산업관광지</item>
+        <item>건축/조형물</item>
+    </string-array>
+
+    <string-array name = "category_A02_2">
+        <item>문화시설</item>
+    </string-array>>
+
+    <string-array name = "category_A02_3">
+        <item>축제</item>
+        <item>공연/행사</item>
+    </string-array>
+
+    <string-array name="category_A0201">
+        <item>고궁</item>
+        <item>성</item>
+        <item>문</item>
+        <item>고택</item>
+        <item>생가</item>
+        <item>민속마을</item>
+        <item>유적지/사적지</item>
+        <item>사찰</item>
+        <item>종교성지</item>
+        <item>안보관광</item>
+    </string-array>
+
+    <string-array name = "category_A0201_values">
+        <item>A02010100</item><!--> 고궁-->
+        <item>A02010200</item><!--> 성-->
+        <item>A02010300</item><!--> 문-->
+        <item>A02010400</item><!--> 고택-->
+        <item>A02010500</item><!--> 생가-->
+        <item>A02010600</item><!--> 민속마을-->
+        <item>A02010700</item><!--> 유적지/사적지-->
+        <item>A02010800</item><!--> 사찰-->
+        <item>A02010900</item><!--> 종교성지-->
+        <item>A02011000</item><!--> 안보관광-->
+    </string-array>
+
+    <string-array name="category_A0202">
+        <item>관광단지</item>
+        <item>온천/욕장/스파</item>
+        <item>이색찜질방</item>
+        <item>헬스투어</item>
+        <item>테마공원</item>
+        <item>공원</item>
+        <item>유람선/잠수함관광</item>
+    </string-array>
+
+    <string-array name = "category_A0202_values">
+        <item>A02020200</item><!--> 관광단지-->
+        <item>A02020300</item><!--> 온천/욕장/스파-->
+        <item>A02020400</item><!--> 이색찜질방-->
+        <item>A02020500</item><!--> 헬스투어-->
+        <item>A02020600</item><!--> 테마공원-->
+        <item>A02020700</item><!--> 공원-->
+        <item>A02020800</item><!--> 유람선/잠수함관광-->
+    </string-array>
+
+    <string-array name="category_A0203">
+        <item>농.산.어촌 체험</item>
+        <item>전통체험</item>
+        <item>산사체험</item>
+        <item>이색체험</item>
+        <item>이색거리</item>
+    </string-array>
+
+    <string-array name = "category_A0203_values">
+        <item>A02030100</item><!--> 농.산.어촌 체험-->
+        <item>A02030200</item><!--> 전통체험-->
+        <item>A02030300</item><!--> 산사체험-->
+        <item>A02030400</item><!--> 이색체험-->
+        <item>A02030600</item><!--> 이색거리-->
+    </string-array>
+
+    <string-array name="category_A0204">
+        <item>발전소</item>
+        <item>식음료</item>
+        <item>기타</item>
+        <item>전자-반도체</item>
+        <item>자동차</item>
+    </string-array>
+
+    <string-array name = "category_A0204_values">
+        <item>A02040400</item><!--> 발전소-->
+        <item>A02040600</item><!--> 식음료-->
+        <item>A02040800</item><!--> 기타-->
+        <item>A02040900</item><!--> 전자-반도체-->
+        <item>A02041000</item><!--> 자동차-->
+    </string-array>
+
+    <string-array name="category_A0205">
+        <item>다리/대교</item>
+        <item>기념탑/기념비/전망대</item>
+        <item>분수</item>
+        <item>동상</item>
+        <item>터널</item>
+        <item>유명건물</item>
+    </string-array>
+
+    <string-array name = "category_A0205_values">
+        <item>A02050100</item><!--> 관광단지-->
+        <item>A02050200</item><!--> 온천/욕장/스파-->
+        <item>A02050300</item><!--> 이색찜질방-->
+        <item>A02050400</item><!--> 헬스투어-->
+        <item>A02050500</item><!--> 테마공원-->
+        <item>A02050600</item><!--> 공원-->
+    </string-array>
+
+    <string-array name="category_A0206">
+        <item>박물관</item>
+        <item>기념관</item>
+        <item>전시관</item>
+        <item>컨벤션센터</item>
+        <item>미술관/화랑</item>
+        <item>공연장</item>
+        <item>문화원</item>
+        <item>외국문화원</item>
+        <item>도서관</item>
+        <item>대형서점</item>
+        <item>문화전수시설</item>
+        <item>영화관</item>
+        <item>어학당</item>
+        <item>학교</item>
+    </string-array>
+
+    <string-array name = "category_A0206_values">
+        <item>A02060100</item><!--> 박물관-->
+        <item>A02060200</item><!--> 기념관-->
+        <item>A02060300</item><!--> 전시관-->
+        <item>A02060400</item><!--> 컨벤션센터-->
+        <item>A02060500</item><!--> 미술관/화랑-->
+        <item>A02060600</item><!--> 공연장-->
+        <item>A02060700</item><!--> 문화원-->
+        <item>A02060800</item><!--> 외국문화원-->
+        <item>A02060900</item><!--> 도서관-->
+        <item>A02061000</item><!--> 대형서점-->
+        <item>A02061100</item><!--> 문화전수시설-->
+        <item>A02061200</item><!--> 영화관-->
+        <item>A02061300</item><!--> 어학당-->
+        <item>A02061400</item><!--> 학교-->
+    </string-array>
+
+    <string-array name="category_A0207">
+        <item>문화관광축제</item>
+        <item>일반축제</item>
+    </string-array>
+
+    <string-array name = "category_A0207_values">
+        <item>A02070100</item><!--> 관광단지-->
+        <item>A02070200</item><!--> 온천/욕장/스파-->
+    </string-array>
+
+    <string-array name="category_A0208">
+        <item>전통공연</item>
+        <item>연극</item>
+        <item>뮤지컬</item>
+        <item>오페라</item>
+        <item>전시회</item>
+        <item>박람회</item>
+        <item>무용</item>
+        <item>클래식음악회</item>
+        <item>대중콘서트</item>
+        <item>영화</item>
+        <item>스포츠경기</item>
+        <item>기타행사</item>
+    </string-array>
+
+    <string-array name = "category_A0208_values">
+        <item>A02080100</item><!--> 관광단지-->
+        <item>A02080200</item><!--> 온천/욕장/스파-->
+        <item>A02080300</item><!--> 이색찜질방-->
+        <item>A02080400</item><!--> 헬스투어-->
+        <item>A02080500</item><!--> 테마공원-->
+        <item>A02080600</item><!--> 공원-->
+        <item>A02080800</item><!--> 관광단지-->
+        <item>A02080900</item><!--> 온천/욕장/스파-->
+        <item>A02081000</item><!--> 이색찜질방-->
+        <item>A02081100</item><!--> 헬스투어-->
+        <item>A02081200</item><!--> 테마공원-->
+        <item>A02081300</item><!--> 공원-->
+    </string-array>
+
+
+    <string-array name = "category_A03">
+        <item>레포츠소개</item>
+        <item>육상 레포츠</item>
+        <item>수상 레포츠</item>
+        <item>항공 레포츠</item>
+        <item>복합 레포츠</item>
+    </string-array>
+
+    <string-array name = "category_A0301">
+        <item>수상레포츠</item>
+        <item>항공레포츠</item>
+    </string-array>
+
+    <string-array name= "category_A0301_values">
+        <item>A03010200</item>
+        <item>A03010300</item>
+    </string-array>
+
+    <string-array name="category_A0302">
+        <item>수련시설</item>
+        <item>경기장</item>
+        <item>인라인(실내 인라인 포함)</item>
+        <item>자전거하이킹</item>
+        <item>카트</item>
+        <item>골프</item>
+        <item>경마</item>
+        <item>경륜</item>
+        <item>카지노</item>
+        <item>승마</item>
+        <item>스키/스노보드</item>
+        <item>스케이트</item>
+        <item>썰매장</item>
+        <item>수렵장</item>
+        <item>사격장</item>
+        <item>야영장,오토캠핑장</item>
+        <item>암벽등반</item>
+        <item>서바이벌게임</item>
+        <item>ATV</item>
+        <item>MTB</item>
+        <item>오프로드</item>
+        <item>번지점프</item>
+        <item>스키(보드) 렌탈샵</item>
+        <item>트래킹</item>
+    </string-array>
+
+
+    <string-array name="category_A0302_values">
+        <item>A03020200</item>
+        <item>A03020300</item>
+        <item>A03020400</item>
+        <item>A03020500</item>
+        <item>A03020600</item>
+        <item>A03020700</item>
+        <item>A03020800</item>
+        <item>A03020900</item>
+        <item>A03021000</item>
+        <item>A03021100</item>
+        <item>A03021200</item>
+        <item>A03021300</item>
+        <item>A03021400</item>
+        <item>A03021500</item>
+        <item>A03021600</item>
+        <item>A03021700</item>
+        <item>A03021800</item>
+        <item>A03022000</item>
+        <item>A03022100</item>
+        <item>A03022200</item>
+        <item>A03022300</item>
+        <item>A03022400</item>
+        <item>A03022600</item>
+        <item>A03022700</item>
+    </string-array>
+
+
+    <string-array name="category_A0303">
+        <item>윈드서핑/제트스키</item>
+        <item>카약/카누</item>
+        <item>요트</item>
+        <item>스노쿨링/스킨스쿠버다이빙</item>
+        <item>민물낚시</item>
+        <item>바다낚시</item>
+        <item>수영</item>
+        <item>래프팅</item>
+    </string-array>
+
+
+    <string-array name="category_A0303_values">
+        <item>A03030100</item>
+        <item>A03030200</item>
+        <item>A03030300</item>
+        <item>A03030400</item>
+        <item>A03030500</item>
+        <item>A03030600</item>
+        <item>A03030700</item>
+        <item>A03030800</item>
+    </string-array>
+
+
+    <string-array name="category_A0304">
+        <item>스카이다이빙</item>
+        <item>초경량비행</item>
+        <item>헹글라이딩/패러글라이딩</item>
+        <item>열기구</item>
+    </string-array>
+
+
+    <string-array name="category_A0304_values">
+        <item>A03040100</item>
+        <item>A03040200</item>
+        <item>A03040300</item>
+        <item>A03040400</item>
+    </string-array>
+
+
+    <string-array name = "category_A0305">
+        <item>복합 레포츠</item>
+    </string-array>
+
+    <string-array name= "category_A0305_values">
+        <item>A03050100</item>
+    </string-array>
+
+    <string-array name = "category_A04">
+        <item>쇼핑점</item>
+    </string-array>
+
+    <string-array name="category_A0401">
+        <item>5일장</item>
+        <item>상설시장</item>
+        <item>백화점</item>
+        <item>면세점</item>
+        <item>대형마트</item>
+        <item>전문매장/상가</item>
+        <item>공예/공방</item>
+        <item>특산물판매점</item>
+        <item>사후면세점</item>
+    </string-array>
+
+    <string-array name="category_A0401_values">
+        <item>A04010100</item>
+        <item>A04010200</item>
+        <item>A04010300</item>
+        <item>A04010400</item>
+        <item>A04010500</item>
+        <item>A04010600</item>
+        <item>A04010700</item>
+        <item>A04010900</item>
+        <item>A04011000</item>
+    </string-array>
+
+
+
+    <string-array name = "category_A05">
+        <item>음식점</item>
+    </string-array>
+
+    <string-array name="category_A0502">
+        <item>한식</item>
+        <item>서양식</item>
+        <item>일식</item>
+        <item>중식</item>
+        <item>이색음식점</item>
+        <item>카페/전통찻집</item>
+        <item>클럽</item>
+    </string-array>
+
+    <string-array name="category_A0502_values">
+        <item>A05020100</item>
+        <item>A05020200</item>
+        <item>A05020300</item>
+        <item>A05020400</item>
+        <item>A05020700</item>
+        <item>A05020900</item>
+        <item>A05021000</item>
+    </string-array>
+
+
+</resources>

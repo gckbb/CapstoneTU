@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".Map.MapActivity">
+
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/ic_back"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+            <Button
+                android:id="@+id/nextbutton"
+                android:layout_width="83dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="307dp"
+                android:text="다음"
+                android:textStyle="bold"
+                android:background="@drawable/buttonshape1"
+                tools:ignore="TouchTargetSizeCheck" />
+            <TextView
+                android:id="@+id/firstDay"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="99dp"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="1 DAY"
+                tools:ignore="TouchTargetSizeCheck"
+                />
+
+            <Button
+                android:id="@+id/path_1"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="98dp"
+                android:background="@drawable/buttonshape2"
+                android:text="경로 보기"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/totalTime_1"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="210dp"
+                android:layout_marginTop="102dp"
+                android:text=" "
+
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                tools:ignore="SpeakableTextPresentCheck,TextSizeCheck" />
+
+            <ListView
+                android:id="@+id/listView1"
+                android:layout_width="365dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="140dp"
+                android:background="@drawable/edittext3"/>
+
+            <TextView
+                android:id="@+id/secondDay"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="469dp"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="2 DAY"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/path_2"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="468dp"
+                android:background="@drawable/buttonshape2"
+                android:text="경로 보기"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/totalTime_2"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="210dp"
+                android:layout_marginTop="472dp"
+                android:text=" "
+
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                tools:ignore="SpeakableTextPresentCheck,TextSizeCheck" />
+            <ListView
+                android:id="@+id/listView2"
+                android:layout_width="365dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="510dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/edittext3"/>
+
+        </FrameLayout>
+    </ScrollView>
+
+
+
+
+
+
+</FrameLayout>
+
