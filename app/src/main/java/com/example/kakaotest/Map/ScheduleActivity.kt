@@ -11,7 +11,10 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+<<<<<<< HEAD
 import com.example.kakaotest.CashBook.CashBookActivity
+=======
+>>>>>>> other-origin/K_Ho_demo2
 import com.example.kakaotest.CheckList.CheckListActivity
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
@@ -22,7 +25,10 @@ import com.example.kakaotest.HomeActivity
 
 
 import com.example.kakaotest.R
+<<<<<<< HEAD
 import com.example.kakaotest.Utility.SharedPreferenceUtil
+=======
+>>>>>>> other-origin/K_Ho_demo2
 import com.example.kakaotest.Utility.TravelPlanManager
 import com.example.kakaotest.databinding.ActivityScheduleBinding
 import com.google.gson.Gson
@@ -32,14 +38,19 @@ import java.util.LinkedList
 class ScheduleActivity : AppCompatActivity() {
     private val travelPlanManager = TravelPlanManager()
     val gson = Gson()
+
     val dayRouteList = mutableListOf<ArrayList<SearchRouteData>?>()
     val dayRouteList2 = mutableListOf<MetaDayRoute>()
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityScheduleBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val travelPlan: TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
-    //    val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
+
         val startDate = travelPlan!!.startDate?.day ?: 0
         val endDate = travelPlan.endDate?.day ?: 0
         val dateRange = endDate - startDate
@@ -61,6 +72,7 @@ class ScheduleActivity : AppCompatActivity() {
             travelPlanManager.updatePlan(destination = dayRouteList[0])
             travelPlanManager.updatePlan(destination = dayRouteList[1])
         }
+
 
 
 
@@ -98,8 +110,6 @@ class ScheduleActivity : AppCompatActivity() {
             firstdate.text = plan.startDate?.date ?: ""
             lastdate.text = plan.endDate?.date ?: ""
             who.text = plan.who ?: ""
-            //     day1.text = plan.startDate?.day.toString() ?: ""
-            //  day2.text = (plan.startDate?.day?.plus(1)).toString()
         }
 
 
@@ -118,6 +128,7 @@ class ScheduleActivity : AppCompatActivity() {
             }
             textView?.text = (startDate + i).toString()
         }
+
 
 
 
@@ -178,7 +189,6 @@ class ScheduleActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
         val time1_1=findViewById<TextView>(R.id.time1_1)
         val time1_2=findViewById<TextView>(R.id.time1_2)
         val time1_3=findViewById<TextView>(R.id.time1_3)
@@ -191,33 +201,6 @@ class ScheduleActivity : AppCompatActivity() {
         val time1_10=findViewById<TextView>(R.id.time1_10)
 
 
-
-        /*
-                binding.path1.setOnClickListener {
-                    val intent = Intent(this, FirstRoute::class.java)
-                    if(travelPlan.transportion == "버스") {
-                        val firstPlaceList = gson.toJson(dayRouteList2[0])
-                        intent.putExtra("firstList2", firstPlaceList)
-                    }
-                    else {
-                        intent.putExtra("firstList",  dayRouteList[0])
-                    }
-                    intent.putExtra("travelPlan",travelPlan)
-                    startActivity(intent)
-                }
-
-                binding.path2.setOnClickListener {
-                    val intent = Intent(this, FirstRoute::class.java)
-                    if(travelPlan.transportion == "버스") {
-                        val secondPlaceList = gson.toJson(dayRouteList2[1])
-                        intent.putExtra("firstList2", secondPlaceList)
-                    }
-                    else {
-                        intent.putExtra("firstList",  dayRouteList[1])
-                    }
-                    intent.putExtra("travelPlan",travelPlan)
-                    startActivity(intent)
-                }*/
 
 
 
@@ -251,6 +234,7 @@ class ScheduleActivity : AppCompatActivity() {
             }
         }
 
+
         //singleRouteShow(firstList)
 
         binding.backBtn.setOnClickListener {
@@ -279,6 +263,7 @@ class ScheduleActivity : AppCompatActivity() {
         val minutes = (seconds?.rem(3600))?.div(60)?.toInt()
         return Pair(hours, minutes)
     }
+
 
 
     fun time(daylist: ArrayList<SearchRouteData>){
@@ -399,10 +384,9 @@ class ScheduleActivity : AppCompatActivity() {
 
     }
 
-
     fun singleRoute2(time:TextView,value : Int, daylist:MetaDayRoute){ // 대중교통일때 사용
         time.setOnClickListener {
-            //     time.setBackgroundColor(R.color.button)
+
             time.background = ContextCompat.getDrawable(this, R.color.button)
             val intent = Intent(this, SingleMetaRoute::class.java)
             intent.putExtra("time",value)
@@ -423,6 +407,7 @@ class ScheduleActivity : AppCompatActivity() {
         }
 
     }
+
 
 
     fun allRoute(path:Button,value: Int,data : ArrayList<SearchRouteData>){
@@ -502,7 +487,6 @@ class ScheduleActivity : AppCompatActivity() {
         allRoute2(pathBtn,value, data)
 
     }
-
 
 
     fun dayListShow(day: Button, placeListContainerList: List<LinearLayout>, i: Int) {

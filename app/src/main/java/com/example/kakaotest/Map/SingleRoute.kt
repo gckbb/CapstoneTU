@@ -13,7 +13,10 @@ import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.R
+<<<<<<< HEAD
 import com.google.android.gms.maps.OnMapReadyCallback
+=======
+>>>>>>> other-origin/K_Ho_demo2
 import com.google.gson.Gson
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
@@ -22,8 +25,10 @@ import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.overlay.TMapPolyLine
 
 
+
 class SingleRoute : AppCompatActivity(){
    private lateinit var dayList:ArrayList<SearchRouteData>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_single_route)

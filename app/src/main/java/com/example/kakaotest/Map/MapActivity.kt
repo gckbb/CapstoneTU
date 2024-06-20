@@ -21,7 +21,10 @@ import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.SelectRecyclerAdapter
+<<<<<<< HEAD
 import com.example.kakaotest.Utility.SharedPreferenceUtil
+=======
+>>>>>>> other-origin/K_Ho_demo2
 import com.example.kakaotest.databinding.ActivityMapBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.skt.tmap.TMapData
@@ -56,7 +59,6 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
         mBinding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-  //      val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
 
 
 
@@ -106,10 +108,12 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
 
         dataadapter.selectRecyclerAdapter = selectRecyclerAdapter
 
+
         // 어댑터를 초기화한 후
         dataadapter.setOnDeleteListener { position ->
             dataadapter.deleteItem(position)
         }
+
 
 
         binding.searchDataListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -190,10 +194,12 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
             } as ArrayList<SelectedPlaceData>
 
 
+
             SharedPreferenceUtil.saveDataToSharedPreferences(this,selectedPlaceDataList)
 
         //    intent.putParcelableArrayListExtra("selectedPlaceDataList", selectedPlaceDataList)
           //  intent.putExtra("travelPlan", travelPlan)
+
             startActivity(intent)
             Log.d("Item", selectedPlaceDataList.toString())
         }
@@ -271,10 +277,12 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
 
     // PersistentBottomSheet 내부 버튼 click event
     private fun persistentBottomSheetEvent() {
+
         bottomSheetHidePersistentButton.setOnClickListener {
             // BottomSheet 숨김
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
+
     }
 
 

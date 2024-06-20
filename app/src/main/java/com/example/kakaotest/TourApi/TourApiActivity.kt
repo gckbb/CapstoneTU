@@ -8,7 +8,9 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+
 import android.widget.TextView
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -145,7 +147,9 @@ class TourApiActivity : AppCompatActivity() {
         }
 
 
+
         binding.tourapisearch.setOnClickListener {
+
             val selectedValuePosition = tourapiSpinner3.selectedItemPosition
             val selectedValue = categoryValues[selectedValuePosition]
             val selectedArea = resources.getStringArray(R.array.areaCode_values)[tourapiSpinner.selectedItemPosition]
@@ -170,9 +174,11 @@ class TourApiActivity : AppCompatActivity() {
                 Log.d("AreaCode", "searchRecommend")
                 // RecyclerView 설정
                 val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+
                 val text : TextView = findViewById<TextView>(R.id.text)
                 text.visibility=View.GONE
                 recyclerView.visibility=View.VISIBLE
+
                 recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)
                 val adapter = RecommendAdapter(recommends.response.body.items.item)
                 recyclerView.adapter = adapter

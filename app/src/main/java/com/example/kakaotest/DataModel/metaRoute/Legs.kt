@@ -15,6 +15,10 @@ data class Legs(
     val distance:Int,
     val start:Start?,
     val end:End?,
+<<<<<<< HEAD
+=======
+    val route:String?,
+>>>>>>> other-origin/K_Ho_demo2
     val steps: List<Steps>?,
     val routeColor: String?,
     val routeId: String?,
@@ -32,6 +36,10 @@ data class Legs(
         parcel.readInt(),
         parcel.readParcelable(Start::class.java.classLoader),
         parcel.readParcelable(End::class.java.classLoader),
+<<<<<<< HEAD
+=======
+        parcel.readString(),
+>>>>>>> other-origin/K_Ho_demo2
         parcel.createTypedArrayList(Steps.CREATOR),
         parcel.readString(),
         parcel.readString(),
@@ -50,6 +58,10 @@ data class Legs(
         parcel.writeInt(distance)
         parcel.writeParcelable(start, flags)
         parcel.writeParcelable(end, flags)
+<<<<<<< HEAD
+=======
+        parcel.writeString(route)
+>>>>>>> other-origin/K_Ho_demo2
         parcel.writeParcelableList(steps, flags)
         parcel.writeString(routeColor)
         parcel.writeString(routeId)

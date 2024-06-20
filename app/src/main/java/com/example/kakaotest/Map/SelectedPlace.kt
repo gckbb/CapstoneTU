@@ -16,7 +16,10 @@ import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.simpleListItem2Adapter
+<<<<<<< HEAD
 import com.example.kakaotest.Utility.SharedPreferenceUtil
+=======
+>>>>>>> other-origin/K_Ho_demo2
 import com.skt.tmap.TMapPoint
 import java.util.ArrayList
 
@@ -28,14 +31,12 @@ class SelectedPlace : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selected_place)
 
-      //  val receivedDataList: ArrayList<SelectedPlaceData>? =
-        //    intent.getParcelableArrayListExtra("selectedPlaceDataList")
 
-      //  val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
         var  receivedDataList: ArrayList<SelectedPlaceData>? = SharedPreferenceUtil.getDataFromSharedPreferences(this)
         // 초기 데이터가 없을 경우 빈 리스트로 초기화
 
         Log.d("PLAN",receivedDataList.toString())
+
 
         val backBtn = findViewById<ImageButton>(R.id.back_btn)
         backBtn.setOnClickListener {
@@ -68,10 +69,6 @@ class SelectedPlace : AppCompatActivity() {
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
             val intent = Intent(this, FoodSelectActivity::class.java)
-       //     intent.putExtra("travelPlan", travelPlan)
-         //   intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
-            startActivity(intent)
-           // Log.d("Item", receivedDataList.toString())
         }
 
         val scrollView = findViewById<ScrollView>(R.id.scrollView)
@@ -97,10 +94,11 @@ class SelectedPlace : AppCompatActivity() {
             savedRestaurantNames.add(value.toString())
         }
 
+
         // 리스트를 ListView에 표시
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, savedRestaurantNames)
         foundListView.adapter = adapter
-// foundListView의 아이템 클릭 리스너 설정
+
         foundListView.setOnItemClickListener { parent, view, position, id ->
             // 클릭한 위치(position)에 해당하는 아이템 가져오기
             val clickedRestaurantName = savedRestaurantNames[position]
@@ -117,6 +115,7 @@ class SelectedPlace : AppCompatActivity() {
                     val latitude = latitudeLongitude[1].toDouble()
                     val longitude = latitudeLongitude[2].toDouble()
                     val address = latitudeLongitude[3]
+
 
                     receivedDataList?.add(SelectedPlaceData(clickedRestaurantName, TMapPoint(longitude, latitude), address))
                     Log.d("PLAN", "Data added: ${receivedDataList.toString()}")
@@ -137,6 +136,7 @@ class SelectedPlace : AppCompatActivity() {
 
             }
         }
+
 
 
 

@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TableLayout
 import android.widget.TextView
+<<<<<<< HEAD
 import android.widget.Toast
+=======
+>>>>>>> other-origin/K_Ho_demo2
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.kakaotest.DataModel.Recommend
@@ -67,8 +70,10 @@ class RecommendDetailActivity : AppCompatActivity() {
                 val mapy = String.format("%.8f", recommend.mapy.toDouble())
                 //Log.d("add_test","DetailActivity: ${mapx}_${mapy}")
                 editor.putString("recommend_${mapx}_${mapy}_${recommend.addr1}", recommend.title)
+
                 Log.d("plan",recommend.title.toString())
                 Toast.makeText(this@RecommendDetailActivity, "${recommend.title} 저장", Toast.LENGTH_SHORT).show()
+
             }
             editor.apply()
         }

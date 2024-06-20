@@ -23,7 +23,10 @@ import com.example.kakaotest.Fragment.DatePickerFragment
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.TravelPlanManager
 import com.example.kakaotest.Utility.NullCheck
+<<<<<<< HEAD
 import com.example.kakaotest.Utility.SharedPreferenceUtil
+=======
+>>>>>>> other-origin/K_Ho_demo2
 import com.example.kakaotest.databinding.ActivityPlanInfoBinding
 import org.w3c.dom.Text
 
@@ -395,8 +398,10 @@ class PlanInfoInput : AppCompatActivity() {
             if (activityTime != null) {
                 travelPlanManager.updatePlan(activityTime = activityTime)
                 Log.d("PLAN", "activity time : $activityTime")
+
             }else {
                 travelPlanManager.updatePlan(activityTime = 8)
+
             }
 
             if (!checkConditions(transportBtn, findViewById(R.id.transport))) {
@@ -410,9 +415,11 @@ class PlanInfoInput : AppCompatActivity() {
             }
             if (isValid) {
                 val intent = Intent(this, MapActivity::class.java)
+
                 var travel = travelPlanManager.getPlan()
                 SharedPreferenceUtil.saveTravelPlanToSharedPreferences(this,travel)
                // intent.putExtra("travelPlan", travelPlanManager.getPlan())
+
                 startActivity(intent)
             }else{
                 Toast.makeText(this, "유효한 값을 입력 및 선택해주세요.", Toast.LENGTH_LONG).show()

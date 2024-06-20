@@ -3,11 +3,9 @@ package com.example.kakaotest.Map
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.ScrollView
 import android.widget.TextView
@@ -20,29 +18,39 @@ import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
-import com.example.kakaotest.Utility.SharedPreferenceUtil
 import com.google.gson.Gson
 import com.skt.tmap.TMapPoint
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 import java.util.LinkedList
 
+
 class RouteListActivity : AppCompatActivity() {
 
     private val routetest = MakeRoute()
     var convertedFoodDataList : ArrayList<SelectedPlaceData>? = null
+
     private var dateRange =0
     private var startDate=0
     private var endDate =0
     var gson = Gson()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_route_list)
-        val receivedDataList : ArrayList<SelectedPlaceData>? = SharedPreferenceUtil.getDataFromSharedPreferences(this)
-        val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
-        val receivedFoodDataList: ArrayList<SearchData>? = SharedPreferenceUtil.getFoodFromSharedPreferences(this)
+
+        val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
+        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+        val receivedFoodDataList = intent.getParcelableArrayListExtra<SearchData>("selectedFoodDataList")
+        val gson = Gson()
+
+
+
+        Log.d("RouteListActivity",receivedDataList.toString()) //arraylistof<SelectedPlaceData>
+        Log.d("RouteListActivity",receivedFoodDataList.toString()) //arraylistof<SearchData>
+
 
 
 
@@ -55,6 +63,8 @@ class RouteListActivity : AppCompatActivity() {
         startDate = travelPlan!!.startDate?.day ?: 0
         endDate = travelPlan.endDate?.day ?: 0
         dateRange = endDate - startDate
+
+
         val activityTime = travelPlan.activityTime
         var restaurant = travelPlan.restaurant
         if(restaurant == null) {
@@ -95,8 +105,6 @@ class RouteListActivity : AppCompatActivity() {
         }
 
 
-
-
         nextButton.setOnClickListener {
             val intent = Intent(this, ScheduleActivity::class.java)
 
@@ -111,9 +119,7 @@ class RouteListActivity : AppCompatActivity() {
                 }
             }
 
-            //       intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
-            //     intent.putExtra("travelPlan", travelPlan)
-            //   Log.d("PLAN",travelPlan.toString())
+
             startActivity(intent)
         }
 
@@ -123,11 +129,13 @@ class RouteListActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
+
                 val listView = findViewById<ListView>(R.id.listView1)
                 listView.visibility = View.VISIBLE
                 val emptyList = listOf("로딩 중...") // Adjust the type based on your data
                 val adapter = ArrayAdapter(this@RouteListActivity, android.R.layout.simple_list_item_1, emptyList)
                 listView.adapter = adapter
+
 
                 // 비동기적으로 routeSet을 호출합니다.
                 if(travelPlan.transportion == "자차" || travelPlan.transportion == "택시") {
@@ -153,11 +161,12 @@ class RouteListActivity : AppCompatActivity() {
                 routetest.printTotalRoute()
                 Log.d("PLAN", "Total Route Printed")
 
+
                 if(travelPlan.transportion == "버스") BusUpdateList(0,DayRoute2(0)!!.dayRoute)
                 else CarUpdateList(0, CarRoute(0))
 
 
-               // UpdateList(0,)
+
             } catch (e: Exception) {
                 Log.e("CreatedRoute1", "Error: ${e.message}", e)
             }
@@ -199,6 +208,7 @@ class RouteListActivity : AppCompatActivity() {
         return DayData
     }
 
+
     private fun CarRoute(day : Int):  ArrayList<SearchRouteData> {
         val DayData = routetest.printTotalRoute()?.let {
             it.getOrNull(day)?.dayRoute
@@ -228,6 +238,7 @@ class RouteListActivity : AppCompatActivity() {
         Log.d("PLAN","${day+1}일차 총 이동예상 시간 : ${totalHour.toString()}")
         return totalHour
     }
+
 
 
     private fun CarUpdateList(day:Int,data : ArrayList<SearchRouteData>){
@@ -263,11 +274,8 @@ class RouteListActivity : AppCompatActivity() {
         totalTime.text = totalTime2(value).toString() + "시간"
 
 
+
     }
-
-
-
-
 
 
     private fun updateListView2() {
@@ -276,7 +284,9 @@ class RouteListActivity : AppCompatActivity() {
         val scrollView = findViewById<ScrollView>(R.id.scrollView)
         val totalTime_1 = findViewById<TextView>(R.id.totalTime_1)
         val totalTime_2 = findViewById<TextView>(R.id.totalTime_2)
+
         val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
+
 
         val firstDayPlace = DayRoute2(0)!!.dayRoute.map { it.pointdata?.placeName?: "Unknown Place"}
         val adapter1 = ArrayAdapter(this, android.R.layout.simple_list_item_1, firstDayPlace)
@@ -305,6 +315,7 @@ class RouteListActivity : AppCompatActivity() {
 
 
     }
+
 
     private fun buttonClick(value:Int){
         val day1 = findViewById<Button>(R.id.day1)
@@ -336,6 +347,7 @@ class RouteListActivity : AppCompatActivity() {
 
 
     }
+
 
 
     //SearchData -> SelectedPlaceData

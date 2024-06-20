@@ -4,11 +4,15 @@ import DataAdapter
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+<<<<<<< HEAD
 import android.graphics.BitmapFactory
+=======
+>>>>>>> other-origin/K_Ho_demo2
 import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+<<<<<<< HEAD
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
@@ -17,16 +21,27 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+=======
+import android.widget.AdapterView
+import android.widget.FrameLayout
+import android.widget.Toast
+>>>>>>> other-origin/K_Ho_demo2
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
+<<<<<<< HEAD
 import com.example.kakaotest.Utility.Adapter.SelectRecyclerAdapter
 import com.example.kakaotest.Utility.SharedPreferenceUtil
 import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 
 import com.example.kakaotest.databinding.ActivityFoodSelectBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+=======
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
+
+import com.example.kakaotest.databinding.ActivityFoodSelectBinding
+>>>>>>> other-origin/K_Ho_demo2
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
@@ -39,11 +54,14 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
     var searchDataList2 = java.util.ArrayList<SearchData>()
     private lateinit var adapter: DataAdapter
     private var mBinding: ActivityFoodSelectBinding ?= null
+
     private lateinit var tMapView: TMapView
+
     private val binding get() = mBinding!!
     var startpoint: TMapPoint? = null
     var endpoint: TMapPoint? = null
     lateinit var start: TMapPoint
+
     lateinit var end: TMapPoint
 
     private lateinit var selectRecyclerAdapter: SelectRecyclerAdapter
@@ -58,10 +76,6 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
 
         mBinding = ActivityFoodSelectBinding.inflate(layoutInflater)
         setContentView(binding.root)
-   //     val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
-     //  val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
-    //    Log.d("ITEM",receivedDataList.toString())
-      //  Log.d("ITEM", arrayListOf(receivedDataList).toString())
 
 
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
@@ -73,7 +87,9 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
         // FrameLayout 컨테이너를 XML에서 찾아옴
         val container: FrameLayout = findViewById(R.id.tmapViewContainer)
         // TMapView 인스턴스를 생성
+
         tMapView = TMapView(this)
+
         val tMapData = TMapData()
         val tMapGps = TMapPoint()
 
@@ -87,6 +103,7 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
 
         adapter = DataAdapter(this,R.layout.data_list, searchDataList,this)
         binding.searchDataListView.adapter = adapter
+
 
 
 
@@ -123,6 +140,7 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
 
             // 중복된 장소인지 확인
             if (!isPlaceAlreadySelected(selectItem)) {
+
                 tMapView.removeAllTMapMarkerItem()
                 tMapView.removeAllTMapPOIItem()
                 selectedFoodPlacesList.clear()
@@ -185,7 +203,9 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
                     runOnUiThread {
                         adapter.notifyDataSetChanged()
                     }
+
                     tMapView.addTMapPOIItem(poiItemList)
+
                 })
             }   catch (e: Exception) {
                 Log.e("FoodSelectActivity", "searchBtn action - Exception: ${e.toString()}", e)
@@ -193,6 +213,7 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
         }
 
         binding.nextbutton.setOnClickListener {
+
             try {
 
                 val intent = Intent(this, RouteListActivity::class.java)
@@ -304,7 +325,9 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
             tMapView.setCenterPoint(place.tpoint.latitude,place.tpoint.latitude)
 
 
+
         }
+
 
 
         if (selectedFoodPlacesList.isNotEmpty()) {
@@ -346,6 +369,7 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
         selectedFoodPlacesList.removeAt(position)
         //   selectRecyclerAdapter.removeItem(selectPlaceList.get(position))
         updateMarkers()
+
     }
     private fun isPlaceAlreadySelected(newPlace: SearchData): Boolean {
         // 중복된 장소인지 확인

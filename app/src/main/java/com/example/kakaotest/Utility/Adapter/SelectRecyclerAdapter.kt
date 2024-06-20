@@ -16,9 +16,15 @@ import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 
 class SelectRecyclerAdapter(
     private val context: Context,
+<<<<<<< HEAD
     private var itemList: ArrayList<SearchData>,
     private var selectedPlacesList: ArrayList<SearchData>,
     internal var onDeleteListener: (Int) -> Unit // 삭제 이벤트 콜백 추가
+=======
+    private val itemList: ArrayList<SearchData>,
+    private val selectedPlacesList: ArrayList<SearchData>,
+    private val onDeleteListener: (Int) -> Unit // 삭제 이벤트 콜백 추가
+>>>>>>> other-origin/K_Ho_demo2
 ) : RecyclerView.Adapter<SelectRecyclerAdapter.SelectedPlaceViewHolder>(), View.OnClickListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectedPlaceViewHolder {
@@ -60,6 +66,14 @@ class SelectRecyclerAdapter(
         }
     }
 
+<<<<<<< HEAD
+=======
+    fun addItems(items: List<SearchData>) {
+        itemList.addAll(items)
+        notifyDataSetChanged()
+    }
+
+>>>>>>> other-origin/K_Ho_demo2
     fun removeItem(item: SearchData) {
         val position = itemList.indexOf(item)
         if (position != -1) {
@@ -67,6 +81,7 @@ class SelectRecyclerAdapter(
             notifyItemRemoved(position)
         }
     }
+<<<<<<< HEAD
 
 
     fun addItems(items: List<SearchData>) {
@@ -75,4 +90,6 @@ class SelectRecyclerAdapter(
     }
 
 
+=======
+>>>>>>> other-origin/K_Ho_demo2
 }

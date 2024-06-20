@@ -1,0 +1,1195 @@
+Index: app/src/main/java/com/example/kakaotest/Map/RouteListActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakaotest.Map\n\nimport android.content.Intent\nimport android.os.Bundle\nimport android.util.Log\nimport android.widget.ArrayAdapter\nimport android.widget.Button\nimport android.widget.ImageButton\nimport android.widget.ListView\nimport android.widget.ScrollView\nimport android.widget.TextView\nimport androidx.appcompat.app.AppCompatActivity\nimport androidx.lifecycle.lifecycleScope\nimport com.example.kakaotest.DataModel.TravelPlan\nimport com.example.kakaotest.DataModel.tmap.SelectedPlaceData\nimport com.example.kakaotest.R\nimport com.example.kakaotest.Utility.tmap.MakeRoute\nimport kotlinx.coroutines.launch\n\nclass RouteListActivity : AppCompatActivity() {\n\n    private val routetest = MakeRoute()\n\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n\n        setContentView(R.layout.activity_create_route)\n        val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>(\"selectedPlaceDataList\")\n        val travelPlan = intent.getParcelableExtra<TravelPlan>(\"travelPlan\")\n\n        val receivedFoodDataList = intent.getParcelableArrayListExtra<com.example.kakaotest.Plan.SelectedPlaceData>(\"selectedFoodDataList\")\n\n        val path_1: Button = findViewById<Button>(R.id.path_1)\n        val path_2: Button = findViewById<Button>(R.id.path_2)\n        val nextButton: Button = findViewById<Button>(R.id.nextbutton)\n\n        val backBtn = findViewById<ImageButton>(R.id.back_btn)\n        backBtn.setOnClickListener {\n            finish()\n\n        }\n\n        // 클릭 이벤트 설정\n        path_1.setOnClickListener {\n            val intent = Intent(this, FirstRoute::class.java)\n\n            val firstDayData = routetest.printTotalRoute().firstOrNull()\n\n            Log.d(\"PLAN\",\"firstDayData : \\n\"+firstDayData)\n            // 첫 번째 날짜의 데이터가 있을 때 처리\n            if (firstDayData != null) {\n                // 첫 번째 날짜의 선택된 장소 리스트 가져오기\n                val firstPlaceList = firstDayData!!.dayRoute\n                intent.putExtra(\"firstList\", firstPlaceList)\n\n                startActivity(intent)\n            } else {\n                Log.e(\"PLAN\", \"No data available for the first day\")\n            }\n        }\n\n        path_2.setOnClickListener {\n            val secondDayData = routetest.printTotalRoute().getOrNull(1)\n            val intent = Intent(this, SecondRoute::class.java)\n            Log.d(\"PLAN\",\"secondDayData : \\n\"+secondDayData)\n            if (secondDayData != null) {\n\n                val secondList = secondDayData!!.dayRoute\n                // 두 번째 날짜의 선택된 장소 리스트 가져오기\n                intent.putExtra(\"secondList\",  secondList)\n                startActivity(intent)\n            } else {\n                Log.e(\"CreatedRoute1\", \"No data available for the secondday\")\n            }\n        }\n\n        nextButton.setOnClickListener {\n            val firstDayData = routetest.printTotalRoute().firstOrNull()\n            val firstPlaceList = firstDayData!!.dayRoute\n            val secondDayData = routetest.printTotalRoute().getOrNull(1)\n            val secondList = secondDayData!!.dayRoute\n            val intent = Intent(this, ScheduleActivity::class.java)\n\n            intent.putExtra(\"firstList\",firstPlaceList)\n            intent.putExtra(\"secondList\",  secondList)\n            intent.putParcelableArrayListExtra(\"selectedPlaceDataList\", ArrayList(receivedDataList))\n            intent.putExtra(\"travelPlan\", travelPlan)\n            startActivity(intent)\n        }\n\n\n\n\n        Log.d(\"PLAN\",\"receivedDataList : \\n\"+ receivedDataList.toString())\n\n        lifecycleScope.launch {\n            try {\n                // 비동기적으로 routeSet을 호출합니다.\n                routetest.routeSet(receivedDataList!!, receivedDataList[0])\n                Log.d(\"PLAN\", \"Route Set\")\n                // 비동기적으로 routeStart를 호출합니다.\n                routetest.routeStart(2, 6)\n                Log.d(\"PLAN\", \"Route Started\")\n                routetest.printTotalRoute()\n                Log.d(\"PLAN\", \"Total Route Printed\")\n                updateListView()\n            } catch (e: Exception) {\n                Log.e(\"CreatedRoute1\", \"Error: ${e.message}\", e)\n            }\n        }\n    }\n\n    private fun updateListView() {\n        val listView1 = findViewById<ListView>(R.id.listView1)\n        val listView2 = findViewById<ListView>(R.id.listView2)\n        val scrollView = findViewById<ScrollView>(R.id.scrollView)\n        val totalTime_1 = findViewById<TextView>(R.id.totalTime_1)\n        val totalTime_2 = findViewById<TextView>(R.id.totalTime_2)\n        val totalRouteData = routetest.printTotalRoute()\n        Log.d(\"PLAN\",\"updateListView() totalRouteData : \\n\" + totalRouteData)\n\n\n        // 첫 번째 날짜의 모든 데이터\n        val firstDayData = routetest.printTotalRoute().firstOrNull()\n        if (firstDayData != null) {\n            Log.d(\"PLAN\",\"updateListView() firstDayData : \\n\" + firstDayData)\n\n            //  Log.d(\"PLAN\",\"${i}일째 총 이동시간 : \"+hour.toString())\n\n\n            val totalTime = firstDayData.totalTime.toDouble() / 3600 // 첫 번째 날짜의 총 이동 시간\n            val totalHour: Double = String.format(\"%.1f\", totalTime).toDouble()\n            val selectedPlaceList = firstDayData.dayRoute // 첫 번째 날짜의 선택된 장소 데이터 목록\n            totalTime_1.text = totalHour.toString() +\"시간\"\n            val firstDayPlace = selectedPlaceList!!.map { it.pointdata?.placeName }\n            val adapter1 =\n                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, firstDayPlace)\n            listView1.adapter = adapter1\n            listView1.setOnTouchListener { _, _ ->\n                scrollView.requestDisallowInterceptTouchEvent(true)\n                false\n            }\n        }\n\n        val secondDayData = totalRouteData.getOrNull(1)\n        if (secondDayData!= null) {\n            Log.d(\"PLAN\",\"updateListView() secondDayData : \\n\" + secondDayData)\n            val totalTime = secondDayData.totalTime.toDouble() / 3600 // 두 번째 날짜의 총 이동 시간\n            val totalHour: Double = String.format(\"%.1f\", totalTime).toDouble() // 첫 번째 날짜의 총 이동 시간\n            val selectedPlaceList = secondDayData.dayRoute // 두 번째 날짜의 선택된 장소 데이터 목록\n            totalTime_2.text=totalHour.toString() +\"시간\"\n            val secondDayPlace = selectedPlaceList!!.map { it.pointdata?.placeName }\n            val adapter2 =\n                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, secondDayPlace)\n            listView2.adapter = adapter2\n            listView2.setOnTouchListener { _, _ ->\n                scrollView.requestDisallowInterceptTouchEvent(true)\n                false\n            }\n        }\n\n\n\n    }\n}\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/Map/RouteListActivity.kt b/app/src/main/java/com/example/kakaotest/Map/RouteListActivity.kt
+--- a/app/src/main/java/com/example/kakaotest/Map/RouteListActivity.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/java/com/example/kakaotest/Map/RouteListActivity.kt	(date 1715806212651)
+@@ -13,13 +13,13 @@
+ import androidx.lifecycle.lifecycleScope
+ import com.example.kakaotest.DataModel.TravelPlan
+ import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
++import com.example.kakaotest.Plan.PMakeRoute
+ import com.example.kakaotest.R
+-import com.example.kakaotest.Utility.tmap.MakeRoute
+ import kotlinx.coroutines.launch
+ 
+ class RouteListActivity : AppCompatActivity() {
+ 
+-    private val routetest = MakeRoute()
++    private val routetest = PMakeRoute()
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+@@ -28,7 +28,7 @@
+         val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
+         val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+ 
+-        val receivedFoodDataList = intent.getParcelableArrayListExtra<com.example.kakaotest.Plan.SelectedPlaceData>("selectedFoodDataList")
++        val receivedFoodDataList = intent.getParcelableArrayListExtra<com.example.kakaotest.DataModel.tmap.SelectedPlaceData>("selectedFoodDataList")
+ 
+         val path_1: Button = findViewById<Button>(R.id.path_1)
+         val path_2: Button = findViewById<Button>(R.id.path_2)
+@@ -99,7 +99,7 @@
+                 routetest.routeSet(receivedDataList!!, receivedDataList[0])
+                 Log.d("PLAN", "Route Set")
+                 // 비동기적으로 routeStart를 호출합니다.
+-                routetest.routeStart(2, 6)
++                routetest.routeStart(2, 8, 1, receivedFoodDataList!!)
+                 Log.d("PLAN", "Route Started")
+                 routetest.printTotalRoute()
+                 Log.d("PLAN", "Total Route Printed")
+Index: app/src/main/java/com/example/kakaotest/Map/CreatedPath.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakaotest.Map\n\nimport android.content.Context\nimport android.graphics.BitmapFactory\nimport android.os.Bundle\nimport android.util.Log\nimport android.widget.FrameLayout\nimport android.widget.Toast\nimport androidx.appcompat.app.AppCompatActivity\nimport com.example.kakaotest.Plan.SelectedPlaceData\nimport com.example.kakaotest.R\n\nimport com.skt.tmap.TMapData\nimport com.skt.tmap.TMapPoint\nimport com.skt.tmap.TMapView\nimport com.skt.tmap.overlay.TMapMarkerItem\nimport com.skt.tmap.overlay.TMapPolyLine\n\nclass CreatedPath : AppCompatActivity() {\n\n\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        setContentView(R.layout.created_path)\n\n      //  SavedUser().getUserDataFromSharedPreferences(this) //회원정보 문서 ID\n\n\n        // Intent request code\n        val REQUEST_ENABLE_BT = 2\n\n\n\n        // CreatedPath에서 데이터 받아오기\n        val selectedPlacesList =\n            intent.getParcelableArrayListExtra<SelectedPlaceData>(\"selectedPlaceDataList\")\n\n        Log.d(\"selectedPlaceDataList\",selectedPlacesList.toString())\n\n        val sharedPreferences = getSharedPreferences(\"MyPrefs\", Context.MODE_PRIVATE)\n        sharedPreferences.edit().putString(\"app_key\", \"8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP\")\n            .apply()\n\n\n        // 값을 가져옴\n        val appKey: String? = sharedPreferences.getString(\"app_key\", null)\n        val container: FrameLayout = findViewById(R.id.tmapViewContainer)\n        val tMapView = TMapView(this)\n        val tMapData = TMapData()\n        val tMapGps = TMapPoint()\n\n\n        tMapView.setSKTMapApiKey(appKey)\n        container.addView(tMapView)\n\n\n\n\n        tMapView.setOnMapReadyListener(object : TMapView.OnMapReadyListener {\n            override fun onMapReady() {\n                // 맵 로딩 완료 후 구현\n                Toast.makeText(this@CreatedPath, \"MapLoading\", Toast.LENGTH_SHORT).show()\n                //지도 중심좌표로 이동\n                tMapView.setCenterPoint(37.566474, 126.985022);\n                tMapView.zoomLevel = 10\n\n\n                val iconList = listOf(\n                    BitmapFactory.decodeResource(resources, R.drawable.start),\n                    BitmapFactory.decodeResource(resources, R.drawable.pass),\n                    BitmapFactory.decodeResource(resources, R.drawable.end),\n\n                )\n\n\n                for ((index, selectedPlace) in selectedPlacesList!!.withIndex()) {\n                    val tpoint = selectedPlace.tpoint\n\n                    //선택된 장소들 표시\n                    if (tpoint != null) {\n                        val marker = TMapMarkerItem().apply {\n                            id = selectedPlace.placeName\n                            setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))\n                            icon = if (index==0) iconList[0]\n                            else if (index == selectedPlacesList.size-1) iconList[2]\n                            else iconList[1]\n\n                        }\n                        tMapView.addTMapMarkerItem(marker)\n                    }\n\n\n                }\n\n\n                // 선택된 장소들의 TMapPoint를 이용하여 리스트 생성\n                val pointList = ArrayList<TMapPoint>()\n                for (selectedPlace in selectedPlacesList!!) {\n                    selectedPlace.tpoint?.let { tMapPoint ->\n                        pointList.add(tMapPoint)\n                    }\n                }\n\n\n\n                // 선택된 장소들 간의 경로 표시\n                for (i in 0 until pointList.size - 1) {\n                    val start = pointList[i]\n                    val end = pointList[i + 1]\n\n\n\n                    TMapData().findPathData(start, end) { tMapPolyLine ->\n                       // tMapPolyLine.lineWidth = 5f\n                      //  tMapPolyLine.lineColor = Color.BLUE\n                      //  tMapPolyLine.lineAlpha = 255\n                      //  tMapPolyLine.outLineWidth = 5f\n                      //  tMapPolyLine.outLineColor = Color.RED\n                       // tMapPolyLine.outLineAlpha = 255\n\n                        // 새로운 PolyLine을 생성하여 기존 PolyLine의 좌표를 복사\n                    //    val newPolyLine = TMapPolyLine()\n                        val newPolyLine = TMapPolyLine(\"line1\", pointList)\n                          //  newPolyLine.linePointList.addAll(tMapPolyLine.linePointList)\n\n                        // 지도에 추가\n                        tMapView.addTMapPolyLine(newPolyLine)\n\n                        // 경로 추가 후 지도의 중심 및 줌 조절\n                        val info = tMapView.getDisplayTMapInfo(newPolyLine.linePointList)\n                        tMapView.zoomLevel = info.zoom\n                        tMapView.setCenterPoint(info.point.latitude, info.point.longitude)\n                    }\n                }\n\n            }\n        })\n\n    }\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/Map/CreatedPath.kt b/app/src/main/java/com/example/kakaotest/Map/CreatedPath.kt
+--- a/app/src/main/java/com/example/kakaotest/Map/CreatedPath.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/java/com/example/kakaotest/Map/CreatedPath.kt	(date 1715806212674)
+@@ -7,7 +7,7 @@
+ import android.widget.FrameLayout
+ import android.widget.Toast
+ import androidx.appcompat.app.AppCompatActivity
+-import com.example.kakaotest.Plan.SelectedPlaceData
++import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
+ import com.example.kakaotest.R
+ 
+ import com.skt.tmap.TMapData
+Index: app/src/main/java/com/example/kakaotest/Map/FoodSelectActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakaotest.Map\n\nimport android.content.ContentValues\nimport android.content.Context\nimport android.content.Intent\nimport android.graphics.BitmapFactory\nimport android.graphics.PointF\nimport android.os.Bundle\nimport android.util.Log\nimport android.widget.AdapterView\nimport android.widget.FrameLayout\nimport android.widget.Toast\nimport androidx.appcompat.app.AppCompatActivity\nimport com.example.kakaotest.DataModel.TravelPlan\nimport com.example.kakaotest.DataModel.tmap.FeatureCollection\nimport com.example.kakaotest.DataModel.tmap.SearchData\nimport com.example.kakaotest.Plan.SelectedPlaceData\nimport com.example.kakaotest.R\nimport com.example.kakaotest.Utility.Adapter.DataAdapter\nimport com.example.kakaotest.Utility.tmap.ApiService\nimport com.example.kakaotest.databinding.ActivityFoodMapBinding\nimport com.skt.tmap.TMapData\nimport com.skt.tmap.TMapData.OnFindAllPOIListener\nimport com.skt.tmap.TMapPoint\nimport com.skt.tmap.TMapView\nimport com.skt.tmap.TMapView.OnClickListenerCallback\nimport com.skt.tmap.overlay.TMapMarkerItem\nimport com.skt.tmap.poi.TMapPOIItem\nimport retrofit2.Call\nimport retrofit2.Callback\nimport retrofit2.Response\nimport retrofit2.Retrofit\nimport retrofit2.converter.gson.GsonConverterFactory\n\n\nclass FoodSelectActivity : AppCompatActivity() {\n    private val selectedFoodPlacesList = ArrayList<SearchData>() //선택한 장소 저장하는 list\n    val searchDataList = arrayListOf<SearchData>()\n    var searchDataList2 = ArrayList<SearchData>()\n\n    private var mBinding: ActivityFoodMapBinding ?= null\n    private val binding get() = mBinding!!\n    var startpoint: TMapPoint? = null\n    var endpoint: TMapPoint? = null\n    lateinit var start: TMapPoint\n    lateinit var end: TMapPoint\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n\n        mBinding = ActivityFoodMapBinding.inflate(layoutInflater)\n        setContentView(binding.root)\n        val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>(\"selectedPlaceDataList\")\n\n        //이부분 tmap sdk에도 BuildConfig가 있어서 고생좀 함\n        //여기 오류나면 상단바 Build -> Rebuild Project 누르면 됨\n        //   val appKey: String = BuildConfig.app_key\n\n        val sharedPreferences = getSharedPreferences(\"MyPrefs\", Context.MODE_PRIVATE)\n        sharedPreferences.edit().putString(\"app_key\", \"8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP\").apply()\n\n        // 값을 가져옴\n        val appKey: String? = sharedPreferences.getString(\"app_key\", null)\n\n        // FrameLayout 컨테이너를 XML에서 찾아옴\n        val container: FrameLayout = findViewById(R.id.tmapViewContainer)\n        // TMapView 인스턴스를 생성\n        val tMapView = TMapView(this@FoodSelectActivity)\n        val tMapData = TMapData()\n        val tMapGps = TMapPoint()\n\n\n        // TMapView를 FrameLayout에 추가\n        container.addView(tMapView)\n        // 발급받은 키로 TMapView에 API 키 설정\n        tMapView.setSKTMapApiKey(appKey)\n\n        val searchDataAdapter = DataAdapter(this,searchDataList)\n        binding.searchDataListView.adapter = searchDataAdapter\n\n\n\n        binding.searchDataListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->\n            val selectItem = parent.getItemAtPosition(position) as SearchData\n\n            //apiAdapter.apiRequest(126.862833,35.151286,126.883917,35.153113)\n            // Toast.makeText(this, \"${selectItem.tpoint.latitude}\", Toast.LENGTH_SHORT).show()\n            tMapView.setCenterPoint(selectItem.tpoint.latitude,selectItem.tpoint.longitude)\n            tMapView.zoomLevel = 15\n\n\n            if(startpoint==null || endpoint==null){\n                if(startpoint==null){\n                    startpoint = selectItem.tpoint\n                    //  Toast.makeText(this, \"시작지역: ${selectItem.id}\", Toast.LENGTH_SHORT).show()\n                }else if(endpoint==null){\n                    endpoint = selectItem.tpoint\n                    // Toast.makeText(this, \"도착지역: ${selectItem.id}\", Toast.LENGTH_SHORT).show()\n                }\n            }\n\n            // 중복된 장소인지 확인\n            if (!isPlaceAlreadySelected(selectItem)) {\n                //  Toast.makeText(this, selectItem.id, Toast.LENGTH_SHORT).show()\n\n                // 선택한 장소를 리스트에 추가\n                selectedFoodPlacesList.add(selectItem)\n\n\n\n                // 선택한 장소를 SelectedPlaceData에 추가\n                val selectedPlaceData = SelectedPlaceData(\n                    placeName = selectItem.id,\n                    tpoint = TMapPoint(selectItem.tpoint.latitude, selectItem.tpoint.longitude),\n                    address = selectItem.address\n\n                )\n\n                Log.d(\"ITEM\", selectItem.toString())\n\n                // 리스트에 추가된 모든 장소를 SelectedPlaceData 리스트로 변환\n                val selectedPlaceDataList = selectedFoodPlacesList.map {\n                    SelectedPlaceData(\n                        placeName = it.id,\n                        tpoint = TMapPoint(it.tpoint.latitude, it.tpoint.longitude),\n                        address = it.address\n                    )\n\n                }\n\n\n\n                binding.nextbuttons.setOnClickListener {\n                    val intent = Intent(this, RouteListActivity::class.java)\n                    val travelPlan = intent.getParcelableExtra<TravelPlan>(\"travelPlan\")\n                    intent.putExtra(\"travelPlan\", travelPlan)\n                    intent.putParcelableArrayListExtra(\"selectedPlaceDataList\", receivedDataList)\n                    intent.putParcelableArrayListExtra(\"selectedFoodDataList\", ArrayList(selectedPlaceDataList))\n                    startActivity(intent)\n                    Log.d(\"Item\", selectedFoodPlacesList.toString())\n\n                }\n\n            } else {\n                Toast.makeText(this, \"이미 선택된 장소입니다.\", Toast.LENGTH_SHORT).show()\n            }\n\n        }\n\n        // 클릭 이벤트 설정\n        tMapView.setOnClickListenerCallback(object : OnClickListenerCallback {\n            override fun onPressDown( // 터치함\n                p0: ArrayList<TMapMarkerItem>?,\n                p1: ArrayList<TMapPOIItem>?,\n                p2: TMapPoint?,\n                p3: PointF?\n            ) {\n                //Toast.makeText(this@FoodSelectActivity, \"onPressDown\", Toast.LENGTH_SHORT).show()\n            }\n\n            override fun onPressUp( // 떨어짐\n                p0: ArrayList<TMapMarkerItem>?,\n                p1: ArrayList<TMapPOIItem>?,\n                p2: TMapPoint?,\n                p3: PointF?\n            ) {\n                //Toast.makeText(this@FoodSelectActivity, \"onPressUp\", Toast.LENGTH_SHORT).show()\n            }\n        })\n\n\n\n\n\n        // 맵 로딩 완료 시 동작할 리스너 설정\n        tMapView.setOnMapReadyListener(object : TMapView.OnMapReadyListener {\n            override fun onMapReady() {\n                // 맵 로딩이 완료된 후에 수행할 동작을 구현해주세요\n                // 예: 마커 추가, 경로 표시 등\n                Toast.makeText(this@FoodSelectActivity, \"MapLoading\", Toast.LENGTH_SHORT).show()\n                tMapView.setCenterPoint(tMapGps.katecLat, tMapGps.katecLon)\n                tMapView.zoomLevel = 10\n\n                val marker = TMapMarkerItem()\n                marker.id = \"marker1\"\n                marker.setTMapPoint(tMapGps.katecLat, tMapGps.katecLon)\n                marker.icon = BitmapFactory.decodeResource(resources, R.drawable.point)\n                tMapView.addTMapMarkerItem(marker)\n\n\n                binding.searchButton.setOnClickListener{\n                    tMapView.removeAllTMapMarkerItem()\n                    tMapView.removeAllTMapPOIItem()\n                    searchDataList.clear()\n\n                    var strData = binding.searchText.text.toString()\n                    tMapData.findAllPOI(strData,\n                        OnFindAllPOIListener { poiItemList ->\n                            var num = 1\n                            for (item in poiItemList) {\n                                Log.e(\n                                    \"Poi Item\",\n                                    \"name:\" + item.poiName + \" address:\" + item.poiAddress\n                                )\n                                marker.id = item.poiName\n                                marker.setTMapPoint(TMapPoint())\n                                marker.icon = BitmapFactory.decodeResource(resources,\n                                    R.drawable.poi\n                                )\n                                tMapView.addTMapMarkerItem(marker)\n                                searchDataList2.add(SearchData(item.poiName,item.poiPoint,item.poiAddress))\n                                runOnUiThread{\n                                    searchDataList.add(SearchData(item.poiName,item.poiPoint,item.poiAddress))\n                                    searchDataAdapter.notifyDataSetChanged()\n                                }\n                                num += 1\n                            }\n\n                            /*\n                                                        routetest.routeSet(searchDataList2,searchDataList2[0])\n                                                        routetest.routeStart(2,6)\n                                                        routetest.printTotalRoute()\n                            */\n                            tMapView.addTMapPOIItem(poiItemList)\n                        })\n\n                }\n\n\n\n\n            }\n        })\n\n\n\n\n\n\n\n\n    }\n\n\n\n    private fun isPlaceAlreadySelected(newPlace: SearchData): Boolean {\n        // 중복된 장소인지 확인\n        for (selectedPlace in selectedFoodPlacesList) {\n            if (selectedPlace.id == newPlace.id) {\n                return true // 이미 선택된 장소가 존재하면 중복으로 판단\n            }\n        }\n        return false // 선택된 장소가 없으면 중복이 아님\n    }\n    fun apiRequest(startX: Number, startY: Number, endX: Number, endY: Number): Number? {\n        val retrofit: Retrofit = Retrofit.Builder()\n            .baseUrl(\"https://apis.openapi.sk.com/tmap/\")\n            .addConverterFactory(GsonConverterFactory.create())\n            .build()\n\n        val apiService: ApiService = retrofit.create(ApiService::class.java)\n\n        var input = HashMap<String, Any>()\n        input[\"startY\"] = startY\n        input[\"startX\"] = startX\n        input[\"endY\"] = endY\n        input[\"endX\"] = endX\n        input[\"totalValue\"] = 2\n\n        val routeCall: Call<FeatureCollection> = apiService.getRoute(input)\n        var totalTime: Number? = null\n\n        routeCall.enqueue(object : Callback<FeatureCollection> {\n            override fun onResponse(\n                call: Call<FeatureCollection?>,\n                response: Response<FeatureCollection?>\n            ) {\n                val RouteInfo: FeatureCollection? = response.body()\n                Log.d(ContentValues.TAG, \"getPostList onResponse()\")\n                Log.d(ContentValues.TAG, \"type : ${RouteInfo?.features?.get(0)?.type}\")\n                Log.d(\n                    ContentValues.TAG,\n                    \"TotalTime : ${RouteInfo?.features?.get(0)?.properties?.totalTime}\"\n                )\n                Log.d(\n                    ContentValues.TAG,\n                    \"TotalDistance : ${RouteInfo?.features?.get(0)?.properties?.totalDistance}\"\n                )\n                Log.d(\n                    ContentValues.TAG,\n                    \"TotalFare : ${RouteInfo?.features?.get(0)?.properties?.totalFare}\"\n                )\n                totalTime = RouteInfo?.features?.get(0)?.properties?.totalTime\n            }\n\n            override fun onFailure(call: Call<FeatureCollection?>, t: Throwable) {\n                call.cancel()\n                Log.d(ContentValues.TAG, \"api fail\")\n                totalTime = null\n            }\n\n        })\n        return totalTime\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/Map/FoodSelectActivity.kt b/app/src/main/java/com/example/kakaotest/Map/FoodSelectActivity.kt
+--- a/app/src/main/java/com/example/kakaotest/Map/FoodSelectActivity.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/java/com/example/kakaotest/Map/FoodSelectActivity.kt	(date 1715806212691)
+@@ -14,7 +14,7 @@
+ import com.example.kakaotest.DataModel.TravelPlan
+ import com.example.kakaotest.DataModel.tmap.FeatureCollection
+ import com.example.kakaotest.DataModel.tmap.SearchData
+-import com.example.kakaotest.Plan.SelectedPlaceData
++import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
+ import com.example.kakaotest.R
+ import com.example.kakaotest.Utility.Adapter.DataAdapter
+ import com.example.kakaotest.Utility.tmap.ApiService
+Index: app/src/main/java/com/example/kakaotest/DataModel/AreaData.kt
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/DataModel/AreaData.kt b/app/src/main/java/com/example/kakaotest/DataModel/AreaData.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/example/kakaotest/DataModel/AreaData.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ /dev/null	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
+@@ -1,47 +0,0 @@
+-package com.example.kakaotest.DataModel
+-
+-data class AreaDataResponse(
+-    val response: AreaResponseData
+-)
+-
+-data class AreaResponseData(
+-    val header: AreaHeaderData,
+-    val body: AreaBodyData
+-)
+-
+-data class AreaHeaderData(
+-    val resultCode: String,
+-    val resultMsg: String
+-)
+-
+-data class AreaBodyData(
+-    val items: AreaItemsData
+-)
+-
+-data class AreaItemsData(
+-    val item: List<AreaData>
+-)
+-
+-data class AreaData(
+-    val firstimage: String, //대표이미지(원본)
+-    val firstimage2:	String, //대표이미지(썸네일)
+-    val mapx: String, //GPS X좌표
+-    val mapy: String, //GPS Y좌표
+-    val mlevel: String, //Map Level
+-    val addr2: String, //상세주소
+-    val areacode: String, //지역코드
+-    val modifiedtime: String, //수정일
+-    val cpyrhtDivCd: String, //저작권 유형 (Type1:제1유형(출처표시-권장), Type3:제3유형(제1유형+변경금지)
+-    val booktour: String, //교과서속여행지 여부
+-    val cat1: String, //대분류
+-    val sigungucode: String, //시군구코드
+-    val tel: String, //전화번호
+-    val title: String, //제목
+-    val addr1: String, //주소
+-    val cat2: String, //중분류
+-    val cat3: String, //소분류
+-    val contentid: String, //콘텐츠ID
+-    val contenttypeid: String, //콘텐츠타입ID
+-    val createdtime: String, //등록일
+-    val zipcode: String //우편번호
+-)
+Index: app/src/main/java/com/example/kakaotest/Plan/SelectedPlaceData.kt
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/Plan/SelectedPlaceData.kt b/app/src/main/java/com/example/kakaotest/Plan/SelectedPlaceData.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/example/kakaotest/Plan/SelectedPlaceData.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ /dev/null	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
+@@ -1,54 +0,0 @@
+-
+-package com.example.kakaotest.Plan
+-
+-
+-import android.os.Parcel
+-import android.os.Parcelable
+-import com.skt.tmap.*
+-
+-
+-data class SelectedPlaceData(
+-    val placeName: String,
+-    val tpoint: TMapPoint, // TMapPoint는 Parcelable이어야 함
+-    val address: String,
+-
+-) : Parcelable {
+-    constructor(parcel: Parcel) : this(
+-        parcel.readString() ?: "",
+-        TMapPoint(
+-            parcel.readDouble(),
+-            parcel.readDouble()
+-        ),
+-        parcel.readString() ?: ""
+-    )
+-
+-    override fun writeToParcel(parcel: Parcel, flags: Int) {
+-        parcel.writeString(placeName)
+-        parcel.writeDouble(tpoint.latitude)
+-        parcel.writeDouble(tpoint.longitude)
+-        parcel.writeString(address)
+-    }
+-
+-    override fun describeContents(): Int {
+-        return 0
+-    }
+-
+-    companion object CREATOR : Parcelable.Creator<SelectedPlaceData> {
+-        override fun createFromParcel(parcel: Parcel): SelectedPlaceData {
+-            return SelectedPlaceData(
+-                parcel.readString() ?: "",
+-                TMapPoint(parcel.readDouble(), parcel.readDouble()),
+-                parcel.readString() ?: ""
+-            )
+-        }
+-
+-        override fun newArray(size: Int): Array<SelectedPlaceData?> {
+-            return arrayOfNulls(size)
+-        }
+-    }
+-
+-
+-
+-
+-
+-}
+Index: app/src/main/java/com/example/kakaotest/TourApi/RestaurantDetailActivity.kt
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/TourApi/RestaurantDetailActivity.kt b/app/src/main/java/com/example/kakaotest/TourApi/RestaurantDetailActivity.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/example/kakaotest/TourApi/RestaurantDetailActivity.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ /dev/null	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
+@@ -1,107 +0,0 @@
+-package com.example.kakaotest.TourApi
+-
+-import android.content.Context
+-import android.graphics.BitmapFactory
+-import android.os.Bundle
+-import android.util.Log
+-import android.widget.FrameLayout
+-import android.widget.Toast
+-import androidx.appcompat.app.AppCompatActivity
+-import com.bumptech.glide.Glide
+-import com.example.kakaotest.DataModel.Restaurant
+-import com.example.kakaotest.R
+-import com.example.kakaotest.databinding.ActivityRestaurantDetailBinding
+-import com.skt.tmap.TMapPoint
+-import com.skt.tmap.TMapView
+-import com.skt.tmap.overlay.TMapMarkerItem
+-
+-class RestaurantDetailActivity : AppCompatActivity() {
+-
+-    override fun onCreate(savedInstanceState: Bundle?) {
+-        super.onCreate(savedInstanceState)
+-        val binding = ActivityRestaurantDetailBinding.inflate(layoutInflater)
+-        setContentView(binding.root)
+-
+-        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+-        sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP").apply()
+-
+-        // 값을 가져옴
+-        val appKey: String? = sharedPreferences.getString("app_key", null)
+-
+-        // FrameLayout 컨테이너를 XML에서 찾아옴
+-        val container: FrameLayout = findViewById(R.id.tmapViewContainer)
+-
+-        // TMapView 인스턴스를 생성
+-        val tMapView = TMapView(this)
+-
+-        // TMapView를 FrameLayout에 추가
+-        container.addView(tMapView)
+-
+-        // 발급받은 키로 TMapView에 API 키 설정
+-        tMapView.setSKTMapApiKey(appKey)
+-
+-        val marker = TMapMarkerItem()
+-
+-        // Restaurant 객체를 인텐트에서 가져옴
+-        val restaurant = intent.getSerializableExtra("restaurant") as? Restaurant
+-
+-        var selcted = TMapPoint(restaurant!!.mapx.toDouble(),restaurant.mapy.toDouble())
+-
+-        if(restaurant != null) {
+-
+-            Glide.with(this)
+-                .load(restaurant.firstimage)
+-                .into(binding.mainImage)
+-
+-            binding.textViewTitle.text = restaurant.title
+-            binding.textViewAddress.text = restaurant.addr1
+-            binding.textViewTitle.text = restaurant.tel
+-            binding.textViewAddressDetail.text = restaurant.addr2
+-            binding.cat1.text = restaurant.cat1
+-            binding.cat2.text = restaurant.cat2
+-            binding.cat3.text = restaurant.cat3
+-        }
+-
+-        tMapView.setOnMapReadyListener(object : TMapView.OnMapReadyListener {
+-            override fun onMapReady() {
+-                // 맵 로딩이 완료된 후에 수행할 동작을 구현해주세요
+-                // 예: 마커 추가, 경로 표시 등
+-                Toast.makeText(this@RestaurantDetailActivity, "MapLoading", Toast.LENGTH_SHORT).show()
+-
+-                if (restaurant != null) {
+-                    Log.d("restaurant","${restaurant.title}, ${restaurant.mapx}, ${restaurant.mapy.toDouble()}")
+-                    Log.d("restaurant","1.${tMapView.centerPoint}")
+-                    marker.setTMapPoint(selcted.latitude,selcted.longitude)
+-                    marker.id = "marker1"
+-                    marker.icon = BitmapFactory.decodeResource(resources, R.drawable.poi)
+-                    marker.visible = true
+-
+-                    tMapView.addTMapMarkerItem(marker)
+-                    tMapView.setCenterPoint(selcted.latitude,selcted.longitude)
+-                    tMapView.setLocationPoint(selcted.latitude,selcted.longitude)
+-
+-                    Log.d("restaurant","2.${tMapView.centerPoint}")
+-                }
+-                //tMapView.zoomLevel = 15
+-
+-                binding.button.setOnClickListener {
+-                    Log.d("restaurant","${restaurant.title}, ${restaurant.mapx}, ${restaurant.mapy.toDouble()}")
+-                    Log.d("restaurant","3.${tMapView.centerPoint}")
+-                    marker.setTMapPoint(selcted.latitude,selcted.longitude)
+-                    marker.id = "marker1"
+-                    marker.icon = BitmapFactory.decodeResource(resources, R.drawable.poi)
+-                    marker.visible = true
+-
+-                    tMapView.addTMapMarkerItem(marker)
+-                    tMapView.setCenterPoint(selcted.latitude,selcted.longitude)
+-                    tMapView.setLocationPoint(selcted.latitude,selcted.longitude)
+-                    tMapView.zoomLevel = 15
+-
+-                    Log.d("restaurant","4.${tMapView.centerPoint}")
+-                }
+-            }
+-        })
+-
+-
+-    }
+-}
+Index: app/src/main/java/com/example/kakaotest/TourApi/AreaBasedAdapter.kt
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/TourApi/AreaBasedAdapter.kt b/app/src/main/java/com/example/kakaotest/TourApi/AreaBasedAdapter.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/example/kakaotest/TourApi/AreaBasedAdapter.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ /dev/null	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
+@@ -1,33 +0,0 @@
+-package com.example.kakaotest.TourApi
+-
+-import android.view.LayoutInflater
+-import android.view.View
+-import android.view.ViewGroup
+-import android.widget.TextView
+-import androidx.recyclerview.widget.RecyclerView
+-import com.example.kakaotest.DataModel.AreaData
+-import com.example.kakaotest.R
+-
+-
+-class AreaBasedAdapter(private val areadatas: List<AreaData>) :
+-    RecyclerView.Adapter<AreaBasedAdapter.AreaDataViewHolder>() {
+-
+-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AreaDataViewHolder {
+-        val itemView = LayoutInflater.from(parent.context)
+-            .inflate(R.layout.areadata_item, parent, false)
+-        return AreaDataViewHolder(itemView)
+-    }
+-
+-    override fun onBindViewHolder(holder: AreaDataViewHolder, position: Int) {
+-        val currentItem = areadatas[position]
+-        holder.textViewTitle.text = currentItem.title
+-        holder.textViewAddress.text = currentItem.addr1
+-    }
+-
+-    override fun getItemCount() = areadatas.size
+-
+-    class AreaDataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+-        val textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle)
+-        val textViewAddress: TextView = itemView.findViewById(R.id.textViewAddress)
+-    }
+-}
+\ No newline at end of file
+Index: app/src/main/java/com/example/kakaotest/TourApi/Detail_map_test.kt
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/TourApi/Detail_map_test.kt b/app/src/main/java/com/example/kakaotest/TourApi/Detail_map_test.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/example/kakaotest/TourApi/Detail_map_test.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ /dev/null	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
+@@ -1,75 +0,0 @@
+-package com.example.kakaotest.TourApi
+-
+-import android.content.Context
+-import android.graphics.BitmapFactory
+-import android.os.Bundle
+-import android.util.Log
+-import android.widget.FrameLayout
+-import android.widget.Toast
+-import androidx.appcompat.app.AppCompatActivity
+-import com.example.kakaotest.DataModel.Restaurant
+-import com.example.kakaotest.R
+-import com.example.kakaotest.Utility.tmap.ApiAdapter
+-import com.example.kakaotest.databinding.ActivityDetailMapBinding
+-import com.skt.tmap.TMapData
+-import com.skt.tmap.TMapPoint
+-import com.skt.tmap.TMapView
+-import com.skt.tmap.overlay.TMapMarkerItem
+-
+-class Detail_map_test : AppCompatActivity() {
+-    override fun onCreate(savedInstanceState: Bundle?){
+-        super.onCreate(savedInstanceState)
+-        val binding = ActivityDetailMapBinding.inflate(layoutInflater)
+-        setContentView(binding.root)
+-
+-
+-        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+-        sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP").apply()
+-
+-        // 값을 가져옴
+-        val appKey: String? = sharedPreferences.getString("app_key", null)
+-
+-        // FrameLayout 컨테이너를 XML에서 찾아옴
+-        val container: FrameLayout = findViewById(R.id.detailView)
+-
+-        // TMapView 인스턴스를 생성
+-        val tMapView = TMapView(this@Detail_map_test)
+-        val tMapData = TMapData()
+-        val tMapGps = TMapPoint()
+-        val apiAdapter = ApiAdapter()
+-
+-        // TMapView를 FrameLayout에 추가
+-        container.addView(tMapView)
+-        // 발급받은 키로 TMapView에 API 키 설정
+-        tMapView.setSKTMapApiKey(appKey)
+-
+-        val selected_place = intent.getSerializableExtra("restaurant") as? Restaurant
+-
+-
+-
+-        tMapView.setOnMapReadyListener(object : TMapView.OnMapReadyListener {
+-            override fun onMapReady() {
+-                // 맵 로딩이 완료된 후에 수행할 동작을 구현해주세요
+-                // 예: 마커 추가, 경로 표시 등
+-                Toast.makeText(this@Detail_map_test, "MapLoading", Toast.LENGTH_SHORT).show()
+-
+-                val marker = TMapMarkerItem()
+-
+-                if (selected_place != null) {
+-                    Log.d("restaurant","${selected_place.title}")
+-                    tMapView.setCenterPoint(selected_place.mapx.toDouble(),selected_place.mapy.toDouble())
+-                    marker.setTMapPoint(selected_place.mapx.toDouble(),selected_place.mapy.toDouble())
+-                }
+-                tMapView.zoomLevel = 15
+-
+-
+-                marker.id = "marker1"
+-                marker.icon = BitmapFactory.decodeResource(resources, R.drawable.point)
+-                tMapView.addTMapMarkerItem(marker)
+-
+-
+-            }
+-        })
+-    }
+-
+-}
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    package=\"com.example.kakaotest\">\n\n    <uses-permission android:name=\"android.permission.INTERNET\" />\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\n    <uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />\n    <uses-permission android:name=\"android.permission.INTERNET\" />\n\n    <application\n        android:allowBackup=\"true\"\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\n        android:fullBackupContent=\"@xml/backup_rules\"\n        android:icon=\"@mipmap/ic_launcher\"\n        android:label=\"@string/app_name\"\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\n        android:supportsRtl=\"true\"\n        android:theme=\"@style/AppTheme\"\n        android:usesCleartextTraffic=\"true\"\n        tools:targetApi=\"31\">\n        <activity\n            android:name=\".Map.ScheduleActivity\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".scheduleActivity\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Map.MyTrip\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Map.WhereActivity\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Map.SecondRoute\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Map.FirstRoute\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".HomeActivity\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".TourApi.TourApiActivity\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".TourApi.RestaurantDetailActivity\"\n            android:exported=\"false\"/>\n        <activity\n            android:name=\".TourApi.Detail_map_test\"\n            android:exported=\"false\"/>\n        <activity\n            android:name=\".Map.RouteListActivity\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Login.Id.ResetPassword\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Login.Id.IdSignup\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Login.Id.IdFindId\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Login.Id.IdFindPw\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Login.Email.EmailFindPW\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Login.Email.Emailsignup\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Login.Email.EmailLogin\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Map.PlanInfoInput\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Map.SelectedPlace\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Map.MapActivity\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".Map.FoodSelectActivity\"\n            android:exported=\"false\" />\n\n        <activity\n            android:name=\".CheckList.CheckListActivity\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".CheckList.EditTodoActivity\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".CheckList.AfterSelectListActivity\"\n            android:exported=\"false\" />\n        <activity\n            android:name=\".CheckList.ListSelectActivity\"\n            android:exported=\"false\" />\n\n        <activity\n            android:name=\".Login.MainActivity\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" />\n\n                <category android:name=\"android.intent.category.LAUNCHER\" />\n            </intent-filter>\n        </activity>\n        <activity\n            android:name=\"com.kakao.sdk.auth.AuthCodeHandlerActivity\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.VIEW\" />\n\n                <category android:name=\"android.intent.category.DEFAULT\" />\n                <category android:name=\"android.intent.category.BROWSABLE\" />\n\n                <data\n                    android:host=\"oauth\"\n                    android:scheme=\"@string/kakao_app_key2\" />\n            </intent-filter>\n        </activity>\n    </application>\n\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/AndroidManifest.xml	(date 1715806212762)
+@@ -25,12 +25,6 @@
+             android:name=".Map.ScheduleActivity"
+             android:exported="false" />
+         <activity
+-            android:name=".scheduleActivity"
+-            android:exported="false" />
+-        <activity
+-            android:name=".Map.MyTrip"
+-            android:exported="false" />
+-        <activity
+             android:name=".Map.WhereActivity"
+             android:exported="false" />
+         <activity
+@@ -46,10 +40,7 @@
+             android:name=".TourApi.TourApiActivity"
+             android:exported="false" />
+         <activity
+-            android:name=".TourApi.RestaurantDetailActivity"
+-            android:exported="false"/>
+-        <activity
+-            android:name=".TourApi.Detail_map_test"
++            android:name=".TourApi.TourapiDetailActivity"
+             android:exported="false"/>
+         <activity
+             android:name=".Map.RouteListActivity"
+Index: app/src/main/java/com/example/kakaotest/CreatedRoute1.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakaotest\n\nimport android.content.Intent\nimport android.os.Bundle\nimport android.util.Log\nimport android.widget.ArrayAdapter\nimport android.widget.Button\nimport android.widget.ListView\nimport android.widget.ScrollView\nimport android.widget.TextView\nimport androidx.appcompat.app.AppCompatActivity\nimport androidx.lifecycle.lifecycleScope\nimport com.example.kakaotest.Plan.PMakeRoute\nimport com.example.kakaotest.Plan.SelectedPlaceData\nimport kotlinx.coroutines.launch\n\nclass CreatedRoute1 : AppCompatActivity() {\n\n    private val routetest = PMakeRoute()\n\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        setContentView(R.layout.activity_create_route)\n        val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>(\"selectedPlaceDataList\")\n        val receivedFoodDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>(\"selectedFoodDataList\")\n\n        val path_1: Button = findViewById<Button>(R.id.path_1)\n        val path_2: Button = findViewById<Button>(R.id.path_2)\n        val nextButton: Button = findViewById<Button>(R.id.nextbutton)\n\n        // 클릭 이벤트 설정\n        path_1.setOnClickListener {\n            val intent = Intent(this, FirstRoute::class.java)\n            // TotalRouteData에서 첫 번째 날짜의 데이터 가져오기\n            val firstDayData = routetest.printTotalRoute().firstOrNull()\n            Log.d(\"PLAN\",\"firstDayData : \\n\"+firstDayData)\n            // 첫 번째 날짜의 데이터가 있을 때 처리\n            if (firstDayData != null) {\n                // 첫 번째 날짜의 선택된 장소 리스트 가져오기\n                val firstList = firstDayData.dayRoute\n                intent.putExtra(\"firstList\",  firstList)\n\n                startActivity(intent)\n            } else {\n                Log.e(\"PLAN\", \"No data available for the first day\")\n            }\n        }\n\n        path_2.setOnClickListener {\n            val intent = Intent(this, SecondRoute::class.java)\n            val secondDayData = routetest.printTotalRoute().getOrNull(1)\n            Log.d(\"PLAN\",\"secondDayData : \\n\"+secondDayData)\n            if (secondDayData != null) {\n                // 두 번째 날짜의 선택된 장소 리스트 가져오기\n                val secondList = secondDayData.dayRoute\n\n                intent.putExtra(\"secondList\",  secondList)\n\n                startActivity(intent)\n            } else {\n                Log.e(\"CreatedRoute1\", \"No data available for the secondday\")\n            }\n        }\n\n        nextButton.setOnClickListener {\n            val intent = Intent(this, PlanInfoActivity::class.java)\n            startActivity(intent)\n        }\n\n\n        Log.d(\"PLAN\",\"receivedDataList : \\n\"+ receivedDataList.toString())\n\n        lifecycleScope.launch {\n            try {\n                // 비동기적으로 routeSet을 호출합니다.\n                routetest.routeSet(receivedDataList!!, receivedDataList[0])\n                Log.d(\"PLAN\", \"Route Set\")\n                // 비동기적으로 routeStart를 호출합니다.\n                routetest.routeStart(2, 8, 1, receivedFoodDataList!!)\n                Log.d(\"PLAN\", \"Route Started\")\n                routetest.printTotalRoute()\n                Log.d(\"PLAN\", \"Total Route Printed\")\n                updateListView()\n            } catch (e: Exception) {\n                Log.e(\"CreatedRoute1\", \"Error: ${e.message}\", e)\n            }\n        }\n    }\n\n    private fun updateListView() {\n        val listView1 = findViewById<ListView>(R.id.listView1)\n        val listView2 = findViewById<ListView>(R.id.listView2)\n        val scrollView = findViewById<ScrollView>(R.id.scrollView)\n        val totalTime_1 = findViewById<TextView>(R.id.totalTime_1)\n        val totalTime_2 = findViewById<TextView>(R.id.totalTime_2)\n        val totalRouteData = routetest.printTotalRoute()\n        Log.d(\"PLAN\",\"updateListView() totalRouteData : \\n\" + totalRouteData)\n\n\n        // 첫 번째 날짜의 모든 데이터\n        val firstDayData = routetest.printTotalRoute().firstOrNull()\n        if (firstDayData != null) {\n            Log.d(\"PLAN\",\"updateListView() firstDayData : \\n\" + firstDayData)\n\n            //  Log.d(\"PLAN\",\"${i}일째 총 이동시간 : \"+hour.toString())\n\n\n            val totalTime = firstDayData.totalTime.toDouble() / 3600 // 첫 번째 날짜의 총 이동 시간\n            val totalHour: Double = String.format(\"%.1f\", totalTime).toDouble()\n            val selectedPlaceList = firstDayData.dayRoute // 첫 번째 날짜의 선택된 장소 데이터 목록\n            totalTime_1.text = totalHour.toString() +\"시간\"\n            val firstDayPlace = selectedPlaceList!!.map { it.pointdata?.placeName }\n            val adapter1 =\n                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, firstDayPlace)\n            listView1.adapter = adapter1\n            listView1.setOnTouchListener { _, _ ->\n                scrollView.requestDisallowInterceptTouchEvent(true)\n                false\n            }\n        }\n\n        val secondDayData = totalRouteData.getOrNull(1)\n        if (secondDayData!= null) {\n            Log.d(\"PLAN\",\"updateListView() secondDayData : \\n\" + secondDayData)\n            val totalTime = secondDayData.totalTime.toDouble() / 3600 // 첫 번째 날짜의 총 이동 시간\n            val totalHour: Double = String.format(\"%.1f\", totalTime).toDouble() // 첫 번째 날짜의 총 이동 시간\n            val selectedPlaceList = secondDayData.dayRoute // 첫 번째 날짜의 선택된 장소 데이터 목록\n            totalTime_2.text=totalHour.toString() +\"시간\"\n            val secondDayPlace = selectedPlaceList!!.map { it.pointdata?.placeName }\n            val adapter2 =\n                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, secondDayPlace)\n            listView2.adapter = adapter2\n            listView2.setOnTouchListener { _, _ ->\n                scrollView.requestDisallowInterceptTouchEvent(true)\n                false\n            }\n        }\n\n\n\n    }\n}\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/CreatedRoute1.kt b/app/src/main/java/com/example/kakaotest/CreatedRoute1.kt
+--- a/app/src/main/java/com/example/kakaotest/CreatedRoute1.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/java/com/example/kakaotest/CreatedRoute1.kt	(date 1715806212775)
+@@ -10,8 +10,8 @@
+ import android.widget.TextView
+ import androidx.appcompat.app.AppCompatActivity
+ import androidx.lifecycle.lifecycleScope
++import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
+ import com.example.kakaotest.Plan.PMakeRoute
+-import com.example.kakaotest.Plan.SelectedPlaceData
+ import kotlinx.coroutines.launch
+ 
+ class CreatedRoute1 : AppCompatActivity() {
+Index: app/src/main/java/com/example/kakaotest/Plan/PMakeRoute.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakaotest.Plan\n\nimport android.util.Log\nimport com.example.kakaotest.Utility.tmap.ApiAdapter\nimport com.skt.tmap.TMapPoint\nimport kotlinx.coroutines.Dispatchers\nimport kotlinx.coroutines.async\nimport kotlinx.coroutines.coroutineScope\nimport kotlinx.coroutines.runBlocking\nimport java.lang.Exception\nimport java.util.LinkedList\nimport java.util.ArrayList\n\nclass PMakeRoute {\n    private var totalRouteList = LinkedList<DRouteData>()\n    private var routeList = LinkedList<PSearchRouteData>()\n    private var saveList = LinkedList<PSearchRouteData>()\n    private var dayRouteList = LinkedList<PSearchRouteData>()\n    private val apiAdapter = ApiAdapter()\n    private lateinit var startPoint: SelectedPlaceData\n    val AllRouteList = LinkedList<DRouteData>()\n\n    suspend fun apiRequest(startLongitude: Double, startLatitude: Double, endLongitude: Double, endLatitude: Double): Number? {\n        return coroutineScope {\n            val deferredTime = async(Dispatchers.IO) {\n                apiAdapter.apiRequest(startLongitude, startLatitude, endLongitude, endLatitude)\n            }\n            deferredTime.await()?.toInt()\n        }\n    }\n\n    fun routeSet(selectedPlaceList: ArrayList<SelectedPlaceData>, startPoint: SelectedPlaceData) {\n        try {\n            Log.d(\"PLAN\", \"Start Point: $startPoint\")\n            this.startPoint = startPoint\n            var routeData: PSearchRouteData\n            var time: Number?\n\n            for (i in 1 until selectedPlaceList.count()) {\n                val time = runBlocking {\n                    async(Dispatchers.IO) {\n                        apiAdapter.apiRequest(\n                            startPoint.tpoint.longitude, startPoint.tpoint.latitude,\n                            selectedPlaceList[i].tpoint.longitude, selectedPlaceList[i].tpoint.latitude\n                        )\n                    }.await()\n                }\n\n                if (time != null) {\n                    routeData = PSearchRouteData(selectedPlaceList[i], time)\n                    routeList.add(routeData)\n                    println(\"time is $time for ${selectedPlaceList[i].placeName}\")\n                } else {\n                    Log.e(\"PLAN\", \"Received null time for ${selectedPlaceList[i].placeName}\")\n                }\n            }\n            // routeList.removeAt(0)\n            // saveList = routeList\n            saveList.addAll(routeList)\n\n            Log.d(\"PLAN\", \"Route List:\")\n            routeList.forEachIndexed { index, routeData ->\n                Log.d(\"PLAN\", \"Index $index: ${routeData.pointdata}\")\n            }\n        } catch (e: Exception) {\n            Log.e(\"PLAN\", \"routeSet - Exception in routeSet: ${e.toString()}\")\n            e.printStackTrace()\n        }\n    }\n\n    //totalDate만큼 진행,maxDayTime이 하루의 최대여행시간(단위는 시간), 장소 하나당 1시간 가정\n    suspend fun routeStart(totalDate: Int, maxDayTime: Int, stayTimePerPlace: Int, foodDataList:ArrayList<SelectedPlaceData>) {\n        coroutineScope {\n            try {\n                for (k in 0 until totalDate) {\n                    var totalTime: Double = 0.0\n                    var currentDayTime: Double = 0.0\n                    var remainingTime: Int = maxDayTime * 3600 // 남은 시간을 초 단위로 계산\n                    var lunchcheck = 0\n\n                    dayRouteList.add(PSearchRouteData(startPoint, 0))\n                    Log.d(\"PLAN\", \"dayRouteList : ${dayRouteList.toString()}\")\n\n                    // 최단 시간 경로를 구하는 대신, 최대한 많은 장소를 방문하는 로직 추가\n                    while (routeList.isNotEmpty() && currentDayTime + routeList.first().time.toInt() <= remainingTime) {\n                        val minTime = routeList.minByOrNull { it.time.toInt() } ?: break\n                        if (currentDayTime + minTime.time.toInt() > remainingTime) break\n                        if (currentDayTime > 4 * 3600 && lunchcheck == 0) {\n                            var minfood = 999999\n                            var mindata: SelectedPlaceData? = null\n                            for (i in 0 until foodDataList.size ) {\n                                val temp = apiRequest(dayRouteList.last.pointdata?.tpoint?.longitude!!,dayRouteList.last.pointdata?.tpoint?.latitude!!,\n                                    foodDataList[i].tpoint.longitude,foodDataList[i].tpoint.latitude)\n                                if (temp!!.toInt() < minfood.toInt()) {\n                                    minfood = temp.toInt()\n                                    mindata = foodDataList[i]\n                                }\n                            }\n\n                            dayRouteList.add(PSearchRouteData(mindata,minfood))\n                            currentDayTime += minfood.toInt()\n\n                            currentDayTime += 3600\n\n                            lunchcheck = 1\n                            continue\n                        }\n\n                        // 장소 추가\n                        dayRouteList.add(minTime)\n                        currentDayTime += minTime.time.toInt() + 3600\n\n\n\n                        // 해당 장소를 routeList에서 제거\n                        routeList.remove(minTime)\n                    }\n\n                    Log.d(\"PLAN\", \"dayRouteList : ${dayRouteList.toString()}\")\n\n                    // 총 이동 시간 계산 (이동 시간 + 체류 시간)\n                    totalTime = currentDayTime + stayTimePerPlace * (dayRouteList.size - 1)\n                    Log.d(\"PLAN\",\"totalTime : ${totalTime}\")\n                    // 현재 일자의 경로를 추가\n                    totalRouteList.add(DRouteData(totalTime, LinkedList(dayRouteList)))\n\n                    // 현재 일자의 경로가 선택되면, dayRouteList를 초기화\n                    dayRouteList.clear()\n                }\n            } catch (e: Exception) {\n                Log.e(\"PLAN\", \"routeStart - Exception: ${e.toString()}\", e)\n            }\n        }\n    }\n\n\n\n    //경로의 마지막 장소와 가장 가까운 장소를 다음 장소로 추가하는 함수\n    suspend fun findMinPoint(startRouteData: PSearchRouteData): Boolean {\n        return try {\n            if (routeList.isEmpty()) {\n                Log.d(\"PLAN\", \"Route list is empty in findMinPoint\")\n                return false\n            }\n\n            val asyncResults = routeList.map { route ->\n                coroutineScope {\n                    async(Dispatchers.IO) {\n                        apiAdapter.apiRequest(\n                            startRouteData.pointdata!!.tpoint.longitude,\n                            startRouteData.pointdata.tpoint.latitude,\n                            route.pointdata!!.tpoint.longitude,\n                            route.pointdata!!.tpoint.latitude\n                        )\n                    }\n                }\n            }\n\n            // 모든 비동기 작업 완료 및 결과를 times에 매핑\n            val times = asyncResults.mapNotNull { asyncResult -> asyncResult.await()?.toInt() }\n\n            if (times.isEmpty()) {\n                Log.d(\"PLAN\", \"Time list is empty in findMinPoint\")\n                return false\n            }\n\n            // 최소 이동 시간 및 해당 인덱스 찾기\n            val minTime = times.minOrNull() ?: return false\n            val minIndex = times.indexOf(minTime)\n\n            // 최소 이동 시간의 장소를 dayRouteList에 추가하고 routeList에서 제거\n            dayRouteList.add(routeList[minIndex])\n            Log.d(\"PLAN\", \"dayRouteList : ${dayRouteList.toString()}\")\n            routeList.removeAt(minIndex)\n            // 이동 시간 추가\n            dayRouteList[0].time = dayRouteList[0].time.toInt() + minTime\n\n            true // 성공적으로 최소 이동 시간을 찾았으므로 true 반환\n        } catch (e: Exception) {\n            // 예외 발생 시 로그 출력 및 false 반환\n            Log.e(\"PLAN\", \"findMinPoint - Exception: ${e.toString()}\", e)\n            false\n        }\n    }\n\n\n    fun findInList(findData:PSearchRouteData):Int {\n        try {\n            for (i in 0 until saveList.count()) {\n                if (saveList[i] == findData) {\n\n                    return i\n                }\n            }\n            return -1\n        } catch (e: Exception) {\n            Log.e(\"PLAN\", \"Exception: ${e.toString()}\", e)\n            return -1\n        }\n    }\n\n    /*\n    data class RouteData(\n        val routeStringList: List<List<String>>,\n        val routeTpointList: List<List<String>>,\n        val TotalTimeList : List<String>\n    )\n\n    fun printTotalRoute(): RouteData {\n        val routeStringList = mutableListOf<List<String>>()\n        val routeTpointList = mutableListOf<List<String>>()\n        val totalTimeList = mutableListOf<String>()\n        try {\n            for (i in 0 until totalRouteList.count()) {\n                val dayRouteList = mutableListOf<String>()\n                val tpointList = mutableListOf<String>()\n                for (k in 0 until (totalRouteList[i].dayRoute?.count()!!)) {\n                    val placeName = totalRouteList[i].dayRoute?.get(k)?.pointdata?.placeName\n                    val tpoint = totalRouteList[i].dayRoute?.get(k)?.pointdata?.tpoint\n                    val address = totalRouteList[i].dayRoute?.get(k)?.pointdata?.address\n                    if (placeName != null) {\n                        dayRouteList.add(placeName)\n                    }\n                    if (tpoint != null) {\n                        tpointList.add(tpoint.toString())\n                    }\n                }\n                routeStringList.add(dayRouteList)\n                routeTpointList.add(tpointList)\n                val min = totalRouteList[i].totalTime / 60\n                val hour = min / 60\n                val formattedHour: Double = String.format(\"%.1f\", hour).toDouble()\n                val totalTime = \"총 이동시간 : ${formattedHour} 시간\"\n                totalTimeList.add(totalTime)\n            }\n        } catch (e: Exception) {\n            // 예외가 발생하면 로그로 출력\n            Log.e(\"PLAN\", \"getTotalRouteList - Exception: ${e.toString()}\", e)\n        }\n        return RouteData(routeStringList, routeTpointList,totalTimeList)\n    }*/\n    /*\n    data class TotalRouteData(\n        val totalTime: String, // 총 이동 시간\n        val selectedPlaceList: List<SelectedPlaceData> // 선택된 장소 데이터 목록\n    )\n\n    /**\n     * 전체 경로 정보를 기반으로 TotalRouteData 객체를 생성하고 반환합니다.\n     */\n    fun printTotalRoute(): TotalRouteData {\n\n        val routeStringList = mutableListOf<List<String>>()\n        val routeTpointList = mutableListOf<List<String>>()\n        val totalTimeList = mutableListOf<String>()\n        // 선택된 장소 데이터 목록을 저장할 리스트\n        val selectedPlaceDataList = mutableListOf<SelectedPlaceData>()\n\n        // 전체 경로 정보를 순회하며 각 날짜별 이동 경로와 총 이동 시간을 계산합니다.\n        try {\n            for (i in 0 until totalRouteList.count()) {\n                val dayRouteList = mutableListOf<String>()\n                val tpointList = mutableListOf<String>()\n                // 각 날짜별 이동 경로와 선택된 장소 데이터를 계산합니다.\n                for (k in 0 until (totalRouteList[i].dayRoute?.count()!!)) {\n                    val placeName = totalRouteList[i].dayRoute?.get(k)?.pointdata?.placeName\n                    val tpoint = totalRouteList[i].dayRoute?.get(k)?.pointdata?.tpoint\n                    val address = totalRouteList[i].dayRoute?.get(k)?.pointdata?.address\n                    // 장소 이름과 좌표가 유효한 경우에만 데이터를 추가합니다.\n                    if (placeName != null && tpoint != null) {\n                        dayRouteList.add(placeName)\n                        tpointList.add(tpoint.toString())\n                        // 선택된 장소 데이터를 생성하여 리스트에 추가합니다.\n                        val selectedPlaceData = SelectedPlaceData(placeName, tpoint, address ?: \"\")\n                        selectedPlaceDataList.add(selectedPlaceData)\n                    }\n                }\n                // 이동 경로와 총 이동 시간을 각 리스트에 추가합니다.\n                routeStringList.add(dayRouteList)\n                routeTpointList.add(tpointList)\n                val min = totalRouteList[i].totalTime / 60\n                val hour = min / 60\n                val formattedHour: Double = String.format(\"%.1f\", hour).toDouble()\n                val totalTime = \"총 이동시간 : ${formattedHour} 시간\"\n                totalTimeList.add(totalTime)\n            }\n        } catch (e: Exception) {\n            // 예외가 발생하면 로그로 출력합니다.\n            Log.e(\"PLAN\", \"getTotalRouteList - Exception: ${e.toString()}\", e)\n        }\n        // 총 이동 시간(totalTime)은 totalTimeList의 첫 번째 요소로 설정합니다.\n        val totalTime = totalTimeList.firstOrNull() ?: \"\"\n        // TotalRouteData 객체를 생성하여 반환합니다.\n        return TotalRouteData(totalTime, selectedPlaceDataList)\n    }\n\n*/\n    data class TotalRouteData(\n        val routeDataList: List<RouteData>\n    )\n\n    data class RouteData(\n        val date: Int,\n        val totalTime: String,\n        val selectedPlaceList: List<SelectedPlaceData>\n    )\n\n    fun printTotalRoute(): LinkedList<DRouteData> {\n\n        try {\n            for (i in 0 until totalRouteList.count()) {\n                println(\"${i + 1} Day\")\n                for (k in 0 until (totalRouteList[i].dayRoute?.count() ?: 0)) {\n                    val placeInfo = totalRouteList[i].dayRoute?.get(k)\n                    Log.d(\"PLAN\", placeInfo?.pointdata!!.placeName)\n                }\n\n                val hour = totalRouteList[i].totalTime.toDouble() / 3600\n                //  Log.d(\"PLAN\",\"${i}일째 총 이동시간 : \"+hour.toString())\n                val totalHour: Double = String.format(\"%.1f\", hour).toDouble()\n                Log.d(\"PLAN\", \"${i+1}일째 총 이동시간 : \" + totalHour)\n                val totalTime = \"총 이동시간 : ${totalHour} 시간\"\n                //  println(totalTime)\n\n\n            }\n\n        } catch (e: Exception) {\n            Log.e(\"PLAN\", \"getTotalRouteList - Exception: ${e.toString()}\", e)\n        }\n\n\n        return totalRouteList\n    }\n\n    fun printAllRoute() {\n        try{\n            for(i in 0 until dayRouteList.count()) {\n                println(\"${dayRouteList[i].pointdata?.placeName}\")\n                Log.d(\"printAllRoute\",\"${dayRouteList[i].pointdata?.placeName}\")\n            }\n        }catch (e:Exception){\n\n            Log.e(\"PLAN\", \"printAllRoute - Exception: ${e.toString()}\", e)\n        }    }\n\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/Plan/PMakeRoute.kt b/app/src/main/java/com/example/kakaotest/Plan/PMakeRoute.kt
+--- a/app/src/main/java/com/example/kakaotest/Plan/PMakeRoute.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/java/com/example/kakaotest/Plan/PMakeRoute.kt	(date 1715806212790)
+@@ -1,15 +1,13 @@
+ package com.example.kakaotest.Plan
+ 
+ import android.util.Log
++import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
+ import com.example.kakaotest.Utility.tmap.ApiAdapter
+-import com.skt.tmap.TMapPoint
+ import kotlinx.coroutines.Dispatchers
+ import kotlinx.coroutines.async
+ import kotlinx.coroutines.coroutineScope
+ import kotlinx.coroutines.runBlocking
+-import java.lang.Exception
+ import java.util.LinkedList
+-import java.util.ArrayList
+ 
+ class PMakeRoute {
+     private var totalRouteList = LinkedList<DRouteData>()
+Index: app/src/main/java/com/example/kakaotest/Plan/PSearchRouteData.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakaotest.Plan\n\nimport android.os.Parcel\nimport android.os.Parcelable\n\ndata class PSearchRouteData(\n    val pointdata: SelectedPlaceData?,\n    var time: Number\n) : Parcelable {\n    constructor(parcel: Parcel) : this(\n        parcel.readParcelable(SelectedPlaceData::class.java.classLoader),\n        parcel.readDouble()\n    )\n\n    override fun writeToParcel(parcel: Parcel, flags: Int) {\n        parcel.writeParcelable(pointdata, flags)\n        parcel.writeDouble(time.toDouble())\n    }\n\n    override fun describeContents(): Int {\n        return 0\n    }\n\n    companion object CREATOR : Parcelable.Creator<PSearchRouteData> {\n        override fun createFromParcel(parcel: Parcel): PSearchRouteData {\n            return PSearchRouteData(parcel)\n        }\n\n        override fun newArray(size: Int): Array<PSearchRouteData?> {\n            return arrayOfNulls(size)\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/Plan/PSearchRouteData.kt b/app/src/main/java/com/example/kakaotest/Plan/PSearchRouteData.kt
+--- a/app/src/main/java/com/example/kakaotest/Plan/PSearchRouteData.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/java/com/example/kakaotest/Plan/PSearchRouteData.kt	(date 1715806212804)
+@@ -2,6 +2,7 @@
+ 
+ import android.os.Parcel
+ import android.os.Parcelable
++import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
+ 
+ data class PSearchRouteData(
+     val pointdata: SelectedPlaceData?,
+Index: app/src/main/java/com/example/kakaotest/TourApi/TourApiManager.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakaotest.TourApi\n\nimport android.util.Log\nimport com.example.kakaotest.DataModel.AreaDataResponse\nimport com.example.kakaotest.DataModel.RestaurantResponse\n\n\nclass TourApiManager {\n\n        suspend fun searchRestaurantsInArea(\n            latitude: Double,\n            longitude: Double\n        ): RestaurantResponse {\n            val apiService = TourApiClient.create()\n            Log.d(\"restest\", \"apiservice 실행\")\n            val response = apiService.searchRestaurants(\n                apiKey = TourApiClient.API_KEY, // 여기를 변경\n                numOfRows = 20,\n                pageNo = 5,\n                mobileOS = \"AND\",\n                mobileApp = \"AppTest\",\n                arrange = \"A\",\n                mapX = longitude,\n                mapY = latitude,\n                radius = 5000,\n                type = \"json\",\n                listYN = \"Y\",\n                contentTypeId = 39,\n                modifiedtime = \"\"\n            )\n            Log.d(\"restest\", \"searchRestaurants 실행\")\n            return response\n        }\n\n        suspend fun searchAreaBasedList(latitude: Double, longitude: Double): AreaDataResponse {\n            val apiService = TourApiClient.create()\n            Log.d(\"areatest\", \"AreaData_apiservice 실행\")\n            val response = apiService.searchAreaData(\n                apiKey = TourApiClient.API_KEY, // 여기를 변경\n                numOfRows = 10,\n                pageNo = 1,\n                mobileOS = \"AND\",\n                mobileApp = \"AppTest\",\n                arrange = \"A\",\n                mapX = longitude,\n                mapY = latitude,\n                radius = 5000,\n                type = \"json\",\n                listYN = \"Y\",\n                contentTypeId = 39,\n                modifiedtime = \"\"\n            )\n            Log.d(\"areatest\", \"searchAreaData 실행\")\n            return response\n        }\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/TourApi/TourApiManager.kt b/app/src/main/java/com/example/kakaotest/TourApi/TourApiManager.kt
+--- a/app/src/main/java/com/example/kakaotest/TourApi/TourApiManager.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/java/com/example/kakaotest/TourApi/TourApiManager.kt	(date 1715806212815)
+@@ -1,18 +1,20 @@
+ package com.example.kakaotest.TourApi
+ 
+ import android.util.Log
+-import com.example.kakaotest.DataModel.AreaDataResponse
+-import com.example.kakaotest.DataModel.RestaurantResponse
++import com.example.kakaotest.DataModel.CategoryResponse
++import com.example.kakaotest.DataModel.TourapiResponse
+ 
+ 
+ class TourApiManager {
+ 
+-        suspend fun searchRestaurantsInArea(
++        suspend fun searchApi(
+             latitude: Double,
+-            longitude: Double
+-        ): RestaurantResponse {
++            longitude: Double,
++            type: Int
++        ): TourapiResponse {
+             val apiService = TourApiClient.create()
+-            Log.d("restest", "apiservice 실행")
++            Log.d("places", "apiservice 실행")
++            Log.d("places", "type: ${type}")
+             val response = apiService.searchRestaurants(
+                 apiKey = TourApiClient.API_KEY, // 여기를 변경
+                 numOfRows = 20,
+@@ -25,32 +27,27 @@
+                 radius = 5000,
+                 type = "json",
+                 listYN = "Y",
+-                contentTypeId = 39,
++                contentTypeId = type,
+                 modifiedtime = ""
+             )
+-            Log.d("restest", "searchRestaurants 실행")
++            Log.d("places", "searchRestaurants 실행")
+             return response
+         }
+ 
+-        suspend fun searchAreaBasedList(latitude: Double, longitude: Double): AreaDataResponse {
++        suspend fun searchCategory(cat1 : String,cat2 : String,cat3 : String): CategoryResponse {
+             val apiService = TourApiClient.create()
+-            Log.d("areatest", "AreaData_apiservice 실행")
+-            val response = apiService.searchAreaData(
++            Log.d("category", "category 실행")
++            val response = apiService.searchCategory(
+                 apiKey = TourApiClient.API_KEY, // 여기를 변경
+-                numOfRows = 10,
+-                pageNo = 1,
+                 mobileOS = "AND",
+                 mobileApp = "AppTest",
+-                arrange = "A",
+-                mapX = longitude,
+-                mapY = latitude,
+-                radius = 5000,
+                 type = "json",
+-                listYN = "Y",
+-                contentTypeId = 39,
+-                modifiedtime = ""
++                cat1 = cat1,
++                cat2 = cat2,
++                cat3 = cat3,
++                contentTypeId = 39
+             )
+-            Log.d("areatest", "searchAreaData 실행")
++            Log.d("category", "category 실행")
+             return response
+         }
+ }
+Index: app/src/main/java/com/example/kakaotest/TourApi/TourApiActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakaotest.TourApi\n\nimport android.os.Bundle\nimport android.util.Log\nimport androidx.appcompat.app.AppCompatActivity\nimport androidx.recyclerview.widget.LinearLayoutManager\nimport androidx.recyclerview.widget.RecyclerView\nimport com.example.kakaotest.R\nimport com.example.kakaotest.databinding.ActivityTourapiBinding\nimport kotlinx.coroutines.MainScope\nimport kotlinx.coroutines.launch\n\nclass TourApiActivity : AppCompatActivity() {\n    private val tourApiManager = TourApiManager()\n    private val scope = MainScope()\n\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n\n        var binding = ActivityTourapiBinding.inflate(layoutInflater)\n        setContentView(binding.root)\n\n\n\n        val latitude = 37.5665\n        val longitude = 126.9780\n\n        binding.restaurant.setOnClickListener {\n            searchRestaurantsInArea(latitude, longitude)\n        }\n        binding.areaBased.setOnClickListener {\n            searchAreaBasedList(latitude, longitude)\n        }\n    }\n\n    private fun searchRestaurantsInArea(latitude: Double, longitude: Double) {\n        scope.launch {\n            try {\n                val restaurants = tourApiManager.searchRestaurantsInArea(latitude,longitude)\n                // 결과 처리\n                val items = restaurants.response.body.items\n                for (restaurant in items.item) {\n                    Log.d(\"Restaurant\", \"음식점 이름: ${restaurant.title}, 주소: ${restaurant.addr1}, 이미지: ${restaurant.firstimage2}\")\n                }\n                // RecyclerView 설정\n                val recyclerView: RecyclerView = findViewById(R.id.recyclerView)\n                recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)\n                val adapter = RestaurantAdapter(restaurants.response.body.items.item)\n                recyclerView.adapter = adapter\n            } catch (e: Exception) {\n                // 오류 처리\n                Log.e(\"TourApiActivity\", \"음식점 검색 오류: $e\")\n            }\n        }\n    }\n\n    private fun searchAreaBasedList(latitude: Double, longitude: Double) {\n        scope.launch {\n            try {\n                val areaData = tourApiManager.searchAreaBasedList(latitude, longitude)\n                // 결과 처리\n                val items = areaData.response.body.items\n                for (place in items.item) {\n                    Log.d(\"Place\", \"장소 이름: ${place.title}, 주소: ${place.addr1}\")\n                }\n                // RecyclerView 설정\n                val recyclerView: RecyclerView = findViewById(R.id.recyclerView)\n                recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)\n                val adapter = AreaBasedAdapter(areaData.response.body.items.item)\n                recyclerView.adapter = adapter\n            } catch (e: Exception) {\n                // 오류 처리\n                Log.e(\"TourApiActivity\", \"지역 기반 리스트 검색 오류: $e\")\n            }\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/TourApi/TourApiActivity.kt b/app/src/main/java/com/example/kakaotest/TourApi/TourApiActivity.kt
+--- a/app/src/main/java/com/example/kakaotest/TourApi/TourApiActivity.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/java/com/example/kakaotest/TourApi/TourApiActivity.kt	(date 1715806212827)
+@@ -14,64 +14,104 @@
+     private val tourApiManager = TourApiManager()
+     private val scope = MainScope()
+ 
++
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-
+         var binding = ActivityTourapiBinding.inflate(layoutInflater)
++
+         setContentView(binding.root)
+ 
+ 
+ 
+         val latitude = 37.5665
+         val longitude = 126.9780
++        var type = 0
+ 
+         binding.restaurant.setOnClickListener {
+-            searchRestaurantsInArea(latitude, longitude)
++            type = 39 //음식점
++            searchApi(latitude, longitude, type)
++        }
++        binding.tour.setOnClickListener {
++            type = 12 //관광지
++            searchApi(latitude, longitude, type)
++        }
++        binding.culture.setOnClickListener {
++            type = 14 //문화시설
++            searchApi(latitude, longitude, type)
+         }
+-        binding.areaBased.setOnClickListener {
+-            searchAreaBasedList(latitude, longitude)
++        binding.shopping.setOnClickListener {
++            type = 38 //쇼핑
++            searchApi(latitude, longitude, type)
+         }
++//        binding.category.setOnClickListener {
++//            searchCategory()
++//        }
++
+     }
+ 
+-    private fun searchRestaurantsInArea(latitude: Double, longitude: Double) {
++    //추천장소 검색 함수
++    private fun searchApi(latitude: Double, longitude: Double, type: Int) {
++
+         scope.launch {
+             try {
+-                val restaurants = tourApiManager.searchRestaurantsInArea(latitude,longitude)
++                Log.d(
++                    "places", "tourapi실행"
++                )
++                val places = tourApiManager.searchApi(latitude, longitude, type)
+                 // 결과 처리
+-                val items = restaurants.response.body.items
++                Log.d(
++                    "places", "tourapi실행 완료"
++                )
++                val items = places.response.body.items
+                 for (restaurant in items.item) {
+-                    Log.d("Restaurant", "음식점 이름: ${restaurant.title}, 주소: ${restaurant.addr1}, 이미지: ${restaurant.firstimage2}")
++                    Log.d(
++                        "places",
++                        "장소 이름: ${restaurant.title}, 주소: ${restaurant.addr1}, 이미지: ${restaurant.firstimage2}"
++                    )
+                 }
+                 // RecyclerView 설정
+                 val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+                 recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)
+-                val adapter = RestaurantAdapter(restaurants.response.body.items.item)
++                val adapter = TourapiAdapter(places.response.body.items.item)
+                 recyclerView.adapter = adapter
+             } catch (e: Exception) {
+                 // 오류 처리
+-                Log.e("TourApiActivity", "음식점 검색 오류: $e")
++                Log.e("places", "음식점 검색 오류: $e")
+             }
+         }
+     }
+ 
+-    private fun searchAreaBasedList(latitude: Double, longitude: Double) {
+-        scope.launch {
+-            try {
+-                val areaData = tourApiManager.searchAreaBasedList(latitude, longitude)
+-                // 결과 처리
+-                val items = areaData.response.body.items
+-                for (place in items.item) {
+-                    Log.d("Place", "장소 이름: ${place.title}, 주소: ${place.addr1}")
+-                }
+-                // RecyclerView 설정
+-                val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+-                recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)
+-                val adapter = AreaBasedAdapter(areaData.response.body.items.item)
+-                recyclerView.adapter = adapter
+-            } catch (e: Exception) {
+-                // 오류 처리
+-                Log.e("TourApiActivity", "지역 기반 리스트 검색 오류: $e")
+-            }
+-        }
+-    }
++//    private fun searchCategory() {
++//        var binding = ActivityTourapiBinding.inflate(layoutInflater)
++//        scope.launch {
++//            try {
++//                Log.d(
++//                    "category", "tourapi실행"
++//                )
++//                val places = tourApiManager.searchCategory()
++//                // 결과 처리
++//                Log.d(
++//                    "category", "tourapi실행 완료"
++//                )
++//                val items = places.response.body.items
++//                for (category in items.item) {
++//                    Log.d(
++//                        "category",
++//                        "category cat1: ${category.cat1}, cat2: ${category.cat2}, cat3: ${category.cat3}"
++//                    )
++//                    Log.d(
++//                        "category",
++//                        "category cat1: ${category.rnum}, cat2: ${category.code}, cat3: ${category.name}"
++//                    )
++//                }
++//                binding.category1.text = items.item[0].cat1
++//                binding.category2.text = items.item[0].cat2
++//                binding.category3.text = items.item[0].cat3
++//
++//            } catch (e: Exception) {
++//                // 오류 처리
++//                Log.e("places", "음식점 검색 오류: $e")
++//            }
++//        }
++//    }
+ }
+Index: app/src/main/java/com/example/kakaotest/TourApi/TourapiDetailActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/TourApi/TourapiDetailActivity.kt b/app/src/main/java/com/example/kakaotest/TourApi/TourapiDetailActivity.kt
+new file mode 100644
+--- /dev/null	(date 1715806212874)
++++ b/app/src/main/java/com/example/kakaotest/TourApi/TourapiDetailActivity.kt	(date 1715806212874)
+@@ -0,0 +1,140 @@
++package com.example.kakaotest.TourApi
++
++import android.content.Context
++import android.graphics.BitmapFactory
++import android.os.Bundle
++import android.util.Log
++import android.widget.FrameLayout
++import android.widget.Toast
++import androidx.appcompat.app.AppCompatActivity
++import com.bumptech.glide.Glide
++import com.example.kakaotest.DataModel.Tourapi
++import com.example.kakaotest.R
++import com.example.kakaotest.databinding.ActivityTourapiDetailBinding
++import com.skt.tmap.TMapPoint
++import com.skt.tmap.TMapView
++import com.skt.tmap.overlay.TMapMarkerItem
++import kotlinx.coroutines.MainScope
++import kotlinx.coroutines.launch
++
++class TourapiDetailActivity : AppCompatActivity() {
++    private val tourApiManager = TourApiManager()
++    private val scope = MainScope()
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        val binding = ActivityTourapiDetailBinding.inflate(layoutInflater)
++        setContentView(binding.root)
++
++        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
++        sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP").apply()
++
++        // 값을 가져옴
++        val appKey: String? = sharedPreferences.getString("app_key", null)
++
++        // FrameLayout 컨테이너를 XML에서 찾아옴
++        val container: FrameLayout = findViewById(R.id.tmapViewContainer)
++
++        // TMapView 인스턴스를 생성
++        val tMapView = TMapView(this)
++
++        // TMapView를 FrameLayout에 추가
++        container.addView(tMapView)
++
++        // 발급받은 키로 TMapView에 API 키 설정
++        tMapView.setSKTMapApiKey(appKey)
++
++        val marker = TMapMarkerItem()
++
++        // Restaurant 객체를 인텐트에서 가져옴
++        val tourapi_place = intent.getSerializableExtra("tourapi") as? Tourapi
++
++        var selcted = TMapPoint(tourapi_place!!.mapx.toDouble(),tourapi_place.mapy.toDouble())
++
++        if(tourapi_place != null) {
++
++            Glide.with(this)
++                .load(tourapi_place.firstimage)
++                .into(binding.mainImage)
++
++            binding.textViewTitle.text = tourapi_place.title
++            binding.textViewAddress.text = tourapi_place.addr1
++            binding.textViewTitle.text = tourapi_place.tel
++            binding.textViewAddressDetail.text = tourapi_place.addr2
++            binding.cat1.text = tourapi_place.cat1
++            binding.cat2.text = tourapi_place.cat2
++            binding.cat3.text = tourapi_place.cat3
++            var res = searchCategory(tourapi_place.cat1,tourapi_place.cat2,tourapi_place.cat3)
++        }
++
++        tMapView.setOnMapReadyListener(object : TMapView.OnMapReadyListener {
++            override fun onMapReady() {
++                // 맵 로딩이 완료된 후에 수행할 동작을 구현해주세요
++                // 예: 마커 추가, 경로 표시 등
++                Toast.makeText(this@TourapiDetailActivity, "MapLoading", Toast.LENGTH_SHORT).show()
++
++                if (tourapi_place != null) {
++                    Log.d("places","${tourapi_place.title}, ${tourapi_place.mapx}, ${tourapi_place.mapy.toDouble()}")
++                    Log.d("places","1.${tMapView.centerPoint}")
++                    marker.setTMapPoint(selcted.latitude,selcted.longitude)
++                    marker.id = "marker1"
++                    marker.icon = BitmapFactory.decodeResource(resources, R.drawable.poi)
++                    marker.visible = true
++
++                    tMapView.addTMapMarkerItem(marker)
++                    tMapView.setCenterPoint(selcted.latitude,selcted.longitude)
++                    tMapView.setLocationPoint(selcted.latitude,selcted.longitude)
++
++                    Log.d("places","2.${tMapView.centerPoint}")
++                }
++                //tMapView.zoomLevel = 15
++
++                binding.button.setOnClickListener {
++                    Log.d("places","${tourapi_place.title}, ${tourapi_place.mapx}, ${tourapi_place.mapy.toDouble()}")
++                    Log.d("places","3.${tMapView.centerPoint}")
++                    marker.setTMapPoint(selcted.latitude,selcted.longitude)
++                    marker.id = "marker1"
++                    marker.icon = BitmapFactory.decodeResource(resources, R.drawable.poi)
++                    marker.visible = true
++
++                    tMapView.addTMapMarkerItem(marker)
++                    tMapView.setCenterPoint(selcted.latitude,selcted.longitude)
++                    tMapView.setLocationPoint(selcted.latitude,selcted.longitude)
++                    tMapView.zoomLevel = 15
++
++                    Log.d("places","4.${tMapView.centerPoint}")
++                }
++            }
++        })
++
++
++    }
++    private fun searchCategory(cat1 : String,cat2 : String,cat3 : String) {
++        scope.launch {
++            try {
++                Log.d(
++                    "category", "tourapi실행"
++                )
++                val places = tourApiManager.searchCategory(cat1,cat2,cat3)
++                // 결과 처리
++                Log.d(
++                    "category", "tourapi실행 완료"
++                )
++                val items = places.response.body.items
++                for (category in items.item) {
++                    Log.d(
++                        "category",
++                        "category cat1: ${category.cat1}, cat2: ${category.cat2}, cat3: ${category.cat3}"
++                    )
++                    Log.d(
++                        "category",
++                        "category cat1: ${category.rnum}, cat2: ${category.code}, cat3: ${category.name}"
++                    )
++                }
++
++            } catch (e: Exception) {
++                // 오류 처리
++                Log.e("places", "음식점 검색 오류: $e")
++            }
++        }
++    }
++}
+Index: app/src/main/java/com/example/kakaotest/TourApi/TourApiService.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.kakaotest.TourApi\n\nimport com.example.kakaotest.DataModel.AreaDataResponse\nimport com.example.kakaotest.DataModel.RestaurantResponse\nimport retrofit2.http.GET\nimport retrofit2.http.Query\n\ninterface TourApiService {\n    @GET(\"locationBasedList1\")\n    suspend fun searchRestaurants(\n        @Query(\"serviceKey\") apiKey: String,\n        @Query(\"numOfRows\") numOfRows: Int,\n        @Query(\"pageNo\") pageNo: Int,\n        @Query(\"MobileOS\") mobileOS: String,\n        @Query(\"MobileApp\") mobileApp: String,\n        @Query(\"arrange\") arrange: String,\n        @Query(\"mapX\") mapX: Double,\n        @Query(\"mapY\") mapY: Double,\n        @Query(\"radius\") radius: Int,\n        @Query(\"_type\") type: String,\n        @Query(\"listYN\") listYN: String,\n        @Query(\"contentTypeId\") contentTypeId: Int,\n        @Query(\"modifiedtime\") modifiedtime: String\n    ): RestaurantResponse\n    @GET(\"areaBasedList1\")\n    suspend fun searchAreaData(\n        @Query(\"serviceKey\") apiKey: String,\n        @Query(\"numOfRows\") numOfRows: Int,\n        @Query(\"pageNo\") pageNo: Int,\n        @Query(\"MobileOS\") mobileOS: String,\n        @Query(\"MobileApp\") mobileApp: String,\n        @Query(\"arrange\") arrange: String,\n        @Query(\"mapX\") mapX: Double,\n        @Query(\"mapY\") mapY: Double,\n        @Query(\"radius\") radius: Int,\n        @Query(\"_type\") type: String,\n        @Query(\"listYN\") listYN: String,\n        @Query(\"contentTypeId\") contentTypeId: Int,\n        @Query(\"modifiedtime\") modifiedtime: String\n    ): AreaDataResponse\n}\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/TourApi/TourApiService.kt b/app/src/main/java/com/example/kakaotest/TourApi/TourApiService.kt
+--- a/app/src/main/java/com/example/kakaotest/TourApi/TourApiService.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/java/com/example/kakaotest/TourApi/TourApiService.kt	(date 1715806212839)
+@@ -1,7 +1,7 @@
+ package com.example.kakaotest.TourApi
+ 
+-import com.example.kakaotest.DataModel.AreaDataResponse
+-import com.example.kakaotest.DataModel.RestaurantResponse
++import com.example.kakaotest.DataModel.CategoryResponse
++import com.example.kakaotest.DataModel.TourapiResponse
+ import retrofit2.http.GET
+ import retrofit2.http.Query
+ 
+@@ -21,23 +21,19 @@
+         @Query("listYN") listYN: String,
+         @Query("contentTypeId") contentTypeId: Int,
+         @Query("modifiedtime") modifiedtime: String
+-    ): RestaurantResponse
+-    @GET("areaBasedList1")
+-    suspend fun searchAreaData(
++    ): TourapiResponse
++    @GET("categoryCode1")
++    suspend fun searchCategory(
+         @Query("serviceKey") apiKey: String,
+-        @Query("numOfRows") numOfRows: Int,
+-        @Query("pageNo") pageNo: Int,
+         @Query("MobileOS") mobileOS: String,
+         @Query("MobileApp") mobileApp: String,
+-        @Query("arrange") arrange: String,
+-        @Query("mapX") mapX: Double,
+-        @Query("mapY") mapY: Double,
+-        @Query("radius") radius: Int,
+         @Query("_type") type: String,
+-        @Query("listYN") listYN: String,
++        @Query("cat1") cat1: String,
++        @Query("cat2") cat2: String,
++        @Query("cat3") cat3: String,
+         @Query("contentTypeId") contentTypeId: Int,
+-        @Query("modifiedtime") modifiedtime: String
+-    ): AreaDataResponse
++    ): CategoryResponse
++
+ }
+ 
+ 
+Index: app/src/main/java/com/example/kakaotest/DataModel/Restaurant.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/DataModel/Restaurant.kt b/app/src/main/java/com/example/kakaotest/DataModel/Tourapi.kt
+rename from app/src/main/java/com/example/kakaotest/DataModel/Restaurant.kt
+rename to app/src/main/java/com/example/kakaotest/DataModel/Tourapi.kt
+--- a/app/src/main/java/com/example/kakaotest/DataModel/Restaurant.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/java/com/example/kakaotest/DataModel/Tourapi.kt	(date 1715806212955)
+@@ -2,7 +2,10 @@
+ 
+ import java.io.Serializable
+ 
+-data class RestaurantResponse(
++data class TourapiResponse(
++    val response: ResponseData
++)
++data class CategoryResponse(
+     val response: ResponseData
+ )
+ 
+@@ -24,10 +27,10 @@
+ )
+ 
+ data class ItemsData(
+-    val item: List<Restaurant>
++    val item: List<Tourapi>
+ )
+ 
+-data class Restaurant(
++data class Tourapi(
+     val addr1: String,  //주소
+     val addr2: String?, //상세주소
+     val areacode: String,   //지역코드
+@@ -48,5 +51,9 @@
+     val modifiedtime: String,   //수정일
+     val sigungucode: String,    //시군코드
+     val tel: String,    //전화번호
+-    val title: String   //제목
++    val title: String,   //제목
++
++    val rnum : String, //일련번호
++    val code: String, //코드 : 대,중,소분류코드
++    val name: String //코드명 : 대,중,소분류코드명
+ ): Serializable
+Index: app/src/main/java/com/example/kakaotest/TourApi/RestaurantAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/kakaotest/TourApi/RestaurantAdapter.kt b/app/src/main/java/com/example/kakaotest/TourApi/TourapiAdapter.kt
+rename from app/src/main/java/com/example/kakaotest/TourApi/RestaurantAdapter.kt
+rename to app/src/main/java/com/example/kakaotest/TourApi/TourapiAdapter.kt
+--- a/app/src/main/java/com/example/kakaotest/TourApi/RestaurantAdapter.kt	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/java/com/example/kakaotest/TourApi/TourapiAdapter.kt	(date 1715806212990)
+@@ -8,20 +8,20 @@
+ import android.widget.TextView
+ import androidx.recyclerview.widget.RecyclerView
+ import com.bumptech.glide.Glide
+-import com.example.kakaotest.DataModel.Restaurant
++import com.example.kakaotest.DataModel.Tourapi
+ import com.example.kakaotest.R
+ 
+-class RestaurantAdapter(private val restaurants: List<Restaurant>) :
+-    RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
++class TourapiAdapter(private val tourapis: List<Tourapi>) :
++    RecyclerView.Adapter<TourapiAdapter.TourapiViewHolder>() {
+ 
+-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
++    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TourapiViewHolder {
+         val itemView = LayoutInflater.from(parent.context)
+             .inflate(R.layout.restaurant_item, parent, false)
+-        return RestaurantViewHolder(itemView)
++        return TourapiViewHolder(itemView)
+     }
+ 
+-    override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
+-        val currentItem = restaurants[position]
++    override fun onBindViewHolder(holder: TourapiViewHolder, position: Int) {
++        val currentItem = tourapis[position]
+ 
+         // Glide를 사용하여 이미지 설정
+         Glide.with(holder.itemView.context)
+@@ -34,17 +34,17 @@
+         // 아이템 클릭 리스너 설정
+         holder.itemView.setOnClickListener {
+             val context = holder.itemView.context
+-            val intent = Intent(context, RestaurantDetailActivity::class.java).apply {
++            val intent = Intent(context, TourapiDetailActivity::class.java).apply {
+                 // 클릭된 아이템의 상세 정보를 인텐트에 추가
+-                putExtra("restaurant", currentItem)
++                putExtra("tourapi", currentItem)
+             }
+             context.startActivity(intent)
+         }
+     }
+ 
+-    override fun getItemCount() = restaurants.size
++    override fun getItemCount() = tourapis.size
+ 
+-    class RestaurantViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
++    class TourapiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+         val thumbnail: ImageView = itemView.findViewById(R.id.thumbnail) ?: throw NullPointerException("Thumbnail ImageView is null")
+         val textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle) ?: throw NullPointerException("TextViewTitle is null")
+         val textViewAddress: TextView = itemView.findViewById(R.id.textViewAddress) ?: throw NullPointerException("TextViewAddress is null")
+Index: app/src/main/res/layout/activity_tourapi.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"wrap_content\">\n\n    <androidx.constraintlayout.widget.ConstraintLayout\n        android:id=\"@+id/linearLayout\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:orientation=\"vertical\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\">\n\n        <Button\n            android:id=\"@+id/restaurant\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            android:text=\"음식점\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintTop_toTopOf=\"parent\" />\n\n        <Button\n            android:id=\"@+id/areaBased\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            android:text=\"위치기반\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toTopOf=\"parent\" />\n    </androidx.constraintlayout.widget.ConstraintLayout>\n\n    <ScrollView\n        android:id=\"@+id/scrollView2\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:orientation=\"vertical\"\n        app:layout_constraintBottom_toBottomOf=\"parent\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toBottomOf=\"@+id/linearLayout\">\n\n        <androidx.recyclerview.widget.RecyclerView\n            android:id=\"@+id/recyclerView\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"wrap_content\"\n            android:clipToPadding=\"false\"\n            android:padding=\"8dp\"\n            android:scrollbars=\"vertical\"\n            app:layoutManager=\"androidx.recyclerview.widget.LinearLayoutManager\" />\n    </ScrollView>\n\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_tourapi.xml b/app/src/main/res/layout/activity_tourapi.xml
+--- a/app/src/main/res/layout/activity_tourapi.xml	(revision 2311847b3b115865a289411dacbf21bc1cf07e14)
++++ b/app/src/main/res/layout/activity_tourapi.xml	(date 1715806213019)
+@@ -1,43 +1,86 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+-    android:layout_height="wrap_content">
++    android:layout_height="wrap_content"
++    android:orientation="vertical">
+ 
+-    <androidx.constraintlayout.widget.ConstraintLayout
++    <LinearLayout
+         android:id="@+id/linearLayout"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:orientation="vertical"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent">
++        android:orientation="horizontal">
++
++        <Button
++            android:id="@+id/shopping"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_weight="1"
++            android:text="쇼핑시설" />
++
++        <Button
++            android:id="@+id/culture"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_weight="1"
++            android:text="문화시설" />
+ 
+         <Button
+             android:id="@+id/restaurant"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:text="음식점"
+-            app:layout_constraintEnd_toEndOf="parent"
+-            app:layout_constraintTop_toTopOf="parent" />
++            android:layout_weight="1"
++            android:text="음식점" />
++
++        <Button
++            android:id="@+id/tour"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_weight="1"
++            android:text="관광시설" />
+ 
+         <Button
+-            android:id="@+id/areaBased"
++            android:id="@+id/category"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_weight="1"
++            android:text="카테고리" />
++
++    </LinearLayout>
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:orientation="horizontal">
++
++        <TextView
++            android:id="@+id/category1"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_weight="1"
++            android:text="category1" />
++
++        <TextView
++            android:id="@+id/category2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:text="위치기반"
+-            app:layout_constraintStart_toStartOf="parent"
+-            app:layout_constraintTop_toTopOf="parent" />
+-    </androidx.constraintlayout.widget.ConstraintLayout>
++            android:layout_weight="1"
++            android:text="category2" />
++
++        <TextView
++            android:id="@+id/category3"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_weight="1"
++            android:text="category3"
++            app:layout_constraintBottom_toBottomOf="parent" />
++    </LinearLayout>
+ 
+     <ScrollView
+         android:id="@+id/scrollView2"
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:orientation="vertical"
+-        app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
++        android:layout_height="wrap_content">
+ 
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/recyclerView"
+@@ -49,4 +92,4 @@
+             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+     </ScrollView>
+ 
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
++</LinearLayout>
+\ No newline at end of file
+diff --git a/app/src/main/res/layout/activity_restaurant_detail.xml b/app/src/main/res/layout/activity_tourapi_detail.xml
+rename from app/src/main/res/layout/activity_restaurant_detail.xml
+rename to app/src/main/res/layout/activity_tourapi_detail.xml
