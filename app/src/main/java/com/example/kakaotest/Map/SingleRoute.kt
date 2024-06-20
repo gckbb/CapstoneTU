@@ -13,6 +13,7 @@ import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.R
+
 import com.google.gson.Gson
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
@@ -21,13 +22,16 @@ import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.overlay.TMapPolyLine
 
 
-class SingleRoute : AppCompatActivity() {
+
+class SingleRoute : AppCompatActivity(){
+   private lateinit var dayList:ArrayList<SearchRouteData>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_single_route)
 
         val gson = Gson()
-        lateinit var dayList:ArrayList<SearchRouteData>
+
         val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
         intent.getParcelableArrayListExtra<SearchRouteData>("dayList")?.let { dayListdata ->
             dayList = dayListdata

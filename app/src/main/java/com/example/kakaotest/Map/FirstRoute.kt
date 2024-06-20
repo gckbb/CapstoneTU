@@ -7,12 +7,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.FrameLayout
+
+import android.widget.ImageButton
+
 import android.widget.Toast
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.R
+
+import com.example.kakaotest.Utility.SharedPreferenceUtil
+
 import com.google.gson.Gson
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
@@ -21,6 +27,9 @@ import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.overlay.TMapPolyLine
 import java.util.LinkedList
 
+import com.google.gson.reflect.TypeToken
+
+
 
 class FirstRoute : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +37,19 @@ class FirstRoute : AppCompatActivity() {
         setContentView(R.layout.activity_first_route)
 
         val gson = Gson()
-        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+
+     //   val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
         lateinit var firstList:ArrayList<SearchRouteData>
         lateinit var firstList2:MetaDayRoute
+
+
+        val travelPlan= SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
+
+        val backic = findViewById<ImageButton>(R.id.back_btn)
+        backic.setOnClickListener{
+            finish()
+        }
+
 
         intent.getStringExtra("firstList2")?.let { firstListdata2 ->
             firstList2 = gson.fromJson(firstListdata2, MetaDayRoute::class.java)

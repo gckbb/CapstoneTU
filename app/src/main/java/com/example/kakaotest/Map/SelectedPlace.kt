@@ -1,5 +1,6 @@
 package com.example.kakaotest.Map
 
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -15,7 +16,12 @@ import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.simpleListItem2Adapter
+
+import com.example.kakaotest.Utility.SharedPreferenceUtil
+
 import com.skt.tmap.TMapPoint
+import java.util.ArrayList
+
 
 class SelectedPlace : AppCompatActivity() {
 
@@ -24,48 +30,50 @@ class SelectedPlace : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selected_place)
 
-        val receivedDataList: ArrayList<SelectedPlaceData>? =
-            intent.getParcelableArrayListExtra("selectedPlaceDataList")
 
-        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
+        var  receivedDataList: ArrayList<SelectedPlaceData>? = SharedPreferenceUtil.getDataFromSharedPreferences(this)
+        // 초기 데이터가 없을 경우 빈 리스트로 초기화
 
-        if (receivedDataList != null) {
-            for (place in receivedDataList) {
-                Log.d("SelectedPlace", "Place: ${place.placeName}, Address: ${place.address}")
-            }
-        } else {
-            Log.d("SelectedPlace", "No places selected")
-        }
+        Log.d("PLAN",receivedDataList.toString())
+
 
         val backBtn = findViewById<ImageButton>(R.id.back_btn)
         backBtn.setOnClickListener {
             finish()
+
         }
+
+
+        // val documnetID = SavedUser().getUserDataFromSharedPreferences(this) //회원정보 문서 ID
+
 
         // ListView 참조
         val placeListView: ListView = findViewById(R.id.placeListView)
 
+        // 어댑터 생성 및 설정
+        val selectedPlaceNames = receivedDataList?.map { "${it.placeName}" }?.toMutableList() ?: mutableListOf()
+
         // 어댑터 생성
-        val nameAdapter = simpleListItem2Adapter(this, receivedDataList?.toMutableList() ?: mutableListOf())
+        val nameAdapter =
+            simpleListItem2Adapter(this, receivedDataList!!.toMutableList())
 
         // ListView에 어댑터 설정
         placeListView.adapter = nameAdapter
 
         // 로그에 selectedPlaceNames 출력
-        val selectedPlaceNames = receivedDataList?.map { it.placeName }?.toMutableList() ?: mutableListOf()
         Log.d("selectedPlaceNames", selectedPlaceNames.toString())
 
-        // next 버튼 클릭 시 FoodSelectActivity로 이동
+
+        // next 버튼 클릭 시 FoodSelectActivity 로 이동
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
             val intent = Intent(this, FoodSelectActivity::class.java)
-            intent.putExtra("travelPlan", travelPlan)
-            intent.putParcelableArrayListExtra("selectedPlaceDataList", ArrayList(receivedDataList))
+            SharedPreferenceUtil.saveData2ToSharedPreferences(this,receivedDataList)
             startActivity(intent)
-            Log.d("Item", receivedDataList.toString())
         }
 
         val scrollView = findViewById<ScrollView>(R.id.scrollView)
+
         placeListView.setOnTouchListener { _, _ ->
             scrollView.requestDisallowInterceptTouchEvent(true)
             false
@@ -86,6 +94,11 @@ class SelectedPlace : AppCompatActivity() {
         for ((key, value) in savedRestaurantMap) {
             savedRestaurantNames.add(value.toString())
         }
+
+
+        // 리스트를 ListView에 표시
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, savedRestaurantNames)
+        foundListView.adapter = adapter
 
         // foundListView의 아이템 클릭 리스너 설정
         foundListView.setOnItemClickListener { parent, view, position, id ->
@@ -112,13 +125,11 @@ class SelectedPlace : AppCompatActivity() {
             }
         }
 
-        // 리스트를 ListView에 표시
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, savedRestaurantNames)
-        foundListView.adapter = adapter
 
         foundListView.setOnTouchListener { _, _ ->
             scrollView.requestDisallowInterceptTouchEvent(true)
             false
         }
     }
+
 }

@@ -35,7 +35,9 @@ class MainCommunity : AppCompatActivity() {
 
         //현재 로그인 계정정보 관련
         auth = FirebaseAuth.getInstance()
+
         var currentUID = auth.currentUser?.email
+
         Toast.makeText(this, currentUID, Toast.LENGTH_SHORT).show()
 
         //리사이클러 뷰

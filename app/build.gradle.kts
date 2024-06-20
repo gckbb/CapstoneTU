@@ -12,7 +12,7 @@ android {
     compileSdk = 34
 
     val properties = Properties()
-    properties.load(FileInputStream(rootProject.file("local.properties")))
+
 
     defaultConfig {
         applicationId = "com.example.kakaotest"

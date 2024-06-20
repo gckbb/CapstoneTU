@@ -23,6 +23,11 @@ import com.example.kakaotest.Fragment.DatePickerFragment
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.TravelPlanManager
 import com.example.kakaotest.Utility.NullCheck
+
+
+import com.example.kakaotest.Utility.SharedPreferenceUtil
+
+
 import com.example.kakaotest.databinding.ActivityPlanInfoBinding
 import org.w3c.dom.Text
 
@@ -89,7 +94,7 @@ class PlanInfoInput : AppCompatActivity() {
                 firstday =  String.format("%d/%02d/%02d",start_selectedYear,start_selectedMonth,start_selectedDay)
                 firstdate.text = firstday
                 //   firstdate.text = firstday // 첫 번째 날짜 TextView에 선택된 날짜 설정
-                Toast.makeText(binding.root.context, firstday, Toast.LENGTH_SHORT).show()
+             //   Toast.makeText(binding.root.context, firstday, Toast.LENGTH_SHORT).show()
                 val day1 = Date(date= firstday,year = start_selectedYear, month=start_selectedMonth,day=start_selectedDay)
                 date.add(day1)
                 travelPlanManager.updatePlan(startDate = date[0])
@@ -119,7 +124,7 @@ class PlanInfoInput : AppCompatActivity() {
                 secondday = String.format("%d/%02d/%02d",last_selectedYear,last_selectedMonth,last_selectedDay)
                 seconddate.text = secondday
                 //   seconddate.text = secondday // 첫 번째 날짜 TextView에 선택된 날짜 설정
-                Toast.makeText(binding.root.context, firstday, Toast.LENGTH_SHORT).show()
+             //   Toast.makeText(binding.root.context, firstday, Toast.LENGTH_SHORT).show()
                 val day2 = Date(date =secondday ,year = last_selectedYear, month=last_selectedMonth,day=last_selectedDay)
                 date.add(day2)
 
@@ -394,6 +399,10 @@ class PlanInfoInput : AppCompatActivity() {
             if (activityTime != null) {
                 travelPlanManager.updatePlan(activityTime = activityTime)
                 Log.d("PLAN", "activity time : $activityTime")
+
+            }else {
+                travelPlanManager.updatePlan(activityTime = 8)
+
             }
 
             if (!checkConditions(transportBtn, findViewById(R.id.transport))) {
@@ -407,7 +416,11 @@ class PlanInfoInput : AppCompatActivity() {
             }
             if (isValid) {
                 val intent = Intent(this, MapActivity::class.java)
-                intent.putExtra("travelPlan", travelPlanManager.getPlan())
+
+                var travel = travelPlanManager.getPlan()
+                SharedPreferenceUtil.saveTravelPlanToSharedPreferences(this,travel)
+               // intent.putExtra("travelPlan", travelPlanManager.getPlan())
+
                 startActivity(intent)
             }else{
                 Toast.makeText(this, "유효한 값을 입력 및 선택해주세요.", Toast.LENGTH_LONG).show()

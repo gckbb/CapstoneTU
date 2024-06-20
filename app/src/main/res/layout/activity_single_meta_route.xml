@@ -17,6 +17,7 @@
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 
+
     <FrameLayout
         android:id="@+id/tmapViewContainer"
         android:layout_width="match_parent"

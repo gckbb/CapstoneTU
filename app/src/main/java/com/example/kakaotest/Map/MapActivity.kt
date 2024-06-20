@@ -1,5 +1,6 @@
 package com.example.kakaotest.Map
 
+
 import DataAdapter
 import android.content.Context
 import android.content.Intent
@@ -16,11 +17,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.SelectRecyclerAdapter
+import com.example.kakaotest.Utility.SharedPreferenceUtil
 import com.example.kakaotest.databinding.ActivityMapBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.skt.tmap.TMapData
@@ -54,10 +55,7 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
         mBinding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
-        if (travelPlan == null) {
-            throw NullPointerException("TravelPlan is null")
-        }
+
 
 
         binding.backBtn.setOnClickListener {
@@ -105,6 +103,13 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
         selectPlaceList.adapter = selectRecyclerAdapter
 
         dataadapter.selectRecyclerAdapter = selectRecyclerAdapter
+
+
+        // 어댑터를 초기화한 후
+        dataadapter.setOnDeleteListener { position ->
+            dataadapter.deleteItem(position)
+        }
+
 
 
         binding.searchDataListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -184,8 +189,13 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
                 )
             } as ArrayList<SelectedPlaceData>
 
-            intent.putParcelableArrayListExtra("selectedPlaceDataList", selectedPlaceDataList)
-            intent.putExtra("travelPlan", travelPlan)
+
+
+            SharedPreferenceUtil.saveDataToSharedPreferences(this,selectedPlaceDataList)
+
+        //    intent.putParcelableArrayListExtra("selectedPlaceDataList", selectedPlaceDataList)
+          //  intent.putExtra("travelPlan", travelPlan)
+
             startActivity(intent)
             Log.d("Item", selectedPlaceDataList.toString())
         }
@@ -264,17 +274,10 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
     // PersistentBottomSheet 내부 버튼 click event
     private fun persistentBottomSheetEvent() {
 
-
-
         bottomSheetHidePersistentButton.setOnClickListener {
             // BottomSheet 숨김
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-
         }
-
-
-
-
 
     }
 
