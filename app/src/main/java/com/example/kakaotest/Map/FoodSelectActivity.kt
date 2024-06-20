@@ -155,7 +155,7 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
                 p2: TMapPoint?,
                 p3: PointF?
             ) {
-                Toast.makeText(this@FoodSelectActivity, "onPressDown", Toast.LENGTH_SHORT).show()
+
             }
 
             override fun onPressUp( // 떨어짐
@@ -164,7 +164,7 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
                 p2: TMapPoint?,
                 p3: PointF?
             ) {
-                Toast.makeText(this@FoodSelectActivity, "onPressUp", Toast.LENGTH_SHORT).show()
+
             }
         })
 

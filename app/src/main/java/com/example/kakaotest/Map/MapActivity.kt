@@ -1,5 +1,6 @@
 package com.example.kakaotest.Map
 
+
 import DataAdapter
 import android.content.Context
 import android.content.Intent
@@ -16,16 +17,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.SelectRecyclerAdapter
-
-
 import com.example.kakaotest.Utility.SharedPreferenceUtil
-
-
 import com.example.kakaotest.databinding.ActivityMapBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.skt.tmap.TMapData
@@ -33,7 +29,6 @@ import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.poi.TMapPOIItem
-import java.util.ArrayList
 
 class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
     private val selectedPlacesList = ArrayList<SearchData>() //선택한 장소 저장하는 list
@@ -148,7 +143,7 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
                 p2: TMapPoint?,
                 p3: PointF?
             ) {
-                Toast.makeText(this@MapActivity, "onPressDown", Toast.LENGTH_SHORT).show()
+
             }
 
             override fun onPressUp(
@@ -157,7 +152,7 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
                 p2: TMapPoint?,
                 p3: PointF?
             ) {
-                Toast.makeText(this@MapActivity, "onPressUp", Toast.LENGTH_SHORT).show()
+
             }
         })
 
