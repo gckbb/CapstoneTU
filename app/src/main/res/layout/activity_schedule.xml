@@ -156,7 +156,6 @@
 
 
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="42dp"
@@ -164,7 +163,14 @@
         android:gravity="center"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/leftBtn"
+            android:layout_width="15dp"
+            android:layout_height="18dp"
+            android:background="@drawable/left"
+            android:layout_marginEnd="8dp"
 
+            />
         <!--날짜 버튼 -->
         <FrameLayout
             android:layout_width="320dp"
@@ -232,7 +238,14 @@
 
         </FrameLayout>
 
+        <Button
+            android:id="@+id/rightBtn"
+            android:layout_width="15dp"
+            android:layout_height="18dp"
+            android:background="@drawable/right"
+            android:layout_marginStart="8dp"
 
+            />
     </LinearLayout>
 
 
