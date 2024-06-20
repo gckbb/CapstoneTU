@@ -11,10 +11,9 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-<<<<<<< HEAD
+
 import com.example.kakaotest.CashBook.CashBookActivity
-=======
->>>>>>> other-origin/K_Ho_demo2
+
 import com.example.kakaotest.CheckList.CheckListActivity
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
@@ -25,10 +24,9 @@ import com.example.kakaotest.HomeActivity
 
 
 import com.example.kakaotest.R
-<<<<<<< HEAD
+
 import com.example.kakaotest.Utility.SharedPreferenceUtil
-=======
->>>>>>> other-origin/K_Ho_demo2
+
 import com.example.kakaotest.Utility.TravelPlanManager
 import com.example.kakaotest.databinding.ActivityScheduleBinding
 import com.google.gson.Gson

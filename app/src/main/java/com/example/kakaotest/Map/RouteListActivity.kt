@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import java.util.ArrayList
 import java.util.LinkedList
 
+import com.example.kakaotest.Utility.SharedPreferenceUtil
 
 class RouteListActivity : AppCompatActivity() {
 
@@ -41,11 +42,9 @@ class RouteListActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_route_list)
 
-        val receivedDataList = intent.getParcelableArrayListExtra<SelectedPlaceData>("selectedPlaceDataList")
-        val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
-        val receivedFoodDataList = intent.getParcelableArrayListExtra<SearchData>("selectedFoodDataList")
-        val gson = Gson()
-
+        val receivedDataList : ArrayList<SelectedPlaceData>? = SharedPreferenceUtil.getDataFromSharedPreferences(this)
+        val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
+        val receivedFoodDataList: ArrayList<SearchData>? = SharedPreferenceUtil.getFoodFromSharedPreferences(this)
 
 
         Log.d("RouteListActivity",receivedDataList.toString()) //arraylistof<SelectedPlaceData>
@@ -131,7 +130,7 @@ class RouteListActivity : AppCompatActivity() {
             try {
 
                 val listView = findViewById<ListView>(R.id.listView1)
-                listView.visibility = View.VISIBLE
+
                 val emptyList = listOf("로딩 중...") // Adjust the type based on your data
                 val adapter = ArrayAdapter(this@RouteListActivity, android.R.layout.simple_list_item_1, emptyList)
                 listView.adapter = adapter

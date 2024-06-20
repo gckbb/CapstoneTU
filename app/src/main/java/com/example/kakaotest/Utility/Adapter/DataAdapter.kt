@@ -20,7 +20,7 @@ import com.skt.tmap.overlay.TMapMarkerItem
 class DataAdapter(
     context: Context,
     private val resourceId: Int,
-<<<<<<< HEAD
+
     var list: ArrayList<SearchData>,
     private var listBtnClickListener: ListBtnClickListener
 
@@ -31,24 +31,12 @@ class DataAdapter(
     var selectRecyclerAdapter: SelectRecyclerAdapter = SelectRecyclerAdapter(context, ArrayList(), selectedPlacesList) { position ->
         deleteItem(position)
     }
-=======
-    val list: ArrayList<SearchData>,
-    private val listBtnClickListener: ListBtnClickListener,
-) : ArrayAdapter<SearchData>(context, resourceId, list), View.OnClickListener {
 
-    private val selectedPlacesList = ArrayList<SearchData>()
-
-    var selectRecyclerAdapter: SelectRecyclerAdapter? = null // SelectRecyclerAdapter 프로퍼티 추가
->>>>>>> other-origin/K_Ho_demo2
     interface ListBtnClickListener {
         fun onListBtnClick(position: Int, selectedPlacesList: ArrayList<SearchData>)
         fun onItemClick(item: SearchData)
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> other-origin/K_Ho_demo2
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val itemView: View = convertView ?: LayoutInflater.from(context).inflate(resourceId, parent, false)
 
@@ -66,21 +54,7 @@ class DataAdapter(
         selectBtn.tag = position
         selectBtn.setOnClickListener(this)
 
-<<<<<<< HEAD
-        /*  if (!selectedPlacesList.contains(data)) {
-                 selectBtn.setBackgroundResource(R.drawable.buttonshape4)
-             }else{
-                 selectBtn.setBackgroundResource(R.drawable.buttonshape2)
-             }
-     */
-=======
-        if (!selectedPlacesList.contains(data)) {
-            selectBtn.setBackgroundResource(R.drawable.buttonshape4)
-        }else{
-            selectBtn.setBackgroundResource(R.drawable.buttonshape2)
-        }
 
->>>>>>> other-origin/K_Ho_demo2
 
         return itemView
     }
@@ -93,26 +67,17 @@ class DataAdapter(
         if (!selectedPlacesList.contains(data)) {
             selectedPlacesList.add(data)
             Toast.makeText(context, "${data.id} 추가", Toast.LENGTH_SHORT).show()
-<<<<<<< HEAD
+
             //  (v as Button).setBackgroundResource(R.drawable.buttonshape2)
             Log.d("placeadd",selectedPlacesList.toString())
             listBtnClickListener.onListBtnClick(position, selectedPlacesList)
-=======
-            (v as Button).setBackgroundResource(R.drawable.buttonshape2)
-            Log.d("placeadd",selectedPlacesList.toString())
-            selectRecyclerAdapter?.notifyDataSetChanged()
->>>>>>> other-origin/K_Ho_demo2
+
         } else{
             Toast.makeText(context, "이미 추가된 장소입니다.", Toast.LENGTH_SHORT).show()
         }
 
         // 삭제 기능 관련 코드는 모두 제거
 
-<<<<<<< HEAD
-        //  listBtnClickListener.onListBtnClick(position, selectedPlacesList)
-=======
-        listBtnClickListener.onListBtnClick(position, selectedPlacesList)
->>>>>>> other-origin/K_Ho_demo2
         notifyDataSetChanged()
     }
 
@@ -121,13 +86,11 @@ class DataAdapter(
     }
 
     fun getItemCount(): Int = list.size
-<<<<<<< HEAD
+
 
 
     fun deleteItem(position: Int) {
-=======
-    private fun deleteItem(position: Int) {
->>>>>>> other-origin/K_Ho_demo2
+
         try {
             val data = selectedPlacesList[position]
             selectedPlacesList.removeAt(position)
@@ -137,12 +100,11 @@ class DataAdapter(
             e.printStackTrace()
         }
     }
-<<<<<<< HEAD
+
 
 
     fun setOnDeleteListener(listener: (Int) -> Unit) {
         selectRecyclerAdapter?.onDeleteListener = listener
     }
-=======
->>>>>>> other-origin/K_Ho_demo2
+
 }

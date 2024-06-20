@@ -7,20 +7,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.FrameLayout
-<<<<<<< HEAD
+
 import android.widget.ImageButton
-=======
->>>>>>> other-origin/K_Ho_demo2
+
 import android.widget.Toast
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.R
-<<<<<<< HEAD
+
 import com.example.kakaotest.Utility.SharedPreferenceUtil
-=======
->>>>>>> other-origin/K_Ho_demo2
+
 import com.google.gson.Gson
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
@@ -28,10 +26,9 @@ import com.skt.tmap.TMapView
 import com.skt.tmap.overlay.TMapMarkerItem
 import com.skt.tmap.overlay.TMapPolyLine
 import java.util.LinkedList
-<<<<<<< HEAD
+
 import com.google.gson.reflect.TypeToken
-=======
->>>>>>> other-origin/K_Ho_demo2
+
 
 
 class FirstRoute : AppCompatActivity() {

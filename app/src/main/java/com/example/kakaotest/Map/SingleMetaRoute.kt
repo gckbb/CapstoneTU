@@ -11,11 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.R
-<<<<<<< HEAD
-=======
+
 import com.example.kakaotest.Utility.Adapter.MetaListAdapter
 import com.example.kakaotest.databinding.ActivitySingleMetaRouteBinding
->>>>>>> other-origin/K_Ho_demo2
+
 import com.google.gson.Gson
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
@@ -25,10 +24,12 @@ import com.skt.tmap.overlay.TMapPolyLine
 
 
 class SingleMetaRoute : AppCompatActivity() {
-
+    private var mBinding: ActivitySingleMetaRouteBinding? = null
+    private val binding get() = mBinding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_single_meta_route)
+        mBinding = ActivitySingleMetaRouteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
         val gson = Gson()
@@ -55,6 +56,8 @@ class SingleMetaRoute : AppCompatActivity() {
 
         tMapView.setSKTMapApiKey(appKey)
         container.addView(tMapView)
+        val Adapter = MetaListAdapter(this,dayList?.dayRoute?.get(timeindex+1)?.metaData?.plan?.itineraries?.get(0)?.legs!!)
+        binding.metaListView.adapter = Adapter
 
 
 

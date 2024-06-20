@@ -23,10 +23,11 @@ import com.example.kakaotest.Fragment.DatePickerFragment
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.TravelPlanManager
 import com.example.kakaotest.Utility.NullCheck
-<<<<<<< HEAD
+
+
 import com.example.kakaotest.Utility.SharedPreferenceUtil
-=======
->>>>>>> other-origin/K_Ho_demo2
+
+
 import com.example.kakaotest.databinding.ActivityPlanInfoBinding
 import org.w3c.dom.Text
 

@@ -4,15 +4,14 @@ import DataAdapter
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-<<<<<<< HEAD
+
 import android.graphics.BitmapFactory
-=======
->>>>>>> other-origin/K_Ho_demo2
+
 import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-<<<<<<< HEAD
+
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
@@ -21,27 +20,19 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-=======
-import android.widget.AdapterView
-import android.widget.FrameLayout
-import android.widget.Toast
->>>>>>> other-origin/K_Ho_demo2
+
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
-<<<<<<< HEAD
+
 import com.example.kakaotest.Utility.Adapter.SelectRecyclerAdapter
 import com.example.kakaotest.Utility.SharedPreferenceUtil
 import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 
 import com.example.kakaotest.databinding.ActivityFoodSelectBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-=======
-import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 
-import com.example.kakaotest.databinding.ActivityFoodSelectBinding
->>>>>>> other-origin/K_Ho_demo2
 import com.skt.tmap.TMapData
 import com.skt.tmap.TMapPoint
 import com.skt.tmap.TMapView

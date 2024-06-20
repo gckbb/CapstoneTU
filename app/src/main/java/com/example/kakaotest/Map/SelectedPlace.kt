@@ -16,10 +16,9 @@ import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.simpleListItem2Adapter
-<<<<<<< HEAD
+
 import com.example.kakaotest.Utility.SharedPreferenceUtil
-=======
->>>>>>> other-origin/K_Ho_demo2
+
 import com.skt.tmap.TMapPoint
 import java.util.ArrayList
 
@@ -65,10 +64,11 @@ class SelectedPlace : AppCompatActivity() {
         Log.d("selectedPlaceNames", selectedPlaceNames.toString())
 
 
-        // next 버튼 클릭 시 RouteListActivity 로 이동
+        // next 버튼 클릭 시 FoodSelectActivity 로 이동
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
             val intent = Intent(this, FoodSelectActivity::class.java)
+            startActivity(intent)
         }
 
         val scrollView = findViewById<ScrollView>(R.id.scrollView)
@@ -99,45 +99,30 @@ class SelectedPlace : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, savedRestaurantNames)
         foundListView.adapter = adapter
 
+        // foundListView의 아이템 클릭 리스너 설정
         foundListView.setOnItemClickListener { parent, view, position, id ->
             // 클릭한 위치(position)에 해당하는 아이템 가져오기
             val clickedRestaurantName = savedRestaurantNames[position]
 
             // 해당 음식점의 정보를 SharedPreferences에서 가져오기
-            val sharedPreferences = getSharedPreferences("MySavedRestaurants", Context.MODE_PRIVATE)
             val clickedRestaurantMap = sharedPreferences.all
 
             // SharedPreferences에서 해당 음식점의 정보를 찾아서 receivedDataList에 추가
             for ((key, value) in clickedRestaurantMap) {
                 if (value == clickedRestaurantName) {
-                    // 해당 음식점의 정보를 receivedDataList에 추가
                     val latitudeLongitude = key.split("_")
                     val latitude = latitudeLongitude[1].toDouble()
                     val longitude = latitudeLongitude[2].toDouble()
                     val address = latitudeLongitude[3]
+                    val newPlace = SelectedPlaceData(clickedRestaurantName, TMapPoint(latitude, longitude), address)
 
-
-                    receivedDataList?.add(SelectedPlaceData(clickedRestaurantName, TMapPoint(longitude, latitude), address))
-                    Log.d("PLAN", "Data added: ${receivedDataList.toString()}")
-
-                    // 선택된 장소 이름 추가
+                    receivedDataList?.add(newPlace)
                     selectedPlaceNames.add(clickedRestaurantName)
-
-                    // 어댑터 갱신
-                    nameAdapter.notifyDataSetChanged()
-
-
-
-                    // UI에 반영될 수 있도록 ScrollView 위치 설정
-                    scrollView.scrollTo(0, 0)
-
+                    nameAdapter.updateData(receivedDataList!!)
                     break
                 }
-
             }
         }
-
-
 
 
         foundListView.setOnTouchListener { _, _ ->

@@ -12,11 +12,7 @@ android {
     compileSdk = 34
 
     val properties = Properties()
-<<<<<<< HEAD
-//    properties.load(FileInputStream(rootProject.file("local.properties")))
-=======
-    properties.load(FileInputStream(rootProject.file("local.properties")))
->>>>>>> other-origin/K_Ho_demo2
+
 
     defaultConfig {
         applicationId = "com.example.kakaotest"

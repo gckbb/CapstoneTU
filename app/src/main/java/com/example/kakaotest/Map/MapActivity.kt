@@ -21,10 +21,11 @@ import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.SelectRecyclerAdapter
-<<<<<<< HEAD
+
+
 import com.example.kakaotest.Utility.SharedPreferenceUtil
-=======
->>>>>>> other-origin/K_Ho_demo2
+
+
 import com.example.kakaotest.databinding.ActivityMapBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.skt.tmap.TMapData
