@@ -68,6 +68,7 @@ class SelectedPlace : AppCompatActivity() {
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
             val intent = Intent(this, FoodSelectActivity::class.java)
+            SharedPreferenceUtil.saveData2ToSharedPreferences(this,receivedDataList)
             startActivity(intent)
         }
 

@@ -94,7 +94,7 @@ class PlanInfoInput : AppCompatActivity() {
                 firstday =  String.format("%d/%02d/%02d",start_selectedYear,start_selectedMonth,start_selectedDay)
                 firstdate.text = firstday
                 //   firstdate.text = firstday // 첫 번째 날짜 TextView에 선택된 날짜 설정
-                Toast.makeText(binding.root.context, firstday, Toast.LENGTH_SHORT).show()
+             //   Toast.makeText(binding.root.context, firstday, Toast.LENGTH_SHORT).show()
                 val day1 = Date(date= firstday,year = start_selectedYear, month=start_selectedMonth,day=start_selectedDay)
                 date.add(day1)
                 travelPlanManager.updatePlan(startDate = date[0])
@@ -124,7 +124,7 @@ class PlanInfoInput : AppCompatActivity() {
                 secondday = String.format("%d/%02d/%02d",last_selectedYear,last_selectedMonth,last_selectedDay)
                 seconddate.text = secondday
                 //   seconddate.text = secondday // 첫 번째 날짜 TextView에 선택된 날짜 설정
-                Toast.makeText(binding.root.context, firstday, Toast.LENGTH_SHORT).show()
+             //   Toast.makeText(binding.root.context, firstday, Toast.LENGTH_SHORT).show()
                 val day2 = Date(date =secondday ,year = last_selectedYear, month=last_selectedMonth,day=last_selectedDay)
                 date.add(day2)
 

@@ -84,6 +84,28 @@ object SharedPreferenceUtil {
     }
 
 
+    fun saveData2ToSharedPreferences(context: Context,receivedDataList: ArrayList<SelectedPlaceData>) {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("MySavedPlaces", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(receivedDataList)
+        editor.putString("selectedPlaceDataList", json)
+        editor.apply()
+    }
+
+
+    fun getData2FromSharedPreferences(context: Context): java.util.ArrayList<SelectedPlaceData>? {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("MySavedPlaces", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString("selectedPlaceDataList", null)
+        val type = object : TypeToken<java.util.ArrayList<SelectedPlaceData>>() {}.type
+        return if (json != null) {
+            gson.fromJson(json, type)
+        } else {
+            java.util.ArrayList() // 저장된 데이터
+        }
+    }
+
 
     fun saveFoodToSharedPreferences(context: Context,receivedDataList: ArrayList<SearchData>) {
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("foodPlace", Context.MODE_PRIVATE)

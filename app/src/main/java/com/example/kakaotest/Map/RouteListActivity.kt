@@ -42,7 +42,7 @@ class RouteListActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_route_list)
 
-        val receivedDataList : ArrayList<SelectedPlaceData>? = SharedPreferenceUtil.getDataFromSharedPreferences(this)
+        val receivedDataList : ArrayList<SelectedPlaceData>? = SharedPreferenceUtil.getData2FromSharedPreferences(this)
         val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
         val receivedFoodDataList: ArrayList<SearchData>? = SharedPreferenceUtil.getFoodFromSharedPreferences(this)
 

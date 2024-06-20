@@ -66,7 +66,7 @@ class DataAdapter(
         // 선택된 항목에 대한 처리만 남김
         if (!selectedPlacesList.contains(data)) {
             selectedPlacesList.add(data)
-            Toast.makeText(context, "${data.id} 추가", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "${data.id} 추가", Toast.LENGTH_SHORT).show()
 
             //  (v as Button).setBackgroundResource(R.drawable.buttonshape2)
             Log.d("placeadd",selectedPlacesList.toString())
