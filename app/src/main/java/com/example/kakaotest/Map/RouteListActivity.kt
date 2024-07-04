@@ -12,19 +12,18 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.kakaotest.DataModel.TravelPlan
-import com.example.kakaotest.DataModel.metaRoute.*
+import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
+import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.DataModel.tmap.SearchData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
-import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
+import com.example.kakaotest.Utility.SharedPreferenceUtil
+import com.example.kakaotest.Utility.tmap.MakeRoute
 import com.google.gson.Gson
 import com.skt.tmap.TMapPoint
 import kotlinx.coroutines.launch
-import java.util.ArrayList
 import java.util.LinkedList
-
-import com.example.kakaotest.Utility.SharedPreferenceUtil
 
 class RouteListActivity : AppCompatActivity() {
 
@@ -54,10 +53,6 @@ class RouteListActivity : AppCompatActivity() {
 
 
 
-        if (receivedFoodDataList != null) {
-            convertedFoodDataList = convertList(receivedFoodDataList)
-            receivedDataList?.addAll(convertedFoodDataList!!)
-        }
         val rentStartPoint:SelectedPlaceData
         startDate = travelPlan!!.startDate?.day ?: 0
         endDate = travelPlan.endDate?.day ?: 0

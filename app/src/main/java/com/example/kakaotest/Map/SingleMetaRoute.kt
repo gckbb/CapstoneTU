@@ -140,16 +140,36 @@ class SingleMetaRoute : AppCompatActivity() {
                                     icon = iconList[14]
                                 }
                                 tMapView.addTMapMarkerItem(marker)
-
+/*
                                 tpointList.add(TMapPoint(selectedRoute.end?.lat?.toDouble()!!,selectedRoute.end?.lon?.toDouble()!!))
                                 polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.PEDESTRIAN_PATH,
                                     TMapPoint(selectedRoute.start?.lat?.toDouble()!!,selectedRoute.start?.lon?.toDouble()!!),
                                     TMapPoint(selectedRoute.end?.lat?.toDouble()!!,selectedRoute.end?.lon?.toDouble()!!))
-                                polyLines.setID("polylin${polylineindex}")
-                                polyLines.pathEffect = dashStyle
-                                polyLines.setLineColor(Color.BLACK)
+                                    */
+                                for(k in 0 until selectedRoute.steps?.size!!) {
+                                    val split =
+                                        selectedRoute.steps?.get(k)?.linestring?.split(",", " ")
+                                    for (j in 0 until split?.size!! / 2) {
+                                        tpointPathList.add(
+                                            TMapPoint(
+                                                split.get(j * 2 + 1).toDouble(),
+                                                split.get((j * 2)).toDouble()
+                                            )
+                                        )
+                                    }
+
+                                }
+                                polyLines = TMapPolyLine(
+                                    "polylineees${polylineindex}",
+                                    tpointPathList
+                                )
+                                polyLines.setID("walkpoly${polylineindex}")
+                                polyLines.setLineColor(Color.YELLOW)
+                                polyLines.pathEffect = dashStyle2
                                 tMapView.addTMapPolyLine(polyLines)
                                 polylineindex++
+                                tpointPathList.clear()
+
                             }
                             else if(selectedRoute.mode == "BUS" || selectedRoute.mode == "SUBWAY") {
                                 val marker = TMapMarkerItem().apply {

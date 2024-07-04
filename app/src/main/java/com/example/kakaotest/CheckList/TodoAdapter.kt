@@ -1,6 +1,5 @@
 package com.example.kakaotest.CheckList
 
-import android.app.Activity
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaotest.R
 import com.google.firebase.database.DataSnapshot
@@ -21,7 +19,7 @@ class TodoAdapter(private var itemList: ArrayList<TodoListData>, private val lis
     RecyclerView.Adapter<TodoAdapter.TodoListViewHolder>() {
 
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val myRef: DatabaseReference = database.reference.child("checklist").child(listTitle).child("todo-list")
+    private val myRef: DatabaseReference = database.reference.child("checklists").child(listTitle).child("todo-list")
     val dbTool = CheckListDB()
     val listName = listTitle
 
