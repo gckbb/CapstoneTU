@@ -8,8 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.kakaotest.DataModel.Recommend
 import com.example.kakaotest.R
+
 
 class RecommendAdapter(private val recommends: List<Recommend>) :
     RecyclerView.Adapter<RecommendAdapter.RestaurantViewHolder>() {
@@ -24,9 +26,16 @@ class RecommendAdapter(private val recommends: List<Recommend>) :
         val currentItem = recommends[position]
 
         // Glide를 사용하여 이미지 설정
-        Glide.with(holder.itemView.context)
-            .load(currentItem.firstimage2) // 이미지 URL
-            .into(holder.thumbnail) // ImageView에 설정
+        // Glide를 사용하여 이미지 설정
+        val requestOptions: RequestOptions = RequestOptions()
+            .placeholder(R.drawable.null_image) // 이미지 로딩 중 표시할 플레이스홀더 이미지
+            .error(R.drawable.null_image) // 이미지 로딩 실패 시 표시할 에러 이미지
+
+        Glide.with(holder.itemView.context) // 컨텍스트를 가져옴
+            .load(currentItem.firstimage2) // 이미지 URL을 로드
+            .apply(requestOptions) // 옵션 적용
+            .into(holder.thumbnail) // ImageView에 이미지 설정
+
 
         holder.textViewTitle.text = currentItem.title
         holder.textViewAddress.text = currentItem.addr1

@@ -67,7 +67,6 @@ class RecommendDetailActivity : AppCompatActivity() {
             if (recommend != null) {
                 val mapx = String.format("%.8f", recommend.mapx.toDouble())
                 val mapy = String.format("%.8f", recommend.mapy.toDouble())
-                //Log.d("add_test","DetailActivity: ${mapx}_${mapy}")
                 editor.putString("recommend_${mapx}_${mapy}_${recommend.addr1}", recommend.title)
 
                 Log.d("plan",recommend.title.toString())
@@ -186,64 +185,6 @@ class RecommendDetailActivity : AppCompatActivity() {
                 // 인허가 번호
                 val lcnsnoTextView = findViewById<TextView>(R.id.text_lcnsno)
                 lcnsnoTextView.text = details_info.lcnsno ?: "정보 없음"
-
-
-
-//                //신용카드 가능 정보
-//                val chkcreditcardfood = findViewById<TextView>(R.id.text_chkcreditcardfood)
-//                chkcreditcardfood.text = details_info.chkcreditcardfood
-//
-//                //할인 정보
-//                val discountinfofood = findViewById<TextView>(R.id.text_discountinfofood)
-//                discountinfofood.text = details_info.discountinfofood
-//
-//                //대표 메뉴
-//                val firstmenu = findViewById<TextView>(R.id.text_firstmenu)
-//                firstmenu.text = details_info.firstmenu
-//
-//                //문의 및 안내
-//                val infocenterfood = findViewById<TextView>(R.id.text_infocenterfood)
-//                infocenterfood.text = details_info.infocenterfood
-//
-//                //어린이 놀이 방 여부
-//                val kidsfacility = findViewById<TextView>(R.id.text_kidsfacility)
-//                kidsfacility.text = details_info.kidsfacility
-//
-//                //개업일
-//                val opendatefood = findViewById<TextView>(R.id.text_opendatefood)
-//                opendatefood.text = details_info.opendatefood
-//
-//                val opentimefood = findViewById<TextView>(R.id.text_opentimefood)
-//                opentimefood.text = details_info.opentimefood
-//
-//                val packing = findViewById<TextView>(R.id.text_packing)
-//                packing.text = details_info.packing
-//
-//                val parkingfood = findViewById<TextView>(R.id.text_parkingfood)
-//                parkingfood.text = details_info.parkingfood
-//
-//                val reservationfood = findViewById<TextView>(R.id.text_reservationfood)
-//                reservationfood.text = details_info.reservationfood
-//
-//                val restdatefood = findViewById<TextView>(R.id.text_restdatefood)
-//                restdatefood.text = details_info.restdatefood
-//
-//                val scalefood = findViewById<TextView>(R.id.text_scalefood)
-//                scalefood.text = details_info.scalefood
-//
-//                val seat = findViewById<TextView>(R.id.text_seat)
-//                seat.text = details_info.seat
-//
-//                val smoking = findViewById<TextView>(R.id.text_smoking)
-//                smoking.text = details_info.smoking
-//
-//                val treatmenu = findViewById<TextView>(R.id.text_treatmenu)
-//                treatmenu.text = details_info.treatmenu
-//
-//                val lcnsno = findViewById<TextView>(R.id.text_lcnsno)
-//                lcnsno.text = details_info.lcnsno
-
-
 
                 val heritage1 = findViewById<TextView>(R.id.text_heritage1)
                 heritage1.text = details_info.heritage1
