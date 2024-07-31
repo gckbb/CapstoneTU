@@ -47,9 +47,10 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
         // RecyclerView 초기화
         val rvChecklist = findViewById<RecyclerView>(R.id.rvCheckList)
         cadapter = CAdapter(itemList)
+
         rvChecklist.adapter = cadapter
         rvChecklist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
+        loadUserCheckLists()
         // 어댑터 아이템 클릭 리스너 설정
         cadapter.setItemClickListener(object : CAdapter.ItemClickListener {
             override fun onClick(view: View, position: Int, titleName: String) {
@@ -98,6 +99,7 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
 
     override fun onDataPassed(listTitle: String, currentDate: String, sNum: Int) {
         Toast.makeText(this, "List Selected: $listTitle, Date: $currentDate, Num: $sNum", Toast.LENGTH_SHORT).show()
+
         supportFragmentManager.beginTransaction().remove(optionSelectFragment!!).commit()
         isFragmentVisible = false
         optionSelectFragment = null
@@ -105,9 +107,11 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
         // 공유 코드 생성
         val shareCode = generateSharingCode(6)
         val userId = auth.currentUser?.email ?: return // 현재 사용자 ID 가져오기
-
+        Log.d("CList","${shareCode}")
+        Log.d("CList","${userId}")
         // 체크리스트 생성
         val newList = CheckListData(listTitle, currentDate, shareCode, mutableListOf(userId))
+        Log.d("CList","${newList}")
 
         // Firebase Database에 체크리스트 저장
         dbReference.child(listTitle).setValue(newList)
@@ -121,7 +125,7 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
                 Toast.makeText(this, "목록 생성 실패", Toast.LENGTH_SHORT).show()
             }
 
-        dbTool.initCheckList(listTitle, currentDate)
+        dbTool.initCheckList(listTitle, currentDate, shareCode, mutableListOf(userId))
         when (sNum) {
             1 -> dbTool.sNum1(listTitle)
             2 -> dbTool.sNum2(listTitle)
@@ -185,7 +189,7 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
     }
 
     private fun loadUserCheckLists() {
-        val userId = auth.currentUser?.uid ?: return
+        val userId = auth.currentUser?.email ?: return //현재 접속중인 사용자의 이메일
         firestore.collection("checklists")
             .whereArrayContains("userIds", userId)
             .get()
@@ -195,7 +199,7 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
                     val checkList = document.toObject(CheckListData::class.java)
                     itemList.add(checkList)
                 }
-                cadapter.notifyDataSetChanged()
+                cadapter.update(itemList)
             }
             .addOnFailureListener {
                 Toast.makeText(this, "체크리스트 불러오기 실패", Toast.LENGTH_SHORT).show()

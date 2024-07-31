@@ -10,8 +10,8 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaotest.DataModel.CheckList.CheckListDB
-import com.example.kakaotest.R
 import com.example.kakaotest.DataModel.CheckList.TodoListData
+import com.example.kakaotest.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -22,7 +22,7 @@ class TodoAdapter(private var itemList: ArrayList<TodoListData>, private val lis
     RecyclerView.Adapter<TodoAdapter.TodoListViewHolder>() {
 
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val myRef: DatabaseReference = database.reference.child("checklist").child(listTitle).child("todo-list")
+    private val myRef: DatabaseReference = database.reference.child("checklists").child(listTitle).child("todo-list")
     val dbTool = CheckListDB()
     val listName = listTitle
 

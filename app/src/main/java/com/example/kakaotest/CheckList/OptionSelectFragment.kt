@@ -2,6 +2,7 @@ package com.example.kakaotest.CheckList
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -102,7 +103,7 @@ class OptionSelectFragment : Fragment() {
                 val checklist = CheckListData(listTitle, currentDate)
                 dataPassListener?.onDataPassed(listTitle, currentDate, sNum)
 
-
+                Log.d("CList","${checklist},${listTitle},${currentDate}")
             }
         }
 

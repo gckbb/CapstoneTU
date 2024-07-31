@@ -5,11 +5,11 @@ import com.google.firebase.ktx.Firebase
 
 class CheckListDB {
     private val db = Firebase.database
-    private val myRef = db.getReference("checklist")
+    private val myRef = db.getReference("checklists")
 
     //체크리스트 최초 생성 시
-    fun initCheckList(listName:String, currentDate:String){
-        val checklist = CheckListData(listName, currentDate)
+    fun initCheckList(listName:String, currentDate:String, shareCode:String ,userId: MutableList<String>){
+        val checklist = CheckListData(listName, currentDate, shareCode, userId)
         myRef.child(listName).setValue(checklist)
     }
 
