@@ -155,7 +155,7 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
     }
 
     private fun accessCheckListViaShareCode(shareCode: String) {
-        val userId = auth.currentUser?.uid ?: return
+        val userId = auth.currentUser?.email ?: return
         firestore.collection("checklists")
             .whereEqualTo("sharecode", shareCode)
             .get()
