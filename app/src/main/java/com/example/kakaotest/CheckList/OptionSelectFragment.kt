@@ -103,32 +103,30 @@ class OptionSelectFragment : Fragment() {
                 val checklist = CheckListData(listTitle, currentDate)
                 dataPassListener?.onDataPassed(listTitle, currentDate, sNum)
 
-                Log.d("CList","${checklist},${listTitle},${currentDate}")
+                Log.d("CList", "${checklist},${listTitle},${currentDate}")
             }
         }
 
     }
-        override fun onAttach(context: Context) {
-            super.onAttach(context)
-            if (context is DataPassListener) {
-                dataPassListener = context
-            } else {
-                throw RuntimeException("$context must implement OnListSelectListener")
-            }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is DataPassListener) {
+            dataPassListener = context
+        } else {
+            throw RuntimeException("$context must implement OnListSelectListener")
         }
+    }
 
-        override fun onDetach() {
-            super.onDetach()
-            listener = null
-        }
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
 
-        override fun onDestroyView() {
-            super.onDestroyView()
-            _binding = null
-        }
-
-
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 
 }

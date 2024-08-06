@@ -103,12 +103,12 @@ class TourApiActivity : AppCompatActivity() {
                 Log.d("AreaCode", "selectedContent: ${selectedContent}")
                 val category2ArrayId = findCategory(selectedCategory1, selectedContent)
                 Log.d("AreaCode", "tourapiSpinner1: ${category2ArrayId}")
-                if(category2ArrayId != 0)
-                tourapiSpinner2.adapter = ArrayAdapter.createFromResource(
-                    this@TourApiActivity,
-                    category2ArrayId,
-                    android.R.layout.simple_spinner_item
-                )
+                if (category2ArrayId != 0)
+                    tourapiSpinner2.adapter = ArrayAdapter.createFromResource(
+                        this@TourApiActivity,
+                        category2ArrayId,
+                        android.R.layout.simple_spinner_item
+                    )
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -131,12 +131,12 @@ class TourApiActivity : AppCompatActivity() {
                 Log.d("AreaCode", "selectedContent: ${selectedContent}")
                 val category3ArrayId = findCategory(selectedCategory2, selectedContent)
                 Log.d("AreaCode", "tourapiSpinner2: ${category3ArrayId}")
-                if(category3ArrayId != 0)
-                tourapiSpinner3.adapter = ArrayAdapter.createFromResource(
-                    this@TourApiActivity,
-                    category3ArrayId,
-                    android.R.layout.simple_spinner_item
-                )
+                if (category3ArrayId != 0)
+                    tourapiSpinner3.adapter = ArrayAdapter.createFromResource(
+                        this@TourApiActivity,
+                        category3ArrayId,
+                        android.R.layout.simple_spinner_item
+                    )
 
                 categoryValues = getCategoryValues(selectedCategory2)
             }
@@ -152,11 +152,15 @@ class TourApiActivity : AppCompatActivity() {
 
             val selectedValuePosition = tourapiSpinner3.selectedItemPosition
             val selectedValue = categoryValues[selectedValuePosition]
-            val selectedArea = resources.getStringArray(R.array.areaCode_values)[tourapiSpinner.selectedItemPosition]
-            val selectedContentId = resources.getStringArray(R.array.contentId_values)[tourapiSpinner_content.selectedItemPosition]
-            Log.d("AreaCode","selectedValue: ${selectedValue}" +
-                    "selectedArea:  ${selectedArea}" +
-            "selectedContentId: ${selectedContentId}")
+            val selectedArea =
+                resources.getStringArray(R.array.areaCode_values)[tourapiSpinner.selectedItemPosition]
+            val selectedContentId =
+                resources.getStringArray(R.array.contentId_values)[tourapiSpinner_content.selectedItemPosition]
+            Log.d(
+                "AreaCode", "selectedValue: ${selectedValue}" +
+                        "selectedArea:  ${selectedArea}" +
+                        "selectedContentId: ${selectedContentId}"
+            )
             searchRecommendInArea(selectedValue, selectedArea, selectedContentId)
         }
         binding.areaBased.setOnClickListener {
@@ -175,9 +179,9 @@ class TourApiActivity : AppCompatActivity() {
                 // RecyclerView 설정
                 val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
 
-                val text : TextView = findViewById<TextView>(R.id.text)
-                text.visibility=View.GONE
-                recyclerView.visibility=View.VISIBLE
+                val text: TextView = findViewById<TextView>(R.id.text)
+                text.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
 
                 recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)
                 val adapter = RecommendAdapter(recommends.response.body.items.item)
@@ -191,8 +195,8 @@ class TourApiActivity : AppCompatActivity() {
 
     private fun findCategory(cat: String, id: String): Int {
         var cate = 0 // 초기값 0으로 설정
-        Log.d("AreaCode","id: ${id}")
-        Log.d("AreaCode","cat: ${cat}")
+        Log.d("AreaCode", "id: ${id}")
+        Log.d("AreaCode", "cat: ${cat}")
         // id에 따른 카테고리 설정
         when (id) {
             "관광지" -> {
@@ -210,6 +214,7 @@ class TourApiActivity : AppCompatActivity() {
                     else -> 0 // 이외의 경우에는 초기값인 0 반환
                 }
             }
+
             "문화시설" -> {
                 cate = when (cat) {
                     "인문(문화/예술/역사)" -> R.array.category_A02_2
@@ -217,6 +222,7 @@ class TourApiActivity : AppCompatActivity() {
                     else -> 0
                 }
             }
+
             "축제공연행사" -> {
                 cate = when (cat) {
                     "인문(문화/예술/역사)" -> R.array.category_A02_3
@@ -225,6 +231,7 @@ class TourApiActivity : AppCompatActivity() {
                     else -> 0
                 }
             }
+
             "레포츠" -> {
                 cate = when (cat) {
                     "레포츠" -> R.array.category_A03

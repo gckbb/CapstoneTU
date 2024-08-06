@@ -2,12 +2,12 @@ package com.example.kakaotest.CheckList
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.kakaotest.DataModel.CheckList.CheckListData
-import com.example.kakaotest.databinding.ActivityListSelectBinding
 import com.example.kakaotest.R
+import com.example.kakaotest.databinding.ActivityListSelectBinding
 import java.text.SimpleDateFormat
 
 class ListSelectActivity : AppCompatActivity() {
@@ -23,24 +23,28 @@ class ListSelectActivity : AppCompatActivity() {
         val type = intent.getStringExtra("type")
 
         //라디오 버튼
-        binding.rbGroup.setOnCheckedChangeListener{ group, checkedID ->
-            when(checkedID){
+        binding.rbGroup.setOnCheckedChangeListener { group, checkedID ->
+            when (checkedID) {
                 R.id.rb_1 -> {
                     Toast.makeText(applicationContext, "1선택", Toast.LENGTH_SHORT).show();
                     sNum = 1
                 }
+
                 R.id.rb_2 -> {
                     Toast.makeText(applicationContext, "2선택", Toast.LENGTH_SHORT).show();
                     sNum = 2
                 }
+
                 R.id.rb_3 -> {
                     Toast.makeText(applicationContext, "3선택", Toast.LENGTH_SHORT).show();
                     sNum = 3
                 }
+
                 R.id.rb_4 -> {
                     Toast.makeText(applicationContext, "4선택", Toast.LENGTH_SHORT).show();
                     sNum = 4
                 }
+
                 R.id.rb_5 -> {
                     Toast.makeText(applicationContext, "5선택", Toast.LENGTH_SHORT).show();
                     sNum = 5
@@ -58,11 +62,12 @@ class ListSelectActivity : AppCompatActivity() {
 
             //체크리스트 목록 이름, 생성 일자, 분류 초기 설정
             val listTitle = binding.etTitle.text.toString()
-            val currentDate = SimpleDateFormat("yyyy-MM-dd HH:mm").format(System.currentTimeMillis())
-            if(type.equals("ADD")) {
-                if(listTitle.isNotEmpty()) {
+            val currentDate =
+                SimpleDateFormat("yyyy-MM-dd HH:mm").format(System.currentTimeMillis())
+            if (type.equals("ADD")) {
+                if (listTitle.isNotEmpty()) {
                     val checklist = CheckListData(listTitle, currentDate)
-                    val intent = Intent().apply{
+                    val intent = Intent().apply {
                         putExtra("listTitle", listTitle)
                         putExtra("currentDate", currentDate)
                         putExtra("sNum", sNum)

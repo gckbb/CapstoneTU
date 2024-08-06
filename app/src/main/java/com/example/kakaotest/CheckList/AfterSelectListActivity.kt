@@ -73,11 +73,12 @@ class AfterSelectListActivity : AppCompatActivity() {
 
             override fun onItemClick(view: View, position: Int, item: TodoListData) {
                 // 투두리스트 수정
-                val intent = Intent(this@AfterSelectListActivity, EditTodoActivity::class.java).apply {
-                    putExtra("title", item.todoTitle)
-                    putExtra("content", item.todoContent)
-                    putExtra("type", "EDIT")
-                }
+                val intent =
+                    Intent(this@AfterSelectListActivity, EditTodoActivity::class.java).apply {
+                        putExtra("title", item.todoTitle)
+                        putExtra("content", item.todoContent)
+                        putExtra("type", "EDIT")
+                    }
                 startActivity(intent)
             }
         })
@@ -88,7 +89,11 @@ class AfterSelectListActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.IO).launch {
                     val currentItem = itemList[position]
                     currentItem.isChecked = !currentItem.isChecked!!
-                    dbTool.UpdateChecked(todoTitle!!, currentItem.isChecked!!, currentItem.todoTitle!!)
+                    dbTool.UpdateChecked(
+                        todoTitle!!,
+                        currentItem.isChecked!!,
+                        currentItem.todoTitle!!
+                    )
                 }
             }
         })
@@ -96,28 +101,29 @@ class AfterSelectListActivity : AppCompatActivity() {
         // 공유하기 버튼 클릭 리스너 설정
         binding.btnShare.setOnClickListener {
             // 공유 기능 실행
-            Log.d("sharecode","tvListTitle: ${binding.tvListTitle.text}")
+            Log.d("sharecode", "tvListTitle: ${binding.tvListTitle.text}")
             accessCheckListViaListTitle(binding.tvListTitle.text.toString())
         }
     }
 
     // EditTodoActivity에서 돌아온 후 처리
-    private val requestActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val data = result.data
-            val title = data?.getStringExtra("title")
-            val content = data?.getStringExtra("content")
+    private val requestActivity =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data = result.data
+                val title = data?.getStringExtra("title")
+                val content = data?.getStringExtra("content")
 
-            when (result.data?.getIntExtra("flag", -1)) {
-                0 -> {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        dbTool.AddTodo(todoTitle!!, title!!, content!!, false)
+                when (result.data?.getIntExtra("flag", -1)) {
+                    0 -> {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            dbTool.AddTodo(todoTitle!!, title!!, content!!, false)
+                        }
+                        Toast.makeText(this, "추가되었습니다.", Toast.LENGTH_SHORT).show()
                     }
-                    Toast.makeText(this, "추가되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
-    }
 
     // 공유 기능 실행 함수
     private fun shareList(sharingCode: String) {

@@ -51,9 +51,7 @@ class TourApiManager {
     }
 
 
-
-
-    suspend fun searchCategory(cat1: String,cat2: String,cat3: String): CategoryResponse {
+    suspend fun searchCategory(cat1: String, cat2: String, cat3: String): CategoryResponse {
         val apiService = TourApiClient.create()
         Log.d("Restaurant", "category 실행")
         val response = apiService.searchCategory(
@@ -69,7 +67,7 @@ class TourApiManager {
         return response
     }
 
-    suspend fun searchCategory2(cat1: String,cat2: String): CategoryResponse {
+    suspend fun searchCategory2(cat1: String, cat2: String): CategoryResponse {
         val apiService = TourApiClient.create()
         Log.d("Restaurant", "category 실행")
         val response = apiService.searchCategory2(

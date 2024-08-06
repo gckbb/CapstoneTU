@@ -150,6 +150,6 @@ data class Recommend(
     val infocenter: String?,              // 문의및안내
     val useseason: String?,               // 이용시기
     val usetime: String?                  // 이용시간
-): Serializable
+) : Serializable
 
 

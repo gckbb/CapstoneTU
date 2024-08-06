@@ -17,14 +17,15 @@ import com.skt.tmap.TMapView
 import com.skt.tmap.overlay.TMapMarkerItem
 
 class Detail_map_test : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?){
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityDetailMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP").apply()
+        sharedPreferences.edit().putString("app_key", "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP")
+            .apply()
 
         // 값을 가져옴
         val appKey: String? = sharedPreferences.getString("app_key", null)
@@ -56,9 +57,15 @@ class Detail_map_test : AppCompatActivity() {
                 val marker = TMapMarkerItem()
 
                 if (selected_place != null) {
-                    Log.d("restaurant","${selected_place.title}")
-                    tMapView.setCenterPoint(selected_place.mapx.toDouble(),selected_place.mapy.toDouble())
-                    marker.setTMapPoint(selected_place.mapx.toDouble(),selected_place.mapy.toDouble())
+                    Log.d("restaurant", "${selected_place.title}")
+                    tMapView.setCenterPoint(
+                        selected_place.mapx.toDouble(),
+                        selected_place.mapy.toDouble()
+                    )
+                    marker.setTMapPoint(
+                        selected_place.mapx.toDouble(),
+                        selected_place.mapy.toDouble()
+                    )
                 }
                 tMapView.zoomLevel = 15
 

@@ -17,8 +17,8 @@ class RecommendAdapter(private val recommends: List<Recommend>) :
     RecyclerView.Adapter<RecommendAdapter.RestaurantViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recommend_item, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.recommend_item, parent, false)
         return RestaurantViewHolder(itemView)
     }
 
@@ -27,9 +27,9 @@ class RecommendAdapter(private val recommends: List<Recommend>) :
 
         // Glide를 사용하여 이미지 설정
         // Glide를 사용하여 이미지 설정
-        val requestOptions: RequestOptions = RequestOptions()
-            .placeholder(R.drawable.null_image) // 이미지 로딩 중 표시할 플레이스홀더 이미지
-            .error(R.drawable.null_image) // 이미지 로딩 실패 시 표시할 에러 이미지
+        val requestOptions: RequestOptions =
+            RequestOptions().placeholder(R.drawable.null_image) // 이미지 로딩 중 표시할 플레이스홀더 이미지
+                .error(R.drawable.null_image) // 이미지 로딩 실패 시 표시할 에러 이미지
 
         Glide.with(holder.itemView.context) // 컨텍스트를 가져옴
             .load(currentItem.firstimage2) // 이미지 URL을 로드

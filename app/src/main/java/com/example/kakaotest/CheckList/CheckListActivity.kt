@@ -54,16 +54,18 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
         // 어댑터 아이템 클릭 리스너 설정
         cadapter.setItemClickListener(object : CAdapter.ItemClickListener {
             override fun onClick(view: View, position: Int, titleName: String) {
-                val intent = Intent(this@CheckListActivity, AfterSelectListActivity::class.java).apply {
-                    putExtra("titleName", titleName)
-                }
+                val intent =
+                    Intent(this@CheckListActivity, AfterSelectListActivity::class.java).apply {
+                        putExtra("titleName", titleName)
+                    }
                 startActivity(intent)
             }
 
             override fun onItemClick(view: View, position: Int, item: CheckListData) {
-                val intent = Intent(this@CheckListActivity, AfterSelectListActivity::class.java).apply {
-                    putExtra("titleName", item.listName)
-                }
+                val intent =
+                    Intent(this@CheckListActivity, AfterSelectListActivity::class.java).apply {
+                        putExtra("titleName", item.listName)
+                    }
                 startActivity(intent)
             }
         })
@@ -98,7 +100,11 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
     }
 
     override fun onDataPassed(listTitle: String, currentDate: String, sNum: Int) {
-        Toast.makeText(this, "List Selected: $listTitle, Date: $currentDate, Num: $sNum", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this,
+            "List Selected: $listTitle, Date: $currentDate, Num: $sNum",
+            Toast.LENGTH_SHORT
+        ).show()
 
         supportFragmentManager.beginTransaction().remove(optionSelectFragment!!).commit()
         isFragmentVisible = false
@@ -107,11 +113,11 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
         // 공유 코드 생성
         val shareCode = generateSharingCode(6)
         val userId = auth.currentUser?.email ?: return // 현재 사용자 ID 가져오기
-        Log.d("CList","${shareCode}")
-        Log.d("CList","${userId}")
+        Log.d("CList", "${shareCode}")
+        Log.d("CList", "${userId}")
         // 체크리스트 생성
         val newList = CheckListData(listTitle, currentDate, shareCode, mutableListOf(userId))
-        Log.d("CList","${newList}")
+        Log.d("CList", "${newList}")
 
         // Firebase Database에 체크리스트 저장
         dbReference.child(listTitle).setValue(newList)
@@ -168,9 +174,14 @@ class CheckListActivity : AppCompatActivity(), DataPassListener {
                         // 사용자 ID 추가
                         if (!checkList.userIds.contains(userId)) {
                             checkList.userIds.add(userId)
-                            firestore.collection("checklists").document(checkList.listName).set(checkList)
+                            firestore.collection("checklists").document(checkList.listName)
+                                .set(checkList)
                         }
-                        Toast.makeText(this, "체크리스트: ${checkList.listName}에 접근합니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "체크리스트: ${checkList.listName}에 접근합니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         val intent = Intent(this, AfterSelectListActivity::class.java).apply {
                             putExtra("titleName", checkList.listName)
                         }

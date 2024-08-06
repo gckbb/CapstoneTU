@@ -19,6 +19,7 @@ interface TourApiService {
         @Query("areaCode") areaCode: String,
         @Query("contentTypeId") contentTypeId: String
     ): RecommendResponse
+
     @GET("categoryCode1")
     suspend fun searchCategory(
         @Query("serviceKey") apiKey: String,

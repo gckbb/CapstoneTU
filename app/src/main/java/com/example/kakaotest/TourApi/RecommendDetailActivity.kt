@@ -29,8 +29,8 @@ class RecommendDetailActivity : AppCompatActivity() {
         // Restaurant 객체를 인텐트에서 가져옴
         val recommend = intent.getSerializableExtra("recommend") as? Recommend
 
-        if(recommend != null) {
-            getDetailIntro_39(recommend.contentid,recommend.contenttypeid)
+        if (recommend != null) {
+            getDetailIntro_39(recommend.contentid, recommend.contenttypeid)
             Glide.with(this)
                 .load(recommend.firstimage)
                 .into(binding.mainImage)
@@ -39,9 +39,9 @@ class RecommendDetailActivity : AppCompatActivity() {
             binding.textViewAddress.text = recommend.addr1
             binding.textViewTel.text = recommend.tel
             binding.textViewAddressDetail.text = recommend.addr2
-            Log.d("Recommend","searchCategory 실행")
-            searchCategory(recommend.cat1,recommend.cat2,recommend.cat3)
-            when(recommend.contenttypeid){
+            Log.d("Recommend", "searchCategory 실행")
+            searchCategory(recommend.cat1, recommend.cat2, recommend.cat3)
+            when (recommend.contenttypeid) {
                 "12" -> binding.tablerowTour.visibility = TableLayout.VISIBLE
                 "14" -> binding.tablerowCulture.visibility = TableLayout.VISIBLE
                 "15" -> binding.tablerowFestival.visibility = TableLayout.VISIBLE
@@ -69,39 +69,44 @@ class RecommendDetailActivity : AppCompatActivity() {
                 val mapy = String.format("%.8f", recommend.mapy.toDouble())
                 editor.putString("recommend_${mapx}_${mapy}_${recommend.addr1}", recommend.title)
 
-                Log.d("plan",recommend.title.toString())
-                Toast.makeText(this@RecommendDetailActivity, "${recommend.title} 저장", Toast.LENGTH_SHORT).show()
+                Log.d("plan", recommend.title.toString())
+                Toast.makeText(
+                    this@RecommendDetailActivity,
+                    "${recommend.title} 저장",
+                    Toast.LENGTH_SHORT
+                ).show()
 
             }
             editor.apply()
         }
     }
-    private fun searchCategory(cat1: String, cat2: String, cat3: String)  {
+
+    private fun searchCategory(cat1: String, cat2: String, cat3: String) {
         scope.launch {
             try {
-                Log.d("Restaurant","tourApiManager.searchCategory(cat1,cat2,cat3)")
-                val cate_1 = tourApiManager.searchCategory(cat1,cat2,cat3)
+                Log.d("Restaurant", "tourApiManager.searchCategory(cat1,cat2,cat3)")
+                val cate_1 = tourApiManager.searchCategory(cat1, cat2, cat3)
                 val cate_3 = tourApiManager.searchCategory3(cat1)
                 val cate_4 = tourApiManager.searchCategory4()
                 var cate_items_1 = cate_1.response.body.items.item
                 var cate_items_3 = cate_3.response.body.items.item
                 var cate_items_4 = cate_4.response.body.items.item
 
-                var cate1 : TextView = findViewById(R.id.cat1)
-                for(item in cate_items_4){
-                    if(item.code.equals(cat1))
+                var cate1: TextView = findViewById(R.id.cat1)
+                for (item in cate_items_4) {
+                    if (item.code.equals(cat1))
                         cate1.text = item.name
                 }
-                Log.d("Restaurant","${cate1.text}")
-                var cate2 : TextView = findViewById(R.id.cat2)
-                for(item in cate_items_3){
-                    if(item.code == cat2)
+                Log.d("Restaurant", "${cate1.text}")
+                var cate2: TextView = findViewById(R.id.cat2)
+                for (item in cate_items_3) {
+                    if (item.code == cat2)
                         cate2.text = item.name
                 }
-                Log.d("Restaurant","${cate2.text}")
-                var cate3 : TextView = findViewById(R.id.cat3)
+                Log.d("Restaurant", "${cate2.text}")
+                var cate3: TextView = findViewById(R.id.cat3)
                 cate3.text = cate_items_1[0].name
-                Log.d("Restaurant","${cate3.text}")
+                Log.d("Restaurant", "${cate3.text}")
 
             } catch (e: Exception) {
                 // 오류 처리
@@ -114,11 +119,11 @@ class RecommendDetailActivity : AppCompatActivity() {
         scope.launch {
             try {
                 // API를 통해 데이터 가져오기
-                Log.d("detailCode","contentId: ${contentId}, ${contentTypeId} 실행")
+                Log.d("detailCode", "contentId: ${contentId}, ${contentTypeId} 실행")
                 val details = tourApiManager.getDetailIntro(contentId, contentTypeId)
-                Log.d("detailCode","getDetailIntro 실행")
+                Log.d("detailCode", "getDetailIntro 실행")
                 var details_info = details.response.body.items.item[0]
-                Log.d("detailCode","${details_info}")
+                Log.d("detailCode", "${details_info}")
 
                 val binding = ActivityRecommendDetailBinding.inflate(layoutInflater)
 
@@ -207,7 +212,7 @@ class RecommendDetailActivity : AppCompatActivity() {
                 val expguide = findViewById<TextView>(R.id.text_expguide)
                 expguide.text = details_info.expguide
 
-                val expagerange =findViewById<TextView>(R.id.text_expagerange)
+                val expagerange = findViewById<TextView>(R.id.text_expagerange)
                 expagerange.text = details_info.expagerange
 
                 val accomcount = findViewById<TextView>(R.id.text_accomcount)
@@ -232,12 +237,11 @@ class RecommendDetailActivity : AppCompatActivity() {
                 chkcreditcard.text = details_info.chkcreditcard
 
 
-
-
                 val chkcreditcardculture = findViewById<TextView>(R.id.text_chkcreditcardculture)
                 chkcreditcardculture.text = details_info.chkcreditcardculture
 
-                val chkbabycarriageculture = findViewById<TextView>(R.id.text_chkbabycarriageculture)
+                val chkbabycarriageculture =
+                    findViewById<TextView>(R.id.text_chkbabycarriageculture)
                 chkbabycarriageculture.text = details_info.chkbabycarriageculture
 
                 val chkpetculture = findViewById<TextView>(R.id.text_chkpetculture)
@@ -272,10 +276,6 @@ class RecommendDetailActivity : AppCompatActivity() {
 
                 val accomcountculture = findViewById<TextView>(R.id.text_accomcountculture)
                 accomcountculture.text = details_info.accomcountculture
-
-
-
-
 
 
                 val sponsor1 = findViewById<TextView>(R.id.text_sponsor1)
@@ -333,10 +333,6 @@ class RecommendDetailActivity : AppCompatActivity() {
                 festivalgrade.text = details_info.festivalgrade
 
 
-
-
-
-
                 val openperiod = findViewById<TextView>(R.id.text_openperiod)
                 openperiod.text = details_info.openperiod
 
@@ -370,7 +366,8 @@ class RecommendDetailActivity : AppCompatActivity() {
                 val parkingfeeleports = findViewById<TextView>(R.id.text_parkingfeeleports)
                 parkingfeeleports.text = details_info.parkingfeeleports
 
-                val chkbabycarriageleports = findViewById<TextView>(R.id.text_chkbabycarriageleports)
+                val chkbabycarriageleports =
+                    findViewById<TextView>(R.id.text_chkbabycarriageleports)
                 chkbabycarriageleports.text = details_info.chkbabycarriageleports
 
                 val chkpetleports = findViewById<TextView>(R.id.text_chkpetleports)
@@ -378,10 +375,6 @@ class RecommendDetailActivity : AppCompatActivity() {
 
                 val chkcreditcardleports = findViewById<TextView>(R.id.text_chkcreditcardleports)
                 chkcreditcardleports.text = details_info.chkcreditcardleports
-
-
-
-
 
 
                 val saleitem = findViewById<TextView>(R.id.text_saleitem)
@@ -417,8 +410,9 @@ class RecommendDetailActivity : AppCompatActivity() {
                 val parkingshopping = findViewById<TextView>(R.id.text_parkingshopping)
                 parkingshopping.text = details_info.parkingshopping
 
-                val chkbabycarriageshopping = findViewById<TextView>(R.id.text_chkbabycarriageshopping)
-                chkbabycarriageshopping.text  =details_info.chkbabycarriageshopping
+                val chkbabycarriageshopping =
+                    findViewById<TextView>(R.id.text_chkbabycarriageshopping)
+                chkbabycarriageshopping.text = details_info.chkbabycarriageshopping
 
                 val chkpetshopping = findViewById<TextView>(R.id.text_chkpetshopping)
                 chkpetshopping.text = details_info.chkpetshopping
