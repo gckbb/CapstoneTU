@@ -34,7 +34,7 @@ class FirstRoute : AppCompatActivity() {
         lateinit var firstList2:MetaDayRoute
 
 
-        val travelPlan= SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
+        val travelPlan = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
 
         val backic = findViewById<ImageButton>(R.id.back_btn)
         backic.setOnClickListener{
@@ -44,7 +44,7 @@ class FirstRoute : AppCompatActivity() {
 
         intent.getStringExtra("firstList2")?.let { firstListdata2 ->
             firstList2 = gson.fromJson(firstListdata2, MetaDayRoute::class.java)
-            Log.d("PLAN","firstRoute \n"+ firstList2.toString())
+            Log.d("PLAN","firstRoute2 \n"+ firstList2.toString())
         }
         intent.getParcelableArrayListExtra<SearchRouteData>("firstList")?.let { firstListdata ->
             firstList = firstListdata
@@ -119,10 +119,12 @@ class FirstRoute : AppCompatActivity() {
                                 dashStyle.plus(0)
                                 for (selectedRoute in firstList2?.dayRoute?.get(i)?.metaData?.plan?.itineraries?.get(0)?.legs!!) {
                                     Log.d("PathError","${selectedRoute.start?.lat?.toDouble()!!}")
+
                                     if (selectedRoute.mode == "WALK") {
                                         if(polylineindex != 1) {
                                             val marker = TMapMarkerItem().apply {
                                                 id = "indeex${polylineindex}${i}"
+                                                polylineindex++
                                                 setTMapPoint(
                                                     TMapPoint(
                                                         selectedRoute.start?.lat?.toDouble()!!,
@@ -140,26 +142,27 @@ class FirstRoute : AppCompatActivity() {
                                             )
                                         )
 
-//                                        Log.d("PathError","${TMapPoint(
-//                                            selectedRoute.start?.lat?.toDouble()!!,
-//                                            selectedRoute.start?.lon?.toDouble()!!
-//                                        )}")
-//                                        polyLines = tMapData.findPathDataWithType(
-//                                            TMapData.TMapPathType.PAQEDESTRIAN_PATH,
-//                                            TMapPoint(
-//                                                selectedRoute.start?.lat?.toDouble()!!,
-//                                                selectedRoute.start?.lon?.toDouble()!!
-//                                            ),
-//                                            TMapPoint(
-//                                                selectedRoute.end?.lat?.toDouble()!!,
-//                                                selectedRoute.end?.lon?.toDouble()!!
-//                                            )
-//                                        )
-//                                        polyLines.setID("polylin${polylineindex}${i}")
-//                                        polyLines.pathEffect = dashStyle
-//                                        polyLines.setLineColor(Color.YELLOW)
-//                                        tMapView.addTMapPolyLine(polyLines)
-//                                        polylineindex++
+                                        Log.d("PathError","${TMapPoint(
+                                            selectedRoute.start?.lat?.toDouble()!!,
+                                            selectedRoute.start?.lon?.toDouble()!!
+                                        )}")
+                                        polyLines = tMapData.findPathDataWithType(
+                                            TMapData.TMapPathType.PEDESTRIAN_PATH,
+                                            TMapPoint(
+                                                selectedRoute.start?.lat?.toDouble()!!,
+                                                selectedRoute.start?.lon?.toDouble()!!
+                                            ),
+                                            TMapPoint(
+                                                selectedRoute.end?.lat?.toDouble()!!,
+                                                selectedRoute.end?.lon?.toDouble()!!
+                                            )
+                                        )
+                                        polyLines.setID("polylin${polylineindex}${i}")
+                                        polyLines.pathEffect = dashStyle
+                                        polyLines.setLineColor(Color.YELLOW)
+                                        tMapView.addTMapPolyLine(polyLines)
+                                        polylineindex++
+                                        /*
                                         for(k in 0 until selectedRoute.steps?.size!!) {
                                             val split =
                                                 selectedRoute.steps?.get(k)?.linestring?.split(","," ")
@@ -171,8 +174,6 @@ class FirstRoute : AppCompatActivity() {
                                                     )
                                                 )
                                             }
-
-
                                         }
                                         polyLines = TMapPolyLine(
                                             "walkpoly${polylineindex}${i}",
@@ -183,10 +184,12 @@ class FirstRoute : AppCompatActivity() {
                                         tMapView.addTMapPolyLine(polyLines)
                                         polylineindex++
                                         tpointPathList.clear()
+                                         */
 
                                     } else if (selectedRoute.mode == "BUS" || selectedRoute.mode == "SUBWAY") {
                                         val marker = TMapMarkerItem().apply {
                                             id = "index${polylineindex}${i}"
+                                            polylineindex++
                                             setTMapPoint(
                                                 TMapPoint(
                                                     selectedRoute.start?.lat?.toDouble()!!,

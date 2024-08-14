@@ -58,7 +58,7 @@ class MakeRoute {
             this.startPoint = startPoint
             if(type == 0 || type == 2) { // 자차,택시,도보
                 coroutineScope {
-                    for (i in 1 until selectedPlaceList.count()) {
+                    for (i in 1 until selectedPlaceList.count()+1) {
                         val deferredTime = async(Dispatchers.IO) {
                             apiAdapter.apiRequest(
                                 startPoint.tpoint.longitude,
@@ -90,7 +90,7 @@ class MakeRoute {
             }
             else if(type == 1){ // 대중교통(버스,지하철)
                 coroutineScope {
-                    for (i in 1 until selectedPlaceList.count()) {
+                    for (i in 1 until selectedPlaceList.count()+1) {
                         val deferredData = async(Dispatchers.IO) {
                             apiAdapter2.apiRequest2(
                                 startPoint.tpoint.longitude,
@@ -132,6 +132,7 @@ class MakeRoute {
     }
 
     suspend fun routeStart2(totalDate: Int, maxDayTime: Int, stayTimePerPlace: Int, foodDataList: ArrayList<SelectedPlaceData>,restaurant:String,type:Int) { // 대중교통
+
         coroutineScope {
             try {
                 for (k in 0 until totalDate+1) {
