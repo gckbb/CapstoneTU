@@ -17,11 +17,10 @@
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 
-
     <FrameLayout
         android:id="@+id/tmapViewContainer"
         android:layout_width="match_parent"
-        android:layout_height="406dp"
+        android:layout_height="500dp"
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
@@ -29,7 +28,7 @@
     <ListView
         android:id="@+id/metaListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="400dp" />
+        android:layout_height="200dp"
+        android:layout_marginTop="500dp" />
 
 </FrameLayout>

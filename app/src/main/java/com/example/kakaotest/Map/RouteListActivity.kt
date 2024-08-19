@@ -48,7 +48,7 @@ class RouteListActivity : AppCompatActivity() {
 
         Log.d("RouteListActivity",receivedDataList.toString()) //arraylistof<SelectedPlaceData>
         Log.d("RouteListActivity",receivedFoodDataList.toString()) //arraylistof<SearchData>
-
+        convertedFoodDataList = convertList(receivedFoodDataList!!)
 
 
 

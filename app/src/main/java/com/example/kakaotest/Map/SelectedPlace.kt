@@ -112,8 +112,8 @@ class SelectedPlace : AppCompatActivity() {
             for ((key, value) in clickedRestaurantMap) {
                 if (value == clickedRestaurantName) {
                     val latitudeLongitude = key.split("_")
-                    val latitude = latitudeLongitude[1].toDouble()
-                    val longitude = latitudeLongitude[2].toDouble()
+                    val latitude = latitudeLongitude[2].toDouble()
+                    val longitude = latitudeLongitude[1].toDouble()
                     val address = latitudeLongitude[3]
                     val newPlace = SelectedPlaceData(clickedRestaurantName, TMapPoint(latitude, longitude), address)
 

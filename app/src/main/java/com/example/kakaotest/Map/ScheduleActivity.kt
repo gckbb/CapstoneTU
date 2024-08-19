@@ -76,15 +76,6 @@ class ScheduleActivity : AppCompatActivity() {
 
 
 
-        for(i in 0 until dateRange+1) {
-            val routeData: ArrayList<SearchRouteData>? =
-                intent.getParcelableArrayListExtra("List${i + 1}")
-            dayRouteList.add(routeData ?: ArrayList())
-        }
-
-        val receivedDataList : ArrayList<SelectedPlaceData>? = SharedPreferenceUtil.getRouteFromSharedPreferences(this)
-
-
 
 
         Log.d("PLAN",travelPlan.toString())
