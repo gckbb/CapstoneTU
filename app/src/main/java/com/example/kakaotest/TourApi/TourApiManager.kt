@@ -11,7 +11,9 @@ class TourApiManager {
     suspend fun searchRecommendInArea(
         cat3: String,
         area: String,
-        contentId: String
+        contentId: String,
+        pageNo: Int,
+        numOfRows: Int
     ): RecommendResponse {
         val apiService = TourApiClient.create()
         Log.d("AreCode", "apiservice 실행")
@@ -24,7 +26,8 @@ class TourApiManager {
             areaCode = area,
             contentTypeId = contentId,
             type = "json",
-            numOfRows = 30
+            numOfRows = numOfRows,
+            pageNo = pageNo
         )
         Log.d("detailCode", "searchRestaurants 실행")
         Log.d("detailCode", "Response: ${response.toString()}") // 응답 데이터 로깅

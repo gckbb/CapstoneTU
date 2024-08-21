@@ -7,11 +7,11 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
-
+import android.widget.LinearLayout
 import android.widget.TextView
-
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaotest.R
@@ -25,6 +25,11 @@ class TourApiActivity : AppCompatActivity() {
     private lateinit var categoryValues: Array<String>
 
     private var isFirstLoad = true // 초기화 플래그
+
+    private var currentPage = 1
+    private var totalPages = 1
+    private val numOfRows = 10  // 한 페이지에 표시할 아이템 수
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -161,7 +166,7 @@ class TourApiActivity : AppCompatActivity() {
                         "selectedArea:  ${selectedArea}" +
                         "selectedContentId: ${selectedContentId}"
             )
-            searchRecommendInArea(selectedValue, selectedArea, selectedContentId)
+            searchRecommendInArea(selectedValue, selectedArea, selectedContentId, 1)
         }
         binding.areaBased.setOnClickListener {
             editor.clear().apply()
@@ -170,28 +175,67 @@ class TourApiActivity : AppCompatActivity() {
         }
     }
 
-    private fun searchRecommendInArea(cat3: String, area: String, contentId: String) {
+    private fun searchRecommendInArea(cat3: String, area: String, contentId: String, pageNo: Int) {
         scope.launch {
             try {
-                Log.d("AreaCode", "${cat3}, ${area}, ${contentId}")
-                val recommends = tourApiManager.searchRecommendInArea(cat3, area, contentId)
+                Log.d("AreaCode", "$cat3, $area, $contentId")
+                val response = tourApiManager.searchRecommendInArea(cat3, area, contentId, pageNo, numOfRows)
                 Log.d("AreaCode", "searchRecommend")
+
+                val items = response.response.body.items.item
+                val totalCount = response.response.body.totalCount
+                totalPages = (totalCount + numOfRows - 1) / numOfRows
+
                 // RecyclerView 설정
                 val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-
                 val text: TextView = findViewById<TextView>(R.id.text)
                 text.visibility = View.GONE
                 recyclerView.visibility = View.VISIBLE
 
                 recyclerView.layoutManager = LinearLayoutManager(this@TourApiActivity)
-                val adapter = RecommendAdapter(recommends.response.body.items.item)
+                val adapter = RecommendAdapter(items)
                 recyclerView.adapter = adapter
+
+                setupPagination(cat3, area, contentId)
             } catch (e: Exception) {
                 // 오류 처리
                 Log.e("AreaCode", "음식점 검색 오류: $e")
             }
         }
     }
+
+    private fun setupPagination(cat3: String, area: String, contentId: String) {
+        val paginationLayout: LinearLayout = findViewById(R.id.pagination_layout_linear)
+        paginationLayout.removeAllViews()
+
+        for (i in 1..totalPages) {
+//            val button = Button(this)
+
+            val button = AppCompatButton(this).apply {
+                setTextAppearance(R.style.PaginationButtonStyle)
+                setBackgroundResource(R.drawable.button1)
+
+                // 레이아웃 크기 설정
+                layoutParams = LinearLayout.LayoutParams(
+                    100,
+                    100
+                ).apply {
+                    setMargins(30, 0, 30, 5)  // 마진 설정
+                }
+
+
+                setPadding(5, 5, 5, 5)  // 패딩 설정
+            }
+            button.text = i.toString()
+            button.setOnClickListener {
+                currentPage = i
+                searchRecommendInArea(cat3, area , contentId , pageNo = currentPage)
+            }
+            paginationLayout.addView(button)
+        }
+    }
+
+
 
     private fun findCategory(cat: String, id: String): Int {
         var cate = 0 // 초기값 0으로 설정

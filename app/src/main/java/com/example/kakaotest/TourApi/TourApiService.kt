@@ -16,6 +16,7 @@ interface TourApiService {
         @Query("cat3") cat3: String,
         @Query("_type") type: String,
         @Query("numOfRows") numOfRows: Int,
+        @Query("pageNo") pageNo: Int,
         @Query("areaCode") areaCode: String,
         @Query("contentTypeId") contentTypeId: String
     ): RecommendResponse

@@ -143,11 +143,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/recyclerLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@id/pagination_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
@@ -156,15 +156,36 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="380dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
 
             android:scrollbars="vertical"
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/restaurant_item" />
+            tools:listitem="@layout/restaurant_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
 
+    <HorizontalScrollView
+        android:id="@+id/pagination_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerLayout">
+
+        <LinearLayout
+            android:id="@+id/pagination_layout_linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="16dp" />
+    </HorizontalScrollView>
 
     <TextView
         android:id="@+id/text"
