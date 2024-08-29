@@ -111,6 +111,7 @@ class RouteListActivity : AppCompatActivity() {
                 for(i in 0 until dateRange+1) {
                     intent.putExtra("List${i+1}",routetest.printTotalRoute().getOrNull(i)?.dayRoute)
                 }
+
             }
 
 

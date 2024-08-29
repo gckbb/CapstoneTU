@@ -218,10 +218,10 @@ class MakeRoute {
 
                     dayRouteList.add(SearchRouteData(startPoint, 0))
 
-                    // 최단 시간 경로를 구하는 대신, 최대한 많은 장소를 방문하는 로직 추가
+
                     while (routeList.isNotEmpty() && currentDayTime + routeList.first().time.toInt() <= remainingTime) {
 
-                        if (currentDayTime > 4 * 3600 && lunchcheck == 0 && restaurant=="YES") {  // 4인 이유는 am8로 생각하고 4시간 후인 12시를 점심시간이라고 가정함
+                        if (currentDayTime > 4 * 3600 && lunchcheck == 0 && restaurant=="YES") {
                             var minfood = 999999
                             var mindata: SelectedPlaceData? = null
 

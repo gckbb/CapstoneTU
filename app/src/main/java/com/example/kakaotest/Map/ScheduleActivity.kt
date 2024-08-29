@@ -15,12 +15,15 @@ import androidx.core.content.ContextCompat
 import com.example.kakaotest.CashBook.CashBookActivity
 
 import com.example.kakaotest.CheckList.CheckListActivity
+import com.example.kakaotest.DataModel.Date
+import com.example.kakaotest.DataModel.ScheduleData
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.HomeActivity
+import com.example.kakaotest.Utility.Database
 
 
 import com.example.kakaotest.R
@@ -30,15 +33,20 @@ import com.example.kakaotest.Utility.SharedPreferenceUtil
 import com.example.kakaotest.Utility.TravelPlanManager
 import com.example.kakaotest.databinding.ActivityScheduleBinding
 import com.google.gson.Gson
-import java.util.ArrayList
-import java.util.LinkedList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
+import java.util.*
 
 class ScheduleActivity : AppCompatActivity() {
     private val travelPlanManager = TravelPlanManager()
     val gson = Gson()
-
+    val dbtool = Database()
     val dayRouteList = mutableListOf<ArrayList<SearchRouteData>?>()
     val dayRouteList2 = mutableListOf<MetaDayRoute>()
+
 
 
 
@@ -53,6 +61,16 @@ class ScheduleActivity : AppCompatActivity() {
         val endDate = travelPlan.endDate?.day ?: 0
         val dateRange = endDate - startDate
 
+        val lattempList = ArrayList<Double>()
+        val lontempList = ArrayList<Double>()
+        val placenameList = ArrayList<String>()
+        val startdata = travelPlan.startDate!!
+        val enddata = travelPlan.endDate!!
+        val scheduletype = travelPlan.transportion!!
+        val mainid = "testid" //테스트용 임시설정 아이디
+
+
+
 
         if(travelPlan.transportion == "버스") {
             for(i in 0 until dateRange+1){
@@ -62,6 +80,25 @@ class ScheduleActivity : AppCompatActivity() {
             }
             travelPlanManager.updatePlan(destination2 = dayRouteList2[0].dayRoute)
             travelPlanManager.updatePlan(destination2 = dayRouteList2[1].dayRoute)
+
+            for(j in 0 until dayRouteList2.size) {
+                for (i in dayRouteList2[j].dayRoute!!) {
+                    lattempList.add(i.pointdata?.tpoint?.latitude!!)
+                    lontempList.add(i.pointdata?.tpoint?.longitude!!)
+                    placenameList.add(i.pointdata.placeName)
+                }
+                lattempList.add(0.0)
+                lontempList.add(0.0)
+                placenameList.add("-")
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                val plancount = dbtool.getData(mainid).await().documents.size
+                dbtool.AddPlan(ScheduleData(mainid,null,lattempList,lontempList,
+                    placenameList,scheduletype,startdata,enddata,mainid+plancount))
+            }
+
+
+
         }
         else {
             for (i in 0 until dateRange + 1) {
@@ -69,7 +106,26 @@ class ScheduleActivity : AppCompatActivity() {
             }
             travelPlanManager.updatePlan(destination = dayRouteList[0])
             travelPlanManager.updatePlan(destination = dayRouteList[1])
+
+
+
+            for(j in 0 until dayRouteList.size) {
+                for (i in dayRouteList[j]!!) {
+                    lattempList.add(i.pointdata?.tpoint?.latitude!!)
+                    lontempList.add(i.pointdata?.tpoint?.longitude!!)
+                    placenameList.add(i.pointdata.placeName)
+                }
+                lattempList.add(0.0)
+                lontempList.add(0.0)
+                placenameList.add("-")
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                val plancount = dbtool.getData(mainid).await().documents.size
+                dbtool.AddPlan(ScheduleData(mainid,null,lattempList,lontempList,
+                    placenameList,scheduletype,startdata,enddata,mainid+plancount))
+            }
         }
+
 
 
 
