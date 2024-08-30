@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 
 data class PassShape(
-    val linestring:String?
+    var linestring:String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(parcel.readString()) {
     }

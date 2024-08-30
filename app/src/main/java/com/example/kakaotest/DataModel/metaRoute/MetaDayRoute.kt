@@ -1,8 +1,8 @@
 package com.example.kakaotest.DataModel.metaRoute
 
-import java.util.LinkedList
+import java.util.ArrayList
 
 data class MetaDayRoute(
-    val totalTime:Number,
-    val dayRoute: LinkedList<SearchMetaData>
+    var totalTime:Int? = null,
+    var dayRoute: ArrayList<SearchMetaData>? = null
 )

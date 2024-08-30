@@ -7,11 +7,11 @@ import kotlinx.parcelize.Parcelize
 //complete
 
 data class StationList(
-    val index:Int,
-    val stationName:String?,
-    val lon:Number,
-    val lat:Number,
-    val stationID:String?
+    var index:Int? = null,
+    var stationName:String? = null,
+    var lon:Double? = null,
+    var lat:Double? = null,
+    var stationID:String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -27,10 +27,10 @@ data class StationList(
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeInt(index)
+        index?.let { dest.writeInt(it) }
         dest.writeString(stationName)
-        dest.writeDouble(lon.toDouble())
-        dest.writeDouble(lat.toDouble())
+        lon?.let { dest.writeDouble(it.toDouble()) }
+        lat?.let { dest.writeDouble(it.toDouble()) }
         dest.writeString(stationID)
     }
 

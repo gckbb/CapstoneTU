@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 //complete
 
 data class PassStopList(
-    val stationList:List<StationList>?,
+    var stationList:List<StationList>? = null,
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(parcel.createTypedArrayList(StationList.CREATOR)) {

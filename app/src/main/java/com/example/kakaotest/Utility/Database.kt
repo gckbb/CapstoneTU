@@ -11,6 +11,10 @@ import com.google.firebase.firestore.AggregateSource
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
+import com.squareup.okhttp.Dispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.ExecutionException
 
@@ -34,6 +38,16 @@ class Database {
     suspend fun getData(id: String) : Task<QuerySnapshot> {
         return db.collection("travelPlans").whereEqualTo("mainId",id).get()
     }
+
+    suspend fun findbyID(id: String) : Task<QuerySnapshot> {
+        val job = CoroutineScope(Dispatchers.IO).async {
+            val returndata = db.collection("travelPlans").whereEqualTo("mainId",id).get()
+
+            return@async returndata
+        }
+        return job.await()
+    }
+
 
 
 }

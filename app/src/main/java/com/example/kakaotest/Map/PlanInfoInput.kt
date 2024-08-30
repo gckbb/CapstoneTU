@@ -3,7 +3,6 @@ package com.example.kakaotest.Map
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +10,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -22,14 +20,12 @@ import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.Fragment.DatePickerFragment
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.TravelPlanManager
-import com.example.kakaotest.Utility.NullCheck
 
 
 import com.example.kakaotest.Utility.SharedPreferenceUtil
 
 
 import com.example.kakaotest.databinding.ActivityPlanInfoBinding
-import org.w3c.dom.Text
 
 import java.util.Calendar
 class PlanInfoInput : AppCompatActivity() {
@@ -203,7 +199,7 @@ class PlanInfoInput : AppCompatActivity() {
                             // 이미 선택된 버튼을 누르면 선택된 버튼  선택 해제
                             view.isSelected = false
                             transport = ""
-                            travelPlanManager.updatePlan(transport=transport)
+                            travelPlanManager.updatePlan(transport =transport)
                         } else { // 선택되지 않은 버튼 누르면 선택
                             for (otherBtn in transportBtn){
                             // 이미 선택된 버튼이 있다면 그 버튼 선택해제하고 저장한 값 초기화

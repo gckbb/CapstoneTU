@@ -4,8 +4,10 @@ import com.example.kakaotest.DataModel.Date
 import com.example.kakaotest.DataModel.Place
 import com.example.kakaotest.DataModel.Time
 import com.example.kakaotest.DataModel.TravelPlan
+import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
+import java.util.ArrayList
 
 class TravelPlanManager {
     private var travelPlan = TravelPlan()
@@ -19,8 +21,8 @@ class TravelPlanManager {
         theme: String? = null,
         activityTime: Int? = null,
         startTime:Time? = null,
-        restaurant : String? = null,
-        destination: List<SearchRouteData>? = null,
+        restaurant: String? = null,
+        destination: ArrayList<SearchRouteData>? = null,
         destination2: List<SearchMetaData>? = null
     ) {
         where?.let { travelPlan.where = it }

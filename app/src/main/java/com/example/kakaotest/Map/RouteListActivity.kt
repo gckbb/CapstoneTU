@@ -157,7 +157,7 @@ class RouteListActivity : AppCompatActivity() {
                 Log.d("PLAN", "Total Route Printed")
 
 
-                if(travelPlan.transportion == "버스") BusUpdateList(0,DayRoute2(0)!!.dayRoute)
+                if(travelPlan.transportion == "버스") BusUpdateList(0,DayRoute2(0)!!.dayRoute!!)
                 else CarUpdateList(0, CarRoute(0))
 
 
@@ -189,7 +189,7 @@ class RouteListActivity : AppCompatActivity() {
 
     private fun DayRoute2(day : Int): MetaDayRoute? {
         val DayData = routetest.printTotalRoute2().getOrNull(day)
-        var DayPlaceList = LinkedList<SearchMetaData>()
+        var DayPlaceList = ArrayList<SearchMetaData>()
         if (DayData != null) {
             // 첫 번째 날짜의 선택된 장소 리스트 가져오기
             DayPlaceList = DayData!!.dayRoute!!
@@ -228,7 +228,7 @@ class RouteListActivity : AppCompatActivity() {
 
     private fun totalTime2(day: Int): Double { //time은 n일차의 총 이동시간  (eg. firstDayData.totalTime 첫 번째 날짜의 총 이동 시간)
         val DayData = routetest.printTotalRoute2().getOrNull(day)
-        val totalTime =  DayData!!.totalTime.toDouble() / 3600
+        val totalTime =  DayData!!.totalTime!!.toDouble() / 3600
         val totalHour : Double = String.format("%.1f", totalTime).toDouble()
         Log.d("PLAN","${day+1}일차 총 이동예상 시간 : ${totalHour.toString()}")
         return totalHour
@@ -252,7 +252,7 @@ class RouteListActivity : AppCompatActivity() {
 
     }
 
-    fun BusUpdateList(value:Int,data : LinkedList<SearchMetaData>){
+    fun BusUpdateList(value:Int, data: ArrayList<SearchMetaData>){
         val listView = findViewById<ListView>(R.id.listView1)
         val totalTime = findViewById<TextView>(R.id.totalTime_1)
 
@@ -283,7 +283,7 @@ class RouteListActivity : AppCompatActivity() {
         val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
 
 
-        val firstDayPlace = DayRoute2(0)!!.dayRoute.map { it.pointdata?.placeName?: "Unknown Place"}
+        val firstDayPlace = DayRoute2(0)!!.dayRoute!!.map { it.pointdata?.placeName?: "Unknown Place"}
         val adapter1 = ArrayAdapter(this, android.R.layout.simple_list_item_1, firstDayPlace)
         listView1.adapter = adapter1
         listView1.setOnTouchListener { _, _ ->
@@ -296,7 +296,7 @@ class RouteListActivity : AppCompatActivity() {
 
 
 
-        val SecondDayPlace = DayRoute2(1)!!.dayRoute.map { it.pointdata?.placeName ?: "Unknown Place"}
+        val SecondDayPlace = DayRoute2(1)!!.dayRoute!!.map { it.pointdata?.placeName ?: "Unknown Place"}
         val adapter2 = ArrayAdapter(this, android.R.layout.simple_list_item_1, SecondDayPlace)
         listView2.adapter = adapter2
         listView2.setOnTouchListener { _, _ ->
@@ -327,7 +327,7 @@ class RouteListActivity : AppCompatActivity() {
                 dayButtons[i].text = (startDate + i).toString()
                 dayButtons[i].setOnClickListener {
                     if(travelPlan!!.transportion == "버스") {
-                        BusUpdateList(i, DayRoute2(i)!!.dayRoute)
+                        BusUpdateList(i, DayRoute2(i)!!.dayRoute!!)
 
                     }else{
                         CarUpdateList(i,CarRoute(i))
