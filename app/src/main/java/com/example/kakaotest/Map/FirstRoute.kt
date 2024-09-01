@@ -100,7 +100,7 @@ class FirstRoute : AppCompatActivity() {
                 if(travelPlan?.transportion == "버스") {
                     Thread {
                         try {
-                            for (i in 1 until firstList2.dayRoute.size) {
+                            for (i in 1 until firstList2.dayRoute!!.size) {
                                 var polylineindex = 1
                                 var polyLines: TMapPolyLine
                                 var tpointList: ArrayList<TMapPoint> = ArrayList<TMapPoint>()
@@ -272,15 +272,15 @@ class FirstRoute : AppCompatActivity() {
                             }
 
                     }.start()
-                    for ((index, selectedPlace) in firstList2!!.dayRoute.withIndex()) {
+                    for ((index, selectedPlace) in firstList2!!.dayRoute!!.withIndex()) {
                         val tpoint = selectedPlace.pointdata!!.tpoint
                         //선택된 장소들 표시
                         if (tpoint != null) {
                             val marker = TMapMarkerItem().apply {
-                                id = selectedPlace.pointdata.placeName
+                                id = selectedPlace.pointdata!!.placeName
                                 setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))
                                 icon = if (index == 0) iconList[0]
-                                else if (index == firstList2.dayRoute.size - 1) iconList[11]
+                                else if (index == firstList2.dayRoute!!.size - 1) iconList[11]
                                 else iconList[index]
                             }
                             tMapView.addTMapMarkerItem(marker)

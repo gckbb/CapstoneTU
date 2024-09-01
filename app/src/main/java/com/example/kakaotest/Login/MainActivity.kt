@@ -32,7 +32,9 @@ import com.example.kakaotest.R
 import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.example.kakaotest.databinding.ActivityMainBinding
 import com.example.kakaotest.HomeActivity
+import com.example.kakaotest.Map.UserPlanActivity
 import com.example.kakaotest.TourApi.TourApiActivity
+import com.example.kakaotest.Utility.DestroyService
 import com.example.kakaotest.databinding.ActivityMainCommunityBinding
 import com.example.kakaotest.Utility.tmap.ApiAdapter
 import com.example.kakaotest.Utility.tmap.ApiAdapter2
@@ -97,9 +99,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        SavedUser().clearUserDataFromSharedPreferences(this)
 
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        startService(Intent(this, DestroyService::class.java))
         auth = FirebaseAuth.getInstance() //2 FirebaseAuth의 인스턴스 초기화
         super.onCreate(savedInstanceState)
         KakaoSdk.init(this, getString(R.string.kakao_app_key))
@@ -169,6 +176,12 @@ class MainActivity : AppCompatActivity() {
         binding.cashbook.setOnClickListener {
             val intent = Intent(this, CashBookActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.userplan.setOnClickListener {
+            val intent = Intent(this, UserPlanActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         binding.community.setOnClickListener {
@@ -258,7 +271,8 @@ class MainActivity : AppCompatActivity() {
                             if (savedPassword == enteredPassword) {
                                 // 비밀번호가 일치하는 경우
                                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                                SavedUser().saveUserDataToSharedPreferences(this, document.id)
+                                SavedUser().saveUserDataToSharedPreferences(this,document.id)
+                                SavedUser().saveUserIdToSharedPreferences(this, document.getString("id")!!)
                                 Toast.makeText(this, "저장된 document Id = $document.id", Toast.LENGTH_SHORT).show()
                                 Log.d("usercheck", "${auth.currentUser?.email}")
                                 // 로그인 성공 후 홈 화면으로 이동

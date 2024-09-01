@@ -8,9 +8,9 @@ import com.skt.tmap.*
 
 
 data class SelectedPlaceData(
-    val placeName: String,
-    val tpoint: TMapPoint, // TMapPoint는 Parcelable이어야 함
-    val address: String,
+    var placeName: String? = null,
+    var tpoint: TMapPoint? = null, // TMapPoint는 Parcelable이어야 함
+    var address: String? = null
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -24,8 +24,8 @@ data class SelectedPlaceData(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(placeName)
-        parcel.writeDouble(tpoint.latitude)
-        parcel.writeDouble(tpoint.longitude)
+        tpoint?.let { parcel.writeDouble(it.latitude) }
+        tpoint?.let { parcel.writeDouble(it.longitude) }
         parcel.writeString(address)
     }
 

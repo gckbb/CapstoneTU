@@ -25,8 +25,12 @@
         <activity
             android:name=".CashBook.AfterCashActivity"
             android:exported="false" />
+        <service android:name=".Utility.DestroyService"
+            android:stopWithTask="false"/>
         <activity
             android:name=".CashBook.EditCashActivity"
+            android:exported="false" />
+        <activity android:name=".Map.UserPlanActivity"
             android:exported="false" />
         <activity
             android:name=".Map.SingleMetaRoute"

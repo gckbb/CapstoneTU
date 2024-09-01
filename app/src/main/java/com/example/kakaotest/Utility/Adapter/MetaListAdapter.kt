@@ -8,7 +8,6 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.kakaotest.DataModel.metaRoute.Legs
-import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.R
 
 class MetaListAdapter (val context: Context, val routeList: List<Legs>) : BaseAdapter() {
@@ -18,10 +17,10 @@ class MetaListAdapter (val context: Context, val routeList: List<Legs>) : BaseAd
 
         /* 위에서 생성된 view를 res-layout-main_lv_item.xml 파일의 각 View와 연결하는 과정이다. */
         val modeimage = view.findViewById<ImageView>(R.id.modeimage)
-        val mode = view.findViewById<TextView>(R.id.mode)
+        val mode = view.findViewById<TextView>(R.id.Date)
         val time = view.findViewById<TextView>(R.id.time)
         val start = view.findViewById<TextView>(R.id.start)
-        val startStation = view.findViewById<TextView>(R.id.startstation)
+        val startStation = view.findViewById<TextView>(R.id.startpoint)
         val end = view.findViewById<TextView>(R.id.end)
         val endStation = view.findViewById<TextView>(R.id.endstation)
         val routetime = view.findViewById<TextView>(R.id.routetime)
@@ -36,7 +35,7 @@ class MetaListAdapter (val context: Context, val routeList: List<Legs>) : BaseAd
             end.text = " "
             startStation.text = " "
             endStation.text = " "
-            routetime.text = "${routeData.sectionTime/60}분 ${routeData.sectionTime%60}초"
+            routetime.text = "${routeData.sectionTime!!/60}분 ${routeData.sectionTime!!%60}초"
         }
         else if(routeData.mode == "BUS") {
             val resourceId = context.resources.getIdentifier("busmarker", "drawable", context.packageName)
@@ -47,7 +46,7 @@ class MetaListAdapter (val context: Context, val routeList: List<Legs>) : BaseAd
             end.text = "도착정류장 :"
             startStation.text = routeData.start?.name
             endStation.text = routeData.end?.name
-            routetime.text = "${routeData.sectionTime/60}분 ${routeData.sectionTime%60}초"
+            routetime.text = "${routeData.sectionTime!!/60}분 ${routeData.sectionTime!!%60}초"
         }
         else if(routeData.mode == "SUBWAY") {
             val resourceId = context.resources.getIdentifier("subwaymarker", "drawable", context.packageName)
@@ -58,7 +57,7 @@ class MetaListAdapter (val context: Context, val routeList: List<Legs>) : BaseAd
             end.text = "도착정류장 :"
             startStation.text = routeData.start?.name
             endStation.text = routeData.end?.name
-            routetime.text = "${routeData.sectionTime/60}분 ${routeData.sectionTime%60}초"
+            routetime.text = "${routeData.sectionTime!!/60}분 ${routeData.sectionTime!!%60}초"
         }
 
 

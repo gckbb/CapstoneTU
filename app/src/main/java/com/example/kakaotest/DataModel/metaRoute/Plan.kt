@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 
 //complete
 data class Plan(
-    val itineraries:List<Itineraries>?
+    var itineraries:List<Itineraries>? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.createTypedArrayList(Itineraries.CREATOR))

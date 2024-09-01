@@ -7,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 //complete
 
 data class Currency(
-    val symbol:String?,
-    val currency:String?,
-    val currencyCode:String?
+    var symbol:String? = null,
+    var currency:String? = null,
+    var currencyCode:String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),

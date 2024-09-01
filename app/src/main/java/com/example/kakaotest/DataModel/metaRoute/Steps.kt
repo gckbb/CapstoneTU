@@ -7,10 +7,10 @@ import kotlinx.parcelize.Parcelize
 //complete
 
 data class Steps(
-    val streetName:String?,
-    val distance:Int,
-    val description:String?,
-    val linestring:String?
+    var streetName:String? = null,
+    var distance:Int? = null,
+    var description:String? = null,
+    var linestring:String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -26,7 +26,7 @@ data class Steps(
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(streetName)
-        dest.writeInt(distance)
+        distance?.let { dest.writeInt(it) }
         dest.writeString(description)
         dest.writeString(linestring)
     }

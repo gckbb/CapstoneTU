@@ -7,11 +7,11 @@ import kotlinx.parcelize.Parcelize
 //complete
 
 data class Lane(
-    val routeColor:String?,
-    val route:String?,
-    val routeId:String?,
-    val service:Int,
-    val type:Int
+    var routeColor:String? = null,
+    var route:String? = null,
+    var routeId:String? = null,
+    var service:Int? = null,
+    var type:Int? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -30,8 +30,8 @@ data class Lane(
         dest.writeString(routeColor)
         dest.writeString(route)
         dest.writeString(routeId)
-        dest.writeInt(service)
-        dest.writeInt(type)
+        service?.let { dest.writeInt(it) }
+        type?.let { dest.writeInt(it) }
     }
 
     companion object CREATOR : Parcelable.Creator<Lane> {

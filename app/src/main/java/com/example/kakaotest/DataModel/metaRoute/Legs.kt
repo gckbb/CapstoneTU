@@ -10,22 +10,22 @@ import java.util.ArrayList
 
 
 data class Legs(
-    val mode: String?,
-    val sectionTime:Int,
-    val distance:Int,
-    val start:Start?,
-    val end:End?,
+    var mode: String? = null,
+    var sectionTime:Int? = null,
+    var distance:Int? = null,
+    var start:Start? = null,
+    var end:End? = null,
 
-    val route:String?,
+    var route:String? = null,
 
-    val steps: List<Steps>?,
-    val routeColor: String?,
-    val routeId: String?,
-    val type:Int,
-    val service:Int,
-    val passStopList:PassStopList?,
-    val passShape:PassShape?,
-    val lane:Lane?
+    var steps: List<Steps>? = null,
+    var routeColor: String? = null,
+    var routeId: String? = null,
+    var type:Int? = null,
+    var service:Int? = null,
+    var passStopList:PassStopList? = null,
+    var passShape:PassShape? = null,
+    var lane:Lane? = null
 
 ) : Parcelable {
 
@@ -52,8 +52,8 @@ data class Legs(
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(mode)
-        parcel.writeInt(sectionTime)
-        parcel.writeInt(distance)
+        sectionTime?.let { parcel.writeInt(it) }
+        distance?.let { parcel.writeInt(it) }
         parcel.writeParcelable(start, flags)
         parcel.writeParcelable(end, flags)
 
@@ -62,8 +62,8 @@ data class Legs(
         parcel.writeParcelableList(steps, flags)
         parcel.writeString(routeColor)
         parcel.writeString(routeId)
-        parcel.writeInt(type)
-        parcel.writeInt(service)
+        type?.let { parcel.writeInt(it) }
+        service?.let { parcel.writeInt(it) }
         parcel.writeParcelable(passStopList, flags)
         parcel.writeParcelable(passShape, flags)
         parcel.writeParcelable(lane, flags)

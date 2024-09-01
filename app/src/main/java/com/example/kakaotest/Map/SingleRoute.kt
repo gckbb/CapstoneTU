@@ -86,7 +86,7 @@ class SingleRoute : AppCompatActivity(){
                     if(tpoint != null) {
                         val marker = TMapMarkerItem().apply {
                             id = tpoint.placeName
-                            setTMapPoint(TMapPoint(tpoint.tpoint.latitude, tpoint.tpoint.longitude))
+                            setTMapPoint(TMapPoint(tpoint.tpoint!!.latitude, tpoint.tpoint!!.longitude))
                             icon = iconList[i]
                         }
                         tMapView.addTMapMarkerItem(marker)

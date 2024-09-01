@@ -5,21 +5,21 @@ import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import android.os.Parcel
 import android.os.Parcelable
 data class SearchMetaData(
-    val metaData: MetaData?,
-    val pointdata: SelectedPlaceData?,
-    var time: Number
+    var metaData: MetaData? = null,
+    var pointdata: SelectedPlaceData? = null,
+    var time: Int? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(MetaData::class.java.classLoader),
         parcel.readParcelable(SelectedPlaceData::class.java.classLoader),
-        parcel.readDouble()
+        parcel.readInt()
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(metaData, flags)
         parcel.writeParcelable(pointdata, flags)
-        parcel.writeDouble(time.toDouble())
+        time?.let { parcel.writeInt(it.toInt()) }
     }
 
     override fun describeContents(): Int {

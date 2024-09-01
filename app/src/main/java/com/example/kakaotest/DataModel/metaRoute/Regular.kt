@@ -7,8 +7,8 @@ import kotlinx.parcelize.Parcelize
 //complete
 
 data class Regular(
-    val totalFare:Int,
-    val currency:Currency?
+    var totalFare:Int? = null,
+    var currency:Currency? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -21,7 +21,7 @@ data class Regular(
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeInt(totalFare)
+        totalFare?.let { dest.writeInt(it) }
         dest.writeParcelable(currency,flags)
     }
 

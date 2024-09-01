@@ -8,9 +8,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Start(
-    val name:String,
-    val lon:Number,
-    val lat:Number
+    var name:String? = null,
+    var lon:Double? = null,
+    var lat:Double? = null
 ) : Parcelable {
     override fun describeContents(): Int {
         return 0
@@ -18,7 +18,7 @@ data class Start(
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(name)
-        dest.writeDouble(lon.toDouble())
-        dest.writeDouble(lat.toDouble())
+        lon?.let { dest.writeDouble(it.toDouble()) }
+        lat?.let { dest.writeDouble(it.toDouble()) }
     }
 }

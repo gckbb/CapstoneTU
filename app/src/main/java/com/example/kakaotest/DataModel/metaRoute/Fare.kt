@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 //complete
 
 data class Fare(
-    val regular:Regular?
+    var regular:Regular? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(parcel.readParcelable(Regular::class.java.classLoader)) {
     }

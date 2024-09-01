@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class MetaRoute(
     @SerializedName("metaData")
-    val metaData:MetaData? = null
+    var metaData:MetaData? = null
 )
