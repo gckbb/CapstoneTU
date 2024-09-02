@@ -8,19 +8,19 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class RequestParameters(
-    val busCount: Int,
-    val subwayBusCount: Int,
-    val expressbusCount: Int,
-    val trainCount: Int,
-    val airplaneCount: Int,
-    val ferryCount: Int,
-    val wideareaRouteCount: Int,
-    val startX: String?,
-    val startY: String?,
-    val endX: String?,
-    val endY: String?,
-    val locale: String?,
-    val reqDttm: String?
+    var busCount: Int? = null,
+    var subwayBusCount: Int? = null,
+    var expressbusCount: Int? = null,
+    var trainCount: Int? = null,
+    var airplaneCount: Int? = null,
+    var ferryCount: Int? = null,
+    var wideareaRouteCount: Int? = null,
+    var startX: String? = null,
+    var startY: String? = null,
+    var endX: String? = null,
+    var endY: String? = null,
+    var locale: String? = null,
+    var reqDttm: String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -44,13 +44,13 @@ data class RequestParameters(
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeInt(busCount)
-        dest.writeInt(subwayBusCount)
-        dest.writeInt(expressbusCount)
-        dest.writeInt(trainCount)
-        dest.writeInt(airplaneCount)
-        dest.writeInt(ferryCount)
-        dest.writeInt(wideareaRouteCount)
+        busCount?.let { dest.writeInt(it) }
+        subwayBusCount?.let { dest.writeInt(it) }
+        expressbusCount?.let { dest.writeInt(it) }
+        trainCount?.let { dest.writeInt(it) }
+        airplaneCount?.let { dest.writeInt(it) }
+        ferryCount?.let { dest.writeInt(it) }
+        wideareaRouteCount?.let { dest.writeInt(it) }
         dest.writeString(startX)
         dest.writeString(startY)
         dest.writeString(endX)

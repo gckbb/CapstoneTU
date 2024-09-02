@@ -4,10 +4,10 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Date(
-    var date : String?,
-    var year : Int?,
-    var month :Int?,
-    var day : Int?
+    var date : String? = null,
+    var year : Int? = null,
+    var month :Int? = null,
+    var day : Int? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -35,5 +35,11 @@ data class Date(
         override fun newArray(size: Int): Array<Date?> {
             return arrayOfNulls(size)
         }
+    }
+    constructor(date : HashMap<String,Object>) : this() {
+        this.date = date.get("date") as String
+        this.year = date.get("year") as Int
+        this.month = date.get("month") as Int
+        this.day = date.get("day") as Int
     }
 }

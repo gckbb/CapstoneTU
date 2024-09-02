@@ -8,8 +8,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MetaData(
-    val requestParameters:RequestParameters,
-    val plan:Plan
+    var requestParameters:RequestParameters? = null,
+    var plan:Plan? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(RequestParameters::class.java.classLoader)!!,
