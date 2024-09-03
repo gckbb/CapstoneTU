@@ -1,6 +1,7 @@
 package com.example.kakaotest.Map
+
+
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,10 +11,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-
 import com.example.kakaotest.CashBook.CashBookActivity
-
 import com.example.kakaotest.CheckList.CheckListActivity
 import com.example.kakaotest.DataModel.ScheduleData
 import com.example.kakaotest.DataModel.TravelPlan
@@ -22,13 +22,10 @@ import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.HomeActivity
 import com.example.kakaotest.Login.SavedUser
-import com.example.kakaotest.Utility.Database
-
-
 import com.example.kakaotest.R
-
+import com.example.kakaotest.Utility.Adapter.RouteListAdapter
+import com.example.kakaotest.Utility.Database
 import com.example.kakaotest.Utility.SharedPreferenceUtil
-
 import com.example.kakaotest.Utility.TravelPlanManager
 import com.example.kakaotest.databinding.ActivityScheduleBinding
 import com.google.gson.Gson
@@ -36,7 +33,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import kotlin.collections.ArrayList
 
 class ScheduleActivity : AppCompatActivity() {
     private val travelPlanManager = TravelPlanManager()
@@ -522,24 +518,15 @@ class ScheduleActivity : AppCompatActivity() {
     }
 
 
-    fun updateListView2(listView:ListView, value:Int, data: ArrayList<SearchMetaData>){
-
-
-        val dateList = data?.map { "${it.pointdata?.placeName}" } ?: emptyList()
-
-        // 어댑터 생성
-        val dateAdapter =
-            ArrayAdapter(this, android.R.layout.simple_list_item_1,  dateList)
-
-        // ListView에 어댑터 설정
+    fun updateListView2(listView: ListView, value: Int, data: ArrayList<SearchMetaData>) {
+        val dateAdapter = RouteListAdapter(listView.context, data)
         listView.adapter = dateAdapter
 
         val listcontainer = findViewById<LinearLayout>(R.id.placeListContainer1)
         listcontainer.visibility = View.VISIBLE
 
         val pathBtn = findViewById<Button>(R.id.path_1)
-        allRoute2(pathBtn,value, data)
-
+        allRoute2(pathBtn, value, data)
     }
 
 

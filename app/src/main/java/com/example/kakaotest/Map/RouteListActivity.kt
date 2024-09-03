@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ListView
-import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -144,8 +143,10 @@ class RouteListActivity : AppCompatActivity() {
                     //routetest.routeSet(receivedDataList!!, rentStartPoint,0)
                 }
                 else if(travelPlan.transportion == "버스") {
+                    Log.d("PLAN", "receivedDataList: ${receivedDataList}")
+                    Log.d("PLAN", "receivedDataList!![0]: ${receivedDataList!![0]}")
                     routetest.routeSet(receivedDataList!!, receivedDataList!![0],1)
-                    routetest.routeStart2(dateRange, activityTime!!, 1, convertedFoodDataList!!,restaurant,1)
+                    routetest.routeStart2(dateRange, activityTime!!, convertedFoodDataList!!,restaurant,1)
                 }
                 else if(travelPlan.transportion == "도보") { //도보 의미가없음...
                     routetest.routeSet(receivedDataList!!, receivedDataList!![0],2)
@@ -273,45 +274,6 @@ class RouteListActivity : AppCompatActivity() {
     }
 
 
-    private fun updateListView2() {
-        val listView1 = findViewById<ListView>(R.id.listView1)
-        val listView2 = findViewById<ListView>(R.id.listView2)
-        val scrollView = findViewById<ScrollView>(R.id.scrollView)
-        val totalTime_1 = findViewById<TextView>(R.id.totalTime_1)
-        val totalTime_2 = findViewById<TextView>(R.id.totalTime_2)
-
-        val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
-
-
-        val firstDayPlace = DayRoute2(0)!!.dayRoute!!.map { it.pointdata?.placeName?: "Unknown Place"}
-        val adapter1 = ArrayAdapter(this, android.R.layout.simple_list_item_1, firstDayPlace)
-        listView1.adapter = adapter1
-        listView1.setOnTouchListener { _, _ ->
-            scrollView.requestDisallowInterceptTouchEvent(true)
-            false
-        }
-
-
-        totalTime_1.text = totalTime2(0).toString() +"시간"
-
-
-
-        val SecondDayPlace = DayRoute2(1)!!.dayRoute!!.map { it.pointdata?.placeName ?: "Unknown Place"}
-        val adapter2 = ArrayAdapter(this, android.R.layout.simple_list_item_1, SecondDayPlace)
-        listView2.adapter = adapter2
-        listView2.setOnTouchListener { _, _ ->
-            scrollView.requestDisallowInterceptTouchEvent(true)
-            false
-        }
-
-
-        totalTime_2.text = totalTime2(1).toString() +"시간"
-
-
-
-    }
-
-
     private fun buttonClick(value:Int){
         val day1 = findViewById<Button>(R.id.day1)
         var day2 = findViewById<Button>(R.id.day2)
@@ -336,9 +298,6 @@ class RouteListActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
 
 
     }

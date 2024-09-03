@@ -7,18 +7,19 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
+import com.example.kakaotest.R
 
 class simpleListItem2Adapter(
     context: Context,
     private var items: MutableList<SelectedPlaceData>
-) : ArrayAdapter<SelectedPlaceData>(context, android.R.layout.simple_list_item_2, items) {
+) : ArrayAdapter<SelectedPlaceData>(context, R.layout.item_selected_place, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?: LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_2, parent, false)
+        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_selected_place, parent, false)
 
         val item = getItem(position)
-        val text1 = view.findViewById<TextView>(android.R.id.text1)
-        val text2 = view.findViewById<TextView>(android.R.id.text2)
+        val text1 = view.findViewById<TextView>(R.id.place_name)
+        val text2 = view.findViewById<TextView>(R.id.addr)
 
         text1.text = item?.placeName
         text2.text = item?.address

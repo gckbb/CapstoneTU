@@ -4,13 +4,14 @@ package com.example.kakaotest.DataModel.tmap
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.skt.tmap.*
+import com.skt.tmap.TMapPoint
 
 
 data class SelectedPlaceData(
     var placeName: String? = null,
     var tpoint: TMapPoint? = null, // TMapPoint는 Parcelable이어야 함
-    var address: String? = null
+    var address: String? = null,
+    var stayDuration: Int? = null
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -19,7 +20,8 @@ data class SelectedPlaceData(
             parcel.readDouble(),
             parcel.readDouble()
         ),
-        parcel.readString() ?: ""
+        parcel.readString() ?: "",
+        parcel.readInt()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -27,6 +29,7 @@ data class SelectedPlaceData(
         tpoint?.let { parcel.writeDouble(it.latitude) }
         tpoint?.let { parcel.writeDouble(it.longitude) }
         parcel.writeString(address)
+        stayDuration?.let { parcel.writeInt(it) }
     }
 
     override fun describeContents(): Int {
@@ -38,7 +41,8 @@ data class SelectedPlaceData(
             return SelectedPlaceData(
                 parcel.readString() ?: "",
                 TMapPoint(parcel.readDouble(), parcel.readDouble()),
-                parcel.readString() ?: ""
+                parcel.readString() ?: "",
+                parcel.readInt()
             )
         }
 
