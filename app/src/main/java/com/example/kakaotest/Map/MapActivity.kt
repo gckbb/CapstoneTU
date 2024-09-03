@@ -185,7 +185,8 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
                 SelectedPlaceData(
                     placeName = it.id,
                     tpoint = TMapPoint(it.tpoint.latitude, it.tpoint.longitude),
-                    address = it.address
+                    address = it.address,
+                    stayDuration = 0
                 )
             } as ArrayList<SelectedPlaceData>
 

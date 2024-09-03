@@ -8,19 +8,16 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.simpleListItem2Adapter
-
 import com.example.kakaotest.Utility.SharedPreferenceUtil
-
 import com.skt.tmap.TMapPoint
-import java.util.ArrayList
 
 
 class SelectedPlace : AppCompatActivity() {
@@ -67,6 +64,16 @@ class SelectedPlace : AppCompatActivity() {
         // next 버튼 클릭 시 FoodSelectActivity 로 이동
         val nextButton: Button = findViewById(R.id.nextbutton)
         nextButton.setOnClickListener {
+            // 사용자가 입력한 체류시간을 받아서 저장
+            for (i in 0 until placeListView.childCount) {
+                val view = placeListView.getChildAt(i)
+                val durationEditText = view.findViewById<EditText>(R.id.stay_duration)
+                val stayDuration = durationEditText.text.toString().toIntOrNull() ?: 0
+                receivedDataList[i].stayDuration = stayDuration
+            }
+
+            Log.d("PLAN",receivedDataList.toString())
+
             val intent = Intent(this, FoodSelectActivity::class.java)
             SharedPreferenceUtil.saveData2ToSharedPreferences(this,receivedDataList)
             startActivity(intent)
