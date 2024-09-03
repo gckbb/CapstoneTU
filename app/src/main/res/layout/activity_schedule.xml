@@ -146,13 +146,13 @@
             android:background="@drawable/buttonshape2"
             android:text="가계부" />
 
-        <Button
-            android:id="@+id/invite"
-            android:layout_width="65dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/buttonshape2"
-            android:text="초대" />
+<!--        <Button-->
+<!--            android:id="@+id/invite"-->
+<!--            android:layout_width="65dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:layout_marginLeft="8dp"-->
+<!--            android:background="@drawable/buttonshape2"-->
+<!--            android:text="초대" />-->
 
 
     </LinearLayout>
@@ -248,19 +248,61 @@
             />
     </LinearLayout>
 
+<!--    <LinearLayout-->
+<!--        android:id="@+id/accommodationContainer"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="42dp"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:background="@drawable/edittext3"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical"-->
+<!--        android:visibility="visible">-->
 
-    <FrameLayout
+<!--        &lt;!&ndash; You can add TextViews or other views here to list accommodation names &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/accommodationName"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:padding="10dp"-->
+<!--            android:text="숙소 : "-->
+<!--            android:textColor="@color/black" />-->
+
+<!--    </LinearLayout>-->
+
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_height="wrap_content">
 
-        <!--1일째-->
         <LinearLayout
             android:id="@+id/placeListContainer1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/accommodationContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edittext3"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- You can add TextViews or other views here to list accommodation names -->
+                <TextView
+                    android:id="@+id/accommodationName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="숙소 : "
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
 
 
             <ListView
@@ -271,251 +313,252 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/edittext3" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+        </LinearLayout>
+
+        <!--1일째-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+
+
+            >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="10dp"
-                android:orientation="vertical"
+                android:layout_marginTop="10dp">
 
+                <Button
+                    android:id="@+id/path_1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="35dp"
+                    android:background="@drawable/map"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
 
-                >
-
-                <FrameLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_gravity="center"
+                    android:text="이동\n예상 시간"
+                    android:textColor="@color/black" />
+            </FrameLayout>
 
-                    <Button
-                        android:id="@+id/path_1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="35dp"
-                        android:background="@drawable/map"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        tools:ignore="TouchTargetSizeCheck" />
+            <ImageView
+                android:id="@+id/line1_0_1"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="이동\n예상 시간"
-                        android:textColor="@color/black" />
-                </FrameLayout>
+            <TextView
+                android:id="@+id/time1_1"
+                android:layout_width="50dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ellipse"
 
-                <ImageView
-                    android:id="@+id/line1_0_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/time1_1"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ellipse"
+            <ImageView
+                android:id="@+id/line1_1_2"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:visibility="gone" />
+            <TextView
+                android:id="@+id/time1_2"
+                android:layout_width="50dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ellipse"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/line1_1_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
+            <ImageView
+                android:id="@+id/line1_2_3"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/time1_2"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ellipse"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:visibility="gone" />
+            <TextView
+                android:id="@+id/time1_3"
+                android:layout_width="50dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ellipse"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/line1_2_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
+            <ImageView
+                android:id="@+id/line1_3_4"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/time1_3"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ellipse"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:visibility="gone" />
+            <TextView
+                android:id="@+id/time1_4"
+                android:layout_width="50dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ellipse"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/line1_3_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
+            <ImageView
+                android:id="@+id/line1_4_5"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/time1_4"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ellipse"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:visibility="gone" />
+            <TextView
+                android:id="@+id/time1_5"
+                android:layout_width="50dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ellipse"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/line1_4_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
+            <ImageView
+                android:id="@+id/line1_5_6"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/time1_5"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ellipse"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:id="@+id/line1_5_6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/time1_6"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ellipse"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:visibility="gone" />
+            <TextView
+                android:id="@+id/time1_6"
+                android:layout_width="50dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ellipse"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
 
-                <ImageView
-                    android:id="@+id/line1_6_7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
+            <ImageView
+                android:id="@+id/line1_6_7"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/time1_7"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ellipse"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:visibility="gone" />
+            <TextView
+                android:id="@+id/time1_7"
+                android:layout_width="50dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ellipse"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/line1_7_8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
+            <ImageView
+                android:id="@+id/line1_7_8"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/time1_8"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ellipse"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:visibility="gone" />
+            <TextView
+                android:id="@+id/time1_8"
+                android:layout_width="50dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ellipse"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/line1_8_9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
+            <ImageView
+                android:id="@+id/line1_8_9"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/time1_9"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ellipse"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:visibility="gone" />
+            <TextView
+                android:id="@+id/time1_9"
+                android:layout_width="50dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ellipse"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/line1_9_10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
+            <ImageView
+                android:id="@+id/line1_9_10"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/time1_10"
-                    android:layout_width="50dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ellipse"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:visibility="gone" />
+            <TextView
+                android:id="@+id/time1_10"
+                android:layout_width="50dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ellipse"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/line1_10_11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
+            <ImageView
+                android:id="@+id/line1_10_11"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/line1_11_12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dashline"
-                    android:visibility="gone" />
-
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/line1_11_12"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dashline"
+                android:visibility="gone" />
 
         </LinearLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 
 
 

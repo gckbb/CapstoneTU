@@ -57,14 +57,14 @@ class UserPlanActivity : AppCompatActivity() {
         }
 
 
-        if (userdata.getUserIdFromSharedPreferences(this) == null) {
+        if (userdata.getUserDataFromSharedPreferences(this) == null) {
             Log.d("ERROR", "로그인이 되어있지않음")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
         else {
-            val userid = userdata.getUserIdFromSharedPreferences(this)!!
+            val userid = userdata.getUserDataFromSharedPreferences(this)!!
             test1(this, userid)
         }
         binding.planlistview.onItemClickListener = AdapterView.OnItemClickListener {

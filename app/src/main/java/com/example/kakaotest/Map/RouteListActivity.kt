@@ -115,6 +115,7 @@ class RouteListActivity : AppCompatActivity() {
 
 
             startActivity(intent)
+            finish()
         }
 
 

@@ -379,74 +379,74 @@
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="34dp"
-                android:layout_marginTop="20dp"
-                android:text="테마?"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                tools:ignore="MissingConstraints" />
+<!--            <TextView-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="34dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:text="테마?"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textStyle="bold"-->
+<!--                tools:ignore="MissingConstraints" />-->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="34dp"
-                android:layout_marginTop="11dp"
-                android:orientation="horizontal"
-                tools:ignore="MissingConstraints">
-
-
-                <Button
-                    android:id="@+id/theme1"
-                    android:layout_width="70dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/edittext3"
-                    android:clickable="false"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="34dp"-->
+<!--                android:layout_marginTop="11dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                tools:ignore="MissingConstraints">-->
 
 
-                <Button
-                    android:id="@+id/theme2"
-                    android:layout_width="70dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/edittext3"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+<!--                <Button-->
+<!--                    android:id="@+id/theme1"-->
+<!--                    android:layout_width="70dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:background="@drawable/edittext3"-->
+<!--                    android:clickable="false"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18dp"-->
+<!--                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />-->
 
-                    />
 
-                <Button
-                    android:id="@+id/theme3"
-                    android:layout_width="70dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/edittext3"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+<!--                <Button-->
+<!--                    android:id="@+id/theme2"-->
+<!--                    android:layout_width="70dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:background="@drawable/edittext3"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18dp"-->
+<!--                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"-->
 
-                <Button
-                    android:id="@+id/theme4"
-                    android:layout_width="70dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/edittext3"
-                    android:text=""
-                    android:textColor="@color/black"
+<!--                    />-->
 
-                    android:textSize="18dp"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-            </LinearLayout>
+<!--                <Button-->
+<!--                    android:id="@+id/theme3"-->
+<!--                    android:layout_width="70dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:background="@drawable/edittext3"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18dp"-->
+<!--                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/theme4"-->
+<!--                    android:layout_width="70dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:background="@drawable/edittext3"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/black"-->
+
+<!--                    android:textSize="18dp"-->
+<!--                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />-->
+<!--            </LinearLayout>-->
 
             <TextView
                 android:layout_width="wrap_content"

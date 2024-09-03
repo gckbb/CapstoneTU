@@ -1,6 +1,5 @@
 package com.example.kakaotest.Map
 
-
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -20,49 +19,49 @@ import com.example.kakaotest.Utility.SharedPreferenceUtil
 import com.example.kakaotest.Utility.TravelPlanManager
 import com.skt.tmap.TMapPoint
 
-
 class SelectedPlace : AppCompatActivity() {
 
     private val travelPlanManager = TravelPlanManager()
+    private var excludedItem: SelectedPlaceData? = null
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selected_place)
 
-
-        var  receivedDataList: ArrayList<SelectedPlaceData>? = SharedPreferenceUtil.getDataFromSharedPreferences(this)
+        var receivedDataList: MutableList<SelectedPlaceData>? = SharedPreferenceUtil.getDataFromSharedPreferences(this)?.toMutableList()
         // 초기 데이터가 없을 경우 빈 리스트로 초기화
+        receivedDataList = receivedDataList ?: mutableListOf()
 
-        Log.d("PLAN",receivedDataList.toString())
-
+        Log.d("PLAN", receivedDataList.toString())
 
         val backBtn = findViewById<ImageButton>(R.id.back_btn)
         backBtn.setOnClickListener {
             finish()
-
         }
-
-
-        // val documnetID = SavedUser().getUserDataFromSharedPreferences(this) //회원정보 문서 ID
-
 
         // ListView 참조
         val placeListView: ListView = findViewById(R.id.placeListView)
 
+        // 첫 번째 데이터를 제외한 나머지 데이터 리스트 생성
+        val filteredReceivedDataList = if (receivedDataList.isNotEmpty()) {
+            excludedItem = receivedDataList.first() // 첫 번째 아이템을 제외하고 저장
+            receivedDataList.drop(1).toMutableList() // 첫 번째 아이템을 제외한 나머지 아이템들을 MutableList로 변환
+        } else {
+            mutableListOf() // 빈 MutableList 반환
+        }
+
         // 어댑터 생성 및 설정
-        val selectedPlaceNames = receivedDataList?.map { "${it.placeName}" }?.toMutableList() ?: mutableListOf()
+        val selectedPlaceNames = filteredReceivedDataList.map { "${it.placeName}" }.toMutableList()
 
         // 어댑터 생성
-        val nameAdapter =
-            simpleListItem2Adapter(this, receivedDataList!!.toMutableList())
+        val nameAdapter = simpleListItem2Adapter(this, filteredReceivedDataList)
 
         // ListView에 어댑터 설정
         placeListView.adapter = nameAdapter
 
         // 로그에 selectedPlaceNames 출력
         Log.d("selectedPlaceNames", selectedPlaceNames.toString())
-
 
         // next 버튼 클릭 시 FoodSelectActivity 로 이동
         val nextButton: Button = findViewById(R.id.nextbutton)
@@ -72,19 +71,29 @@ class SelectedPlace : AppCompatActivity() {
                 val view = placeListView.getChildAt(i)
                 val durationEditText = view.findViewById<EditText>(R.id.stay_duration)
                 val stayDuration = durationEditText.text.toString().toIntOrNull() ?: 0
-                receivedDataList[i].stayDuration = stayDuration
+                filteredReceivedDataList[i].stayDuration = stayDuration
             }
 
-            Log.d("PLAN",receivedDataList.toString())
-            val travle = travelPlanManager.getPlan()
-            if(travle.restaurant.equals("yes")){
+            // 제외했던 아이템을 다시 첫 번째로 추가
+            excludedItem?.let {
+                filteredReceivedDataList.add(0, it)
+                filteredReceivedDataList[0].stayDuration = 0
+            }
+
+            Log.d("PLAN", filteredReceivedDataList.toString())
+            val travel = travelPlanManager.getPlan()
+            if (travel.restaurant.equals("yes")) {
                 val intent = Intent(this, FoodSelectActivity::class.java)
-                SharedPreferenceUtil.saveData2ToSharedPreferences(this,receivedDataList)
+                SharedPreferenceUtil.saveData2ToSharedPreferences(this,
+                    filteredReceivedDataList as ArrayList<SelectedPlaceData>
+                )
                 startActivity(intent)
                 finish()
-            }else{
+            } else {
                 val intent = Intent(this, RouteListActivity::class.java)
-                SharedPreferenceUtil.saveData2ToSharedPreferences(this,receivedDataList)
+                SharedPreferenceUtil.saveData2ToSharedPreferences(this,
+                    filteredReceivedDataList as ArrayList<SelectedPlaceData>
+                )
                 startActivity(intent)
                 finish()
             }
@@ -113,15 +122,17 @@ class SelectedPlace : AppCompatActivity() {
             savedRestaurantNames.add(value.toString())
         }
 
+        // 첫 번째 아이템을 제외한 리스트
+        val filteredSavedRestaurantNames = savedRestaurantNames.drop(1)
 
         // 리스트를 ListView에 표시
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, savedRestaurantNames)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, filteredSavedRestaurantNames)
         foundListView.adapter = adapter
 
         // foundListView의 아이템 클릭 리스너 설정
         foundListView.setOnItemClickListener { parent, view, position, id ->
             // 클릭한 위치(position)에 해당하는 아이템 가져오기
-            val clickedRestaurantName = savedRestaurantNames[position]
+            val clickedRestaurantName = filteredSavedRestaurantNames[position]
 
             // 해당 음식점의 정보를 SharedPreferences에서 가져오기
             val clickedRestaurantMap = sharedPreferences.all
@@ -143,11 +154,9 @@ class SelectedPlace : AppCompatActivity() {
             }
         }
 
-
         foundListView.setOnTouchListener { _, _ ->
             scrollView.requestDisallowInterceptTouchEvent(true)
             false
         }
     }
-
 }

@@ -9,15 +9,21 @@ import android.util.Log
 import android.view.View
 import android.view.animation.TranslateAnimation
 import android.widget.ScrollView
+import android.widget.Toast
 import com.example.kakaotest.Community.MainCommunity
 
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
+import com.example.kakaotest.Login.SavedUser
 import com.example.kakaotest.Map.UserPlanActivity
 import com.example.kakaotest.Map.WhereActivity
 import com.example.kakaotest.TourApi.TourApiActivity
 import com.example.kakaotest.databinding.ActivityHomeBinding
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

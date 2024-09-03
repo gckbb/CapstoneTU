@@ -20,6 +20,7 @@ import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
+import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.HomeActivity
 import com.example.kakaotest.Login.SavedUser
 import com.example.kakaotest.R
@@ -64,7 +65,7 @@ class ScheduleActivity : AppCompatActivity() {
         val startdata = travelPlan.startDate!!
         val enddata = travelPlan.endDate!!
         val scheduletype = travelPlan.transportion!!
-        val mainid = userdata.getUserIdFromSharedPreferences(this)!!
+        val mainid = userdata.getUserDataFromSharedPreferences(this)!!
         var totaltimeData = ArrayList<Int>()
 
 
@@ -137,7 +138,7 @@ class ScheduleActivity : AppCompatActivity() {
 
 
 
-
+        val receivedDataList : ArrayList<SelectedPlaceData>? = SharedPreferenceUtil.getData2FromSharedPreferences(this)
 
 
 
@@ -154,9 +155,21 @@ class ScheduleActivity : AppCompatActivity() {
         var day6 = findViewById<Button>(R.id.day6)
         var day7 = findViewById<Button>(R.id.day7)
         var day8 = findViewById<Button>(R.id.day8)
+        val accom = findViewById<TextView>(R.id.accommodationName)
+        val accomContainer = findViewById<LinearLayout>(R.id.accommodationContainer)
+        accom.text = "숙소: ${receivedDataList!![0].placeName}"
+
+        val domi = findViewById<Button>(R.id.domitory)
+        domi.setOnClickListener {
+            if(accomContainer.visibility == View.GONE){
+                accomContainer.visibility = View.VISIBLE
+            }else{
+                accomContainer.visibility = View.GONE
+            }
+        }
 
 
-        Log.d("PLAN","3")
+            Log.d("PLAN","3")
         travelPlan?.let { plan ->
             placename.text = plan.where?.placeName ?: ""
             firstdate.text = plan.startDate?.date ?: ""
@@ -496,15 +509,14 @@ class ScheduleActivity : AppCompatActivity() {
         }
     }
 
-    fun updateListView(listView:ListView,value: Int,data : ArrayList<SearchRouteData>){
+    fun updateListView(listView: ListView, value: Int, data: ArrayList<SearchRouteData>) {
+        // 첫 번째 데이터를 제외한 나머지 데이터를 필터링
+        val filteredData = data.drop(1)
 
-
-
-        val dateList = data?.map { "${it.pointdata?.placeName}" } ?: emptyList()
+        val dateList = filteredData.map { "${it.pointdata?.placeName}" } ?: emptyList()
 
         // 어댑터 생성
-        val dateAdapter =
-            ArrayAdapter(this, android.R.layout.simple_list_item_1,  dateList)
+        val dateAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, dateList)
 
         // ListView에 어댑터 설정
         listView.adapter = dateAdapter
@@ -513,20 +525,22 @@ class ScheduleActivity : AppCompatActivity() {
         listcontainer.visibility = View.VISIBLE
 
         val pathBtn = findViewById<Button>(R.id.path_1)
-        allRoute(pathBtn,value,data)
-
+        allRoute(pathBtn, value, filteredData as ArrayList<SearchRouteData>)
     }
 
-
     fun updateListView2(listView: ListView, value: Int, data: ArrayList<SearchMetaData>) {
-        val dateAdapter = RouteListAdapter(listView.context, data)
+        // 첫 번째 데이터를 제외한 나머지 데이터를 필터링
+        val filteredData = data.drop(1)
+
+        val dateAdapter = RouteListAdapter(listView.context, filteredData)
         listView.adapter = dateAdapter
 
         val listcontainer = findViewById<LinearLayout>(R.id.placeListContainer1)
         listcontainer.visibility = View.VISIBLE
 
         val pathBtn = findViewById<Button>(R.id.path_1)
-        allRoute2(pathBtn, value, data)
+        allRoute2(pathBtn, value, filteredData as ArrayList<SearchMetaData>)
     }
+
 
 }

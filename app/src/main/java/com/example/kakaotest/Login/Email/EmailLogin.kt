@@ -64,7 +64,6 @@ class EmailLogin : AppCompatActivity() {
                             val savedPassword = document.getString("pw")
                             if (savedPassword == password.text.toString()) {
                                 SavedUser().saveUserDataToSharedPreferences(this, document.id)
-                                Toast.makeText(this, "저장된 document Id = $document.id", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

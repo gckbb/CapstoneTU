@@ -11,6 +11,7 @@ import com.example.kakaotest.CheckList.AfterSelectListActivity
 import com.example.kakaotest.DataModel.CheckList.CheckListDB
 import com.example.kakaotest.DataModel.CheckList.CheckListData
 import com.example.kakaotest.HomeActivity
+import com.example.kakaotest.Login.SavedUser
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.CAdapter
 import com.example.kakaotest.databinding.ActivityCheckListBinding
@@ -36,9 +37,8 @@ class MainCommunity : AppCompatActivity() {
         //현재 로그인 계정정보 관련
         auth = FirebaseAuth.getInstance()
 
-        var currentUID = auth.currentUser?.email
+        var currentUID = auth.currentUser!!.uid
 
-        Toast.makeText(this, currentUID, Toast.LENGTH_SHORT).show()
 
         //리사이클러 뷰
         val rvpost = findViewById<RecyclerView>(R.id.post_rv)

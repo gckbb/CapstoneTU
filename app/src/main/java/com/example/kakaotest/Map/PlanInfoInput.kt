@@ -235,44 +235,6 @@ class PlanInfoInput : AppCompatActivity(){
         }
 
 
-        val theme1Btn = findViewById<Button>(R.id.theme1)
-        val theme2Btn = findViewById<Button>(R.id.theme2)
-        val theme3Btn = findViewById<Button>(R.id.theme3)
-        val theme4Btn = findViewById<Button>(R.id.theme4)
-
-
-        val themeBtn = listOf(theme1Btn, theme2Btn, theme3Btn, theme4Btn)
-        var themeList = listOf("1", "2", "3", "4")
-
-
-        for (btn in themeBtn) {
-            btn.background = ContextCompat.getDrawable(this, R.drawable.buttonshape4)
-            btn.setOnTouchListener { view, motionEvent ->
-                when (motionEvent.action) {
-                    MotionEvent.ACTION_DOWN ->
-                        if (view.isSelected) {
-                            view.isSelected = false
-                            theme = ""
-                        } else {
-                            for (otherBtn in themeBtn) {
-                                // 이미 선택된 버튼이 있다면 선택을 해제
-                                if (otherBtn.isSelected) {
-                                    otherBtn.isSelected = false
-                                    travelPlanManager.updatePlan(theme = "")// 선택 해제된 값을 업데이트
-                                }
-                            }
-                            view.isSelected = true
-                            theme = themeList[themeBtn.indexOf(btn)]
-                            Log.d("PLAN", "theme : $theme")
-
-                            travelPlanManager.updatePlan(theme = theme)
-
-                        }
-                }
-                false
-            }
-        }
-
 
         // 검색 버튼 클릭 리스너 설정
         binding.search.setOnClickListener {
@@ -437,6 +399,7 @@ class PlanInfoInput : AppCompatActivity(){
                 // intent.putExtra("travelPlan", travelPlanManager.getPlan())
 
                 startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, "유효한 값을 입력 및 선택해주세요.", Toast.LENGTH_LONG).show()
             }

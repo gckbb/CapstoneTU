@@ -400,7 +400,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="3.1독립운동기념탑"
+                            android:text="9/6"
                             android:textStyle="bold" />
 
                         <ImageView
@@ -431,6 +431,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="#FFFFFF"
+                android:padding="10dp"
                 android:backgroundTint="#F3EEEE"
                 android:text="내 여행 리스트" />
         </LinearLayout>

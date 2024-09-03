@@ -12,7 +12,9 @@ import com.example.kakaotest.R
 import com.example.kakaotest.databinding.ActivityCashBookBinding
 import com.example.kakaotest.databinding.ActivityMainCommunityBinding
 import com.example.kakaotest.databinding.ActivityWritePostBinding
+import com.google.firebase.storage.StorageReference
 import java.text.SimpleDateFormat
+import java.util.UUID
 
 class WritePostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWritePostBinding
@@ -20,6 +22,7 @@ class WritePostActivity : AppCompatActivity() {
     val dbTool = PostDB()
     private val PICK_IMAGE_REQUEST = 1
     private var imageUri: Uri? = null
+    private lateinit var storageRef: StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +39,6 @@ class WritePostActivity : AppCompatActivity() {
         binding.nextbutton.setOnClickListener {
             val postTitle = binding.title.text.toString()
             val postContent = binding.content.text.toString()
-            //val postPhoto = null
             val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm").format(System.currentTimeMillis())
 
             if(postTitle.isNotEmpty() && postContent.isNotEmpty()) {
@@ -46,7 +48,7 @@ class WritePostActivity : AppCompatActivity() {
 
                 val intent = Intent(this, MainCommunity::class.java)
                 startActivity(intent)
-            }else{
+            } else {
                 Toast.makeText(this, "제목, 내용 입력하세요!", Toast.LENGTH_SHORT).show()
             }
         }
