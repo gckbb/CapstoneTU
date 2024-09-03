@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -23,16 +23,24 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Map.AddAccommodation"
+            android:exported="false" />
+        <activity
             android:name=".CashBook.AfterCashActivity"
             android:exported="false" />
-        <service android:name=".Utility.DestroyService"
-            android:stopWithTask="false"/>
+
+        <service
+            android:name=".Utility.DestroyService"
+            android:stopWithTask="false" />
+
         <activity
             android:name=".CashBook.EditCashActivity"
             android:exported="false" />
-        <activity android:name=".Map.UserPlanActivity"
+        <activity
+            android:name=".Map.UserPlanActivity"
             android:exported="false" />
-        <activity android:name=".Map.PlanActivity"
+        <activity
+            android:name=".Map.PlanActivity"
             android:exported="false" />
         <activity
             android:name=".Map.SingleMetaRoute"
