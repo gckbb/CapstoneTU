@@ -16,6 +16,8 @@ data class ScheduleData(
     var startday : Date? = null,
     var endday : Date? = null,
     var scheduleid : String? = null, //스케줄 고유의 식별아이디
-    var timedata : ArrayList<Int>? = null
+    var timedata : ArrayList<Int>? = null,
+    var dayroutedata : ArrayList<ArrayList<SearchRouteData>?>? = null,
+    var dayroutedata2 : ArrayList<MetaDayRoute>? = null
 )
 

@@ -32,6 +32,8 @@
             android:exported="false" />
         <activity android:name=".Map.UserPlanActivity"
             android:exported="false" />
+        <activity android:name=".Map.PlanActivity"
+            android:exported="false" />
         <activity
             android:name=".Map.SingleMetaRoute"
             android:exported="false" />
