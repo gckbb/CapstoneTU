@@ -13,6 +13,7 @@ import com.example.kakaotest.DataModel.Date
 import com.example.kakaotest.DataModel.ScheduleData
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
+import com.example.kakaotest.HomeActivity
 
 import com.example.kakaotest.Login.MainActivity
 import com.example.kakaotest.Login.SavedUser
@@ -45,6 +46,16 @@ class UserPlanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityUserPlanBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
+        binding.home.setOnClickListener {
+            val intent=Intent(this,HomeActivity::class.java)
+            startActivity(intent)
+        }
+
 
         if (userdata.getUserIdFromSharedPreferences(this) == null) {
             Log.d("ERROR", "로그인이 되어있지않음")
