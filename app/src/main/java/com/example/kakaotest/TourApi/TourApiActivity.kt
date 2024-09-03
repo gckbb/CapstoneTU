@@ -2,6 +2,7 @@ package com.example.kakaotest.TourApi
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -168,10 +169,9 @@ class TourApiActivity : AppCompatActivity() {
             )
             searchRecommendInArea(selectedValue, selectedArea, selectedContentId, 1)
         }
-        binding.areaBased.setOnClickListener {
-            editor.clear().apply()
-            Toast.makeText(this, "초기화 성공", Toast.LENGTH_SHORT).show()
-            //Log.d("add_test","초기화 성공")
+        binding.fabSave.setOnClickListener {
+            val intent = Intent(this, TourApiMyplaces::class.java)
+            startActivity(intent)
         }
     }
 

@@ -9,16 +9,14 @@
     <ScrollView
         android:id="@+id/homefragmend"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
+        android:layout_height="match_parent">
 
 
         <LinearLayout
             android:id="@+id/HomeFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/home"
@@ -28,6 +26,7 @@
                 android:layout_marginTop="21dp"
                 android:background="@drawable/ic_home"
                 tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
             <FrameLayout
                 android:id="@+id/search"
                 android:layout_width="373dp"
@@ -40,50 +39,25 @@
                     android:layout_width="370dp"
                     android:layout_height="70dp"
                     android:background="@drawable/edittext3"
-                    android:text="어디로 여행가세요?"
+                    android:paddingLeft="20dp"
 
+                    android:paddingTop="20dp"
+                    android:text="어디로 여행가세요?"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="20dp"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageButton
                     android:id="@+id/searchBtn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="320dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="320dp"
                     android:background="@drawable/ic_search"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             </FrameLayout>
 
-
-            <TextView
-                android:id="@+id/ThemeRecommendtxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="25dp"
-                android:text="여행 테마별 추천 >"
-                android:textColor="@color/black"
-                android:textSize="25dp"
-                android:textStyle="bold" />
-
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/ThemeRecommend"
-                android:layout_width="370dp"
-                android:layout_height="180dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="25dp"
-                android:background="@drawable/edittext3"
-                android:fillViewport="true"
-                tools:ignore="SpeakableTextPresentCheck">
-
-
-            </androidx.core.widget.NestedScrollView>
 
             <TextView
                 android:id="@+id/placeRecommendtxt"
@@ -96,20 +70,254 @@
                 android:textStyle="bold" />
 
 
-
-            <androidx.core.widget.NestedScrollView
+            <HorizontalScrollView
                 android:id="@+id/placeRecommend"
                 android:layout_width="370dp"
                 android:layout_height="180dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="25dp"
-                android:background="@drawable/edittext3"
-                android:fillViewport="true"
-                tools:ignore="SpeakableTextPresentCheck">
+                android:background="@drawable/edittext3">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            app:srcCompat="@drawable/place3" />
+
+                        <TextView
+                            android:id="@+id/textView14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="청와대"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            app:srcCompat="@drawable/place2" />
+
+                        <TextView
+                            android:id="@+id/textView15"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="호국충혼위령비"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            app:srcCompat="@drawable/place1" />
+
+                        <TextView
+                            android:id="@+id/textView16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="3.1독립운동기념탑"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            app:srcCompat="@drawable/food2" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="고반식당 인천논현점"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/food1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="꽃피는 산골"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!--            <androidx.core.widget.NestedScrollView-->
+            <!--                android:id="@+id/placeRecommend"-->
+            <!--                android:layout_width="370dp"-->
+            <!--                android:layout_height="180dp"-->
+            <!--                android:layout_gravity="center_horizontal"-->
+            <!--                android:layout_marginTop="15dp"-->
+            <!--                android:layout_marginBottom="25dp"-->
+            <!--                android:background="@drawable/edittext3"-->
+            <!--                android:fillViewport="true"-->
+            <!--                tools:ignore="SpeakableTextPresentCheck">-->
 
 
-            </androidx.core.widget.NestedScrollView>
+            <!--            </androidx.core.widget.NestedScrollView>-->
+
+
+            <TextView
+                android:id="@+id/communitytxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:text="커뮤니티  >"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
+                android:id="@+id/community_navi"
+                android:layout_width="370dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/edittext3">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            app:srcCompat="@drawable/commu1" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="나홀로 여행중"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            app:srcCompat="@drawable/commu2" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="같이 가기 좋았던 여행"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            app:srcCompat="@drawable/commu3" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="가을에 갔던 여행"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!--            <androidx.core.widget.NestedScrollView-->
+            <!--                android:id="@+id/i1"-->
+            <!--                android:layout_width="370dp"-->
+            <!--                android:layout_height="180dp"-->
+            <!--                android:layout_gravity="center_horizontal"-->
+            <!--                android:layout_marginTop="15dp"-->
+            <!--                android:background="@drawable/edittext3"-->
+            <!--                android:fillViewport="true"-->
+            <!--                android:layout_marginBottom="25dp"-->
+            <!--                tools:ignore="SpeakableTextPresentCheck">-->
+            <!--            </androidx.core.widget.NestedScrollView>-->
 
             <TextView
                 android:id="@+id/weathertxt"
@@ -121,50 +329,114 @@
                 android:textSize="25dp"
                 android:textStyle="bold" />
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/weather"
+            <HorizontalScrollView
+                android:id="@+id/weather_navi"
                 android:layout_width="370dp"
                 android:layout_height="180dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/edittext3"
-                android:fillViewport="true"
                 android:layout_marginBottom="25dp"
-                tools:ignore="SpeakableTextPresentCheck">
+                android:background="@drawable/edittext3">
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
 
-            </androidx.core.widget.NestedScrollView>
-            <TextView
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="9/4"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            app:srcCompat="@drawable/weather1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="9/5"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            app:srcCompat="@drawable/weather3" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="3.1독립운동기념탑"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="120dp"
+                            app:srcCompat="@drawable/weather2" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!--            <androidx.core.widget.NestedScrollView-->
+            <!--                android:id="@+id/weather"-->
+            <!--                android:layout_width="370dp"-->
+            <!--                android:layout_height="180dp"-->
+            <!--                android:layout_gravity="center_horizontal"-->
+            <!--                android:layout_marginTop="15dp"-->
+            <!--                android:background="@drawable/edittext3"-->
+            <!--                android:fillViewport="true"-->
+            <!--                android:layout_marginBottom="25dp"-->
+            <!--                tools:ignore="SpeakableTextPresentCheck">-->
+            <!--            </androidx.core.widget.NestedScrollView>-->
+
+            <Button
+                android:id="@+id/myplan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:text="..."
-                android:textColor="@color/black"
-                android:textSize="25dp"
-                android:textStyle="bold" />
-
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/i1"
-                android:layout_width="370dp"
-                android:layout_height="180dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/edittext3"
-                android:fillViewport="true"
-                android:layout_marginBottom="25dp"
-                tools:ignore="SpeakableTextPresentCheck">
-
-
-            </androidx.core.widget.NestedScrollView>
-
-
-
-
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:backgroundTint="#F3EEEE"
+                android:text="내 여행 리스트" />
         </LinearLayout>
 
 
     </ScrollView>
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatBtn"

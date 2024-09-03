@@ -73,6 +73,8 @@
         <activity
             android:name=".TourApi.TourApiActivity"
             android:exported="false" />
+        <activity android:name=".TourApi.TourApiMyplaces"
+            android:exported="false"/>
         <activity
             android:name=".Map.ScheduleActivity"
             android:exported="false" />

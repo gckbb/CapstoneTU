@@ -9,8 +9,10 @@ import android.util.Log
 import android.view.View
 import android.view.animation.TranslateAnimation
 import android.widget.ScrollView
+import com.example.kakaotest.Community.MainCommunity
 
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
+import com.example.kakaotest.Map.UserPlanActivity
 import com.example.kakaotest.Map.WhereActivity
 import com.example.kakaotest.TourApi.TourApiActivity
 import com.example.kakaotest.databinding.ActivityHomeBinding
@@ -34,6 +36,15 @@ class HomeActivity : AppCompatActivity() {
 
         binding.placeRecommendtxt.setOnClickListener {
             val intent = Intent(this, TourApiActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.communitytxt.setOnClickListener {
+            val intent = Intent(this, MainCommunity::class.java)
+            startActivity(intent)
+        }
+        binding.myplan.setOnClickListener {
+            val intent = Intent(this,UserPlanActivity::class.java)
             startActivity(intent)
         }
 

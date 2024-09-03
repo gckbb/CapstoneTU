@@ -169,53 +169,45 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:padding="5dp"
                         android:layout_marginTop="20dp"
+                        android:background="@drawable/buttonshape1"
+                        android:textColor="@color/white"
                         android:text="로그아웃" />
 
 
-                    <Button
-                        android:id="@+id/tmapViewbtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+<!--                    <Button-->
+<!--                        android:id="@+id/navi"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
 
-                        android:text="map test btn"
-                        tools:ignore="TouchTargetSizeCheck" />
+<!--                        android:text="navi" />-->
 
+<!--                    <Button-->
+<!--                        android:id="@+id/tourApi"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
 
-                    <Button
-                        android:id="@+id/navi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+<!--                        android:text="tourApi" />-->
 
-                        android:text="navi" />
+<!--                    <Button-->
+<!--                        android:id="@+id/checklist"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="checkList" />-->
 
-                    <Button
-                        android:id="@+id/tourApi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+<!--                    <Button-->
+<!--                        android:id="@+id/cashbook"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
 
-                        android:text="tourApi" />
+<!--                        android:text="cashbook" />-->
 
-                    <Button
-                        android:id="@+id/checklist"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:text="checkList" />
-
-
-                    <Button
-                        android:id="@+id/cashbook"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:text="cashbook" />
-
-                    <Button
-                        android:id="@+id/community"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="cm" />
+<!--                    <Button-->
+<!--                        android:id="@+id/community"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="cm" />-->
 
                     <Button
                         android:id="@+id/userplan"

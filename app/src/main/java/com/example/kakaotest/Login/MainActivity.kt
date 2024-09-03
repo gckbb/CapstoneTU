@@ -136,68 +136,46 @@ class MainActivity : AppCompatActivity() {
             finish() // 현재 액티비티 종료
         }
 
-        //지도 생성 테스트 버튼
-        binding.tmapViewbtn.setOnClickListener{
-            var metaRoute: MetaRoute?
-            thread{
-                metaRoute = apiAdapter2.apiRequest2(
-                    126.926493082645,37.6134436427887,
-                    127.126936754911,37.5004198786564
-                )
-                Log.d("meta","meta is work")
-
-            }
-            Log.d("Plan","plan")
-
-
-            val intent = Intent(this, MapActivity::class.java)
-            startActivity(intent)
-        }
-
         // 테스트 버튼
-        binding.navi.setOnClickListener{
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
-        }
-        binding.tourApi.setOnClickListener {
-            val intent = Intent(this, TourApiActivity::class.java)
-            startActivity(intent)
-        }
-        binding.checklist.setOnClickListener {
-            val intent = Intent(this, CheckListActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.navi.setOnClickListener {
+//            val intent = Intent(this, HomeActivity::class.java)
+//            startActivity(intent)
+//        }
+//        }
+//        binding.tourApi.setOnClickListener {
+//            val intent = Intent(this, TourApiActivity::class.java)
+//            startActivity(intent)
+//        }
+//        binding.checklist.setOnClickListener {
+//            val intent = Intent(this, CheckListActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        binding.cashbook.setOnClickListener {
+//            val intent = Intent(this, CashBookActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        binding.userplan.setOnClickListener {
+//            val intent = Intent(this, UserPlanActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
 
-        binding.tourApi.setOnClickListener {
-            val intent = Intent(this,TourApiActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.cashbook.setOnClickListener {
-            val intent = Intent(this, CashBookActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.userplan.setOnClickListener {
-            val intent = Intent(this, UserPlanActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        binding.community.setOnClickListener {
-            //auth.signInWithEmailAndPassword("hjk@mail.com", "hjkhjk")
-            auth.signInWithEmailAndPassword("qwerasdf@mail.com", "qwerasdf")
-                .addOnCompleteListener(this){ task ->
-                    if(task.isSuccessful){
-                        Toast.makeText(baseContext, "Login Success.", Toast.LENGTH_SHORT).show()
-                        val user = auth.currentUser
-                        val intent = Intent(this, MainCommunity::class.java)
-                        startActivity(intent)
-                    }else{
-                        Toast.makeText(baseContext, "Login Failed.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-        }
+//        binding.community.setOnClickListener {
+//            //auth.signInWithEmailAndPassword("hjk@mail.com", "hjkhjk")
+//            auth.signInWithEmailAndPassword("qwerasdf@mail.com", "qwerasdf")
+//                .addOnCompleteListener(this){ task ->
+//                    if(task.isSuccessful){
+//                        Toast.makeText(baseContext, "Login Success.", Toast.LENGTH_SHORT).show()
+//                        val user = auth.currentUser
+//                        val intent = Intent(this, MainCommunity::class.java)
+//                        startActivity(intent)
+//                    }else{
+//                        Toast.makeText(baseContext, "Login Failed.", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//        }
 
         //아이디 찾기
         val findidBtn =findViewById<TextView>(R.id.FindId)
@@ -273,10 +251,10 @@ class MainActivity : AppCompatActivity() {
                                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                                 SavedUser().saveUserDataToSharedPreferences(this,document.id)
                                 SavedUser().saveUserIdToSharedPreferences(this, document.getString("id")!!)
-                                Toast.makeText(this, "저장된 document Id = $document.id", Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(this, "저장된 document Id = $document.id", Toast.LENGTH_SHORT).show()
                                 Log.d("usercheck", "${auth.currentUser?.email}")
                                 // 로그인 성공 후 홈 화면으로 이동
-                                val nextIntent = Intent(this, MainActivity::class.java)
+                                val nextIntent = Intent(this, HomeActivity::class.java)
                                 startActivity(nextIntent)
                             } else {
                                 // 비밀번호가 일치하지 않는 경우
