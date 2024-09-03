@@ -19,6 +19,7 @@ import com.example.kakaotest.Login.SavedUser
 import com.example.kakaotest.Utility.Adapter.UserPlanAdapter
 import com.example.kakaotest.Utility.Database
 import com.example.kakaotest.Utility.SharedPreferenceUtil
+import com.example.kakaotest.Utility.dialog.AlertDialogHelper
 import com.example.kakaotest.databinding.ActivityUserPlanBinding
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.QuerySnapshot

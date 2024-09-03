@@ -180,7 +180,7 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
 
         binding.nextbutton.setOnClickListener {
             val intent = Intent(this, SelectedPlace::class.java)
-
+            var tempdata = SharedPreferenceUtil.getDataFromSharedPreferences(this)?.get(0)
             val selectedPlaceDataList = selectedPlacesList.map {
                 SelectedPlaceData(
                     placeName = it.id,
@@ -188,8 +188,8 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
                     address = it.address
                 )
             } as ArrayList<SelectedPlaceData>
-
-
+            selectedPlaceDataList.add(0,tempdata!!)
+            Log.d("PLAN","tempdata 확인 : " + tempdata.toString())
 
             SharedPreferenceUtil.saveDataToSharedPreferences(this,selectedPlaceDataList)
 
