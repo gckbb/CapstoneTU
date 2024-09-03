@@ -23,6 +23,7 @@ import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.HomeActivity
 import com.example.kakaotest.Login.SavedUser
 import com.example.kakaotest.Utility.Database
+import java.util.*
 
 
 import com.example.kakaotest.R
@@ -38,15 +39,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlin.collections.ArrayList
 
-class ScheduleActivity : AppCompatActivity() {
-    private val travelPlanManager = TravelPlanManager()
+
+class PlanActivity : AppCompatActivity() {    //UserPlanActivity에서 이어지는 스케줄페이지
     val gson = Gson()
     lateinit var userdata : SavedUser
     val dbtool = Database()
-    val dayRouteList = ArrayList<ArrayList<SearchRouteData>?>()
-    val dayRouteList2 = ArrayList<MetaDayRoute>()
-
-
+    var dayRouteList2 : ArrayList<MetaDayRoute>? = ArrayList<MetaDayRoute>()
+    var dayRouteList : ArrayList<ArrayList<SearchRouteData>?>? = ArrayList<ArrayList<SearchRouteData>?>()
+    lateinit var userPlanData : ScheduleData
+    var daycount = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,96 +55,30 @@ class ScheduleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityScheduleBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        userPlanData = SharedPreferenceUtil.getPlanFromSharedPreferences(this)
 
-        val travelPlan: TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
 
-        val startDate = travelPlan!!.startDate?.day ?: 0
-        val endDate = travelPlan.endDate?.day ?: 0
+
+        val startDate = userPlanData!!.startday?.day ?: 0
+        val endDate = userPlanData.endday?.day ?: 0
         val dateRange = endDate - startDate
-
-        val lattempList = ArrayList<Double>()
-        val lontempList = ArrayList<Double>()
-        val placenameList = ArrayList<String>()
-        val startdata = travelPlan.startDate!!
-        val enddata = travelPlan.endDate!!
-        val scheduletype = travelPlan.transportion!!
-        val mainid = userdata.getUserIdFromSharedPreferences(this)!!
-        var totaltimeData = ArrayList<Int>()
-
-
-
-
-        if(travelPlan.transportion == "버스") {
-            for(i in 0 until dateRange+1){
-                intent.getStringExtra("List${i+1}")?.let { listData ->
-                    dayRouteList2.add(gson.fromJson(listData, MetaDayRoute::class.java))
-                }
+        if(userPlanData.dayroutedata2 != null) {
+            for(i in userPlanData.dayroutedata2!!) {
+                dayRouteList2?.add(i)
             }
-            travelPlanManager.updatePlan(destination2 = dayRouteList2[0].dayRoute)
-
-
-            for(j in 0 until dayRouteList2.size) {
-                for (i in dayRouteList2[j].dayRoute!!) {
-                    lattempList.add(i.pointdata?.tpoint?.latitude!!)
-                    lontempList.add(i.pointdata?.tpoint?.longitude!!)
-                    placenameList.add(i.pointdata!!.placeName!!)
-
-                }
-                lattempList.add(0.0)
-                lontempList.add(0.0)
-                placenameList.add("-")
-                totaltimeData.add(dayRouteList2[j].totalTime!!.toInt())
-            }
-
-            CoroutineScope(Dispatchers.Main).launch {
-                val plancount = dbtool.getData(mainid).await().documents.size
-                dbtool.AddPlan(ScheduleData(mainid,null,lattempList,lontempList,
-                    placenameList,scheduletype,startdata,enddata,mainid+plancount,totaltimeData,null,dayRouteList2))
-            }
-
-
-
+            Log.d("data2",userPlanData.toString())
+            Log.d("data2",dayRouteList2.toString())
         }
-        else {
-
-            for (i in 0 until dateRange + 1) {
-                dayRouteList.add(intent.getParcelableArrayListExtra<SearchRouteData>("List${i + 1}"))
+        if(userPlanData.dayroutedata != null) {
+            for(i in userPlanData.dayroutedata!!) {
+                dayRouteList?.add(i)
             }
-            travelPlanManager.updatePlan(destination = dayRouteList[0])
-
-
-
-
-            for(j in 0 until dayRouteList.size) {
-                totaltimeData.add(0)
-                for (i in dayRouteList[j]!!) {
-                    lattempList.add(i.pointdata?.tpoint?.latitude!!)
-                    lontempList.add(i.pointdata?.tpoint?.longitude!!)
-                    placenameList.add(i.pointdata!!.placeName!!)
-                    totaltimeData[j] = totaltimeData[j] + i.time.toInt() +3600
-                }
-                totaltimeData[j] -= 3600
-                lattempList.add(0.0)
-                lontempList.add(0.0)
-                placenameList.add("-")
-
-            }
-            CoroutineScope(Dispatchers.Main).launch {
-                val plancount = dbtool.getData(mainid).await().documents.size
-                dbtool.AddPlan(ScheduleData(mainid,null,lattempList,lontempList,
-                    placenameList,scheduletype,startdata,enddata,mainid+plancount,totaltimeData,dayRouteList,null))
-            }
+            Log.d("data2",userPlanData.toString())
+            Log.d("data2",dayRouteList.toString())
         }
 
 
-
-
-
-
-
-
-
-        Log.d("PLAN",travelPlan.toString())
+        Log.d("PLAN",userPlanData.toString())
         val placename = findViewById<TextView>(R.id.placename)
         val firstdate = findViewById<TextView>(R.id.date1)
         val lastdate = findViewById<TextView>(R.id.date2)
@@ -159,11 +94,11 @@ class ScheduleActivity : AppCompatActivity() {
 
 
 
-        travelPlan?.let { plan ->
-            placename.text = plan.where?.placeName ?: ""
-            firstdate.text = plan.startDate?.date ?: ""
-            lastdate.text = plan.endDate?.date ?: ""
-            who.text = plan.who ?: ""
+        userPlanData?.let { plan ->
+            placename.text = plan.placenamelist?.get(0) ?: ""
+            firstdate.text = plan.startday?.date ?: ""
+            lastdate.text = plan.endday?.date ?: ""
+            who.text = ""
         }
 
 
@@ -188,52 +123,60 @@ class ScheduleActivity : AppCompatActivity() {
 
         val placeListView1 = findViewById<ListView>(R.id.placeListView1)
 
-        Log.d("travelPlan","travelPlan update : "+travelPlan)
 
 
 
 
-        if(travelPlan.transportion == "버스") { //대중교통일때
-            updateListView2(placeListView1,0, dayRouteList2[0]!!.dayRoute!!)
-            time2(dayRouteList2[0]!!.dayRoute!!)
+        if(userPlanData.type == "버스") { //대중교통일때
+
+            updateListView2(placeListView1, 0, dayRouteList2?.get(0)!!.dayRoute!!)
+            time2(dayRouteList2!![0].dayRoute!!)
             binding.day1.setOnClickListener {
-                updateListView2(placeListView1,0, dayRouteList2[0]!!.dayRoute!!)
-                time2(dayRouteList2[0]!!.dayRoute!!)
+                updateListView2(placeListView1, 0, dayRouteList2!![0]!!.dayRoute!!)
+                time2(dayRouteList2!![0]!!.dayRoute!!)
+                daycount = 0
             }
             binding.day2.setOnClickListener {
-                updateListView2(placeListView1,1, dayRouteList2[1]!!.dayRoute!!)
-                time2(dayRouteList2[1]!!.dayRoute!!)
+                updateListView2(placeListView1, 1, dayRouteList2!![1]!!.dayRoute!!)
+                time2(dayRouteList2!![1]!!.dayRoute!!)
+                daycount = 1
             }
             binding.day3.setOnClickListener {
-                updateListView2(placeListView1,2,dayRouteList2[2]!!.dayRoute!!)
-                time2(dayRouteList2[2]!!.dayRoute!!)
+                updateListView2(placeListView1, 2, dayRouteList2!![2]!!.dayRoute!!)
+                time2(dayRouteList2!![2]!!.dayRoute!!)
+                daycount = 2
             }
             binding.day4.setOnClickListener {
-                updateListView2(placeListView1,3,dayRouteList2[3]!!.dayRoute!!)
-                time2(dayRouteList2[3]!!.dayRoute!!)
+                updateListView2(placeListView1, 3, dayRouteList2!![3]!!.dayRoute!!)
+                time2(dayRouteList2!![3]!!.dayRoute!!)
+                daycount = 3
             }
+
 
         }
         else { //대중교통 제외
-            updateListView(placeListView1, 0,dayRouteList[0]!!)
-            time(dayRouteList[0]!!)
+            updateListView(placeListView1, 0, dayRouteList?.get(0)!!)
+            time(dayRouteList!![0]!!)
 
             binding.day1.setOnClickListener {
-                updateListView(placeListView1,0, dayRouteList[0]!!)
-                time(dayRouteList[0]!!)
-
+                updateListView(placeListView1,0, dayRouteList!![0]!!)
+                time(dayRouteList!![0]!!)
+                daycount = 0
             }
             binding.day2.setOnClickListener {
-                updateListView(placeListView1,1, dayRouteList[1]!!)
-                time(dayRouteList[1]!!)
+                updateListView(placeListView1,1, dayRouteList!![1]!!)
+                time(dayRouteList!![1]!!)
+                daycount = 1
             }
             binding.day3.setOnClickListener {
-                updateListView(placeListView1, 2,dayRouteList[2]!!)
-                time(dayRouteList[2]!!)
+                updateListView(placeListView1, 2, dayRouteList!![2]!!)
+                time(dayRouteList!![2]!!)
+                daycount = 2
             }
             binding.day4.setOnClickListener {
-                updateListView(placeListView1, 3,dayRouteList[3]!!)
-                time(dayRouteList[3]!!)
+                updateListView(placeListView1, 3, dayRouteList!![3]!!)
+                time(dayRouteList!![3]!!)
+                daycount = 3
             }
         }
 
@@ -259,29 +202,29 @@ class ScheduleActivity : AppCompatActivity() {
 
 
         // firstList가 null이 아닌지 확인
-        if(travelPlan.transportion == "버스") {
-            if (dayRouteList2[0] != null) {
-                singleRoute2(time1_1, 0, dayRouteList2[0])
-                singleRoute2(time1_2, 1, dayRouteList2[0])
-                singleRoute2(time1_3, 2, dayRouteList2[0])
-                singleRoute2(time1_4, 3, dayRouteList2[0])
-                singleRoute2(time1_5, 4, dayRouteList2[0])
-                singleRoute2(time1_6, 5, dayRouteList2[0])
-                singleRoute2(time1_7, 6, dayRouteList2[0])
+        if(userPlanData.type== "버스") {
+            if (dayRouteList2?.get(0) != null) {
+                singleRoute2(time1_1, 0, dayRouteList2!!)
+                singleRoute2(time1_2, 1, dayRouteList2!!)
+                singleRoute2(time1_3, 2, dayRouteList2!!)
+                singleRoute2(time1_4, 3, dayRouteList2!!)
+                singleRoute2(time1_5, 4, dayRouteList2!!)
+                singleRoute2(time1_6, 5, dayRouteList2!!)
+                singleRoute2(time1_7, 6, dayRouteList2!!)
             } else {
                 // firstList가 null일 때의 처리
                 Log.e("MainActivity", "firstList is null")
             }
         }
         else {
-            if (dayRouteList[0] != null) {
-                singleRoute(time1_1, 0, dayRouteList[0])
-                singleRoute(time1_2, 1, dayRouteList[0])
-                singleRoute(time1_3, 2, dayRouteList[0])
-                singleRoute(time1_4, 3, dayRouteList[0])
-                singleRoute(time1_5, 4, dayRouteList[0])
-                singleRoute(time1_6, 5, dayRouteList[0])
-                singleRoute(time1_7, 6, dayRouteList[0])
+            if (dayRouteList?.get(0) != null) {
+                singleRoute(time1_1, 0, dayRouteList!!)
+                singleRoute(time1_2, 1, dayRouteList!!)
+                singleRoute(time1_3, 2, dayRouteList!!)
+                singleRoute(time1_4, 3, dayRouteList!!)
+                singleRoute(time1_5, 4, dayRouteList!!)
+                singleRoute(time1_6, 5, dayRouteList!!)
+                singleRoute(time1_7, 6, dayRouteList!!)
             } else {
                 // firstList가 null일 때의 처리
                 Log.e("MainActivity", "firstList is null")
@@ -438,25 +381,25 @@ class ScheduleActivity : AppCompatActivity() {
 
     }
 
-    fun singleRoute2(time:TextView,value : Int, daylist:MetaDayRoute){ // 대중교통일때 사용
+    fun singleRoute2(time:TextView,value : Int,daylist:ArrayList<MetaDayRoute>){ // 대중교통일때 사용
         time.setOnClickListener {
 
             time.background = ContextCompat.getDrawable(this, R.color.button)
             val intent = Intent(this, SingleMetaRoute::class.java)
             intent.putExtra("time",value)
-            intent.putExtra("dayList",gson.toJson(daylist))
+            intent.putExtra("dayList",gson.toJson(daylist.get(daycount)))
             startActivity(intent)
         }
 
     }
 
-    fun singleRoute(time:TextView,value : Int,daylist:ArrayList<SearchRouteData>?){
+    fun singleRoute(time:TextView,value : Int,daylist:ArrayList<ArrayList<SearchRouteData>?>){
         time.setOnClickListener {
             //     time.setBackgroundColor(R.color.button)
             time.background = ContextCompat.getDrawable(this, R.color.button)
             val intent = Intent(this, SingleRoute::class.java)
             intent.putExtra("time",value)
-            intent.putExtra("dayList", daylist)
+            intent.putExtra("dayList", daylist.get(daycount))
             startActivity(intent)
         }
 
@@ -465,17 +408,16 @@ class ScheduleActivity : AppCompatActivity() {
 
 
     fun allRoute(path:Button,value: Int,data : ArrayList<SearchRouteData>){
-        val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
-        //    val carList :  ArrayList<SearchRouteData>? = SharedPreferenceUtil.getCarListFromSharedPreferences(this)
+        val travelPlan : TravelPlan? = TravelPlan(null,null,null,null,"자차",null,null,null,null,null,null)
 
         path.setOnClickListener {
             val intent = Intent(this,FirstRoute::class.java)
             if(travelPlan?.transportion == "버스") {
-                val firstPlaceList = gson.toJson(dayRouteList2[value])
+                val firstPlaceList = gson.toJson(dayRouteList2?.get(value))
                 intent.putExtra("firstList2", firstPlaceList)
             }
             else {
-                intent.putExtra("firstList",  dayRouteList[value])
+                intent.putExtra("firstList", dayRouteList?.get(value))
             }
             intent.putExtra("travelPlan",travelPlan)
             intent.putExtra("dayList",data)
@@ -483,16 +425,15 @@ class ScheduleActivity : AppCompatActivity() {
         }
     }
     fun allRoute2(path:Button, value: Int, data: ArrayList<SearchMetaData>){
-        val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
-
+        val travelPlan : TravelPlan = TravelPlan(null,null,null,null,"버스",null,null,null,null,null,null)
         path.setOnClickListener {
             val intent = Intent(this,FirstRoute::class.java)
-            if(travelPlan!!.transportion == "버스") {
-                val secondPlaceList = gson.toJson(dayRouteList2[value])
+            if(userPlanData!!.type == "버스") {
+                val secondPlaceList = gson.toJson(dayRouteList2?.get(value))
                 intent.putExtra("firstList2", secondPlaceList)
             }
             else {
-                intent.putExtra("firstList",  dayRouteList[value])
+                intent.putExtra("firstList", dayRouteList?.get(value))
             }
             intent.putExtra("travelPlan",travelPlan)
             intent.putExtra("dayList",data)

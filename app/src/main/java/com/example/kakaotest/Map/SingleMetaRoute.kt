@@ -140,12 +140,13 @@ class SingleMetaRoute : AppCompatActivity() {
                                     icon = iconList[14]
                                 }
                                 tMapView.addTMapMarkerItem(marker)
-/*
+
                                 tpointList.add(TMapPoint(selectedRoute.end?.lat?.toDouble()!!,selectedRoute.end?.lon?.toDouble()!!))
                                 polyLines = tMapData.findPathDataWithType(TMapData.TMapPathType.PEDESTRIAN_PATH,
                                     TMapPoint(selectedRoute.start?.lat?.toDouble()!!,selectedRoute.start?.lon?.toDouble()!!),
                                     TMapPoint(selectedRoute.end?.lat?.toDouble()!!,selectedRoute.end?.lon?.toDouble()!!))
-                                    */
+
+                                /*
                                 for(k in 0 until selectedRoute.steps?.size!!) {
                                     val split =
                                         selectedRoute.steps?.get(k)?.linestring?.split(",", " ")
@@ -159,10 +160,13 @@ class SingleMetaRoute : AppCompatActivity() {
                                     }
 
                                 }
+
                                 polyLines = TMapPolyLine(
                                     "polylineees${polylineindex}",
                                     tpointPathList
                                 )
+
+                                 */
                                 polyLines.setID("walkpoly${polylineindex}")
                                 polyLines.setLineColor(Color.YELLOW)
                                 polyLines.pathEffect = dashStyle2
@@ -227,6 +231,9 @@ class SingleMetaRoute : AppCompatActivity() {
                                     tpointPathList.clear()
 
                             }
+                            val info = tMapView.getDisplayTMapInfo(tpointList)
+                            tMapView.zoomLevel = info.zoom
+                            tMapView.setCenterPoint(info.point.latitude, info.point.longitude)
                         }
 
                         val info = tMapView.getDisplayTMapInfo(tpointList)
