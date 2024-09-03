@@ -65,6 +65,7 @@ class WhereActivity :  AppCompatActivity() , CoroutineScope {
             selectedPlace?.let { place ->
                 intent.putExtra("region", place)
                 startActivity(intent)
+                finish()
             }
         }
 

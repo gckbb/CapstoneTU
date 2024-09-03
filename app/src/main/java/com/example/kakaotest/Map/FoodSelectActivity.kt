@@ -215,6 +215,7 @@ class FoodSelectActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener
                     "selectedFoodPlacesList ",
                     "selectedFoodPlacesList :  " + selectedFoodPlacesList.toString()
                 )
+                finish()
 
             } catch (e: Exception) {
                 Log.e("FoodSelectActivity", "intent error - $e")

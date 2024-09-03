@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.R
+import org.w3c.dom.Text
 
 class RouteListAdapter(context: Context, private val data: List<SearchMetaData>) :
     ArrayAdapter<SearchMetaData>(context, R.layout.item_route_list, data) {
@@ -18,10 +19,12 @@ class RouteListAdapter(context: Context, private val data: List<SearchMetaData>)
         val item = getItem(position)
         val text1 = view.findViewById<TextView>(R.id.pname)
         val text2 = view.findViewById<TextView>(R.id.stime)
+        val text3 = view.findViewById<TextView>(R.id.route_addr)
 
         // 장소 이름과 체류 시간을 설정합니다.
         text1.text = item?.pointdata?.placeName ?: "Unknown Place"
-        text2.text = "체류 시간: ${item?.pointdata?.stayDuration ?: 0} 시간"
+        text2.text = "체류 시간: ${item?.pointdata?.stayDuration ?: 0} 분"
+        text3.text = item?.pointdata?.address ?: "주소 없음"
 
         return view
     }

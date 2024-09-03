@@ -17,10 +17,13 @@ import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
 import com.example.kakaotest.R
 import com.example.kakaotest.Utility.Adapter.simpleListItem2Adapter
 import com.example.kakaotest.Utility.SharedPreferenceUtil
+import com.example.kakaotest.Utility.TravelPlanManager
 import com.skt.tmap.TMapPoint
 
 
 class SelectedPlace : AppCompatActivity() {
+
+    private val travelPlanManager = TravelPlanManager()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,10 +76,18 @@ class SelectedPlace : AppCompatActivity() {
             }
 
             Log.d("PLAN",receivedDataList.toString())
-
-            val intent = Intent(this, FoodSelectActivity::class.java)
-            SharedPreferenceUtil.saveData2ToSharedPreferences(this,receivedDataList)
-            startActivity(intent)
+            val travle = travelPlanManager.getPlan()
+            if(travle.restaurant.equals("yes")){
+                val intent = Intent(this, FoodSelectActivity::class.java)
+                SharedPreferenceUtil.saveData2ToSharedPreferences(this,receivedDataList)
+                startActivity(intent)
+                finish()
+            }else{
+                val intent = Intent(this, RouteListActivity::class.java)
+                SharedPreferenceUtil.saveData2ToSharedPreferences(this,receivedDataList)
+                startActivity(intent)
+                finish()
+            }
         }
 
         val scrollView = findViewById<ScrollView>(R.id.scrollView)

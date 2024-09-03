@@ -418,6 +418,7 @@ class PlanInfoInput : AppCompatActivity() {
                // intent.putExtra("travelPlan", travelPlanManager.getPlan())
 
                 startActivity(intent)
+                finish()
             }else{
                 Toast.makeText(this, "유효한 값을 입력 및 선택해주세요.", Toast.LENGTH_LONG).show()
             }

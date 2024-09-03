@@ -198,6 +198,7 @@ class MapActivity : AppCompatActivity(), DataAdapter.ListBtnClickListener {
           //  intent.putExtra("travelPlan", travelPlan)
 
             startActivity(intent)
+            finish()
             Log.d("Item", selectedPlaceDataList.toString())
         }
 

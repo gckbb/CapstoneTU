@@ -51,8 +51,9 @@ class ScheduleActivity : AppCompatActivity() {
         val binding = ActivityScheduleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val travelPlan: TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
 
+        val travelPlan: TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
+        Log.d("PLAN","TravelPlna: ${travelPlan!!.transportion}")
         val startDate = travelPlan!!.startDate?.day ?: 0
         val endDate = travelPlan.endDate?.day ?: 0
         val dateRange = endDate - startDate
@@ -71,6 +72,7 @@ class ScheduleActivity : AppCompatActivity() {
 
         if(travelPlan.transportion == "버스") {
             for(i in 0 until dateRange+1){
+                Log.d("PLAN","List${i+1}")
                 intent.getStringExtra("List${i+1}")?.let { listData ->
                     dayRouteList2.add(gson.fromJson(listData, MetaDayRoute::class.java))
                 }
@@ -154,7 +156,7 @@ class ScheduleActivity : AppCompatActivity() {
         var day8 = findViewById<Button>(R.id.day8)
 
 
-
+        Log.d("PLAN","3")
         travelPlan?.let { plan ->
             placename.text = plan.where?.placeName ?: ""
             firstdate.text = plan.startDate?.date ?: ""
@@ -188,7 +190,7 @@ class ScheduleActivity : AppCompatActivity() {
 
 
 
-
+        Log.d("PLAN","4")
         if(travelPlan.transportion == "버스") { //대중교통일때
             updateListView2(placeListView1,0, dayRouteList2[0]!!.dayRoute!!)
             time2(dayRouteList2[0]!!.dayRoute!!)
@@ -246,9 +248,7 @@ class ScheduleActivity : AppCompatActivity() {
         val time1_5=findViewById<TextView>(R.id.time1_5)
         val time1_6=findViewById<TextView>(R.id.time1_6)
         val time1_7=findViewById<TextView>(R.id.time1_7)
-        val time1_8=findViewById<TextView>(R.id.time1_8)
-        val time1_9=findViewById<TextView>(R.id.time1_9)
-        val time1_10=findViewById<TextView>(R.id.time1_10)
+
 
 
 
@@ -527,19 +527,6 @@ class ScheduleActivity : AppCompatActivity() {
 
         val pathBtn = findViewById<Button>(R.id.path_1)
         allRoute2(pathBtn, value, data)
-    }
-
-
-    fun dayListShow(day: Button, placeListContainerList: List<LinearLayout>, i: Int) {
-        day.setOnClickListener {
-            for (index in placeListContainerList.indices) {
-                if (index == i) {
-                    placeListContainerList[index].visibility = View.VISIBLE
-                } else {
-                    placeListContainerList[index].visibility = View.GONE
-                }
-            }
-        }
     }
 
 }

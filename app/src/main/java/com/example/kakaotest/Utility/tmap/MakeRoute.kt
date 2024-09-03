@@ -53,69 +53,78 @@ class MakeRoute {
         }
     }
 
-    suspend fun routeSet(
-        selectedPlaceList: ArrayList<SelectedPlaceData>,
-        startPoint: SelectedPlaceData,
-        type: Int
-    ) {
+    suspend fun routeSet(selectedPlaceList: java.util.ArrayList<SelectedPlaceData>, startPoint: SelectedPlaceData, type:Int) {
         try {
             Log.d("PLAN", "routeSet - 선택된 장소 리스트 \n $selectedPlaceList")
             this.startPoint = startPoint
-
-            Log.d("PLAN","count: ${selectedPlaceList.count()}")
-
-            if (selectedPlaceList.isEmpty()) {
-                Log.e("PLAN", "Error: selectedPlaceList is empty")
-                return
-            }
-
-            coroutineScope {
-                for (i in 1 until selectedPlaceList.count()) {
-                    Log.d("PLAN", "placename : ${selectedPlaceList[i].placeName} , + ${i}")
-                    val place = selectedPlaceList[i]
-                    val deferredTime = async(Dispatchers.IO) {
-                        if (type == 0 || type == 2) {
+            if(type == 0 || type == 2) { // 자차,택시,도보
+                coroutineScope {
+                    for (i in 1 until selectedPlaceList.count()+1) {
+                        val deferredTime = async(Dispatchers.IO) {
                             apiAdapter.apiRequest(
                                 startPoint.tpoint!!.longitude,
                                 startPoint.tpoint!!.latitude,
-                                place.tpoint!!.longitude,
-                                place.tpoint!!.latitude
+                                selectedPlaceList[i].tpoint!!.longitude,
+                                selectedPlaceList[i].tpoint!!.latitude
                             )
+                        }
+                        val time = deferredTime.await()
+                        if (time != null) {
+                            if(type == 2){
+                                val routeData = SearchRouteData(selectedPlaceList[i], time)
+                                routeList.add(routeData!!)
+                                println("time is $time for ${selectedPlaceList[i].placeName}")
+                            }
+                            else {
+                                val routeData = SearchRouteData(selectedPlaceList[i], time!!)
+                                routeList.add(routeData!!)
+                                println("time is $time for ${selectedPlaceList[i].placeName}")
+                            }
                         } else {
+                            Log.e(
+                                "PLAN",
+                                "Received null time for ${selectedPlaceList[i].placeName}"
+                            )
+                        }
+                    }
+                }
+            }
+            else if(type == 1){ // 대중교통(버스,지하철)
+                coroutineScope {
+                    for (i in 1 until selectedPlaceList.count()+1) {
+                        val deferredData = async(Dispatchers.IO) {
                             apiAdapter2.apiRequest2(
                                 startPoint.tpoint!!.longitude,
                                 startPoint.tpoint!!.latitude,
-                                place.tpoint!!.longitude,
-                                place.tpoint!!.latitude
-                            )?.metaData?.plan?.itineraries?.get(0)?.totalTime
+                                selectedPlaceList[i].tpoint!!.longitude,
+                                selectedPlaceList[i].tpoint!!.latitude
+                            )
+                        }
+                        val time = deferredData.await()?.metaData?.plan?.itineraries?.get(0)?.totalTime
+                        val stayDuration: Int = selectedPlaceList[i].stayDuration ?: 0
+                        Log.d("PLAN","time: ${time}\n stayDuration: ${stayDuration}")
+                        if (time != null) {
+                            val routeData = SearchMetaData(deferredData.await()?.metaData!!,selectedPlaceList[i], time + stayDuration * 60)
+                            routeList2.add(routeData)
+                        } else {
+                            Log.e("PLAN", "Received null time for ${selectedPlaceList[i].placeName}")
                         }
                     }
-
-                    val time: Int? = deferredTime.await()?.toInt() ?: 0  // `toIntOrNull()`로 타입을 맞춰줍니다.
-                    val stayDuration: Int = place.stayDuration ?: 0
-                    Log.d("PLAN","time: ${time}\n stayDuration: ${stayDuration}")
-                    if (time != null) {
-                        val routeData = SearchRouteData(place, time + stayDuration * 60)
-                        routeList.add(routeData)
-                    } else {
-                        Log.e("PLAN", "Received null time for ${place.placeName}")
-                    }
                 }
             }
-
-            if (routeList.isNotEmpty()) {
-                if (type == 0 || type == 2) {
-                    routeList.removeAt(0)
-                    saveList = routeList
-                } else if (type == 1) {
-                    routeList2.removeAt(0)
-                    saveList2 = routeList2
-                }
-            } else {
-                Log.e("PLAN", "Error: routeList is empty after processing")
+            if(type == 0 || type == 2) {
+                routeList.removeAt(0)
+                saveList = routeList
+            }
+            else if (type == 1) {
+                routeList2.removeAt(0)
+                saveList2 = routeList2
             }
 
-        } catch (e: Exception) {
+
+
+
+        } catch (e: java.lang.Exception) {
             Log.e("PLAN", "routeSet - Exception in routeSet: ${e.toString()}")
             e.printStackTrace()
         }
