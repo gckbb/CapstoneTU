@@ -209,12 +209,6 @@
 <!--                        android:layout_height="wrap_content"-->
 <!--                        android:text="cm" />-->
 
-                    <Button
-                        android:id="@+id/userplan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="USERPLAN" />
-
                 </LinearLayout>
 
 

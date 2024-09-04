@@ -249,7 +249,7 @@ class MainActivity : AppCompatActivity() {
                             if (savedPassword == enteredPassword) {
                                 // 비밀번호가 일치하는 경우
                                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                                SavedUser().saveUserDataToSharedPreferences(this,document.id)
+                                SavedUser().saveUserDataToSharedPreferences(this,document.getString("id")!!)
                                 SavedUser().saveUserIdToSharedPreferences(this, document.getString("id")!!)
 //                                Toast.makeText(this, "저장된 document Id = $document.id", Toast.LENGTH_SHORT).show()
                                 Log.d("usercheck", "${auth.currentUser?.email}")

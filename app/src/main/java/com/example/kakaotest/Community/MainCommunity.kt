@@ -37,7 +37,7 @@ class MainCommunity : AppCompatActivity() {
         //현재 로그인 계정정보 관련
         auth = FirebaseAuth.getInstance()
 
-        var currentUID = auth.currentUser!!.uid
+        var currentUID = auth.currentUser!!.email
 
 
         //리사이클러 뷰

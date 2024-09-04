@@ -81,8 +81,8 @@ class SelectedPlace : AppCompatActivity() {
             }
 
             Log.d("PLAN", filteredReceivedDataList.toString())
-            val travel = travelPlanManager.getPlan()
-            if (travel.restaurant.equals("yes")) {
+            val travel = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
+            if (travel!!.restaurant == "yes") {
                 val intent = Intent(this, FoodSelectActivity::class.java)
                 SharedPreferenceUtil.saveData2ToSharedPreferences(this,
                     filteredReceivedDataList as ArrayList<SelectedPlaceData>
@@ -122,17 +122,15 @@ class SelectedPlace : AppCompatActivity() {
             savedRestaurantNames.add(value.toString())
         }
 
-        // 첫 번째 아이템을 제외한 리스트
-        val filteredSavedRestaurantNames = savedRestaurantNames.drop(1)
 
         // 리스트를 ListView에 표시
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, filteredSavedRestaurantNames)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, savedRestaurantNames)
         foundListView.adapter = adapter
 
         // foundListView의 아이템 클릭 리스너 설정
         foundListView.setOnItemClickListener { parent, view, position, id ->
             // 클릭한 위치(position)에 해당하는 아이템 가져오기
-            val clickedRestaurantName = filteredSavedRestaurantNames[position]
+            val clickedRestaurantName = savedRestaurantNames[position]
 
             // 해당 음식점의 정보를 SharedPreferences에서 가져오기
             val clickedRestaurantMap = sharedPreferences.all
@@ -144,11 +142,15 @@ class SelectedPlace : AppCompatActivity() {
                     val latitude = latitudeLongitude[2].toDouble()
                     val longitude = latitudeLongitude[1].toDouble()
                     val address = latitudeLongitude[3]
-                    val newPlace = SelectedPlaceData(clickedRestaurantName, TMapPoint(latitude, longitude), address)
+                    val newPlace = SelectedPlaceData(
+                        clickedRestaurantName,
+                        TMapPoint(latitude, longitude),
+                        address
+                    )
 
-                    receivedDataList?.add(newPlace)
+                    filteredReceivedDataList.add(newPlace)
+                    nameAdapter.notifyDataSetChanged() // 어댑터에 변경 사항 알리기
                     selectedPlaceNames.add(clickedRestaurantName)
-                    nameAdapter.updateData(receivedDataList!!)
                     break
                 }
             }
