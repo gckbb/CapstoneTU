@@ -115,7 +115,8 @@ class AddAccommodation : AppCompatActivity() , CoroutineScope {
             val selectedPlaceData = SelectedPlaceData(
                 placeName = it.name,
                 tpoint = it.locationLatLng.tpoint,
-                address = it.address
+                address = it.address,
+                stayDuration = 0
             )
             this@AddAccommodation.selectedPlace = selectedPlace
             Log.d("PLAN", "숙소 선택 : $selectedPlace")

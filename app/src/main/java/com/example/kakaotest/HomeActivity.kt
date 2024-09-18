@@ -15,6 +15,7 @@ import com.example.kakaotest.Community.MainCommunity
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.Login.SavedUser
 import com.example.kakaotest.Map.UserPlanActivity
+import com.example.kakaotest.Map.UserPlanSelect
 import com.example.kakaotest.Map.WhereActivity
 import com.example.kakaotest.TourApi.TourApiActivity
 import com.example.kakaotest.databinding.ActivityHomeBinding
@@ -51,6 +52,10 @@ class HomeActivity : AppCompatActivity() {
         }
         binding.myplan.setOnClickListener {
             val intent = Intent(this,UserPlanActivity::class.java)
+            startActivity(intent)
+        }
+        binding.weathertxt.setOnClickListener {
+            val intent = Intent(this, UserPlanSelect::class.java)
             startActivity(intent)
         }
 

@@ -23,7 +23,7 @@ class MetaListAdapter (val context: Context, val routeList: List<Legs>) : BaseAd
         val startStation = view.findViewById<TextView>(R.id.startpoint)
         val end = view.findViewById<TextView>(R.id.end)
         val endStation = view.findViewById<TextView>(R.id.endstation)
-        val routetime = view.findViewById<TextView>(R.id.routetime)
+        val routetime = view.findViewById<TextView>(R.id.weather)
 
         val routeData = routeList[position]
         if(routeData.mode == "WALK") {

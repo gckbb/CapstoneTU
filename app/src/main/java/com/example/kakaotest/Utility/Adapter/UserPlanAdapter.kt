@@ -1,7 +1,6 @@
 package com.example.kakaotest.Utility.Adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.kakaotest.DataModel.ScheduleData
 import com.example.kakaotest.R
-import kotlinx.coroutines.Deferred
 import java.util.ArrayList
 
 class UserPlanAdapter(val context: Context, val planList: ArrayList<ScheduleData>) : BaseAdapter() {
@@ -23,7 +21,7 @@ class UserPlanAdapter(val context: Context, val planList: ArrayList<ScheduleData
 
         val date = view.findViewById<TextView>(R.id.Date)
         val time = view.findViewById<TextView>(R.id.time)
-        val plantime = view.findViewById<TextView>(R.id.routetime)
+        val plantime = view.findViewById<TextView>(R.id.weather)
         val start = view.findViewById<TextView>(R.id.startpoint)
         val type = view.findViewById<TextView>(R.id.type)
         val plandata = planList[position]

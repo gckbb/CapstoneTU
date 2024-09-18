@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/qwerqwer"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <TextView
+        android:id="@+id/Date"
+        android:layout_width="229dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="4dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="날짜" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/Date"
+        app:layout_constraintTop_toBottomOf="@+id/Date"
+        tools:text="~~시" />
+
+    <TextView
+        android:id="@+id/weather"
+        android:layout_width="110dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="2dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/time"
+        app:layout_constraintStart_toEndOf="@+id/time"
+        app:layout_constraintTop_toTopOf="@+id/time"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="날씨정보" />
+
+    <TextView
+        android:id="@+id/rain"
+        android:layout_width="103dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="4dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/weather" />
+
+    <ImageView
+        android:id="@+id/weatherimage"
+        android:layout_width="75dp"
+        android:layout_height="62dp"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

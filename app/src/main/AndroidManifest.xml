@@ -28,7 +28,12 @@
         <activity
             android:name=".CashBook.AfterCashActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".Map.UserPlanSelect"
+            android:exported="false" />
+        <activity
+            android:name=".Map.WeatherActivity"
+            android:exported="false" />
         <service
             android:name=".Utility.DestroyService"
             android:stopWithTask="false" />

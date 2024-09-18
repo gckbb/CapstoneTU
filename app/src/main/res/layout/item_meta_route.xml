@@ -38,7 +38,7 @@
         tools:text="소요시간 :" />
 
     <TextView
-        android:id="@+id/routetime"
+        android:id="@+id/weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
