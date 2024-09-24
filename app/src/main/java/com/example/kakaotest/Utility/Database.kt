@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.example.kakaotest.DataModel.ScheduleData
+import com.example.kakaotest.DataModel.ScheduleDbData
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.FirebaseException
@@ -21,11 +22,12 @@ import java.util.concurrent.ExecutionException
 class Database {
     private val db = Firebase.firestore
 
-    fun AddPlan(data : ScheduleData) {
+    fun AddPlan(data : ScheduleDbData) {
         db.collection("travelPlans").document("${data.scheduleid}").set(data)
             .addOnSuccessListener { Log.d("database", "${data.scheduleid}가 성공적으로 추가됨")}
             .addOnFailureListener { Log.d("database", "${data.scheduleid}의 추가가 실패함")}
     }
+
 
     fun DeletePlan(data : ScheduleData) {
         db.collection("travelPlans").document("${data.scheduleid}").delete()

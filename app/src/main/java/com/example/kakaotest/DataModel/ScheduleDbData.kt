@@ -7,7 +7,7 @@ import com.example.kakaotest.DataModel.tmap.SearchRouteData
 
 
 
-data class ScheduleData(
+data class ScheduleDbData(
     var mainId : String? = null, //여행계획을 만든사람의 아이디
     var subId : ArrayList<String>? = null, //여행계획을 공유받은사람의 아이디
     var latdata : ArrayList<Double>? = null,  //날짜별 구별은 1일차 좌표 - 2일차 좌표 사이에 특정문자를 집어넣어서 구별
@@ -18,7 +18,7 @@ data class ScheduleData(
     var endday : Date? = null,
     var scheduleid : String? = null, //스케줄 고유의 식별아이디
     var timedata : ArrayList<Int>? = null,
-    var dayroutedata : ArrayList<ArrayList<SearchRouteData>?>? = null,
+    var dayroutedata : ArrayList<RouteListData>? = null,
     var dayroutedata2 : ArrayList<MetaDayRoute>? = null
 )
 

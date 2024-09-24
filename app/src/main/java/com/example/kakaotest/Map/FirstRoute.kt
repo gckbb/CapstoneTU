@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.R
@@ -29,12 +30,11 @@ class FirstRoute : AppCompatActivity() {
 
         val gson = Gson()
 
-     //   val travelPlan = intent.getParcelableExtra<TravelPlan>("travelPlan")
-        lateinit var firstList:ArrayList<SearchRouteData>
-        lateinit var firstList2:MetaDayRoute
+        val travelPlan = intent.getStringExtra("travelPlan")
+        var firstList:ArrayList<SearchRouteData> = ArrayList()
+        var firstList2:MetaDayRoute = MetaDayRoute()
 
 
-        val travelPlan = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
 
         val backic = findViewById<ImageButton>(R.id.back_btn)
         backic.setOnClickListener{
@@ -97,7 +97,7 @@ class FirstRoute : AppCompatActivity() {
                     BitmapFactory.decodeResource(resources, R.drawable.walkmarker)
                 )
 
-                if(travelPlan?.transportion == "버스") {
+                if(travelPlan == "버스") {
                     Thread {
                         try {
                             for (i in 1 until firstList2.dayRoute!!.size) {
@@ -335,7 +335,7 @@ class FirstRoute : AppCompatActivity() {
                         //선택된 장소들 표시
                         if (tpoint != null) {
                             val marker = TMapMarkerItem().apply {
-                                id = selectedPlace.pointdata.placeName
+                                id = selectedPlace.pointdata!!.placeName
                                 setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))
                                 icon = if (index == 0) iconList[0]
                                 else if (index == firstList.size - 1) iconList[11]

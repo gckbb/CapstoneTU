@@ -16,8 +16,10 @@ import androidx.core.content.ContextCompat
 import com.example.kakaotest.CashBook.CashBookActivity
 import com.example.kakaotest.CheckList.CheckListActivity
 import com.example.kakaotest.DataModel.ScheduleData
+import com.example.kakaotest.DataModel.ScheduleDbData
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
+import com.example.kakaotest.DataModel.metaRoute.RouteListData
 import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.DataModel.tmap.SelectedPlaceData
@@ -42,6 +44,7 @@ class ScheduleActivity : AppCompatActivity() {
     val dbtool = Database()
     val dayRouteList = ArrayList<ArrayList<SearchRouteData>?>()
     val dayRouteList2 = ArrayList<MetaDayRoute>()
+    val dayRouteList3 = ArrayList<RouteListData>()
 
 
 
@@ -96,8 +99,10 @@ class ScheduleActivity : AppCompatActivity() {
 
             CoroutineScope(Dispatchers.Main).launch {
                 val plancount = dbtool.getData(mainid).await().documents.size
-                dbtool.AddPlan(ScheduleData(mainid,null,lattempList,lontempList,
-                    placenameList,scheduletype,startdata,enddata,mainid+plancount,totaltimeData,null,dayRouteList2))
+                dbtool.AddPlan(
+                    ScheduleDbData(mainid,null,lattempList,lontempList,
+                    placenameList,scheduletype,startdata,enddata,mainid+plancount,totaltimeData,null,dayRouteList2)
+                )
             }
 
 
@@ -107,6 +112,7 @@ class ScheduleActivity : AppCompatActivity() {
 
             for (i in 0 until dateRange + 1) {
                 dayRouteList.add(intent.getParcelableArrayListExtra<SearchRouteData>("List${i + 1}"))
+                dayRouteList3.add(RouteListData(intent.getParcelableArrayListExtra<SearchRouteData>("List${i + 1}")))
             }
             travelPlanManager.updatePlan(destination = dayRouteList[0])
 
@@ -119,7 +125,7 @@ class ScheduleActivity : AppCompatActivity() {
                     lattempList.add(i.pointdata?.tpoint?.latitude!!)
                     lontempList.add(i.pointdata?.tpoint?.longitude!!)
                     placenameList.add(i.pointdata!!.placeName!!)
-                    totaltimeData[j] = totaltimeData[j] + i.time.toInt() +3600
+                    totaltimeData[j] = totaltimeData[j] + i.time!!.toInt() +3600
                 }
                 totaltimeData[j] -= 3600
                 lattempList.add(0.0)
@@ -129,8 +135,8 @@ class ScheduleActivity : AppCompatActivity() {
             }
             CoroutineScope(Dispatchers.Main).launch {
                 val plancount = dbtool.getData(mainid).await().documents.size
-                dbtool.AddPlan(ScheduleData(mainid,null,lattempList,lontempList,
-                    placenameList,scheduletype,startdata,enddata,mainid+plancount,totaltimeData,dayRouteList,null))
+                dbtool.AddPlan(ScheduleDbData(mainid,null,lattempList,lontempList,
+                    placenameList,scheduletype,startdata,enddata,mainid+plancount,totaltimeData,dayRouteList3,null))
             }
         }
 
@@ -374,7 +380,7 @@ class ScheduleActivity : AppCompatActivity() {
 
 
         adjustedListTime?.forEachIndexed { index, time ->
-            val (hours, minutes) = convertSecondsToTime(time.toDouble())
+            val (hours, minutes) = convertSecondsToTime(time?.toDouble())
             dayTime[index].apply {
                 visibility = View.VISIBLE
                 text = String.format("%02d:%02d", hours, minutes) // 시간 설정
@@ -474,12 +480,12 @@ class ScheduleActivity : AppCompatActivity() {
 
 
     fun allRoute(path:Button,value: Int,data : ArrayList<SearchRouteData>){
-        val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
+        val travelPlan = "자차"
         //    val carList :  ArrayList<SearchRouteData>? = SharedPreferenceUtil.getCarListFromSharedPreferences(this)
 
         path.setOnClickListener {
             val intent = Intent(this,FirstRoute::class.java)
-            if(travelPlan?.transportion == "버스") {
+            if(travelPlan == "버스") {
                 val firstPlaceList = gson.toJson(dayRouteList2[value])
                 intent.putExtra("firstList2", firstPlaceList)
             }
@@ -492,11 +498,11 @@ class ScheduleActivity : AppCompatActivity() {
         }
     }
     fun allRoute2(path:Button, value: Int, data: ArrayList<SearchMetaData>){
-        val travelPlan : TravelPlan? = SharedPreferenceUtil.getTravelPlanFromSharedPreferences(this)
+        val travelPlan  = "버스"
 
         path.setOnClickListener {
             val intent = Intent(this,FirstRoute::class.java)
-            if(travelPlan!!.transportion == "버스") {
+            if(travelPlan == "버스") {
                 val secondPlaceList = gson.toJson(dayRouteList2[value])
                 intent.putExtra("firstList2", secondPlaceList)
             }

@@ -11,7 +11,9 @@ import com.example.kakaotest.CashBook.CashBookActivity
 
 import com.example.kakaotest.DataModel.Date
 import com.example.kakaotest.DataModel.ScheduleData
+import com.example.kakaotest.DataModel.ScheduleDbData
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
+import com.example.kakaotest.DataModel.metaRoute.RouteListData
 import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.HomeActivity
 
@@ -31,7 +33,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import java.util.*
+
 
 
 class UserPlanSelect : AppCompatActivity() {
@@ -39,7 +41,7 @@ class UserPlanSelect : AppCompatActivity() {
     private val binding get() = mBinding!!
     lateinit var userdata: SavedUser
     val dbtool = Database()
-    private lateinit var userplandata : ArrayList<ScheduleData>
+    private lateinit var userplandata : ArrayList<ScheduleDbData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         userdata = SavedUser()
@@ -71,7 +73,11 @@ class UserPlanSelect : AppCompatActivity() {
                 parent,
                 view,
                 position,
-                id -> val selectItem = parent.getItemAtPosition(position) as ScheduleData
+                id -> val selectItem = parent.getItemAtPosition(position) as ScheduleDbData
+            var temp1 = ArrayList<ArrayList<SearchRouteData>?>()
+            temp1.add(selectItem.dayroutedata?.get(0)?.routeList)
+            temp1.add(selectItem.dayroutedata?.get(1)?.routeList)
+
             SharedPreferenceUtil.savePlanToSharedPreferences(this,selectItem)
             Log.d("testmsg",selectItem.toString())
             val intent = Intent(this, WeatherActivity::class.java)
@@ -92,14 +98,15 @@ class UserPlanSelect : AppCompatActivity() {
 
     }
 
-    suspend fun test2(userid : String) : Deferred<ArrayList<ScheduleData>>{
+    suspend fun test2(userid : String) : Deferred<ArrayList<ScheduleDbData>>{
         val dbtool = Database()
 
-        val plandata2 : Deferred<ArrayList<ScheduleData>> = CoroutineScope(Dispatchers.Main).async {
-            var plandata = ArrayList<ScheduleData>()
+        val plandata2 : Deferred<ArrayList<ScheduleDbData>> = CoroutineScope(Dispatchers.Main).async {
+            var plandata = ArrayList<ScheduleDbData>()
             val tempdata = dbtool.getData(userid)
             for (i in tempdata.await().documents) {
-                plandata.add(ScheduleData(i.get("mainId") as String?,
+
+                plandata.add(ScheduleDbData(i.get("mainId") as String?,
                     i.get("subId") as ArrayList<String>?,
                     i.get("latdata") as ArrayList<Double>,
                     i.get("londata") as ArrayList<Double>,
@@ -109,7 +116,7 @@ class UserPlanSelect : AppCompatActivity() {
                     i.get("endday",Date::class.java),
                     i.get("scheduleid") as String,
                     i.get("timedata") as ArrayList<Int>,
-                    i.get("dayroutedata") as ArrayList<ArrayList<SearchRouteData>?>?,
+                    i.get("dayroutedata") as ArrayList<RouteListData>,
                     i.get("dayroutedata2") as ArrayList<MetaDayRoute>?
                 ))
             }

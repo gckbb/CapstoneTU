@@ -19,14 +19,14 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("routes")
-    @Headers("appKey: 8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP")
+    @Headers("appKey: UEpEdFrLsN3grYYQwxoTIanD6Zt1CNpT9xgFiznr")
     fun getRoute(
         @FieldMap param: HashMap<String, Any>
     ): Call<FeatureCollection>
 
     @GET(Url.GET_TMAP_LOCATION)
     suspend fun getSearchLocation(
-        @Header("appKey") appKey: String = "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP",
+        @Header("appKey") appKey: String = "UEpEdFrLsN3grYYQwxoTIanD6Zt1CNpT9xgFiznr",
         @Query("version") version: Int = 1,
         @Query("callback") callback: String? = null,
         @Query("count") count: Int = 200,
@@ -45,7 +45,7 @@ interface ApiService {
 
     @GET(Url.GET_TMAP_REVERSE_GEO_CODE)
     suspend fun getReverseGeoCode(
-        @Header("appKey") appKey: String = "8Mi9e1fjtt8L0SrwDMyWt9rSnLCShADl5BWTm3EP",
+        @Header("appKey") appKey: String = "UEpEdFrLsN3grYYQwxoTIanD6Zt1CNpT9xgFiznr",
         @Query("version") version: Int = 1,
         @Query("callback") callback: String? = null,
         @Query("lat") lat: Double,

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 
 import com.example.kakaotest.DataModel.ScheduleData
+import com.example.kakaotest.DataModel.ScheduleDbData
 import com.example.kakaotest.DataModel.Weather.*
 import com.example.kakaotest.DataModel.Weather.listdata
 import com.example.kakaotest.HomeActivity
@@ -34,7 +35,7 @@ class WeatherActivity : AppCompatActivity() {
     private val binding get() = mBinding!!
     lateinit var userdata: SavedUser
     val dbtool = Database()
-    lateinit var userPlanData2 : ScheduleData
+    lateinit var userPlanData2 : ScheduleDbData
     private lateinit var userplandata : ArrayList<ScheduleData>
     val apiAdapter = WeatherApiAdapter()
     var count = 0
@@ -77,7 +78,7 @@ class WeatherActivity : AppCompatActivity() {
     }
     private fun setWeather(lon:Double,lat:Double) {
         val xydata = CoordinateConverter().convertToXy(lat,lon)
-        val call = WeatherObject.getRetrofitService().getWeather(1000, 1, "JSON", "20240918", "0500", xydata.nx, xydata.ny)
+        val call = WeatherObject.getRetrofitService().getWeather(1000, 1, "JSON", "20240925", "0500", xydata.nx, xydata.ny)
         call.enqueue(object : retrofit2.Callback<WEATHER> {
             override fun onResponse(call: Call<WEATHER>, response: Response<WEATHER>) {
                 if(response.isSuccessful) {

@@ -3,6 +3,7 @@ package com.example.kakaotest.Utility
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.kakaotest.DataModel.ScheduleData
+import com.example.kakaotest.DataModel.ScheduleDbData
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.tmap.DayRouteData
 import com.example.kakaotest.DataModel.tmap.SearchData
@@ -130,7 +131,7 @@ object SharedPreferenceUtil {
         }
     }
 
-    fun savePlanToSharedPreferences(context: Context, userPlanData : ScheduleData)   {
+    fun savePlanToSharedPreferences(context: Context, userPlanData : ScheduleDbData)   {
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("plandata", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         val gson = Gson()
@@ -139,16 +140,16 @@ object SharedPreferenceUtil {
         editor.apply()
     }
 
-    fun getPlanFromSharedPreferences(context:Context) :ScheduleData {
+    fun getPlanFromSharedPreferences(context:Context) :ScheduleDbData {
         val sharedPreferences : SharedPreferences = context.getSharedPreferences("plandata",Context.MODE_PRIVATE)
         val gson=Gson()
         val json = sharedPreferences.getString("plandata",null)
-        val type = object : TypeToken<ScheduleData>(){}.type
+        val type = object : TypeToken<ScheduleDbData>(){}.type
         return if (json!=null){
             gson.fromJson(json,type)
 
         }else {
-            ScheduleData()
+            ScheduleDbData()
         }
     }
 

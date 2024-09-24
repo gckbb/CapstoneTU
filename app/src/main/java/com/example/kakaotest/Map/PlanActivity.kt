@@ -16,6 +16,7 @@ import com.example.kakaotest.CashBook.CashBookActivity
 
 import com.example.kakaotest.CheckList.CheckListActivity
 import com.example.kakaotest.DataModel.ScheduleData
+import com.example.kakaotest.DataModel.ScheduleDbData
 import com.example.kakaotest.DataModel.TravelPlan
 import com.example.kakaotest.DataModel.metaRoute.MetaDayRoute
 import com.example.kakaotest.DataModel.metaRoute.SearchMetaData
@@ -23,7 +24,7 @@ import com.example.kakaotest.DataModel.tmap.SearchRouteData
 import com.example.kakaotest.HomeActivity
 import com.example.kakaotest.Login.SavedUser
 import com.example.kakaotest.Utility.Database
-import java.util.*
+
 
 
 import com.example.kakaotest.R
@@ -46,7 +47,7 @@ class PlanActivity : AppCompatActivity() {    //UserPlanActivity에서 이어지
     val dbtool = Database()
     var dayRouteList2 : ArrayList<MetaDayRoute>? = ArrayList<MetaDayRoute>()
     var dayRouteList : ArrayList<ArrayList<SearchRouteData>?>? = ArrayList<ArrayList<SearchRouteData>?>()
-    lateinit var userPlanData : ScheduleData
+    lateinit var userPlanData : ScheduleDbData
     var daycount = 0
 
 
@@ -71,7 +72,7 @@ class PlanActivity : AppCompatActivity() {    //UserPlanActivity에서 이어지
         }
         if(userPlanData.dayroutedata != null) {
             for(i in userPlanData.dayroutedata!!) {
-                dayRouteList?.add(i)
+                dayRouteList?.add(i.routeList)
             }
             Log.d("data2",userPlanData.toString())
             Log.d("data2",dayRouteList.toString())
@@ -308,7 +309,7 @@ class PlanActivity : AppCompatActivity() {    //UserPlanActivity에서 이어지
 
 
         adjustedListTime?.forEachIndexed { index, time ->
-            val (hours, minutes) = convertSecondsToTime(time.toDouble())
+            val (hours, minutes) = convertSecondsToTime(time?.toDouble())
             dayTime[index].apply {
                 visibility = View.VISIBLE
                 text = String.format("%02d:%02d", hours, minutes) // 시간 설정
@@ -408,11 +409,11 @@ class PlanActivity : AppCompatActivity() {    //UserPlanActivity에서 이어지
 
 
     fun allRoute(path:Button,value: Int,data : ArrayList<SearchRouteData>){
-        val travelPlan : TravelPlan? = TravelPlan(null,null,null,null,"자차",null,null,null,null,null,null)
+        val travelPlan = "자차"
 
         path.setOnClickListener {
             val intent = Intent(this,FirstRoute::class.java)
-            if(travelPlan?.transportion == "버스") {
+            if(travelPlan == "버스") {
                 val firstPlaceList = gson.toJson(dayRouteList2?.get(value))
                 intent.putExtra("firstList2", firstPlaceList)
             }
@@ -425,7 +426,7 @@ class PlanActivity : AppCompatActivity() {    //UserPlanActivity에서 이어지
         }
     }
     fun allRoute2(path:Button, value: Int, data: ArrayList<SearchMetaData>){
-        val travelPlan : TravelPlan = TravelPlan(null,null,null,null,"버스",null,null,null,null,null,null)
+        val travelPlan = "버스"
         path.setOnClickListener {
             val intent = Intent(this,FirstRoute::class.java)
             if(userPlanData!!.type == "버스") {

@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.kakaotest.DataModel.ScheduleData
+import com.example.kakaotest.DataModel.ScheduleDbData
 import com.example.kakaotest.R
 import java.util.ArrayList
 
-class UserPlanAdapter(val context: Context, val planList: ArrayList<ScheduleData>) : BaseAdapter() {
+class UserPlanAdapter(val context: Context, val planList: ArrayList<ScheduleDbData>) : BaseAdapter() {
 
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {

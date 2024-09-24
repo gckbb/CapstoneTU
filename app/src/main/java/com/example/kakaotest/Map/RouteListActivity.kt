@@ -311,7 +311,8 @@ class RouteListActivity : AppCompatActivity() {
             SelectedPlaceData(
                 placeName = searchData.id,
                 tpoint = TMapPoint(searchData.tpoint.latitude,searchData.tpoint.longitude),
-                address = searchData.address
+                address = searchData.address,
+                stayDuration = null
             )
 
         } as ArrayList<SelectedPlaceData>

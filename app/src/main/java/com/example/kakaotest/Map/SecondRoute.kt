@@ -79,7 +79,7 @@ class SecondRoute : AppCompatActivity() {
                     //선택된 장소들 표시
                     if (tpoint != null) {
                         val marker = TMapMarkerItem().apply {
-                            id = selectedPlace.pointdata.placeName
+                            id = selectedPlace?.pointdata?.placeName
                             setTMapPoint(TMapPoint(tpoint.latitude, tpoint.longitude))
                             icon = if (index==0) iconList[0]
                             else if (index == secondList.size-1) iconList[11]

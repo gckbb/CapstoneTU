@@ -59,7 +59,7 @@ class MakeRoute {
             this.startPoint = startPoint
             if(type == 0 || type == 2) { // 자차,택시,도보
                 coroutineScope {
-                    for (i in 1 until selectedPlaceList.count()+1) {
+                    for (i in 1 until selectedPlaceList.count()) {
                         val deferredTime = async(Dispatchers.IO) {
                             apiAdapter.apiRequest(
                                 startPoint.tpoint!!.longitude,
@@ -234,9 +234,9 @@ class MakeRoute {
                     dayRouteList.add(SearchRouteData(startPoint, 0))
 
 
-                    while (routeList.isNotEmpty() && currentDayTime + routeList.first().time.toInt() <= remainingTime) {
+                    while (routeList.isNotEmpty() && currentDayTime + routeList.first().time!!.toInt() <= remainingTime) {
 
-                        if (currentDayTime > 4 * 3600 && lunchcheck == 0 && restaurant=="YES") {
+                        if (currentDayTime > 4 * 3600 && lunchcheck == 0 && restaurant=="yes") {
                             var minfood = 999999
                             var mindata: SelectedPlaceData? = null
 
@@ -272,11 +272,11 @@ class MakeRoute {
                             break
                         }
 
-                        if (currentDayTime + routeList[minIndex].time.toInt() > remainingTime) break
+                        if (currentDayTime + routeList[minIndex].time!!.toInt() > remainingTime) break
                         if (!dayRouteList.any { route -> route.pointdata?.placeName == routeList[minIndex].pointdata?.placeName }) { // 중복 체크
                             dayRouteList.add(routeList[minIndex]) // 가장 적게 걸리는 장소 추가
-                            currentDayTime += routeList[minIndex].time.toInt() + 3600
-                            Log.d("PLAN", "다음 장소 추가: ${routeList[minIndex].pointdata?.placeName}, 거리: ${routeList[minIndex].time.toInt()}")
+                            currentDayTime += routeList[minIndex].time!!.toInt() + 3600
+                            Log.d("PLAN", "다음 장소 추가: ${routeList[minIndex].pointdata?.placeName}, 거리: ${routeList[minIndex].time!!.toInt()}")
                         }
 
                         routeList.removeAt(minIndex) // 경로 리스트에서 제거
@@ -301,7 +301,7 @@ class MakeRoute {
         var minIndex: Int = 0
         var minTime: Int? = apiRequest(
             startRouteData.pointdata!!.tpoint!!.longitude,
-            startRouteData.pointdata.tpoint!!.latitude,
+            startRouteData.pointdata!!.tpoint!!.latitude,
             routeList[0].pointdata!!.tpoint!!.longitude,
             routeList[0].pointdata!!.tpoint!!.latitude
         )?.toInt()
@@ -310,8 +310,8 @@ class MakeRoute {
         for (i in 0 until routeList.count()) {
             tempTime = routeList[i].pointdata?.tpoint?.let {
                 apiRequest(
-                    startRouteData.pointdata.tpoint!!.longitude,
-                    startRouteData.pointdata.tpoint!!.latitude,
+                    startRouteData.pointdata!!.tpoint!!.longitude,
+                    startRouteData.pointdata!!.tpoint!!.latitude,
                     it.longitude, it.latitude
                 )?.toInt()
             }
@@ -323,7 +323,7 @@ class MakeRoute {
                 minTime = tempTime
             }
         }
-        routeList[minIndex].time = routeList[minIndex].time.toInt().times(multi)
+        routeList[minIndex].time = routeList[minIndex].time?.toInt()?.times(multi)
         return minIndex
     }
 

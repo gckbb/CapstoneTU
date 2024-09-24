@@ -4,8 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class SearchRouteData(
-    val pointdata: SelectedPlaceData?,
-    var time: Number
+    var pointdata: SelectedPlaceData? = null,
+    var time: Number? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(SelectedPlaceData::class.java.classLoader),
@@ -14,7 +14,7 @@ data class SearchRouteData(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(pointdata, flags)
-        parcel.writeDouble(time.toDouble())
+        time?.let { parcel.writeDouble(it as Double) }
     }
 
     override fun describeContents(): Int {
@@ -23,7 +23,7 @@ data class SearchRouteData(
 
     companion object CREATOR : Parcelable.Creator<SearchRouteData> {
         override fun createFromParcel(parcel: Parcel): SearchRouteData {
-            return SearchRouteData(parcel)
+            return SearchRouteData(parcel.readParcelable(SelectedPlaceData::class.java.classLoader),parcel.readDouble())
         }
 
         override fun newArray(size: Int): Array<SearchRouteData?> {
